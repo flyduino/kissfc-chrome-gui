@@ -12,6 +12,7 @@
     float: left;
     width: 90%;
     font-weight: bold;
+    margin-bottom: 20px;
 }
 .rates .bars ul {
     margin-bottom: 5px;
@@ -56,9 +57,8 @@
 .rates .bars .meter-bar .fill .label {
     color: white;
 }
-
 .rates .rc_rates {
-    border-collapse: collapse;
+	border-collapse: collapse;
 }
 .rates .rc_rates tr {
     height: 25px;
@@ -74,22 +74,40 @@
     width: 60px;
 }
 .rates .rc_rates .name {
+    padding: 0 10px 0 0;
     width: 40px;
+    text-align: right;
+    font-weight: bold;
 }
 .rates .rc_rates input[type="text"] {
-    width: 70px;
+    width: 60px;
     height: 20px;
     line-height: 20px;
     text-align: right;
     border: 1px solid silver;
 }
-
-
-.rates .rc_rates td {
-}
-
 .rates .rc_chart {
     width: 200px;
     height: 200px;
 	display: inline-block;    
+}
+.rates .save {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: white;
+    padding: 0 10px 0 10px;
+    height: 20px;
+    line-height: 20px;
+    background-color: #339933;
+}
+.rates .saveAct {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: white;
+    padding: 0 10px 0 10px;
+    height: 20px;
+    line-height: 20px;
+    background-color: #830a0a;
 }

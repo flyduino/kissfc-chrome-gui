@@ -10,20 +10,25 @@ CONTENT.rates.initialize = function(callback) {
     self.startedUIupdate = 0;
     self.updateTimeout;
     self.settingsFilled = 0;
+    self.hasInput = false;
 
     if (GUI.activeContent != 'rates') {
         GUI.activeContent = 'rates';
     }
 
     function animateModel() {
-        requestAnimationFrame(animateModel);
-        var rowNames = ['roll', 'pitch', 'yaw']
-        var axisRate = {};
-        for (var i = 0; i < 3; i++) {
-            axisRate[rowNames[i]] = -Math.PI * 2 * $("#rates_chart_" + rowNames[i]).kissRatesChart('axisRate') / 60;
-        }
-        $("#model").kissModel('updateRate', axisRate);
-        $("#model").kissModel('refresh');
+    	if (GUI.activeContent == 'rates') {
+    		requestAnimationFrame(animateModel);
+    		var rowNames = ['roll', 'pitch', 'yaw']
+			var axisRate = { 'roll' : 0, 'pitch': 0, 'yaw': 0};
+    		if (self.hasInput) {	
+    			for (var i = 0; i < 3; i++) {
+    				axisRate[rowNames[i]] = -Math.PI * 2 * $("#rates_chart_" + rowNames[i]).kissRatesChart('axisRate') / 60;
+    			}
+    		} 
+    		$("#model").kissModel('updateRate', axisRate);
+    		$("#model").kissModel('refresh');
+    	}
     }
 
     function contentChange() {
@@ -31,7 +36,6 @@ CONTENT.rates.initialize = function(callback) {
             $('a.save').addClass("important saveAct");
         }
         var rowNames = ['roll', 'pitch', 'yaw']
-        console.log("DATA CHANGED");
         for (var i = 0; i < 3; i++) {
             $('#rates_chart_' + rowNames[i]).kissRatesChart('updateRcRates', {
                 rate: parseFloat($('tr.' + rowNames[i] + ' input').eq(0).val()),
@@ -43,10 +47,9 @@ CONTENT.rates.initialize = function(callback) {
 
     // get config
     kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
+    	self.settingsFilled = 1;
         $('#content').load("./content/rates.html", htmlLoaded);
     });
-
-
 
     function htmlLoaded() {
         // generate receiver bars
@@ -87,7 +90,6 @@ CONTENT.rates.initialize = function(callback) {
         $('.meter', receiverContainer).each(function() {
             receiverLabelArray.push($('.label', this));
         });
-
 
         self.barResize = function() {
             var containerWidth = $('.meter:first', receiverContainer).width(),
@@ -130,7 +132,8 @@ CONTENT.rates.initialize = function(callback) {
 
         function updateUI() {
             var telem = kissProtocol.data[kissProtocol.GET_TELEMETRY];
-
+            
+          
             if (!telem) {
                 if (GUI.activeContent == 'rates') self.updateTimeout = window.setTimeout(function() {
                     updateUI();
@@ -139,14 +142,19 @@ CONTENT.rates.initialize = function(callback) {
             }
             // update bars with latest data
             var receiverLabelArrayLength = receiverLabelArray.length;
+            var hi = false;
             for (var i = 0; i < receiverLabelArrayLength; i++) {
                 var channel = receiverChannels[i];
+                if (telem['RXcommands'][channel]!=1000) {
+                	hi = true;
+                }
                 receiverFillArray[i].css('width', ((telem['RXcommands'][channel] - meterScale.min) / (meterScale.max - meterScale.min) * 100).clamp(0, 100) + '%');
                 receiverLabelArray[i].text(telem['RXcommands'][channel]);
                 // redraw charts if needed
                 $(chartDivSelectors[i]).kissRatesChart('updateRcInput', (telem['RXcommands'][channel] - 1500) / 500);
             }
-
+            self.hasInput = hi;
+ 
             var sampleBlock = [];
 
             var midscale = 1.5;
@@ -164,7 +172,6 @@ CONTENT.rates.initialize = function(callback) {
                 if (GUI.activeContent == 'rates') {
                     if (self.startedUIupdate == 0) {
                         updateUI();
-
                     }
                 }
             });
@@ -176,18 +183,17 @@ CONTENT.rates.initialize = function(callback) {
         $('tr.roll input').eq(1).val(data['RPY_Expo'][0]);
         $('tr.roll input').eq(2).val(data['RPY_Curve'][0]);
         for (var i = 0; i < 3; i++) {
-            $('tr.roll input').eq(i).on('change', function() {
+            $('tr.roll input').eq(i).on('input', function() {
                 contentChange();
             });
         }
-
 
         // pitch
         $('tr.pitch input').eq(0).val(data['RC_Rate'][1]);
         $('tr.pitch input').eq(1).val(data['RPY_Expo'][1]);
         $('tr.pitch input').eq(2).val(data['RPY_Curve'][1]);
         for (var i = 0; i < 3; i++) {
-            $('tr.pitch input').eq(i).on('change', function() {
+            $('tr.pitch input').eq(i).on('input', function() {
                 contentChange();
             });
         }
@@ -197,7 +203,7 @@ CONTENT.rates.initialize = function(callback) {
         $('tr.yaw input').eq(1).val(data['RPY_Expo'][2]);
         $('tr.yaw input').eq(2).val(data['RPY_Curve'][2]);
         for (var i = 0; i < 3; i++) {
-            $('tr.yaw input').eq(i).on('change', function() {
+            $('tr.yaw input').eq(i).on('imput', function() {
                 contentChange();
             });
         }
@@ -216,8 +222,9 @@ CONTENT.rates.initialize = function(callback) {
         $("#model").kissModel({
             'mixer': data['CopterType']
         })
+        
         animateModel();
-        self.settingsFilled = 1;
+     
         fastDataPoll();
 
         $('a.save').click(function() {
