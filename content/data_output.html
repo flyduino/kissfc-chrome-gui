@@ -1,0 +1,53 @@
+<div class="data_output">
+    <div class="receiver">
+        <div class="groupTitle">Receiver</div>
+        <div class="bars">
+        </div>
+    </div>
+    <div class="motors">
+        <div class="groupTitle">Motors</div>
+        <div class="bars">
+        </div>
+    </div>
+    <div class="other">
+        <div class="groupTitle">Other</div>
+        <dl class="otherValues">
+            <dt>Mode:</dt><dd>&nbsp;</dd>
+            <dt>Status:</dt><dd>&nbsp;</dd>
+            <dt>AngleX:</dt><dd>&nbsp;</dd>
+            <dt>AngleY:</dt><dd>&nbsp;</dd>
+	    <dt>AngleZ:</dt><dd>&nbsp;</dd>
+        </dl>
+        <a class="calibrateAccelerometer" href="#" style="font-size:11px;">Calibrate Accelerometer</a>
+    </div>
+    <div class="clear-both"></div>
+    <div class="plot">
+        <div class="groupTitle" style="margin-left:160px;"> 
+		<select name="graphTitle">
+		    <option value="0">Gyro &amp; ACC Datas:</option>
+	       <!--<option value="1">ESC Temperatures:</option>
+		    <option value="2">ESC Voltanges:</option>
+		    <option value="3">ESC Currents:</option>
+		    <option value="4">ESC used W/h</option>
+		    <option value="5">ESC E-RpM / 1000</option> -->
+		</select>
+		<div style="display:inline;color:#FFF;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MCU Idle: </div><div style="display:inline;color:#FFF;" id="idle"></div><div style="display:inline;color:#FFF;"> %</div>
+		<div style="display:inline;color:#FFF;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Battery Voltage: </div><div style="display:inline;color:#FFF;" id="Vbat"></div><div style="display:inline;color:#FFF;"> V</div>
+	</div>
+        <dl class="legend">
+            <dt id="graph1">Gyroscope X:</dt><dd>&nbsp;</dd>
+            <dt id="graph2">Gyroscope Y:</dt><dd>&nbsp;</dd>
+            <dt id="graph3">Gyroscope Z:</dt><dd>&nbsp;</dd>
+            <dt id="graph4">Accelerometer X:</dt><dd>&nbsp;</dd>
+            <dt id="graph5">Accelerometer Y:</dt><dd>&nbsp;</dd>
+            <dt id="graph6">Accelerometer Z:</dt><dd>&nbsp;</dd>
+        </dl>
+        <canvas id="graph" width="100" height="190"></canvas>
+	<div style="color:#FFF;">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		GXmax:<span id="gxmax">0</span> | GXmin:<span id="gxmin">0</span> | 
+		GYmax:<span id="gymax">0</span> | GYmin:<span id="gymin">0</span> | 
+		GZmax:<span id="gzmax">0</span> | GZmin:<span id="gzmin">0</span> 
+	</div>
+    </div>
+</div>

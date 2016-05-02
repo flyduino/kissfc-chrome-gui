@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+    outline: none;
+}
+html, body {
+    height: 100%;
+}
+body {
+    font-family: sans-serif;
+    font-size: 12px;
+    color: white;
+    background-color: #1e1e1e;
+}
+a {
+    text-decoration: none;
+}
+input[type="number"]::-webkit-inner-spin-button {
+    opacity: 1;
+    margin-left: 5px;
+}
+.clear-both {
+    clear: both;
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+
+#mainWrapper {
+    height: 100%;
+}
+.inputSpinners {
+    position: absolute;
+    width: 15px;
+    top: 1px;
+}
+.inputSpinners div {
+    display: block;
+    width: 15px;
+    height: 10px;
+    background-color: #f1f1f1;
+}
+.inputSpinners div:hover {
+    background-color: #d2d2d2;
+}
+.inputSpinners div:nth-child(1) {
+    background-image: url('./images/triangleArrowUp.gif');
+    background-position: 4px 4px;
+    background-repeat: no-repeat;
+}
+.inputSpinners div:nth-child(2) {
+    background-image: url('./images/triangleArrowDown.gif');
+    background-position: 4px 3px;
+    background-repeat: no-repeat;
+}
+.inputSpinners div:active {
+    background-color: #787878;
+}
+#portArea {
+    margin: 0 0 10px 0;
+    padding: 0 5px 0 0;
+    height: 30px;
+    border-bottom: 2px solid #ad0d0d;
+}
+#portArea #port {
+    float: left;
+    margin: 5px 0 0 5px;
+    width: 100px;
+    height: 20px;
+    line-height: 20px;
+    border: 1px solid #ad0d0d;
+}
+#portArea .connect {
+    float: left;
+    margin: 5px 0 0 5px;
+    height: 18px;
+    line-height: 18px;
+    width: 90px;
+    font-weight: bold;
+    color: #f2ffff;
+    text-align: center;
+    border: 1px solid #ad0d0d;
+    background-color: #ad0d0d;
+}
+#portArea .connect:hover {
+    background-color: #d01414;
+}
+#navigation {
+    float: right;
+    margin: 5px 0 0 0;
+}
+#navigation li {
+    margin: 0 0 0 5px;
+    float: left;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 10px 0 10px;
+    text-align: center;
+    background-color: #830a0a;
+}
+#navigation li.unlocked:hover {
+    cursor: pointer;
+    background-color: #d01414;
+}
+#content {
+    position: relative;
+    padding: 10px;
+    margin: 0 0 0 10px;
+    width: calc(100% - 40px);
+    height: calc(100% - 70px);
+    /*
+    border: 2px solid #ad0d0d;
+    */
+}

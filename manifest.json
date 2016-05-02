@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "minimum_chrome_version": "38",
+    "version": "1.0.6",
+
+    "author": "flyduino",
+    "name": "KissFC",
+    "short_name": "KissFC",
+    "description": "",
+
+    "offline_enabled": true,
+
+    "app": {
+        "background": {
+            "scripts": ["eventPage.js"],
+            "persistent": false
+        }
+    },
+
+    "permissions": [
+        "serial",
+        "storage",
+        "notifications",
+	"http://ultraesc.de/"
+    ],
+
+    "icons": {
+        "128": "images/icon_128.png"
+    }
+}
