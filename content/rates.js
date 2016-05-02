@@ -153,7 +153,7 @@ CONTENT.rates.initialize = function(callback) {
                 // redraw charts if needed
                 $(chartDivSelectors[i]).kissRatesChart('updateRcInput', (telem['RXcommands'][channel] - 1500) / 500);
             }
-            self.hasInput = hi;
+            self.hasInput = true;
  
             var sampleBlock = [];
 
