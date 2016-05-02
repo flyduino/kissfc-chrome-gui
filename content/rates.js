@@ -208,9 +208,11 @@ CONTENT.rates.initialize = function(callback) {
             });
         }
 
+        var messages = ['rolls', 'flips', 'turns']
         for (i = 0; i < 3; i++) {
             $(chartDivSelectors[i]).kissRatesChart({
-                name: receiverNames[i]
+                name: receiverNames[i],
+                message: messages[i]
             });
             $(chartDivSelectors[i]).kissRatesChart('updateRcRates', {
                 rate: data['RC_Rate'][i],

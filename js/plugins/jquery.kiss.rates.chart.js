@@ -33,7 +33,8 @@
                         rate: 0,
                         grate: 0,
                         usecurve: 0,
-                        axisRate: 0
+                        axisRate: 0,
+                        message: 'rolls'
                     }, options));
                     data = pluginData(self);
                 }
@@ -123,9 +124,23 @@
                 context.font = "12px sans-serif ";
                 context.fillStyle = "rgb(71, 71, 71)";
                 context.fillText(text1, width - context.measureText(text1).width - 2, height - 14);
-                var text2 = Math.abs(Math.round(rcInputRotation * 100 / 360)) / 100 + " flips/sec";
+                var text2 = Math.abs(Math.round(rcInputRotation * 100 / 360)) / 100 + " " + data.message + "/sec";
                 context.fillText(text2, width - context.measureText(text2).width - 2, height - 2);
                 context.fillText(data.name, 2, 12);
+                
+                if (Math.abs(maxRotation)>=2000) {
+                	context.fillStyle = "rgba(80,0,0,0.8)";
+                    context.fillRect(0, 0, width, height);
+                	var text3 = "Max rotation > 2000 °/sec!";
+                    context.font = "14px sans-serif ";
+                    context.fillStyle = "rgb(255, 255, 255)";
+                    context.fillText(text3, (width - context.measureText(text3).width) >> 1, hh + 10);
+                    
+                	var text4 = "W A R N I N G";
+                    context.font = "16px sans-serif ";
+                    context.fillStyle = "rgb(255, 255, 255)";
+                    context.fillText(text4, (width - context.measureText(text4).width) >> 1, hh - 10 );
+                }
             }
         }
     };
