@@ -75,26 +75,25 @@
 .configuration .aux_settings dd {
     margin-left: 60px;
 }
-.configuration .save {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
+#save.saveAct {
+    background-color: #830a0a;
+}
+.config_button {
+	margin: 0 0 0 2px;
     color: white;
-    padding: 0 10px 0 10px;
     height: 20px;
     line-height: 20px;
     background-color: #339933;
+    text-align: center;
+    padding: 2px 10px 3px 10px;
 }
-.configuration .saveAct {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    color: white;
-    padding: 0 10px 0 10px;
-    height: 20px;
-    line-height: 20px;
-    background-color: #830a0a;
-}
-.configuration .save:hover {
+.config_button:hover {
     background-color: #d01414;
+}
+.config_buttons {
+	position: fixed;
+    right: 10px;
+    height: 20px;
+    bottom:25px;
+    padding: 0px;
 }
