@@ -203,7 +203,7 @@ CONTENT.rates.initialize = function(callback) {
         $('tr.yaw input').eq(1).val(data['RPY_Expo'][2]);
         $('tr.yaw input').eq(2).val(data['RPY_Curve'][2]);
         for (var i = 0; i < 3; i++) {
-            $('tr.yaw input').eq(i).on('imput', function() {
+            $('tr.yaw input').eq(i).on('input', function() {
                 contentChange();
             });
         }

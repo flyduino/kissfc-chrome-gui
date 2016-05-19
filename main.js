@@ -3,7 +3,6 @@
 $(document).ready(function () {
     PortHandler.initialize();
     CONTENT.welcome.initialize();
-    //CONTENT.configuration.initialize();
 
     $('#navigation li').click(function () {
         var self = this;
