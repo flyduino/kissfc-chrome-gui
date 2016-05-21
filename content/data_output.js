@@ -124,7 +124,7 @@ CONTENT.data_output.initialize = function (callback) {
 		
 	    if(/*data && (data['ESC_Telemetrie0'][1] != 0 || data['ESC_Telemetrie0'][0] != 0) &&*/ !self.ESCTelemetry){
 		    self.ESCTelemetry = 1;
-		    $('select[name="graphTitle"]').html('<option value="0">Gyro &amp; ACC Datas:</option><option value="1">ESC Temperatures:</option><option id="ESCTelemetrie" value="2">ESC Voltanges:</option><option value="3">ESC Currents:</option><option value="4">ESC used A/h</option><option value="5">ESC E-RpM / 1000</option><option value="6">ESC TLM Stats</option>');
+		    $('select[name="graphTitle"]').html('<option value="0">Gyro &amp; ACC Data:</option><option value="1">ESC Temperatures:</option><option id="ESCTelemetrie" value="2">ESC Voltanges:</option><option value="3">ESC Currents:</option><option value="4">ESC used A/h</option><option value="5">ESC E-RpM / 1000</option><option value="6">ESC TLM Stats</option>');
 	    }
 	    if(!data){
 		    if (GUI.activeContent == 'data_output') self.updateTimeout = window.setTimeout(function(){updateUI();},5); 
