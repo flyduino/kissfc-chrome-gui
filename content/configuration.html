@@ -42,7 +42,12 @@
             <dt>OneShot 125</dt><dd><input type="checkbox" name="oneShot" /></dd>
 	  <dt>OneShot 42</dt><dd><input type="checkbox" name="oneShot42" /></dd>
             <dt>3D Mode</dt><dd><input type="checkbox" disabled="true" name="3dMode"/></dd>
-	  <dt><span style="font-size:11px;"  title="activate if you have mounted your FC 180 deg rotated">FC Rotated by 180&deg;</span></dt><dd><input disabled="true" type="checkbox" name="orientation"/></dd>
+	  <dt><span style="font-size:11px;"  title="Select your FC rotation">FC Rotation</span></dt><dd><select disabled="true" name="BoardRotation" id="BoardRotation">
+	    <option value="0">None</option>
+	    <option value="2">90&deg; CW</option>
+	    <option value="1">180&deg;</option>
+	    <option value="3">90&deg; CCW</option>
+	  </select></dd>
         </dl>
     </div>
     <div class="clear-both"></div>

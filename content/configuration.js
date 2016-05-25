@@ -148,7 +148,6 @@ CONTENT.configuration.initialize = function(callback) {
         validateBounds('#content input[type="text"]');
         var settingsFilled = 0;
 
-
         $("#SAC").on('click', function() {
             document.getElementById('AC').style.visibility = "visible";
             document.getElementById('SAC').style.display = "none";
@@ -162,7 +161,7 @@ CONTENT.configuration.initialize = function(callback) {
         } else {
             $('#version').text((data['ver'] / 100));
             $('input[name="3dMode"]').removeAttr("disabled");
-            $('input[name="orientation"]').removeAttr("disabled");
+            $('select[name="BoardRotation"]').removeAttr("disabled");
         }
 
         if (data['ver'] > 101) {
@@ -260,8 +259,8 @@ CONTENT.configuration.initialize = function(callback) {
             contentChange();
         });
         $('input[name="oneShot"]').prop('checked', data['ESConeshot125']);
-        $('input[name="orientation"]').prop('checked', data['ori180deg']);
-        $('input[name="orientation"]').on('click', function() {
+        $('select[name="BoardRotation"]').val(data['BoardRotation']);
+        $('select[name="BoardRotation"]').on('change', function() {
             contentChange();
         });
 
@@ -462,7 +461,7 @@ CONTENT.configuration.initialize = function(callback) {
             data['Active3DMode'] = parseInt($('input[name="3dMode"]').prop('checked') ? 1 : 0);
             data['Active3DMode'] = parseInt($('input[name="3dMode"]').prop('checked') ? 1 : 0);
             data['failsaveseconds'] = parseInt($('input[name="failsaveseconds"]').val());
-            data['ori180deg'] = parseInt($('input[name="orientation"]').prop('checked') ? 1 : 0);
+            data['BoardRotation'] = parseInt($('select[name="BoardRotation"]').val());
 
             // pid and rates
             // roll

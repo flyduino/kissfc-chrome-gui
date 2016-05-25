@@ -343,7 +343,7 @@ kissProtocol.processPacket = function (code, obj) {
 	    obj.ESConeshot42 = data.getUint8(99);
 	    obj.failsaveseconds = data.getUint8(100);
 	    if(obj.ver > 100){
-		    obj.ori180deg = data.getUint8(101);
+		    obj.BoardRotation = data.getUint8(101);
 		    obj.isActive = data.getUint8(102);
 		    if(!obj.actKey) obj.actKey = 0;
 	    }
@@ -450,7 +450,7 @@ kissProtocol.preparePacket = function (code) {
 	    if(obj.ver > 100){
 		    data.setUint16(88, obj.actKey>>16,0);
 		    data.setUint16(90, (obj.actKey&0xFFFF),0);
-		    data.setUint8(92, obj.ori180deg,0);
+		    data.setUint8(92, obj.BoardRotation,0);
 	    }
 	    if(obj.ver > 101){
 		    data.setUint8(93, obj.CustomTPAInfluence);
