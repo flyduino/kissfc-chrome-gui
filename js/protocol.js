@@ -345,7 +345,7 @@ kissProtocol.processPacket = function (code, obj) {
 	    if(obj.ver > 100){
 		    obj.BoardRotation = data.getUint8(101);
 		    obj.isActive = data.getUint8(102);
-		    if(!obj.actKey) obj.actKey = 0;
+		    obj.actKey = 0;
 	    }
 	    if(obj.ver > 101){
 		    obj.CustomTPAInfluence = data.getUint8(103);
@@ -448,8 +448,15 @@ kissProtocol.preparePacket = function (code) {
 	    data.setUint8(86, obj.ESConeshot42,0);
 	    data.setUint8(87, obj.failsaveseconds,0);
 	    if(obj.ver > 100){
-		    data.setUint16(88, obj.actKey>>16,0);
-		    data.setUint16(90, (obj.actKey&0xFFFF),0);
+	    	if (!obj.isActive) {
+	    		console.log('The controller is not activated, let activate it with ' + obj.actKey);
+	    		data.setUint16(88, obj.actKey>>16,0);
+	    		data.setUint16(90, (obj.actKey&0xFFFF),0);
+	    	} else {
+	    		console.log('The controller is active');
+	    		data.setUint16(88, 0, 0);
+	    		data.setUint16(90, 0, 0);
+	    	}
 		    data.setUint8(92, obj.BoardRotation,0);
 	    }
 	    if(obj.ver > 101){

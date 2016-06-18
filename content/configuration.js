@@ -188,7 +188,7 @@ CONTENT.configuration.initialize = function(callback) {
             MCUid += data['SN'][i].toString(16).toUpperCase();
         }
 
-        $('#SN').text(MCUid);
+        $('#SN').text(MCUid + ' (' + (data['isActive'] ? 'Activated' : 'Not Activated') + ')');
 
         var mixerList = [{
             name: 'Tricopter',
@@ -235,27 +235,27 @@ CONTENT.configuration.initialize = function(callback) {
 
         // general settings
         $('input[name="minThrottle"]').val(data['MinThrottle16']);
-        $('input[name="minThrottle"]').on('click', function() {
+        $('input[name="minThrottle"]').on('input', function() {
             contentChange();
         });
         $('input[name="maxThrottle"]').val(data['MaxThrottle16']);
-        $('input[name="maxThrottle"]').on('click', function() {
+        $('input[name="maxThrottle"]').on('input', function() {
             contentChange();
         });
         $('input[name="minCommand"]').val(data['MinCommand16']);
-        $('input[name="minCommand"]').on('click', function() {
+        $('input[name="minCommand"]').on('input', function() {
             contentChange();
         });
         $('input[name="midCommand"]').val(data['MidCommand16']);
-        $('input[name="midCommand"]').on('click', function() {
+        $('input[name="midCommand"]').on('input', function() {
             contentChange();
         });
         $('input[name="TYmid"]').val(data['TYmid16']);
-        $('input[name="TYmid"]').on('click', function() {
+        $('input[name="TYmid"]').on('input', function() {
             contentChange();
         });
         $('input[name="TYinv"]').prop('checked', data['TYinv8']);
-        $('input[name="TYinv"]').on('click', function() {
+        $('input[name="TYinv"]').on('input', function() {
             contentChange();
         });
         $('input[name="oneShot"]').prop('checked', data['ESConeshot125']);
@@ -265,7 +265,7 @@ CONTENT.configuration.initialize = function(callback) {
         });
 
         $('input[name="failsaveseconds"]').val(data['failsaveseconds']);
-        $('input[name="failsaveseconds"]').on('click', function() {
+        $('input[name="failsaveseconds"]').on('input', function() {
             contentChange();
         });
 
@@ -292,7 +292,7 @@ CONTENT.configuration.initialize = function(callback) {
         $('tr.roll input').eq(4).val(data['RPY_Expo'][0]);
         $('tr.roll input').eq(5).val(data['RPY_Curve'][0]);
         for (var i = 0; i < 6; i++) {
-            $('tr.roll input').eq(i).on('click', function() {
+            $('tr.roll input').eq(i).on('input', function() {
                 contentChange();
             });
         }
@@ -305,7 +305,7 @@ CONTENT.configuration.initialize = function(callback) {
         $('tr.pitch input').eq(4).val(data['RPY_Expo'][1]);
         $('tr.pitch input').eq(5).val(data['RPY_Curve'][1]);
         for (var i = 0; i < 6; i++) {
-            $('tr.pitch input').eq(i).on('click', function() {
+            $('tr.pitch input').eq(i).on('input', function() {
                 contentChange();
             });
         }
@@ -318,7 +318,7 @@ CONTENT.configuration.initialize = function(callback) {
         $('tr.yaw input').eq(4).val(data['RPY_Expo'][2]);
         $('tr.yaw input').eq(5).val(data['RPY_Curve'][2]);
         for (var i = 0; i < 6; i++) {
-            $('tr.yaw input').eq(i).on('click', function() {
+            $('tr.yaw input').eq(i).on('input', function() {
                 contentChange();
             });
         }
@@ -328,7 +328,7 @@ CONTENT.configuration.initialize = function(callback) {
         $('tr.TPA input').eq(1).val(data['TPA'][1]);
         $('tr.TPA input').eq(2).val(data['TPA'][2]);
         for (var i = 0; i < 3; i++) {
-            $('tr.TPA input').eq(i).on('click', function() {
+            $('tr.TPA input').eq(i).on('input', function() {
                 contentChange();
             });
         }
@@ -339,7 +339,7 @@ CONTENT.configuration.initialize = function(callback) {
         $('tr.level input').eq(2).val(data['A_D']);
         $('tr.level input').eq(3).val(Math.round(data['maxAng']));
         for (var i = 0; i < 4; i++) {
-            $('tr.level input').eq(i).on('click', function() {
+            $('tr.level input').eq(i).on('input', function() {
                 contentChange();
             });
         }
@@ -366,10 +366,8 @@ CONTENT.configuration.initialize = function(callback) {
             contentChange();
         });
 
-
-
-
         $('input[name="UCTI"]').on('change', function() {
+        	contentChange();
             if (parseInt($('input[name="UCTI"]').prop('checked') ? 1 : 0) == 1) {
                 $('input[name="BP1"]').removeAttr("disabled");
                 $('input[name="BP2"]').removeAttr("disabled");
@@ -405,6 +403,7 @@ CONTENT.configuration.initialize = function(callback) {
 
 
         $('input[name="UVPID"]').on('change', function() {
+        	contentChange();
             if (parseInt($('input[name="UVPID"]').prop('checked') ? 1 : 0) == 1) {
                 $('input[name="LV1"]').removeAttr("disabled");
                 $('input[name="LV2"]').removeAttr("disabled");
@@ -443,6 +442,14 @@ CONTENT.configuration.initialize = function(callback) {
             document.getElementById('SAC').style.display = "none";
             document.body.style.overflow = "scroll";
         }
+        
+        $('input[name^="BP"]').on("input", function() {
+        	contentChange();
+        });
+        
+        $('input[name^="LV"]').on("input", function() {
+        	contentChange();
+        });
 
         function grabData() {
             // uav type and receiver
@@ -591,19 +598,18 @@ CONTENT.configuration.initialize = function(callback) {
 
         });
 
-
-
         if (!data['isActive']) {
             $.ajax({
                 url: 'http://ultraesc.de/KISSFC/getActivation/index.php?SN=' + MCUid + '&VER=' + data['ver'],
                 cache: false,
                 dataType: "text",
                 success: function(key) {
-                    console.log('got activation code');
+                    console.log('Got activation code ' + key);
                     data['actKey'] = parseInt(key);
                 },
                 error: function() {
                     console.log('getting activation code failed');
+                    data['actKey'] = 0;
                 }
 
             });
@@ -703,6 +709,13 @@ CONTENT.configuration.initialize = function(callback) {
             grabData();
             $('#save').removeClass("saveAct");
             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(0x30));
+            if (!data['isActive']) {
+            	 kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
+            	        $('#content').load("./content/configuration.html", function() {
+            	            htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
+            	        });
+            	 });
+            }
         });
 
         $('#backup').on('click', function() {
