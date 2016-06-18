@@ -53,6 +53,7 @@ var serial = {
 
                 self.onReceive.addListener(function logBytesReceived(info) {
                     self.bytesReceived += info.data.byteLength;
+                	self.dump('->', info.data);
                 });
 
                 self.onReceiveError.addListener(function watchForOnReceiveErrors(info) {
@@ -188,9 +189,14 @@ var serial = {
             var data = self.outputBuffer[0].data,
                 callback = self.outputBuffer[0].callback;
 
+        	self.dump('<-', data);
+        	
             if (self.connectionId) {
                 chrome.serial.send(self.connectionId, data, function (sendInfo) {
                     // track sent bytes for statistics
+                	
+                
+                	
                     self.bytesSent += sendInfo.bytesSent;
 
                     // fire callback
@@ -265,5 +271,24 @@ var serial = {
     emptyOutputBuffer: function () {
         this.outputBuffer = [];
         this.transmitting = false;
+    },
+    byteToHex: function(byte) {
+    	var hexChar = ["0", "1", "2", "3", "4", "5", "6", "7","8", "9", "A", "B", "C", "D", "E", "F"];
+    	return hexChar[(byte >> 4) & 0x0f] + hexChar[byte & 0x0f];
+    },
+    wordToHex: function(byte) {
+    	return this.byteToHex(byte>>8 & 0xff)+this.byteToHex(byte & 0xff);
+    },
+    dump: function(direction, data) {
+    	var view = new Uint8Array(data);
+    	var line = '';
+    	for (var i = 0; i < view.length; i++) {
+    		if (i%16==0) {
+    			if (i>0) console.log(line);
+    			line=direction + ' ' + this.wordToHex(i) + ': ';
+    		}
+    		line +=  this.byteToHex(view[i]) + ' ';
+ 		}
+    	console.log(line);
     }
 };
