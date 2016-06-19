@@ -19,10 +19,14 @@
 
     "permissions": [
         "serial",
+        "usb",
         "storage",
         "notifications",
 		"http://ultraesc.de/",
-		{ "fileSystem": ["write"] }
+		{ "fileSystem": ["write"] },
+		{"usbDevices": [
+            {"vendorId": 1155, "productId": 57105}
+        ]}
     ],
 
     "icons": {
