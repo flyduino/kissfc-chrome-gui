@@ -22,6 +22,7 @@ CONTENT.flasher.initialize = function(callback) {
     function htmlLoaded() {
 
     	$("#select_file").on("click", function() {
+    		  if (!$(this).hasClass("disabled")) {
     		  chrome.fileSystem.chooseEntry({type: 'openFile', accepts: [{extensions: ['hex']}]}, function (fileEntry) {
                   if (chrome.runtime.lastError) {
                       console.error(chrome.runtime.lastError.message);
@@ -46,37 +47,45 @@ CONTENT.flasher.initialize = function(callback) {
                                      
                                       if (self.parsed_hex) {
                                     	  console.log("HEX OS OK " + self.parsed_hex.bytes_total + " bytes");
-                                         // $('a.flash').removeClass('disabled');
-
-                                          //$('span.progressLabel').text('Loaded Local Firmware: (' + parsed_hex.bytes_total + ' bytes)');
+                                    	  $("#file_info").html("Loaded " + self.parsed_hex.bytes_total + " bytes from " + path);
+                                    	  $("#flash").show();
                                       } else {
-                                          //$('span.progressLabel').text(chrome.i18n.getMessage('firmwareFlasherHexCorrupted'));
                                     	  console.log("Corrupted firmware file");
+                                    	  $("#file_info").html("Selected firmware file appears to be corrupted");
+                                    	  $("#flash").hide();
                                       }
-                         
                               }
                           };
                           reader.readAsText(file);
                       });
                   });
               });
+    		  };
     	});
     	
     	
     	$("#flash").on("click", function() {
+    		if (!$(this).hasClass('disabled')) {
+    			$("#flash").addClass('disabled');
+    			$("#select_file").addClass('disabled');
+    		
     		  console.log("Removing device protection");
     		  STM32DFU.connect(usbDevices.STM32DFU, self.parsed_hex, {read_unprotect: true}, function() {
     			  console.log("Lets wait a bit for device reenumeration.");
     			  setTimeout(function() {
     				  console.log("Flashing");
-        			  STM32DFU.connect(usbDevices.STM32DFU, self.parsed_hex, {read_unprotect: false, erase_chip: true});
+        			  STM32DFU.connect(usbDevices.STM32DFU, self.parsed_hex, {read_unprotect: false, erase_chip: true}, function() {
+        				$("#flash").removeClass('disabled');
+        	    		$("#select_file").removeClass('disabled');
+        			  });
     			  }, 3000);
     		  });
+    		}
     	});
-    }
+
  
 };
-
+}
 
 CONTENT.flasher.resizeChart = function() {
 }

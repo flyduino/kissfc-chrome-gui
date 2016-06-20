@@ -25,3 +25,15 @@
     line-height: 20px;
     background-color: #830a0a;
 }
+
+.flasher .disabled {
+	background-color: #666;	
+}
+
+.flasher p {
+	margin-bottom: 20px;
+}
+
+.flasher .hidden {
+	display: none;
+}

@@ -107,6 +107,9 @@ input[type="number"]::-webkit-inner-spin-button {
     cursor: pointer;
     background-color: #d01414;
 }
+#navigation li.hidden {
+  	display: none;
+}
 #content {
     position: relative;
     padding: 10px;

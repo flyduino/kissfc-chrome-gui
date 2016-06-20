@@ -69,10 +69,13 @@ STM32DFU_protocol.prototype.connect = function (device, hex, options, callback) 
     var self = this;
     self.hex = hex;
     self.callback = callback;
-
+ 
     self.options = {
         erase_chip:     false,
-        read_unprotect: false
+        read_unprotect: false,
+        event_handler : function(event) {
+        	console.log("["+ event.type +"]: " + event.detail);
+        }
     };
  
     if (options.erase_chip) {
@@ -82,37 +85,41 @@ STM32DFU_protocol.prototype.connect = function (device, hex, options, callback) 
     if (options.read_unprotect) {
     	self.options.read_unprotect = true;
     }
+    
+    if (options.event_handler !== undefined) {
+    	seld.options.event_handler = options.event_hnadler;
+    }
 
     // reset and set some variables before we start
     self.upload_time_start = new Date().getTime();
     self.verify_hex = [];
 
-    // reset progress bar to initial state
-    self.progress_bar_e = $('.progress');
-    self.progress_bar_e.val(0);
-    self.progress_bar_e.removeClass('valid invalid');
-
     chrome.usb.getDevices(device, function (result) {
         if (result.length) {
-            console.log('USB DFU detected with ID: ' + result[0].device);
-
+            self.event('info', {'detail' : 'USB DFU detected with ID: ' + result[0].device});
+            self.event('progress', {'detail' : 0})
             self.openDevice(result[0]);
         } else {
-            console.log('USB DFU not found');
+            self.event('failure', {'detail' : 'USB DFU not found'});
         }
     });
 };
 
+STM32DFU_protocol.prototype.event = function(name, customData) {
+	var self = this;
+	var event = new CustomEvent(name, customData);
+	self.options.event_handler(event);
+}
+
 STM32DFU_protocol.prototype.checkChromeError = function() {
+	var self = this;
     if (chrome.runtime.lastError) {
         if(chrome.runtime.lastError.message)
-            console.log(chrome.runtime.lastError.message);
+        	self.event('error', {'detail': chrome.runtime.lastError.message});
         else
-            console.log(chrome.runtime.lastError);
-
+        	self.event('error', {'detail': chrome.runtime.lastError});
         return true;
     }
-
     return false;
 }
 
@@ -121,36 +128,30 @@ STM32DFU_protocol.prototype.openDevice = function (device) {
 
     chrome.usb.openDevice(device, function (handle) {
         if(self.checkChromeError()) {
-            console.log('Failed to open USB device!');
+            self.event('failure', { 'detail' : 'Failed to open USB device!' });
             return;
         }
-
         self.handle = handle;
-
-        console.log('Device opened with Handle ID: ' + handle.handle);
+        self.event('info', { 'detail' : 'Device opened with Handle ID: ' + handle.handle });
         self.claimInterface(0);
     });
 };
 
 STM32DFU_protocol.prototype.closeDevice = function () {
     var self = this;
-
     chrome.usb.closeDevice(this.handle, function closed() {
         if(self.checkChromeError()) {
-            console.log('Failed to close USB device!');
+        	 self.event('error', { 'detail' : 'Failed to close USB device!' });
         }
-
-        console.log('Device closed with Handle ID: ' + self.handle.handle);
-
+        self.event('info', { 'detail' : 'Device closed with Handle ID: ' + self.handle.handle });
         self.handle = null;
     });
 };
 
 STM32DFU_protocol.prototype.claimInterface = function (interfaceNumber) {
     var self = this;
-
     chrome.usb.claimInterface(this.handle, interfaceNumber, function claimed() {
-        console.log('Claimed interface: ' + interfaceNumber);
+        self.event('info', { 'detail' : 'Claimed interface: ' + interfaceNumber });
         if (self.options.read_unprotect) {
         	self.upload_procedure(97);
         } else {
@@ -163,16 +164,14 @@ STM32DFU_protocol.prototype.releaseInterface = function (interfaceNumber) {
     var self = this;
 
     chrome.usb.releaseInterface(this.handle, interfaceNumber, function released() {
-        console.log('Released interface: ' + interfaceNumber);
-
+        self.event('info', { 'detail' : 'Released interface: ' + interfaceNumber });
         self.closeDevice();
     });
 };
 
 STM32DFU_protocol.prototype.resetDevice = function (callback) {
     chrome.usb.resetDevice(this.handle, function (result) {
-        console.log('Reset Device: ' + result);
-
+        self.event('info', { 'detail' : 'Reset Device: ' + result });
         if (callback) callback();
     });
 };
@@ -190,7 +189,7 @@ STM32DFU_protocol.prototype.getString = function (index, callback) {
         'length':       255 // max length to retreive
     }, function (result) {
         if(self.checkChromeError()) {
-            console.log('USB transfer failed! ' + result.resultCode);
+            self.event('error', { 'detail' : 'USB transfer failed! ' + result.resultCode });
             callback("", result.resultCode);
             return;
         }
@@ -218,7 +217,7 @@ STM32DFU_protocol.prototype.getInterfaceDescriptor = function (_interface, callb
         'length':       18 + _interface * 9
     }, function (result) {
         if(self.checkChromeError()) {
-            console.log('USB transfer failed! ' + result.resultCode);
+        	self.event('error', { 'detail' : 'USB transfer failed! ' + result.resultCode });
             callback({}, result.resultCode);
             return;
         }
@@ -336,9 +335,11 @@ STM32DFU_protocol.prototype.controlTransfer = function (direction, request, valu
             'length':       length
         }, function (result) {
             if(self.checkChromeError()) {
-                console.log('USB transfer failed!');
+                self.event('error', {'detail':'USB transfer failed!'});
             }
-            if (result.resultCode) console.log(result.resultCode);
+            if (result.resultCode) {
+            	self.event('error', {'detail':result.resultCode});
+            }
 
             var buf = new Uint8Array(result.data);
             callback(buf, result.resultCode);
@@ -363,9 +364,11 @@ STM32DFU_protocol.prototype.controlTransfer = function (direction, request, valu
             'data':         arrayBuf
         }, function (result) {
             if(self.checkChromeError()) {
-                console.log('USB transfer failed!');
+            	self.event('error', {'detail':'USB transfer failed!'});
             }
-            if (result.resultCode) console.log(result.resultCode);
+            if (result.resultCode) {
+            	self.event('error', {'detail':result.resultCode});
+            }
 
             callback(result);
         });
@@ -408,13 +411,13 @@ STM32DFU_protocol.prototype.loadAddress = function (address, callback) {
                         if (data[4] == self.state.dfuDNLOAD_IDLE) {
                             callback(data);
                         } else {
-                            console.log('Failed to execute address load');
+                            self.event('failure', {'detail':'Failed to execute address load'})
                             self.upload_procedure(99);
                         }
                     });
                 }, delay);
             } else {
-                console.log('Failed to request address load');
+                self.event('failure', {'detail':'Failed to request address load'})
                 self.upload_procedure(99);
             }
         });
@@ -425,15 +428,14 @@ STM32DFU_protocol.prototype.loadAddress = function (address, callback) {
 // second_array = usually verify_hex array
 // result = true/false
 STM32DFU_protocol.prototype.verify_flash = function (first_array, second_array) {
+	var self = this;
     for (var i = 0; i < first_array.length; i++) {
         if (first_array[i] != second_array[i]) {
-            console.log('Verification failed on byte: ' + i + ' expected: 0x' + first_array[i].toString(16) + ' received: 0x' + second_array[i].toString(16));
+            self.event('error', {'detail' : 'Verification failed on byte: ' + i + ' expected: 0x' + first_array[i].toString(16) + ' received: 0x' + second_array[i].toString(16)});
             return false;
         }
     }
-
-    console.log('Verification successful, matching: ' + first_array.length + ' bytes');
-
+    self.event('info', {'detail':'Verification successful, matching: ' + first_array.length + ' bytes'});
     return true;
 };
 
@@ -444,7 +446,7 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
         case 1:
             self.getFlashInfo(0, function (flash, resultCode) {
                 if (resultCode != 0) {
-                    console.log('Failed to detect chip flash info, resultCode: ' + resultCode);
+                    self.event('failure', { 'detail' : 'Failed to detect chip flash info, resultCode: ' + resultCode});
                     self.upload_procedure(99);
                 } else {
                     self.flash_layout = flash;
@@ -464,8 +466,7 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
             // erase
             if (self.options.erase_chip) {
                 // full chip erase
-                console.log('Executing global chip erase');
-                $('span.progressLabel').text('Erasing ...');
+                self.event('info', { 'detail' : 'Executing global chip erase'});
 
                 self.controlTransfer('out', self.request.DNLOAD, 0, 0, 0, [0x41], function () {
                     self.controlTransfer('in', self.request.GETSTATUS, 0, 0, 6, 0, function (data) {
@@ -477,13 +478,13 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
                                     if (data[4] == self.state.dfuDNLOAD_IDLE) {
                                         self.upload_procedure(4);
                                     } else {
-                                        console.log('Failed to execute global chip erase');
+                                        self.event('failure', { 'detail' : 'Failed to execute global chip erase'});
                                         self.upload_procedure(99);
                                     }
                                 });
                             }, delay);
                         } else {
-                            console.log('Failed to initiate global chip erase');
+                            self.event('failure', { 'detail' : 'Failed to initiate global chip erase'});
                             self.upload_procedure(99);
                         }
                     });
@@ -513,9 +514,8 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
                     }
                 }
 
-                $('span.progressLabel').text('Erasing ...');
-                console.log('Executing local chip erase'); 
-
+                self.event('info', { 'detail' : 'Executing local chip erase'});
+ 
                 var page = 0;
                 var total_erased = 0; // bytes
 
@@ -536,23 +536,24 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
                                     self.controlTransfer('in', self.request.GETSTATUS, 0, 0, 6, 0, function (data) {
                                         if (data[4] == self.state.dfuDNLOAD_IDLE) {
                                             // update progress bar
-                                            self.progress_bar_e.val((page + 1) / erase_pages.length * 100);
+                                            //self.progress_bar_e.val((page + 1) / erase_pages.length * 100);
                                             page++;
 
                                             if(page == erase_pages.length) {
-                                                console.log("Erase: complete");
+                                                self.event('info', { 'detail' : 'Erase: complete'});
                                                 self.upload_procedure(4);
                                             }
                                             else
                                                 erase_page();
                                         } else {
-                                            console.log('Failed to erase page 0x' + page_addr.toString(16));
+                                            console.log();
+                                            self.event('failure', { 'detail' : 'Failed to erase page 0x' + page_addr.toString(16)});
                                             self.upload_procedure(99); 
                                         }
                                     });
                                 }, delay);
                             } else {
-                                console.log('Failed to initiate page erase, page 0x' + page_addr.toString(16));
+                                self.event('failure', { 'detail' : 'Failed to initiate page erase, page 0x' + page_addr.toString(16)});
                                 self.upload_procedure(99);
                             }
                         });
@@ -567,9 +568,8 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
         case 4:
             // upload
             // we dont need to clear the state as we are already using DFU_DNLOAD
-            console.log('Writing data ...');
-            $('span.progressLabel').text('Flashing ...');
-
+            self.event('info', { 'detail' : 'Writing data ...'});
+       
             var blocks = self.hex.data.length - 1;
             var flashing_block = 0;
             var address = self.hex.data[flashing_block].address;
@@ -596,19 +596,16 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
                                 setTimeout(function () {
                                     self.controlTransfer('in', self.request.GETSTATUS, 0, 0, 6, 0, function (data) {
                                         if (data[4] == self.state.dfuDNLOAD_IDLE) {
-                                            // update progress bar
-                                            self.progress_bar_e.val(bytes_flashed_total / (self.hex.bytes_total * 2) * 100);
-
-                                            // flash another page
+                                            self.event('progress', {'detail' : bytes_flashed_total / (self.hex.bytes_total * 2) * 100});
                                             write();
                                         } else {
-                                            console.log('Failed to write ' + bytes_to_write + 'bytes to 0x' + address.toString(16));
+                                            self.event('failure', {'detail' : 'Failed to write ' + bytes_to_write + 'bytes to 0x' + address.toString(16)});
                                             self.upload_procedure(99);
                                         }
                                     });
                                 }, delay);
                             } else {
-                                console.log('Failed to initiate write ' + bytes_to_write + 'bytes to 0x' + address.toString(16));
+                                self.event('failure', {'detail' : 'Failed to initiate write ' + bytes_to_write + 'bytes to 0x' + address.toString(16)});
                                 self.upload_procedure(99);
                             }
                         });
@@ -625,7 +622,7 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
                         self.loadAddress(address, write);
                     } else {
                         // all blocks flashed
-                        console.log('Writing: done');
+                        self.event('info', {'detail' : 'Writing: done'});
 
                         // proceed to next step
                         self.upload_procedure(5);
@@ -639,9 +636,8 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
             break;
         case 5:
             // verify
-            console.log('Verifying data ...');
-            $('span.progressLabel').text('Verifying ...');
-
+        	self.event('info', { detail: 'Verifying data ...'});
+ 
             var blocks = self.hex.data.length - 1;
             var reading_block = 0;
             var address = self.hex.data[reading_block].address;
@@ -674,11 +670,7 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
                         address += bytes_to_read;
                         bytes_verified += bytes_to_read;
                         bytes_verified_total += bytes_to_read;
-
-                        // update progress bar
-                        self.progress_bar_e.val((self.hex.bytes_total + bytes_verified_total) / (self.hex.bytes_total * 2) * 100);
-
-                        // verify another page
+                        self.event('progress', {'detail' : (self.hex.bytes_total + bytes_verified_total) / (self.hex.bytes_total * 2) * 100});
                         read();
                     });
                 } else {
@@ -706,21 +698,12 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
                         }
 
                         if (verify) {
-                            console.log('Programming: SUCCESSFUL');
-                            $('span.progressLabel').text('Programming: SUCCESSFUL');
-                               // update progress bar
-                            self.progress_bar_e.addClass('valid');
-
+                        	self.event('success', { detail: 'Programming: SUCCESSFUL'});
                             // proceed to next step
-                            self.upload_procedure(6);
+                            //self.upload_procedure(6);
+                            self.upload_procedure(99);
                         } else {
-                            console.log('Programming: FAILED');
-                            $('span.progressLabel').text('Programming: FAILED');
-                           
-
-                            // update progress bar
-                            self.progress_bar_e.addClass('invalid');
-
+                            self.event('failure', 'Programming: FAILED');
                             // disconnect
                             self.upload_procedure(99);
                         }
@@ -748,7 +731,7 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
         case 97:
             self.getFlashInfo(0, function (flash, resultCode) {
                 if (resultCode != 0) {
-                    console.log('Failed to detect chip flash info, resultCode: ' + resultCode);
+                    self.event('failure', {'detail' : 'Failed to detect chip flash info, resultCode: ' + resultCode})
                     self.upload_procedure(99);
                 } else {
                     self.flash_layout = flash;
@@ -765,7 +748,7 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
             });
             break;    
         case 98:
-        	 console.log("Removing read protection");
+        	 self.event('info', { detail: 'Removing read protection'});
         	 self.controlTransfer('out', self.request.DNLOAD, 0, 0, 0, [0x92], function () {
                  self.controlTransfer('in', self.request.GETSTATUS, 0, 0, 6, 0, function (data) {
                      self.upload_procedure(99);
@@ -776,7 +759,7 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
             // cleanup
             self.releaseInterface(0);
             var timeSpent = new Date().getTime() - self.upload_time_start;
-            console.log('Script finished after: ' + (timeSpent / 1000) + ' seconds');
+       	 	self.event('info', { detail: 'Script finished after: ' + (timeSpent / 1000) + ' seconds'});
             if (self.callback) self.callback();
             break;
     }
