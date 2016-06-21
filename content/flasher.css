@@ -28,6 +28,7 @@
 
 .flasher .disabled {
 	background-color: #666;	
+	cursor: wait;
 }
 
 .flasher p {

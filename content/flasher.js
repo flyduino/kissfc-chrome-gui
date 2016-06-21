@@ -18,11 +18,29 @@ CONTENT.flasher.initialize = function(callback) {
     }
 
     $('#content').load("./content/flasher.html", htmlLoaded);
+    
+
+    function checkDFU() {
+    	 chrome.usb.getDevices(usbDevices.STM32DFU, function (result) {
+ 	        if (result.length==0) {
+ 	        	$("#portArea").children().show();
+ 	        	GUI.contentSwitchInProgress = true;
+ 	            GUI.contentSwitchCleanup(function () {
+ 	                CONTENT['welcome'].initialize();
+ 	            });
+ 	        } else {
+ 	        	if (GUI.activeContent == 'flasher')  setTimeout(checkDFU, 2000);
+ 	        }
+ 	    });
+    }
 
     function htmlLoaded() {
+    	
+    	checkDFU();
 
     	$("#select_file").on("click", function() {
     		  if (!$(this).hasClass("disabled")) {
+    			  $("#status").html("");
     		  chrome.fileSystem.chooseEntry({type: 'openFile', accepts: [{extensions: ['hex']}]}, function (fileEntry) {
                   if (chrome.runtime.lastError) {
                       console.error(chrome.runtime.lastError.message);
@@ -63,18 +81,28 @@ CONTENT.flasher.initialize = function(callback) {
     		  };
     	});
     	
-    	
     	$("#flash").on("click", function() {
     		if (!$(this).hasClass('disabled')) {
-    			$("#flash").addClass('disabled');
-    			$("#select_file").addClass('disabled');
-    		
-    		  console.log("Removing device protection");
-    		  STM32DFU.connect(usbDevices.STM32DFU, self.parsed_hex, {read_unprotect: true}, function() {
-    			  console.log("Lets wait a bit for device reenumeration.");
+    	      $("#status").html("");
+    		  $("#flash").addClass('disabled');
+    		  $("#select_file").addClass('disabled');
+    		  $("#status").html("Removing device protection");
+    		  self.success = false;
+    		  STM32DFU.connect(usbDevices.STM32DFU, self.parsed_hex, {read_unprotect: true, event_handler: function(event) {} }, function() {
+    			  $("#status").html("Protection removed");
     			  setTimeout(function() {
-    				  console.log("Flashing");
-        			  STM32DFU.connect(usbDevices.STM32DFU, self.parsed_hex, {read_unprotect: false, erase_chip: true}, function() {
+    				  $("#status").html("Flashing the firmware");
+    				  self.success = false;
+        			  STM32DFU.connect(usbDevices.STM32DFU, self.parsed_hex, {read_unprotect: false, erase_chip: true, event_handler: function(event) {
+        				 console.log(event);
+        				  if (event.type=="success") {
+        					  $("#status").html("SUCCESS!");
+        				  } else if (event.type=="failure") {
+        					  $("#status").html("FAILURE: " + event.detail);
+        				  } else if (event.type=="progress") {
+        					  $("#status").html("Progress: " + Math.floor(event.detail + 0.5)+"%");
+        				  }
+        			  }}, function() {
         				$("#flash").removeClass('disabled');
         	    		$("#select_file").removeClass('disabled');
         			  });
@@ -82,8 +110,6 @@ CONTENT.flasher.initialize = function(callback) {
     		  });
     		}
     	});
-
- 
 };
 }
 

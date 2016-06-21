@@ -87,7 +87,7 @@ STM32DFU_protocol.prototype.connect = function (device, hex, options, callback) 
     }
     
     if (options.event_handler !== undefined) {
-    	seld.options.event_handler = options.event_hnadler;
+    	self.options.event_handler = options.event_handler;
     }
 
     // reset and set some variables before we start
@@ -751,6 +751,7 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
         	 self.event('info', { detail: 'Removing read protection'});
         	 self.controlTransfer('out', self.request.DNLOAD, 0, 0, 0, [0x92], function () {
                  self.controlTransfer('in', self.request.GETSTATUS, 0, 0, 6, 0, function (data) {
+                	 self.event('success', { detail: 'Protection removed'});
                      self.upload_procedure(99);
                  });
              });
