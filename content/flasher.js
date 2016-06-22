@@ -106,7 +106,7 @@ CONTENT.flasher.initialize = function(callback) {
         				$("#flash").removeClass('disabled');
         	    		$("#select_file").removeClass('disabled');
         			  });
-    			  }, 3000);
+    			  }, 5000);
     		  });
     		}
     	});
