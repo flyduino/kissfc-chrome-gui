@@ -323,7 +323,7 @@ CONTENT.tpa.initialize = function(callback) {
         $('a.save').click(function() {
             grabData();
             $('a.save').removeClass("saveAct");
-            kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(0x30));
+            kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
         });
     }
 };

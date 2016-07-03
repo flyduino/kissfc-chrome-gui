@@ -9,6 +9,7 @@ CONTENT.data_output.initialize = function (callback) {
     self.ESCTelemetry = 0;
     self.startedUIupdate = 0;
     self.updateTimeout;
+    self.motorTestEnabled = false;
 
     if (GUI.activeContent != 'data_output') {
         GUI.activeContent = 'data_output';
@@ -66,7 +67,7 @@ CONTENT.data_output.initialize = function (callback) {
             motorContainer.append('\
                 <ul>\
                     <li class="name">' + name + '</li>\
-                    <li class="meter">\
+                    <li class="motor">\
                         <div class="meter-bar">\
                             <div class="label"></div>\
                             <div class="fill">\
@@ -74,17 +75,49 @@ CONTENT.data_output.initialize = function (callback) {
                             </div>\
                         </div>\
                     </li>\
+                    <li class="test"><input type="checkbox" class="motor-test" value="'+i+'"></li> \
                 </ul>\
             ');
         }
 
-        $('.meter .fill', motorContainer).each(function () {
+        $('.motor .fill', motorContainer).each(function () {
             motorFillArray.push($(this));
         });
 
-        $('.meter', motorContainer).each(function () {
+        $('.motor', motorContainer).each(function () {
             motorLabelArray.push($('.label' , this));
         });
+        
+        $(".motor-test").on('change', function() {
+        	 if (self.motorTestEnabled) {
+        	  	var motorTest = [0, 0, 0, 0, 0, 0];
+        	 	$(".motor-test").each(function(motor, elm) {
+        	 		motorTest[motor] = $(elm).is(':checked') ? 1 : 0;
+        	 	});
+        	 	var tmp = {
+					'buffer' : new ArrayBuffer(7),
+					'motorTestEnabled': 1,
+					'motorTest' : motorTest
+			 	};
+				kissProtocol.send(kissProtocol.MOTOR_TEST, kissProtocol.preparePacket(kissProtocol.MOTOR_TEST, tmp));
+			}
+        });
+
+		$('.motor-test-enabled').on('change', function() {
+			$(".motor-test").prop('checked', false);
+			self.motorTestEnabled = this.checked;
+			if (self.motorTestEnabled) {
+				$(".motor-test").first().trigger('change');
+			} else {
+				$(".motor-test").prop("disabled", true); 
+				var tmp = {
+					'buffer' : new ArrayBuffer(7),
+					'motorTestEnabled': 0,
+					'motorTest' : [0,0,0,0,0,0]
+			 	};
+				kissProtocol.send(kissProtocol.MOTOR_TEST, kissProtocol.preparePacket(kissProtocol.MOTOR_TEST, tmp));
+			}
+		});
 
         self.barResize = function () {
             var containerWidth = $('.meter:first', receiverContainer).width(),
@@ -111,7 +144,8 @@ CONTENT.data_output.initialize = function (callback) {
             config['ACCZero'][1] = (data['ACCRaw'][1]) * 1000;
             config['ACCZero'][2] = (data['ACCRaw'][2] - 1.0) * 1000;
 
-            kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(0x30));
+            kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
+
         });
 
         var legendItems = $('dl.legend dd');
@@ -131,6 +165,11 @@ CONTENT.data_output.initialize = function (callback) {
 		    return;
 	    }
 	    
+	    if (data['RXcommands'][0]<1020 && self.motorTestEnabled) {
+			$(".motor-test").prop("disabled", false); 
+	    } else {
+	    	$(".motor-test").prop("disabled", true); 
+	    }
 		
 	    if(useGraphData == 0){
 		    $('#graph1').html('Gyroscope X');
@@ -179,10 +218,16 @@ CONTENT.data_output.initialize = function (callback) {
 	    else if(data['Armed'] == 1) otherItems.eq(1).text('Armed!');
 	    else otherItems.eq(1).text(data['Armed']);
 	
-            otherItems.eq(2).text((data['angle'][0]*10).toFixed(2));
+        otherItems.eq(2).text((data['angle'][0]*10).toFixed(2));
 	    otherItems.eq(3).text((data['angle'][1]*10).toFixed(2));
 	    otherItems.eq(4).text((data['angle'][2]*10).toFixed(2));
-	     
+	    
+	    
+	    if (data['Armed'] == 0) {
+	    	$(".motor-test-enabled").prop("disabled", false); 
+	    } else {
+	    	$(".motor-test-enabled").prop("disabled", true); 
+	    } 
 	    
 	    // build sample block
 	    var sampleBlock = [];

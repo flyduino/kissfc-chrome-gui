@@ -14,6 +14,7 @@ var kissProtocol = {
     GET_TELEMETRY:  0x20,
     GET_SETTINGS:   0x30,
     SET_SETTINGS:   0x10,
+    MOTOR_TEST:     0x11,
 
     block:                  false,
     ready:                  false,
@@ -373,6 +374,11 @@ kissProtocol.processPacket = function (code, obj) {
 
             //console.log(obj);
             break;
+            
+        case this.MOTOR_TEST:
+            console.log('Motor test');
+            console.log(obj);
+            break;
 
         default:
             console.log('Unknown code received: ' + code);
@@ -381,8 +387,7 @@ kissProtocol.processPacket = function (code, obj) {
     if (obj.callback) obj.callback();
 };
 
-kissProtocol.preparePacket = function (code) {
-    var obj = this.data[code];
+kissProtocol.preparePacket = function (code, obj) {
     var buffer = obj['buffer'];
     var data = new DataView(buffer, 0);
     var bufferU8 = new Uint8Array(buffer);
@@ -392,7 +397,7 @@ kissProtocol.preparePacket = function (code) {
     var crcCounter = 0;
 
     switch (code) {
-        case this.GET_SETTINGS:
+        case this.SET_SETTINGS:
             data.setUint16(0, obj.G_P[0] * 1000, 0);
             data.setUint16(2, obj.G_P[1] * 1000, 0);
             data.setUint16(4, obj.G_P[2] * 1000, 0);
@@ -430,8 +435,8 @@ kissProtocol.preparePacket = function (code) {
             data.setInt16(58, obj.MidCommand16-1000, 0);
             data.setInt16(60, obj.MinThrottle16-1000, 0);
             data.setInt16(62, obj.MaxThrottle16-1000, 0);
-	    data.setInt16(64, obj.TYmid16, 0);
-	    data.setUint8(66, obj.TYinv8, 0);
+	    	data.setInt16(64, obj.TYmid16, 0);
+	    	data.setUint8(66, obj.TYinv8, 0);
             data.setInt16(67, obj.ACCZero[0], 0);
             data.setInt16(69, obj.ACCZero[1], 0);
             data.setInt16(71, obj.ACCZero[2], 0);
@@ -439,48 +444,58 @@ kissProtocol.preparePacket = function (code) {
             data.setUint8(74, obj.aux2Funk);
             data.setUint8(75, obj.aux3Funk);
             data.setUint8(76, obj.aux4Funk);
-	    data.setUint16(77, obj.maxAng * 14.3);
-	    data.setUint8(79, obj.LPF);
+	    	data.setUint16(77, obj.maxAng * 14.3);
+	    	data.setUint8(79, obj.LPF);
 	
             data.setUint16(80, obj.TPA[0] * 1000, 0);
             data.setUint16(82, obj.TPA[1] * 1000, 0);
             data.setUint16(84, obj.TPA[2] * 1000, 0);
-	    data.setUint8(86, obj.ESConeshot42,0);
-	    data.setUint8(87, obj.failsaveseconds,0);
-	    if(obj.ver > 100){
-	    	if (!obj.isActive) {
-	    		console.log('The controller is not activated, let activate it with ' + obj.actKey);
-	    		data.setUint16(88, obj.actKey>>16,0);
-	    		data.setUint16(90, (obj.actKey&0xFFFF),0);
-	    	} else {
-	    		console.log('The controller is active');
-	    		data.setUint16(88, 0, 0);
-	    		data.setUint16(90, 0, 0);
+	    	data.setUint8(86, obj.ESConeshot42,0);
+	    	data.setUint8(87, obj.failsaveseconds,0);
+	    	if(obj.ver > 100){
+	    		if (!obj.isActive) {
+	    			console.log('The controller is not activated, let activate it with ' + obj.actKey);
+	    			data.setUint16(88, obj.actKey>>16,0);
+	    			data.setUint16(90, (obj.actKey&0xFFFF),0);
+	    		} else {
+	    			console.log('The controller is active');
+	    			data.setUint16(88, 0, 0);
+	    			data.setUint16(90, 0, 0);
+	    		}
+		    	data.setUint8(92, obj.BoardRotation,0);
 	    	}
-		    data.setUint8(92, obj.BoardRotation,0);
-	    }
-	    if(obj.ver > 101){
-		    data.setUint8(93, obj.CustomTPAInfluence);
-		    data.setUint8(94, obj.TPABP1);
-		    data.setUint8(95, obj.TPABP2);
-		    data.setUint8(96, obj.TPABPI1);
-		    data.setUint8(97, obj.TPABPI2);
-		    data.setUint8(98, obj.TPABPI3);
-		    data.setUint8(99, obj.TPABPI4);
+	    	if(obj.ver > 101){
+		    	data.setUint8(93, obj.CustomTPAInfluence);
+		    	data.setUint8(94, obj.TPABP1);
+		    	data.setUint8(95, obj.TPABP2);
+		    	data.setUint8(96, obj.TPABPI1);
+		    	data.setUint8(97, obj.TPABPI2);
+		    	data.setUint8(98, obj.TPABPI3);
+		    	data.setUint8(99, obj.TPABPI4);
 		    
-		    data.setUint8(100, obj.BatteryInfluence);
+		    	data.setUint8(100, obj.BatteryInfluence);
 
-		    data.setUint16(101, obj.voltage1 * 10, 0);
-		    data.setUint16(103, obj.voltage2 * 10, 0);
-		    data.setUint16(105, obj.voltage3 * 10, 0);
-		    data.setUint8(107, obj.voltgePercent1);
-		    data.setUint8(108, obj.voltgePercent2);
-		    data.setUint8(109, obj.voltgePercent3);
-	    }
+		    	data.setUint16(101, obj.voltage1 * 10, 0);
+		    	data.setUint16(103, obj.voltage2 * 10, 0);
+		    	data.setUint16(105, obj.voltage3 * 10, 0);
+		    	data.setUint8(107, obj.voltgePercent1);
+		    	data.setUint8(108, obj.voltgePercent2);
+		    	data.setUint8(109, obj.voltgePercent3);
+	    	}
             break;
+            
+          case this.MOTOR_TEST:
+          	 	data.setUint8(0, obj.motorTestEnabled, 0);
+          	 	data.setUint8(1, obj.motorTest[0], 0);
+          	 	data.setUint8(2, obj.motorTest[1], 0);
+          	 	data.setUint8(3, obj.motorTest[2], 0);
+          	 	data.setUint8(4, obj.motorTest[3], 0);
+          	 	data.setUint8(5, obj.motorTest[4], 0);
+          	 	data.setUint8(6, obj.motorTest[5], 0);
+          break;     
     }
 
-    outputU8[0] = 0x10;
+    outputU8[0] = code; // was 0x10
     outputU8[1] = 5;
     outputU8[2] = buffer.byteLength;
     for (var i = 0; i < bufferU8.length; i++) {

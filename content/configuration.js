@@ -708,7 +708,7 @@ CONTENT.configuration.initialize = function(callback) {
         $('#save').on('click', function() {
             grabData();
             $('#save').removeClass("saveAct");
-            kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(0x30));
+            kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
             if (!data['isActive']) {
             	 kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
             	        $('#content').load("./content/configuration.html", function() {

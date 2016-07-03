@@ -63,6 +63,9 @@
 .data_output .bars .meter {
     width: calc(100% - 50px);
 }
+.data_output .bars .motor {
+    width: calc(100% - 80px);
+}
 .data_output .bars .meter-bar {
     position: relative;
     margin-top: 2px;
@@ -127,4 +130,8 @@
 .data_output #graph {
     float: right;
     background-color: white;
+}
+
+.data_output .motor-test {
+	margin-left: 10px;
 }
