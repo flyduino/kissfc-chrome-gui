@@ -75,7 +75,7 @@ CONTENT.data_output.initialize = function (callback) {
                             </div>\
                         </div>\
                     </li>\
-                    <li class="test"><input type="checkbox" class="motor-test" value="'+i+'"></li> \
+                    <li class="test"><input style="display:none" type="checkbox" class="motor-test" value="'+i+'"></li> \
                 </ul>\
             ');
         }
@@ -117,6 +117,18 @@ CONTENT.data_output.initialize = function (callback) {
 			 	};
 				kissProtocol.send(kissProtocol.MOTOR_TEST, kissProtocol.preparePacket(kissProtocol.MOTOR_TEST, tmp));
 			}
+		});
+
+		$(".motor-test-button").on("click", function() {
+			$(".motor-test-disclaimer").show();
+		});
+		
+		$(".warning-button").on("click", function() {
+			$(".motor-test-button").hide();
+			$(".motor-test").show();
+			$(".motor-test-enabled").show();
+			$("#motorTestTitle span").first().text('Enable Motors Test ');
+			$(".motor-test-disclaimer").hide();
 		});
 
         self.barResize = function () {
@@ -514,6 +526,13 @@ CONTENT.data_output.resizeCanvas = function () {
 CONTENT.data_output.cleanup = function (callback) {
     $(window).off('resize', this.barResize);
     $(window).off('resize', this.resizeCanvas);
+    // Turn off motors!
+    var tmp = {
+			'buffer' : new ArrayBuffer(7),
+			'motorTestEnabled': 0,
+			'motorTest' : [0,0,0,0,0,0]
+	};
+	kissProtocol.send(kissProtocol.MOTOR_TEST, kissProtocol.preparePacket(kissProtocol.MOTOR_TEST, tmp))
 
     if (callback) callback();
 };
