@@ -526,14 +526,15 @@ CONTENT.data_output.resizeCanvas = function () {
 CONTENT.data_output.cleanup = function (callback) {
     $(window).off('resize', this.barResize);
     $(window).off('resize', this.resizeCanvas);
-    // Turn off motors!
-    var tmp = {
+	if (this.motorTestEnabled) {
+		console.log("For safety reasons, turning off the motors");
+    	var tmp = {
 			'buffer' : new ArrayBuffer(7),
 			'motorTestEnabled': 0,
 			'motorTest' : [0,0,0,0,0,0]
-	};
-	kissProtocol.send(kissProtocol.MOTOR_TEST, kissProtocol.preparePacket(kissProtocol.MOTOR_TEST, tmp))
-
+		};
+		kissProtocol.send(kissProtocol.MOTOR_TEST, kissProtocol.preparePacket(kissProtocol.MOTOR_TEST, tmp))
+	}
     if (callback) callback();
 };
 
