@@ -371,13 +371,10 @@ kissProtocol.processPacket = function (code, obj) {
             break;
         case this.SET_SETTINGS:
             console.log('Settings saved');
-
-            //console.log(obj);
             break;
             
         case this.MOTOR_TEST:
             console.log('Motor test');
-            console.log(obj);
             break;
 
         default:
