@@ -14,10 +14,10 @@ function read_hex_file(data) {
     var hexfile_valid = true; // if any of the crc checks failed, this variable flips to false
 
     var result = {
-        data:                   [],
-        end_of_file:            false,
-        bytes_total:            0,
-        start_linear_address:   0
+        data: [],
+        end_of_file: false,
+        bytes_total: 0,
+        start_linear_address: 0
     };
 
     var extended_linear_address = 0;
@@ -34,7 +34,11 @@ function read_hex_file(data) {
         switch (record_type) {
             case 0x00: // data record
                 if (address != next_address || next_address == 0) {
-                    result.data.push({'address': extended_linear_address + address, 'bytes': 0, 'data': []});
+                    result.data.push({
+                        'address': extended_linear_address + address,
+                        'bytes': 0,
+                        'data': []
+                    });
                 }
 
                 // store address for next comparison
@@ -88,6 +92,107 @@ function read_hex_file(data) {
     if (result.end_of_file && hexfile_valid) {
         return result;
     } else {
-       return false;
+        return false;
     }
+}
+
+
+/*
+ *	Parse hex file, suitable for the bootloader flashing
+ */
+function parseBootloaderHexFile(hexFile) {
+    var pages = [];
+    var ByteArr = [];
+    var BlockName = "";
+    var BlockStartSign = 0;
+    var hexFileArr = hexFile.replace(/(?:\r\n|\r|\n)/g, '').split(':');
+    for (var i = 0; i < hexFileArr.length; i++) {
+        var lineArr = hexFileArr[i].split("");
+        if (i == 3) {
+            if (parseInt(lineArr[3]) == 4) {
+                BlockName = 'page';
+                BlockStartSign = 70;
+            } else if (parseInt(lineArr[3]) == 8) {
+                BlockName = 'block';
+                BlockStartSign = 69;
+            } else {
+                console.log('this hexfile cant be loaded as it is not bootloder conform');
+                pages = [];
+                return;
+            }
+        }
+        if (parseInt('0x' + lineArr[6] + lineArr[7]) == 0) {
+            for (var y = 8; y < lineArr.length - 2; y += 2) {
+                ByteArr.push(parseInt('0x' + lineArr[y] + lineArr[y + 1]));
+            }
+        }
+    }
+    var pagecounter = 0;
+    var pageBytecounter = 0;
+    var crc = 0;
+
+    // resize to full pages
+    var fittingpages = Math.ceil(ByteArr.length / 64);
+    var leftBytes = (fittingpages * 64) - (ByteArr.length);
+    console.log('loaded: ' + ByteArr.length + ' bytes');
+    for (var i = 0; i < leftBytes; i++) {
+        ByteArr.push(255);
+    }
+    console.log(BlockName + ' conform: ' + ByteArr.length + ' bytes, ' + ByteArr.length / 64 + ' ' + BlockName + 's');
+
+    for (var i = 0; i < ByteArr.length; i++) {
+        if (pageBytecounter == 0) {
+            pages[pagecounter] = [];
+            crc = update_crc8(BlockStartSign, 0);
+            pages[pagecounter].push(BlockStartSign);
+            pages[pagecounter].push(BlockStartSign);
+            pages[pagecounter].push(BlockStartSign);
+
+            crc = update_crc8((pagecounter & 0xFF), crc);
+            pages[pagecounter].push((pagecounter & 0xFF));
+            pages[pagecounter].push((pagecounter & 0xFF));
+            pages[pagecounter].push((pagecounter & 0xFF));
+
+            crc = update_crc8((pagecounter >> 8), crc);
+            pages[pagecounter].push((pagecounter >> 8));
+            pages[pagecounter].push((pagecounter >> 8));
+            pages[pagecounter].push((pagecounter >> 8));
+
+            if (pagecounter < (ByteArr.length / 64) - 1) {
+                crc = update_crc8(0, crc);
+                pages[pagecounter].push(0);
+                pages[pagecounter].push(0);
+                pages[pagecounter].push(0);
+            } else {
+                crc = update_crc8(255, crc);
+                pages[pagecounter].push(255);
+                pages[pagecounter].push(255);
+                pages[pagecounter].push(255);
+            }
+        }
+        crc = update_crc8(ByteArr[i], crc);
+        pages[pagecounter].push(ByteArr[i]);
+        pages[pagecounter].push(ByteArr[i]);
+        pages[pagecounter].push(ByteArr[i]);
+        pageBytecounter++;
+        if (pageBytecounter == 64) {
+            pageBytecounter = 0;
+            pages[pagecounter].push(crc);
+            pages[pagecounter].push(crc);
+            pages[pagecounter].push(crc);
+            pagecounter++;
+        }
+    }
+    return pages;
+}
+
+function update_crc8(crc, crc_seed) {
+    var crc_u = crc;
+    var i = 0;
+    crc_u ^= crc_seed;
+    for (i = 0; i < 8; i++) {
+        crc_u = (crc_u & 0x80) ? 0x7 ^ (crc_u << 1) : (crc_u << 1);
+        if (crc_u > 256) crc_u -= 256;
+    }
+    return (crc_u);
 }

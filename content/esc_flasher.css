@@ -1,0 +1,40 @@
+.esc_flasher .groupTitle {
+    padding: 0 0 5px 0;
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    color: #e09338;
+}
+
+.esc_flasher .flash {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: white;
+    padding: 0 10px 0 10px;
+    height: 20px;
+    line-height: 20px;
+    background-color: #339933;
+}
+.esc_flasher .flashAct {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: white;
+    padding: 0 10px 0 10px;
+    height: 20px;
+    line-height: 20px;
+    background-color: #830a0a;
+}
+
+.esc_flasher .disabled {
+	background-color: #666;	
+	cursor: wait;
+}
+
+.esc_flasher p {
+	margin-bottom: 20px;
+}
+
+.esc_flasher .hidden {
+	display: none;
+}
