@@ -38,3 +38,83 @@
 .esc_flasher .hidden {
 	display: none;
 }
+
+.esc-flasher-disclaimer {
+	display: none;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background-image: url("../images/warning_stripe.png");
+}
+
+.esc-flasher-disclaimer-inner {
+	width: calc(100% - 50px);
+	height: calc(100% - 50px);
+	margin: 25px;
+	background-color: black;
+    text-align: center;
+}
+
+.esc-flasher-disclaimer-inner .warning1 {
+    font-size: 30px;
+    color: #d01414;
+    padding-top: 30px;
+    text-align: center;
+}
+
+.esc-flasher-disclaimer-inner .warning2 {
+    font-size: 20px;
+    color: #ffffff;
+    padding-top: 30px;
+    text-align: center;
+}
+
+.esc-flasher-disclaimer-inner .warning-button {
+  	margin: 40px 0 0 0;
+    color: white;
+    padding: 10px 10px 10px 10px;
+    height: 24px;
+    line-height: 24px;
+    background-color: #830a0a;
+    font-size: 16px;
+}
+
+.esc-flasher-disclaimer-inner .warning-button:hover {
+    background-color: #d01414;
+}
+
+.esc-flasher-complete {
+	display: none;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background-image: url("../images/warning_stripe.png");
+}
+
+.esc-flasher-complete-inner {
+	width: calc(100% - 50px);
+	height: calc(100% - 50px);
+	margin: 25px;
+	background-color: black;
+    text-align: center;
+}
+
+.esc-flasher-complete-inner .warning1 {
+    font-size: 30px;
+    color: #d01414;
+    padding-top: 30px;
+    text-align: center;
+}
+
+.esc-flasher-complete-inner .warning2 {
+    font-size: 20px;
+    color: #ffffff;
+    padding-top: 30px;
+    text-align: center;
+}
+
+

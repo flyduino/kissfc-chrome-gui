@@ -21,8 +21,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
     	var bufferView = new Uint8Array(bufferOut);
     	bufferView.set(data, 0);	
 		serial.send(bufferOut, function(a) {
-			console.log("Callback called");
-			console.log(a);
+		
 		});
 	}
 	
@@ -39,6 +38,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
 			Write(startApp);
 			console.log('done.');
 			$("#status").html("SUCCESS!");
+			$(".esc-flasher-complete").show();
 			serial.disconnect();
 			return;
 		} else {
@@ -52,6 +52,12 @@ CONTENT.esc_flasher.initialize = function(callback) {
 	}
 
     function htmlLoaded() {
+    
+    	$(".warning-button").on("click", function() {
+			$(".esc-flasher-disclaimer").hide();
+		});
+    
+    	$(".esc-flasher-disclaimer").show();
     	
      	$("#select_file").on("click", function() {
     		  if (!$(this).hasClass("disabled")) {

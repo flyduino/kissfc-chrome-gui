@@ -20,7 +20,10 @@ CONTENT.welcome.initialize = function (callback) {
  	                CONTENT['flasher'].initialize();
  	            });
  	        } else {
- 	        	if (GUI.activeContent == 'welcome')  setTimeout(checkDFU, 2000);
+ 	        	if (GUI.activeContent == 'welcome')  {
+ 	        		setTimeout(checkDFU, 2000);
+ 	        		$("#portArea").children().show();
+ 	        	}
  	        }
  	    });
     }
