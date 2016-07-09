@@ -257,7 +257,7 @@ CONTENT.data_output.initialize = function (callback) {
 		    legendItems.eq(5).text(data['ACCRaw'][2].toFixed(3));
 		    
 		    for (var i = 0; i < 3; i++) {
-                        sampleBlock.push(data['GyroRaw'][i]*4); // to have it more visible
+                        sampleBlock.push(data['GyroRaw'][i]*4*(self.motorTestEnabled ? 100 : 1)); // to have it more visible
                         sampleBlock.push(data['ACCRaw'][i]);
 			if(i == 0){
 				if(data['GyroRaw'][i]*2000 >  parseInt($('#gxmax').text())) $('#gxmax').text(data['GyroRaw'][i]*2000);
