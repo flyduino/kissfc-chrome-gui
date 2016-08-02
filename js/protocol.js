@@ -365,8 +365,12 @@ kissProtocol.processPacket = function (code, obj) {
 		    obj.voltgePercent2 = data.getUint8(118);
 		    obj.voltgePercent3 = data.getUint8(119);
 	    }
-	    
-
+	    obj.loggerConfig = 0;
+	    obj.secret = 0;
+	    if(obj.ver > 102){
+	        obj.secret = data.getUint8(120);
+	        obj.loggerConfig = data.getUint8(121);
+	    } 
             //console.log(obj);
             break;
         case this.SET_SETTINGS:
@@ -478,6 +482,10 @@ kissProtocol.preparePacket = function (code, obj) {
 		    	data.setUint8(107, obj.voltgePercent1);
 		    	data.setUint8(108, obj.voltgePercent2);
 		    	data.setUint8(109, obj.voltgePercent3);
+	    	}
+	    	if(obj.ver > 102) {
+	    		data.setUint8(110, 0);
+	    		data.setUint8(111, obj.loggerConfig);
 	    	}
             break;
             

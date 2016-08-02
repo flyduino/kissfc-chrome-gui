@@ -170,6 +170,11 @@ CONTENT.configuration.initialize = function(callback) {
             document.getElementById('ppmadd2').style.display = "inline";
             document.getElementById('mpxSRXL').style.display = "inline";
         }
+        
+        
+        if (data['ver'] > 102) {
+            $('select[name="loggerConfig"]').removeAttr("disabled");
+        }
 
 
         var MCUid = '';
@@ -451,6 +456,11 @@ CONTENT.configuration.initialize = function(callback) {
         	contentChange();
         });
 
+ 		$('select[name="loggerConfig"]').val(data['loggerConfig']);
+        $('select[name="loggerConfig"]').on('change', function() {
+            contentChange();
+        });
+        
         function grabData() {
             // uav type and receiver
             data['CopterType'] = parseInt($('select.mixer').val());
@@ -528,6 +538,9 @@ CONTENT.configuration.initialize = function(callback) {
             data['voltgePercent1'] = parseInt($('input[name="LVP1"]').val());
             data['voltgePercent2'] = parseInt($('input[name="LVP2"]').val());
             data['voltgePercent3'] = parseInt($('input[name="LVP3"]').val());
+            
+            data['secret'] = 0;
+            data['loggerConfig'] = parseInt($('select[name="loggerConfig"]').val());
         }
         settingsFilled = 1;
 
