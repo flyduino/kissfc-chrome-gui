@@ -208,6 +208,11 @@ CONTENT.configuration.initialize = function(callback) {
 		$('#SN').on('click', function(e) {
 			console.log("Copy to clipboard: " + MCUid);
 			copyTextToClipboard(MCUid);
+			var x = $('#SN').text();
+			$('#SN').text("Serial number has been copied to clipboard");
+			setTimeout(function() {
+				$('#SN').text(x);
+			}, 1000);
 		});
 
         var mixerList = [{
