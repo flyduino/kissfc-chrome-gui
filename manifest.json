@@ -18,6 +18,7 @@
     },
 
     "permissions": [
+    	"clipboardWrite",
         "serial",
         "usb",
         "storage",

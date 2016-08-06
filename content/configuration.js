@@ -204,14 +204,14 @@ CONTENT.configuration.initialize = function(callback) {
             MCUid += data['SN'][i].toString(16).toUpperCase();
         }
 
-        $('#SN').text(MCUid + ' (' + (data['isActive'] ? 'Activated' : 'Not Activated') + ')');
-		$('#SN').on('click', function(e) {
+  		var sntext = MCUid + ' (' + (data['isActive'] ? 'Activated' : 'Not Activated') + ')';
+  		$('#SN').text(sntext);
+ 		$('#SN').on('click', function(e) {
 			console.log("Copy to clipboard: " + MCUid);
 			copyTextToClipboard(MCUid);
-			var x = $('#SN').text();
 			$('#SN').text("Serial number has been copied to clipboard");
 			setTimeout(function() {
-				$('#SN').text(x);
+				$('#SN').text(sntext);
 			}, 1000);
 		});
 
