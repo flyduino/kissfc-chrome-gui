@@ -18,6 +18,17 @@ CONTENT.configuration.initialize = function(callback) {
         });
     });
 
+
+	function copyTextToClipboard(text) {
+    	var copyFrom = $('<textarea/>');
+    	copyFrom.text(text);
+    	$('body').append(copyFrom);
+    	copyFrom.select();
+    	document.execCommand('copy');
+    	copyFrom.remove();
+	}
+
+
     function backupConfig() {
         var chosenFileEntry = null;
 
@@ -194,6 +205,10 @@ CONTENT.configuration.initialize = function(callback) {
         }
 
         $('#SN').text(MCUid + ' (' + (data['isActive'] ? 'Activated' : 'Not Activated') + ')');
+		$('#SN').on('click', function(e) {
+			console.log("Copy to clipboard: " + MCUid);
+			copyTextToClipboard(MCUid);
+		});
 
         var mixerList = [{
             name: 'Tricopter',
