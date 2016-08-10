@@ -12,6 +12,7 @@
 
 var kissProtocol = {
     GET_TELEMETRY:  0x20,
+    GET_INFO:       0x21,
     GET_SETTINGS:   0x30,
     SET_SETTINGS:   0x10,
     MOTOR_TEST:     0x11,
@@ -380,8 +381,14 @@ kissProtocol.processPacket = function (code, obj) {
         case this.MOTOR_TEST:
             console.log('Motor test');
             break;
-
-        default:
+            
+        case this.GET_INFO:
+            var p = 0;
+            obj.firmvareVersion = kissProtocol.readString(data, p);
+            p += obj.firmvareVersion.length + 1;
+            break;
+ 
+         default:
             console.log('Unknown code received: ' + code);
     }
 
@@ -511,6 +518,14 @@ kissProtocol.preparePacket = function (code, obj) {
     outputU8[outputU8.length - 1] = Math.floor(crc / crcCounter);
 
     return outputU8;
+};
+
+kissProtocol.readString = function(buffer, offset) {
+	 var ret = "";
+	 for (var i = offset; i < buffer.byteLength ; i++) {
+	 	if (buffer.getUint8(i, 0) != 0) ret += String.fromCharCode(buffer.getUint8(i)); else break;
+	 }
+	 return ret;
 };
 
 kissProtocol.disconnectCleanup = function () {

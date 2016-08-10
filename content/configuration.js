@@ -159,13 +159,7 @@ CONTENT.configuration.initialize = function(callback) {
         validateBounds('#content input[type="text"]');
         var settingsFilled = 0;
 
-        $("#SAC").on('click', function() {
-            document.getElementById('AC').style.visibility = "visible";
-            document.getElementById('SAC').style.display = "none";
-            document.body.style.overflow = "scroll";
-        });
-
-        if (data['ver'] < 100) {
+  		if (data['ver'] < 100) {
             $('#version').text('0.' + data['ver']);
         } else if (data['ver'] == 100) {
             $('#version').text((data['ver'] / 100) + '.00');
@@ -174,6 +168,19 @@ CONTENT.configuration.initialize = function(callback) {
             $('input[name="3dMode"]').removeAttr("disabled");
             $('select[name="BoardRotation"]').removeAttr("disabled");
         }
+        
+        if (data['ver'] > 102) {
+			kissProtocol.send(kissProtocol.GET_INFO, [0x21], function() {
+				var info = kissProtocol.data[kissProtocol.GET_INFO];
+				$('#version').text(info.firmvareVersion);
+			});
+		}
+
+        $("#SAC").on('click', function() {
+            document.getElementById('AC').style.visibility = "visible";
+            document.getElementById('SAC').style.display = "none";
+            document.body.style.overflow = "scroll";
+        });
 
         if (data['ver'] > 101) {
             document.getElementById('SAC').style.display = "inline";
@@ -182,11 +189,9 @@ CONTENT.configuration.initialize = function(callback) {
             document.getElementById('mpxSRXL').style.display = "inline";
         }
         
-        
         if (data['ver'] > 102) {
             $('select[name="loggerConfig"]').removeAttr("disabled");
         }
-
 
         var MCUid = '';
         for (var i = 0; i < 4; i++) {
