@@ -491,7 +491,7 @@ kissProtocol.preparePacket = function (code, obj) {
 		    	data.setUint8(109, obj.voltgePercent3);
 	    	}
 	    	if(obj.ver > 102) {
-	    		data.setUint8(110, 0);
+	    		data.setUint8(110, obj.secret);
 	    		data.setUint8(111, obj.loggerConfig);
 	    	}
             break;
