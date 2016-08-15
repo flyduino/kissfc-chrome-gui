@@ -88,6 +88,10 @@ CONTENT.data_output.initialize = function (callback) {
             motorLabelArray.push($('.label' , this));
         });
         
+        if (kissProtocol.data[kissProtocol.GET_SETTINGS].ver<102) {
+        	$(".motor-test-button").hide();
+        }
+        
         $(".motor-test").on('change', function() {
         	 if (self.motorTestEnabled) {
         	  	var motorTest = [0, 0, 0, 0, 0, 0];
