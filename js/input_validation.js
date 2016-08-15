@@ -104,14 +104,6 @@ function validateBounds(selector) {
         $('div:eq(1)', spinner).on('mouseup', spinStop);
     });
 
-    inputs.on('mousewheel', function (e) {
-        if (e.originalEvent.wheelDelta > 0) {
-            stepUp(this);
-        } else {
-            stepDown(this);
-        }
-    });
-
     // regular events
     inputs.on('keydown', function (e) {
         // whitelist all that we need for numeric control
