@@ -11,23 +11,34 @@ CONTENT.rates.initialize = function(callback) {
     self.updateTimeout;
     self.settingsFilled = 0;
     self.hasInput = false;
+	self.lastTimestamp = null; 
 
     if (GUI.activeContent != 'rates') {
         GUI.activeContent = 'rates';
     }
 
-    function animateModel() {
+    function animateModel(timestamp) {
     	if (GUI.activeContent == 'rates') {
     		requestAnimationFrame(animateModel);
-    		var rowNames = ['roll', 'pitch', 'yaw']
-			var axisRate = { 'roll' : 0, 'pitch': 0, 'yaw': 0};
-    		if (self.hasInput) {	
-    			for (var i = 0; i < 3; i++) {
-    				axisRate[rowNames[i]] = -Math.PI * 2 * $("#rates_chart_" + rowNames[i]).kissRatesChart('axisRate') / 60;
-    			}
-    		} 
-    		$("#model").kissModel('updateRate', axisRate);
-    		$("#model").kissModel('refresh');
+    		
+    		if (!self.lastTimestamp) {
+    			self.lastTimestamp = timestamp;
+			}
+    		var frameTime = timestamp - self.lastTimestamp; 
+    		self.lastTimestamp = timestamp;
+    		
+    		if (frameTime>0) {	
+    			var freq = 1000/frameTime;
+    			var rowNames = ['roll', 'pitch', 'yaw']
+				var axisRate = { 'roll' : 0, 'pitch': 0, 'yaw': 0};
+    			if (self.hasInput) {	
+    				for (var i = 0; i < 3; i++) {
+    					axisRate[rowNames[i]] = -Math.PI * 2 * $("#rates_chart_" + rowNames[i]).kissRatesChart('axisRate') / freq;
+    				}
+    			} 
+    			$("#model").kissModel('updateRate', axisRate);
+    			$("#model").kissModel('refresh');
+    		}
     	}
     }
 
@@ -37,11 +48,16 @@ CONTENT.rates.initialize = function(callback) {
         }
         var rowNames = ['roll', 'pitch', 'yaw']
         for (var i = 0; i < 3; i++) {
-            $('#rates_chart_' + rowNames[i]).kissRatesChart('updateRcRates', {
-                rate: parseFloat($('tr.' + rowNames[i] + ' input').eq(0).val()),
-                grate: parseFloat($('tr.' + rowNames[i] + ' input').eq(1).val()),
-                usecurve: parseFloat($('tr.' + rowNames[i] + ' input').eq(2).val()),
-            });
+        	var rate = parseFloat($('tr.' + rowNames[i] + ' input').eq(0).val());
+        	var grate = parseFloat($('tr.' + rowNames[i] + ' input').eq(1).val());
+        	var usecurve = parseFloat($('tr.' + rowNames[i] + ' input').eq(2).val());
+        	if (!isNaN(rate) && !isNaN(grate) && !isNaN(usecurve)) {
+            	$('#rates_chart_' + rowNames[i]).kissRatesChart('updateRcRates', {
+                	'rate': rate,
+                	'grate': grate,
+                	'usecurve': usecurve
+            	});
+            }
         }
     }
 
