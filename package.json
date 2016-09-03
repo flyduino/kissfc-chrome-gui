@@ -1,0 +1,21 @@
+{
+  "name": "KissFC",
+  "main": "main.html",
+  "version": "0.0.13",
+  "single-instance": true,
+  "window": {
+    "title": "KissFC",
+    "width": 900,
+    "height": 670,
+    "min_width": 900,
+    "min_height": 600,
+    "fullscreen": false,
+    "resizable": true,
+    "toolbar": true,
+    "frame": true 
+  },
+  "chromium-args": "--child-clean-exit --enable-webgl --ignore-gpu-blacklist --disable-pinch",
+  "webkit": {
+    "plugin": true
+  }
+}
