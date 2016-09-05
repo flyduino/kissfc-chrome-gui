@@ -1,10 +1,10 @@
 {
-  "name": "KissFC",
+  "name": "KISS GUI",
   "main": "main.html",
   "version": "0.0.13",
   "single-instance": true,
   "window": {
-    "title": "KissFC",
+    "title": "KISS GUI",
     "width": 900,
     "height": 670,
     "min_width": 900,
