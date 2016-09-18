@@ -207,6 +207,7 @@ CONTENT.configuration.initialize = function(callback) {
 					});
 					if (!found) $('select[name="RGBSelector"]').val('');
 					$('input[name="RGB"]').val(rgb);
+					contentChange();
         		},
         		hide: function() {
     				console.log('Hide event triggered!');
