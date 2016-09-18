@@ -191,9 +191,12 @@ CONTENT.configuration.initialize = function(callback) {
         if (data['ver'] > 102) {
             $('select[name="loggerConfig"]').removeAttr("disabled");
             $('input[name="secret"]').removeAttr("disabled");
+        } else {
+        	$("select[name^='aux'] option[value='12']").remove();
+        	$("select[name^='aux'] option[value='13']").remove();
         }
         
-         if (data['ver'] > 103) {
+        if (data['ver'] > 103) {
             $('#colorPicker').minicolors({
         		format: 'rgb',
         		change: function(value, opacity) {
@@ -225,6 +228,8 @@ CONTENT.configuration.initialize = function(callback) {
     			}
 			});
 			$('select[name="RGBSelector"]').removeAttr("disabled");
+        } else {
+        	$("select[name^='aux'] option[value='14']").remove();
         }
 
         var MCUid = '';
