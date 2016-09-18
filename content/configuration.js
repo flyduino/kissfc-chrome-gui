@@ -28,7 +28,6 @@ CONTENT.configuration.initialize = function(callback) {
     	copyFrom.remove();
 	}
 
-
     function backupConfig() {
         var chosenFileEntry = null;
 
@@ -190,6 +189,41 @@ CONTENT.configuration.initialize = function(callback) {
         }
         
         if (data['ver'] > 102) {
+            $('select[name="loggerConfig"]').removeAttr("disabled");
+            $('input[name="secret"]').removeAttr("disabled");
+        }
+        
+         if (data['ver'] > 103) {
+            $('#colorPicker').minicolors({
+        		format: 'rgb',
+        		change: function(value, opacity) {
+        			var rgb = value.slice(4, -1).replace(/\s+/g, '');
+        		  	var found = false;
+        		  	$('select[name="RGBSelector"] > option').each(function() {
+    					if (this.value==rgb) {
+    						$('select[name="RGBSelector"]').val(this.value);
+    						found = true;
+    					}
+					});
+					if (!found) $('select[name="RGBSelector"]').val('');
+					$('input[name="RGB"]').val(rgb);
+        		},
+        		hide: function() {
+    				console.log('Hide event triggered!');
+    			},
+    			show: function() {
+        			console.log('Show event triggered!');
+   				}
+        	});
+         	var rgb = data['RGB'][0]+','+data['RGB'][1]+','+data['RGB'][2];
+         	$('input[name="RGB"]').val(rgb);
+         	$('#colorPicker').minicolors('value', {color: 'rgb('+rgb+')', opacity: 1});
+         	$('select[name="RGBSelector"] > option').each(function() {
+    			if (this.value==rgb) {
+    				$('select[name="RGBSelector"]').val(this.value);
+    			}
+			});
+			$('select[name="RGBSelector"]').removeAttr("disabled");
             $('select[name="loggerConfig"]').removeAttr("disabled");
             $('input[name="secret"]').removeAttr("disabled");
         }
@@ -492,6 +526,18 @@ CONTENT.configuration.initialize = function(callback) {
             contentChange();
         });
         
+        $('select[name="RGBSelector"]').on('change', function() {
+        	if (this.value!=='') {
+            	$('input[name="RGB"]').val(this.value);
+            } else {
+            	// custom
+            	$('input[name="RGB"]').val('10,20,30');
+            }
+            var rgb = $('input[name="RGB"]').val();
+            $('#colorPicker').minicolors('value', {color: 'rgb('+rgb+')', opacity: 1});
+            contentChange();
+        });
+
         function grabData() {
             // uav type and receiver
             data['CopterType'] = parseInt($('select.mixer').val());
@@ -572,6 +618,13 @@ CONTENT.configuration.initialize = function(callback) {
             
             data['secret'] = parseInt($('input[name="secret"]').val());
             data['loggerConfig'] = parseInt($('select[name="loggerConfig"]').val());
+            
+            var rgb = $('input[name="RGB"]').val();
+            if (rgb == '') rgb='0,0,0';
+            var rgbArray = rgb.split(',');
+            data['RGB'][0]=parseInt(rgbArray[0]);
+            data['RGB'][1]=parseInt(rgbArray[1]);
+            data['RGB'][2]=parseInt(rgbArray[2]);
         }
         settingsFilled = 1;
 

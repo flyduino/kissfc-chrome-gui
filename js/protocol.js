@@ -271,8 +271,9 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.RPY_Expo = [];
                 obj.RPY_Curve = [];
                 obj.ACCZero = [];
-	        obj.SN = [];
-		obj.TPA = [];
+	        	obj.SN = [];
+				obj.TPA = [];
+				obj.RGB = [];
             }
 
             obj.G_P[0] = data.getUint16(0, 0) / 1000;
@@ -368,11 +369,17 @@ kissProtocol.processPacket = function (code, obj) {
 	    }
 	    obj.loggerConfig = 0;
 	    obj.secret = 0;
-	    if(obj.ver > 102){
+	    obj.vbatAlarm = 0;
+	    if (obj.ver > 102){
 	        obj.secret = data.getUint8(120);
 	        obj.loggerConfig = data.getUint8(121);
 	    } 
-            //console.log(obj);
+	    if (obj.ver > 103){
+	        obj.RGB[0] = data.getUint8(122);
+	        obj.RGB[1] = data.getUint8(123);
+	        obj.RGB[2] = data.getUint8(124);
+	        obj.vbatAlarm = data.getUint16(125, 0) / 10;
+	    } 
             break;
         case this.SET_SETTINGS:
             console.log('Settings saved');
@@ -490,9 +497,15 @@ kissProtocol.preparePacket = function (code, obj) {
 		    	data.setUint8(108, obj.voltgePercent2);
 		    	data.setUint8(109, obj.voltgePercent3);
 	    	}
-	    	if(obj.ver > 102) {
+	    	if (obj.ver > 102) {
 	    		data.setUint8(110, obj.secret);
 	    		data.setUint8(111, obj.loggerConfig);
+	    	}
+	    	if (obj.ver > 103) {
+	    		data.setUint8(112, obj.RGB[0]);
+	    		data.setUint8(113, obj.RGB[1]);
+	    		data.setUint8(114, obj.RGB[2]);
+	    		data.setUint16(115, obj.vbatAlarm * 10, 0);
 	    	}
             break;
             
