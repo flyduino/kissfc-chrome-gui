@@ -285,6 +285,7 @@ CONTENT.configuration.initialize = function(callback) {
         mixer_list_e.on('change', function() {
             var val = parseInt($(this).val());
             contentChange();
+            if (val==0) $(".tricopter").show(); else $(".tricopter").hide();
             $('.mixerPreview img').attr('src', './images/mixer/' + mixerList[val].image);
         });
 
