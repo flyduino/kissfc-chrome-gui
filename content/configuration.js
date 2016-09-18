@@ -225,8 +225,6 @@ CONTENT.configuration.initialize = function(callback) {
     			}
 			});
 			$('select[name="RGBSelector"]').removeAttr("disabled");
-            $('select[name="loggerConfig"]').removeAttr("disabled");
-            $('input[name="secret"]').removeAttr("disabled");
         }
 
         var MCUid = '';
