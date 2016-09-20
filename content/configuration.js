@@ -228,8 +228,14 @@ CONTENT.configuration.initialize = function(callback) {
     			}
 			});
 			$('select[name="RGBSelector"]').removeAttr("disabled");
+			$('input[name="vbatAlarm"]').val(data['vbatAlarm']);
+			$('input[name="vbatAlarm"]').removeAttr("disabled");
         } else {
         	$("select[name^='aux'] option[value='14']").remove();
+        	$("select[name='BoardRotation'] option[value='4']").remove();
+        	$("select[name='BoardRotation'] option[value='5']").remove();
+        	$("select[name='BoardRotation'] option[value='6']").remove();
+        	$("select[name='BoardRotation'] option[value='7']").remove();
         }
 
         var MCUid = '';
@@ -630,6 +636,8 @@ CONTENT.configuration.initialize = function(callback) {
             data['RGB'][0]=parseInt(rgbArray[0]);
             data['RGB'][1]=parseInt(rgbArray[1]);
             data['RGB'][2]=parseInt(rgbArray[2]);
+            
+            data['vbatAlarm'] = parseFloat($('input[name="vbatAlarm"]').val());
         }
         settingsFilled = 1;
 
