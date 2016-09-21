@@ -231,11 +231,13 @@ CONTENT.configuration.initialize = function(callback) {
 			$('input[name="vbatAlarm"]').val(data['vbatAlarm']);
 			$('input[name="vbatAlarm"]').removeAttr("disabled");
         } else {
+        	/* Some fixes for backward compatibility */
         	$("select[name^='aux'] option[value='14']").remove();
         	$("select[name='BoardRotation'] option[value='4']").remove();
         	$("select[name='BoardRotation'] option[value='5']").remove();
         	$("select[name='BoardRotation'] option[value='6']").remove();
         	$("select[name='BoardRotation'] option[value='7']").remove();
+        	$(".rxType option[value='15']").remove();
         }
 
         var MCUid = '';
