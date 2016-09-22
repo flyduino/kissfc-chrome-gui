@@ -54,6 +54,8 @@ CONTENT.esc_flasher.initialize = function(callback) {
 
 	function pollEscInfo() {
 		if (self.pollEscInfo) {
+			$("#escInfoDiv").show();
+		
 			kissProtocol.send(kissProtocol.GET_INFO, [0x21], function() {
 				var info = kissProtocol.data[kissProtocol.GET_INFO];
 				$("#escInfo").empty();
@@ -63,7 +65,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
 					$("#escInfoDiv").show();
 					for (var i=0; i<info.escInfoCount; i++) {
 						if (info.escInfo[i] !== undefined) { 
-							var li = $("<li/>").html("#"+(i+1)+": Firmware Version: " + info.escInfo[i].version + " | S/N: " + info.escInfo[i].SN);
+							var li = $("<li/>").html("#"+(i+1)+": Firmware Version: " + info.escInfo[i].type + " " + info.escInfo[i].version + " | S/N: " + info.escInfo[i].SN);
 						} else {
 							var li = $("<li/>").html("#"+(i+1)+": --");
 						}
@@ -73,16 +75,21 @@ CONTENT.esc_flasher.initialize = function(callback) {
 			});
 		} 
 		if (GUI.activeContent == 'esc_flasher') {
+			// TODO: May be give up after 2 * escCount seconds.
 			setTimeout(function() { pollEscInfo(); }, 2000);
 		}
 	}
 
     function htmlLoaded() {
-		// TODO: Check FC version
-    	kissProtocol.send(kissProtocol.ESC_INFO, [0x22], function() { self.pollEscInfo = true; pollEscInfo(); });
-    
+    	$("#escInfoDiv").hide();
+    	
     	$(".warning-button").on("click", function() {
-			$(".esc-flasher-disclaimer").hide();
+			kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
+				$(".esc-flasher-disclaimer").hide();
+            	if (kissProtocol.data[kissProtocol.GET_SETTINGS]['ver'] > 103) {
+    				kissProtocol.send(kissProtocol.ESC_INFO, [0x22], function() { self.pollEscInfo = true; pollEscInfo(); });
+				}
+    		});
 		});
     
     	$(".esc-flasher-disclaimer").show();

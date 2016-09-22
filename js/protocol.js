@@ -398,15 +398,7 @@ kissProtocol.processPacket = function (code, obj) {
             	// if we have data left
    				obj.escInfoCount =  data.getUint8(p++);
    				for (var i = 0; i < obj.escInfoCount; i++) {
-   					var crc = 0;
-   					for (var j = 0; j<14; j++) {
-   						crc += data.getUint8(p + j);
-   					}
-   					//console.log("crc1="+crc);
-   					crc = Math.floor(crc / 14);
-   					//console.log("crc2="+crc);
-   				
-   					var info = { SN: '', version: 0 };
+   					var info = { SN: '', version: 0, type: 'UNKNOWN ESC' };
    					var SN = [];
    					var CPUID = '';
    					for (var j = 0; j < 12; j++) SN[j] = data.getUint8(p++);
@@ -426,7 +418,14 @@ kissProtocol.processPacket = function (code, obj) {
    					info.version  = data.getUint8(p++) / 100;
    					var found = info.version!=0;
    					info.version += String.fromCharCode(data.getUint8(p++));
-   					p++; // CS?
+   					var type = +data.getUint8(p++);
+   					if (type == 1) {
+   						info.type='KISS 8A';
+   					} else if (type == 2) {
+   						info.type='KISS 16A';
+   					} else if (type == 3) {
+   						info.type='KISS 24A';
+   					}
    					if (!found) info = undefined;
    					obj.escInfo[i] = info;
    				}
