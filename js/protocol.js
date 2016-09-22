@@ -13,6 +13,7 @@
 var kissProtocol = {
     GET_TELEMETRY:  0x20,
     GET_INFO:       0x21,
+    ESC_INFO:       0x22,
     GET_SETTINGS:   0x30,
     SET_SETTINGS:   0x10,
     MOTOR_TEST:     0x11,
@@ -121,7 +122,7 @@ kissProtocol.send = function (code, data, callback) {
     kissProtocol.proceedRequest();
 };
 
-kissProtocol.proceedRequest = function(){
+kissProtocol.proceedRequest = function() {
 	if(!this.receiving){
 		this.ready = true;
 		if (this.requests.length) {
@@ -160,13 +161,13 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.ACCtrim = [];
                 obj.ACCAng = [];
                 obj.PWMOutVals = [];
-		obj.ESC_Telemetrie0 = [];
-		obj.ESC_Telemetrie1 = [];
-		obj.ESC_Telemetrie2 = [];
-		obj.ESC_Telemetrie3 = [];
-		obj.ESC_Telemetrie4 = [];
-		obj.ESC_Telemetrie5 = [];
-		obj.ESC_TelemetrieStats = [];
+				obj.ESC_Telemetrie0 = [];
+				obj.ESC_Telemetrie1 = [];
+				obj.ESC_Telemetrie2 = [];
+				obj.ESC_Telemetrie3 = [];
+				obj.ESC_Telemetrie4 = [];
+				obj.ESC_Telemetrie5 = [];
+				obj.ESC_TelemetrieStats = [];
             }
 
             obj.RXcommands[0] = 1000 + ((data.getInt16(0, 0) / 1000) * 1000);
@@ -256,10 +257,7 @@ kissProtocol.processPacket = function (code, obj) {
             obj.ESC_TelemetrieStats[2] = data.getInt16(146, 0);
             obj.ESC_TelemetrieStats[3] = data.getInt16(148, 0);
             obj.ESC_TelemetrieStats[4] = data.getInt16(150, 0);
-	    obj.ESC_TelemetrieStats[5] = data.getInt16(152, 0);
-         
-
-            //console.log(obj);
+	    	obj.ESC_TelemetrieStats[5] = data.getInt16(152, 0);
             break;
         case this.GET_SETTINGS:
             if (!obj.G_P) {
@@ -313,8 +311,8 @@ kissProtocol.processPacket = function (code, obj) {
             obj.MidCommand16 = data.getInt16(58, 0)+1000;
             obj.MinThrottle16 = data.getInt16(60, 0)+1000;
             obj.MaxThrottle16 = data.getInt16(62, 0)+1000;
-	    obj.TYmid16 = data.getInt16(64, 0);
-	    obj.TYinv8 = data.getUint8(66, 0);
+	    	obj.TYmid16 = data.getInt16(64, 0);
+	    	obj.TYinv8 = data.getUint8(66, 0);
             obj.ACCZero[0] = data.getInt16(67, 0);
             obj.ACCZero[1] = data.getInt16(69, 0);
             obj.ACCZero[2] = data.getInt16(71, 0);
@@ -322,64 +320,64 @@ kissProtocol.processPacket = function (code, obj) {
             obj.aux2Funk = data.getUint8(74);
             obj.aux3Funk = data.getUint8(75);
             obj.aux4Funk = data.getUint8(76);
-	    obj.maxAng = data.getUint16(77) / 14.3;
-	    obj.LPF = data.getUint8(79);
+	    	obj.maxAng = data.getUint16(77) / 14.3;
+	    	obj.LPF = data.getUint8(79);
 	    
-	    obj.SN[0] = data.getUint8(80);
-	    obj.SN[1] = data.getUint8(81);
-	    obj.SN[2] = data.getUint8(82);
-	    obj.SN[3] = data.getUint8(83);
-	    obj.SN[4] = data.getUint8(84);
-	    obj.SN[5] = data.getUint8(85);
-	    obj.SN[6] = data.getUint8(86);
-	    obj.SN[7] = data.getUint8(87);
-	    obj.SN[8] = data.getUint8(88);
-	    obj.SN[9] = data.getUint8(89);
-	    obj.SN[10] = data.getUint8(90);
-	    obj.SN[11] = data.getUint8(91);
+	    	obj.SN[0] = data.getUint8(80);
+	    	obj.SN[1] = data.getUint8(81);
+	    	obj.SN[2] = data.getUint8(82);
+	    	obj.SN[3] = data.getUint8(83);
+	    	obj.SN[4] = data.getUint8(84);
+	    	obj.SN[5] = data.getUint8(85);
+	    	obj.SN[6] = data.getUint8(86);
+	    	obj.SN[7] = data.getUint8(87);
+	    	obj.SN[8] = data.getUint8(88);
+	    	obj.SN[9] = data.getUint8(89);
+	    	obj.SN[10] = data.getUint8(90);
+	    	obj.SN[11] = data.getUint8(91);
 	    
-	    obj.ver = data.getUint8(92);
+	    	obj.ver = data.getUint8(92);
 	    
             obj.TPA[0] = data.getUint16(93, 0) / 1000;
             obj.TPA[1] = data.getUint16(95, 0) / 1000;
             obj.TPA[2] = data.getUint16(97, 0) / 1000;
-	    obj.ESConeshot42 = data.getUint8(99);
-	    obj.failsaveseconds = data.getUint8(100);
-	    if(obj.ver > 100){
-		    obj.BoardRotation = data.getUint8(101);
-		    obj.isActive = data.getUint8(102);
-		    obj.actKey = 0;
-	    }
-	    if(obj.ver > 101){
-		    obj.CustomTPAInfluence = data.getUint8(103);
-		    obj.TPABP1 = data.getUint8(104);
-		    obj.TPABP2 = data.getUint8(105);
-		    obj.TPABPI1 = data.getUint8(106);
-		    obj.TPABPI2 = data.getUint8(107);
-		    obj.TPABPI3 = data.getUint8(108);
-		    obj.TPABPI4 = data.getUint8(109);
+	    	obj.ESConeshot42 = data.getUint8(99);
+	    	obj.failsaveseconds = data.getUint8(100);
+	    	if (obj.ver > 100){
+		    	obj.BoardRotation = data.getUint8(101);
+		    	obj.isActive = data.getUint8(102);
+		    	obj.actKey = 0;
+	    	}
+	    	if(obj.ver > 101){
+		    	obj.CustomTPAInfluence = data.getUint8(103);
+		    	obj.TPABP1 = data.getUint8(104);
+		    	obj.TPABP2 = data.getUint8(105);
+		    	obj.TPABPI1 = data.getUint8(106);
+		    	obj.TPABPI2 = data.getUint8(107);
+		    	obj.TPABPI3 = data.getUint8(108);
+		    	obj.TPABPI4 = data.getUint8(109);
 		    
-		    obj.BatteryInfluence = data.getUint8(110);
-		    obj.voltage1 = data.getInt16(111, 0) / 10;
-		    obj.voltage2 = data.getInt16(113, 0) / 10;
-		    obj.voltage3 = data.getInt16(115, 0) / 10;
-		    obj.voltgePercent1 = data.getUint8(117);
-		    obj.voltgePercent2 = data.getUint8(118);
-		    obj.voltgePercent3 = data.getUint8(119);
-	    }
-	    obj.loggerConfig = 0;
-	    obj.secret = 0;
-	    obj.vbatAlarm = 0;
-	    if (obj.ver > 102){
-	        obj.secret = data.getUint8(120);
-	        obj.loggerConfig = data.getUint8(121);
-	    } 
-	    if (obj.ver > 103){
-	        obj.RGB[0] = data.getUint8(122);
-	        obj.RGB[1] = data.getUint8(123);
-	        obj.RGB[2] = data.getUint8(124);
-	        obj.vbatAlarm = data.getUint16(125, 0) / 10;
-	    } 
+		    	obj.BatteryInfluence = data.getUint8(110);
+		    	obj.voltage1 = data.getInt16(111, 0) / 10;
+		    	obj.voltage2 = data.getInt16(113, 0) / 10;
+		    	obj.voltage3 = data.getInt16(115, 0) / 10;
+		    	obj.voltgePercent1 = data.getUint8(117);
+		    	obj.voltgePercent2 = data.getUint8(118);
+		    	obj.voltgePercent3 = data.getUint8(119);
+	    	}
+	    	obj.loggerConfig = 0;
+	    	obj.secret = 0;
+	    	obj.vbatAlarm = 0;
+	    	if (obj.ver > 102){
+	        	obj.secret = data.getUint8(120);
+	        	obj.loggerConfig = data.getUint8(121);
+	    	} 
+	    	if (obj.ver > 103){
+	        	obj.RGB[0] = data.getUint8(122);
+	        	obj.RGB[1] = data.getUint8(123);
+	        	obj.RGB[2] = data.getUint8(124);
+	        	obj.vbatAlarm = data.getUint16(125, 0) / 10;
+	    	} 
             break;
         case this.SET_SETTINGS:
             console.log('Settings saved');
@@ -391,8 +389,55 @@ kissProtocol.processPacket = function (code, obj) {
             
         case this.GET_INFO:
             var p = 0;
+            obj.escInfo = [];
+            obj.escInfoCount = 0;
             obj.firmvareVersion = kissProtocol.readString(data, p);
             p += obj.firmvareVersion.length + 1;
+          
+          	if (p < data.byteLength) { 
+            	// if we have data left
+   				obj.escInfoCount =  data.getUint8(p++);
+   				for (var i = 0; i < obj.escInfoCount; i++) {
+   					var crc = 0;
+   					for (var j = 0; j<14; j++) {
+   						crc += data.getUint8(p + j);
+   					}
+   					//console.log("crc1="+crc);
+   					crc = Math.floor(crc / 14);
+   					//console.log("crc2="+crc);
+   				
+   					var info = { SN: '', version: 0 };
+   					var SN = [];
+   					var CPUID = '';
+   					for (var j = 0; j < 12; j++) SN[j] = data.getUint8(p++);
+   				
+        			for (var r = 0; r < 4; r++) {
+           				CPUID += ((SN[r] < 16) ? '0' : '') + SN[r].toString(16).toUpperCase();
+        			}
+        			CPUID += '-';
+        			for (var r = 4; r < 8; r++) {
+            			CPUID += ((SN[r] < 16) ? '0' : '') + SN[r].toString(16).toUpperCase();
+       				}
+        			CPUID += '-';
+        			for (var r = 8; r < 12; r++) {
+            			CPUID += ((SN[r] < 16) ? '0' : '') + SN[r].toString(16).toUpperCase();
+        			}
+        			info.SN = CPUID;
+   					info.version  = data.getUint8(p++) / 100;
+   					var found = info.version!=0;
+   					info.version += String.fromCharCode(data.getUint8(p++));
+   					p++; // CS?
+   					if (!found) info = undefined;
+   					obj.escInfo[i] = info;
+   				}
+   			}	
+   			 
+            break;
+
+        case this.ESC_INFO:
+            //var p = 0;
+            //obj.firmvareVersion = kissProtocol.readString(data, p);
+            //p += obj.firmvareVersion.length + 1;
             break;
  
          default:
@@ -517,6 +562,10 @@ kissProtocol.preparePacket = function (code, obj) {
           	 	data.setUint8(4, obj.motorTest[3], 0);
           	 	data.setUint8(5, obj.motorTest[4], 0);
           	 	data.setUint8(6, obj.motorTest[5], 0);
+          break; 
+          
+          case this.ESC_INFO:
+          	
           break;     
     }
 

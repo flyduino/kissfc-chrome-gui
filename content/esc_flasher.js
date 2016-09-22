@@ -9,6 +9,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
     
     self.pages = []; 
     self.flasherAvailable = false;
+    self.pollEscInfo = false;
 
     if (GUI.activeContent != 'esc_flasher') {
         GUI.activeContent = 'esc_flasher';
@@ -51,7 +52,34 @@ CONTENT.esc_flasher.initialize = function(callback) {
 		}
 	}
 
+	function pollEscInfo() {
+		if (self.pollEscInfo) {
+			kissProtocol.send(kissProtocol.GET_INFO, [0x21], function() {
+				var info = kissProtocol.data[kissProtocol.GET_INFO];
+				$("#escInfo").empty();
+				if (info['escInfoCount'] === undefined || info['escInfoCount']==0) {
+					self.pollEscInfo = false;
+				} else {
+					$("#escInfoDiv").show();
+					for (var i=0; i<info.escInfoCount; i++) {
+						if (info.escInfo[i] !== undefined) { 
+							var li = $("<li/>").html("#"+(i+1)+": Firmware Version: " + info.escInfo[i].version + " | S/N: " + info.escInfo[i].SN);
+						} else {
+							var li = $("<li/>").html("#"+(i+1)+": --");
+						}
+						$("#escInfo").append(li);
+					}
+				}
+			});
+		} 
+		if (GUI.activeContent == 'esc_flasher') {
+			setTimeout(function() { pollEscInfo(); }, 2000);
+		}
+	}
+
     function htmlLoaded() {
+		// TODO: Check FC version
+    	kissProtocol.send(kissProtocol.ESC_INFO, [0x22], function() { self.pollEscInfo = true; pollEscInfo(); });
     
     	$(".warning-button").on("click", function() {
 			$(".esc-flasher-disclaimer").hide();
@@ -105,6 +133,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
     	
     	$("#flash").on("click", function() {
     		if (!$(this).hasClass('disabled')) {
+    		  self.pollEscInfo = false;
     	      $("#status").html("");
     		  $("#flash").addClass('disabled');
     		  $("#select_file").addClass('disabled');
@@ -124,7 +153,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
 			  	  	console.log('got no answer. check your com port selection and see if you have the lastest KISSFC version.');
 			  	  	$("#status").html("FAILURE: No response from FC!");
 			  	  }
-			  }, 2000);
+			  }, 3000);
     		}
     	});
 	};

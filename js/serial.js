@@ -280,7 +280,7 @@ var serial = {
     	return this.byteToHex(byte>>8 & 0xff)+this.byteToHex(byte & 0xff);
     },
     dump: function(direction, data) {
-    	/*var view = new Uint8Array(data);
+    	var view = new Uint8Array(data);
     	var line = '';
     	for (var i = 0; i < view.length; i++) {
     		if (i%16==0) {
@@ -289,6 +289,6 @@ var serial = {
     		}
     		line +=  this.byteToHex(view[i]) + ' ';
  		}
-    	console.log(line);*/
+    	console.log(line);
     }
 };
