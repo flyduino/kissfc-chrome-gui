@@ -1,0 +1,133 @@
+<div class="configuration">
+    <div class="config_buttons">
+    	<a id="save" class="config_button" href="#" title="Save Settings to EEPROM">Save Settings</a>
+    </div>
+    <div class="clear-both"></div>
+</div>
+<div class="configuration" id="AC">
+	<div class="groupTitle">Advanced configuration</div>
+
+	<table border="0" style="width:100%;">
+		<tr>
+			<td width="65%" colspan="5"><input type="checkbox" name="UCTI" /> &nbsp;Use custom TPA influence values</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="65%" colspan="5" style="text-align:center;border-bottom:1px solid #FFF;"><h4>TPA Influence</h4></td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="13%">&nbsp;</td>
+			<td width="13%">Zero Throttle</td>
+			<td width="13%">Breakpoint 1</td>
+			<td width="13%">Breakpoint 2</td>
+			<td width="13%">Full Throttle</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="13%">Throttle [%]</td>
+			<td width="13%">0</td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="BP1" data-min="0" data-max="100" data-step="1" data-precision="0" value="30" /></td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="BP2" data-min="0" data-max="100" data-step="1" data-precision="0" value="50" /></td>
+			<td width="13%">100</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="13%">TPA influence [%]</td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="BPI1" data-min="0" data-max="100" data-step="1" data-precision="0" value="30" /></td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="BPI2" data-min="0" data-max="100" data-step="1" data-precision="0" value="0" /></td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="BPI3" data-min="0" data-max="100" data-step="1" data-precision="0" value="0" /></td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="BPI4" data-min="0" data-max="100" data-step="1" data-precision="0" value="100" /></td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="65%" colspan="5">&nbsp;</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="65%" colspan="5"><input type="checkbox" name="UVPID" /> &nbsp;Use PID Voltage Correction</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="65%" colspan="5" style="text-align:center;border-bottom:1px solid #FFF;"><h4>Battery influence</h4></td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="13%">&nbsp;</td>
+			<td width="13%">Voltage 1</td>
+			<td width="13%">Voltage 2</td>
+			<td width="13%">Voltage 3</td>
+			<td width="13%">&nbsp;</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="13%">Lipo Voltage [V]</td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="LV1" data-min="0" data-max="100" data-step="0.1" data-precision="1" value="12.8" /></td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="LV2" data-min="0" data-max="100" data-step="0.1" data-precision="1" value="14.8" /></td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="LV3" data-min="0" data-max="100" data-step="0.1" data-precision="1" value="16.8" /></td>
+			<td width="13%">&nbsp;</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="13%">PID strength [%]</td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="LVP1" data-min="0" data-max="250" data-step="1" data-precision="0" value="130" /></td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="LVP2" data-min="0" data-max="250" data-step="1" data-precision="0" value="100" /></td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="LVP3" data-min="0" data-max="250" data-step="1" data-precision="0" value="70" /></td>
+			<td width="13%">&nbsp;</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		
+		<!--  rotation -->
+		<tr>
+			<td width="65%" colspan="5">&nbsp;</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="65%" colspan="5"><input type="checkbox" name="CBO" /> &nbsp;Use custom FC orientation</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="65%" colspan="5" style="text-align:center;border-bottom:1px solid #FFF;"><h4>FC orientation</h4></td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="13%">&nbsp;</td>
+			<td width="13%">Roll</td>
+			<td width="13%">Pitch</td>
+			<td width="13%">Yaw</td>
+			<td width="13%">&nbsp;</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="13%">FC orientation &deg;</td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="CBO0" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0" /></td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="CBO1" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0" /></td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="CBO2" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0" /></td>
+			<td width="13%">&nbsp;</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="65%" colspan="5">&nbsp;</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+	</table>
+</div>
+
+</div>
