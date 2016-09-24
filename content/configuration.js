@@ -349,22 +349,22 @@ CONTENT.configuration.initialize = function(callback) {
         $('input[name="TYinv"]').on('input', function() {
             contentChange();
         });
-        $('input[name="oneShot"]').prop('checked', data['ESConeshot125']);
+        
+        var outputMode = 2; // PWM
+        if (data['ESConeshot125']==1) outputMode = 1;
+        else if (data['ESConeshot42']==1) outputMode = 0;
+ 
+ 		$("#outputMode").val(outputMode);       
+ 		$("#outputMode").on('change', function() {
+            contentChange();
+        });   
 
         $('input[name="failsaveseconds"]').val(data['failsaveseconds']);
         $('input[name="failsaveseconds"]').on('input', function() {
             contentChange();
         });
 
-        $('input[name="oneShot"]').on('click', function() {
-            contentChange();
-            $('input[name="oneShot42"]').attr('checked', false);
-        });
-        $('input[name="oneShot42"]').prop('checked', data['ESConeshot42']);
-        $('input[name="oneShot42"]').on('click', function() {
-            contentChange();
-            $('input[name="oneShot"]').attr('checked', false);
-        });
+
         $('input[name="3dMode"]').prop('checked', data['Active3DMode']);
         $('input[name="3dMode"]').on('click', function() {
             contentChange();
@@ -585,8 +585,11 @@ CONTENT.configuration.initialize = function(callback) {
             data['MidCommand16'] = parseInt($('input[name="midCommand"]').val());
             data['TYmid16'] = parseInt($('input[name="TYmid"]').val());
             data['TYinv8'] = parseInt($('input[name="TYinv"]').prop('checked') ? 1 : 0);
-            data['ESConeshot125'] = parseInt($('input[name="oneShot"]').prop('checked') ? 1 : 0);
-            data['ESConeshot42'] = parseInt($('input[name="oneShot42"]').prop('checked') ? 1 : 0);
+            
+            var outputMode = parseInt($('select[name="outputMode"]').val());
+            data['ESConeshot125'] = outputMode == 1 ? 1 : 0;
+            data['ESConeshot42'] = outputMode == 0 ? 1 : 0;
+           
             data['Active3DMode'] = parseInt($('input[name="3dMode"]').prop('checked') ? 1 : 0);
             data['Active3DMode'] = parseInt($('input[name="3dMode"]').prop('checked') ? 1 : 0);
             data['failsaveseconds'] = parseInt($('input[name="failsaveseconds"]').val());

@@ -40,8 +40,16 @@
             <dt title="the ESC's middle command for 3D mode use">Mid. Command</dt><dd><input type="text" name="midCommand" data-step="1" data-min="0" data-max="2200" /></dd>
 	  		<dt class="tricopter">Tri Yaw Mid.</dt><dd class="tricopter"><input type="text" name="TYmid" data-step="1" data-min="0" data-max="2200" /></dd>
 	  		<dt class="tricopter">Tri Yaw Invert</dt><dd  class="tricopter"><input type="checkbox" name="TYinv" /></dd>
-      		<dt>OneShot 125</dt><dd><input type="checkbox" name="oneShot" /></dd>
-	  		<dt>OneShot 42</dt><dd><input type="checkbox" name="oneShot42" /></dd>
+      		
+      		 <dt><span style="font-size:11px;"  title="ESC Mode">ESC Mode</span></dt><dd><select name="outputMode" id="outputMode">
+	    		<option value="0">OneShot 42</option>
+	    		<option value="1" selected>OneShot 125</option>
+	    		<option value="2">PWM</option>
+	   		</select></dd>
+      		
+      		
+      		<!-- dt>OneShot 125</dt><dd><input type="checkbox" name="oneShot" /></dd>
+	  		<dt>OneShot 42</dt><dd><input type="checkbox" name="oneShot42" /></dd-->
       		<dt>3D Mode</dt><dd><input type="checkbox" disabled="true" name="3dMode"/></dd>
 	  <dt><span style="font-size:11px;"  title="Serial config">Serial Config</span></dt><dd><select disabled="true" name="loggerConfig" id="loggerConfig">
 	    <option value="0" selected>OSD</option>
