@@ -213,7 +213,7 @@ CONTENT.configuration.initialize = function(callback) {
         	});
          	var rgb = data['RGB'][0]+','+data['RGB'][1]+','+data['RGB'][2];
          	$('input[name="RGB"]').val(rgb);
-         	$('#colorPicker').minicolors('value', {color: 'rgb('+rgb+')', opacity: 1});
+         	$('#colorPicker').minicolors('value', {color: 'rgb('+rgb+')', opacity: 1,  position: 'bottom right'});
          	$('select[name="RGBSelector"] > option').each(function() {
     			if (this.value==rgb) {
     				$('select[name="RGBSelector"]').val(this.value);
