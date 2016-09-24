@@ -272,6 +272,7 @@ kissProtocol.processPacket = function (code, obj) {
 	        	obj.SN = [];
 				obj.TPA = [];
 				obj.RGB = [];
+				obj.CBO = [];
             }
 
             obj.G_P[0] = data.getUint16(0, 0) / 1000;
@@ -377,7 +378,13 @@ kissProtocol.processPacket = function (code, obj) {
 	        	obj.RGB[1] = data.getUint8(123);
 	        	obj.RGB[2] = data.getUint8(124);
 	        	obj.vbatAlarm = data.getUint16(125, 0) / 10;
+	        	
+	        	obj.CBO[0] = data.getInt16(127, 0);
+	        	obj.CBO[1] = data.getInt16(129, 0);
+	        	obj.CBO[2] = data.getInt16(131, 0);
 	    	} 
+	    	
+	    	console.log(obj);
             break;
         case this.SET_SETTINGS:
             console.log('Settings saved');
@@ -550,6 +557,10 @@ kissProtocol.preparePacket = function (code, obj) {
 	    		data.setUint8(113, obj.RGB[1]);
 	    		data.setUint8(114, obj.RGB[2]);
 	    		data.setUint16(115, obj.vbatAlarm * 10, 0);
+	    		
+	    		data.setInt16(117, obj.CBO[0]);
+	    		data.setInt16(119, obj.CBO[1]);
+	    		data.setInt16(121, obj.CBO[2]);
 	    	}
             break;
             

@@ -43,16 +43,6 @@
       		<dt>OneShot 125</dt><dd><input type="checkbox" name="oneShot" /></dd>
 	  		<dt>OneShot 42</dt><dd><input type="checkbox" name="oneShot42" /></dd>
       		<dt>3D Mode</dt><dd><input type="checkbox" disabled="true" name="3dMode"/></dd>
-	  		<dt><span style="font-size:11px;"  title="Select your FC rotation">FC Rotation</span></dt><dd><select disabled="true" name="BoardRotation" id="BoardRotation">
-	    		<option value="0">None</option>
-	    		<option value="4">45&deg; CW</option>
-	    		<option value="2">90&deg; CW</option>
-	    		<option value="5">135&deg; CW</option>
-	    		<option value="1">180&deg;</option>
-	    		<option value="7">45&deg; CCW</option>
-	    		<option value="3">90&deg; CCW</option>
-	    		<option value="6">135&deg; CCW</option>
-	  		</select></dd>
 	  <dt><span style="font-size:11px;"  title="Serial config">Serial Config</span></dt><dd><select disabled="true" name="loggerConfig" id="loggerConfig">
 	    <option value="0" selected>OSD</option>
 	    <option value="1">Logger / 10%</option>
@@ -354,7 +344,46 @@
 			<td width="13%">&nbsp;</td>
 			<td width="20%">&nbsp;</td>
 		</tr>
-
+		
+		<!--  rotation -->
+		<tr>
+			<td width="65%" colspan="5">&nbsp;</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="65%" colspan="5"><input type="checkbox" name="CBO" /> &nbsp;Use custom FC orientation</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="65%" colspan="5" style="text-align:center;border-bottom:1px solid #FFF;"><h4>FC orientation</h4></td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="13%">&nbsp;</td>
+			<td width="13%">Roll</td>
+			<td width="13%">Pitch</td>
+			<td width="13%">Yaw</td>
+			<td width="13%">&nbsp;</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="13%">FC orientation &deg;</td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="CBO0" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0" /></td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="CBO1" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0" /></td>
+			<td width="13%"><input disabled="true" type="text" size="3" name="CBO2" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0" /></td>
+			<td width="13%">&nbsp;</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="65%" colspan="5">&nbsp;</td>
+			<td width="13%">&nbsp;</td>
+			<td width="20%">&nbsp;</td>
+		</tr>
 	</table>
 </div>
 

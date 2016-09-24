@@ -165,7 +165,6 @@ CONTENT.configuration.initialize = function(callback) {
         } else {
             $('#version').text((data['ver'] / 100));
             $('input[name="3dMode"]').removeAttr("disabled");
-            $('select[name="BoardRotation"]').removeAttr("disabled");
         }
         
         if (data['ver'] > 102) {
@@ -230,13 +229,27 @@ CONTENT.configuration.initialize = function(callback) {
 			$('select[name="RGBSelector"]').removeAttr("disabled");
 			$('input[name="vbatAlarm"]').val(data['vbatAlarm']);
 			$('input[name="vbatAlarm"]').removeAttr("disabled");
+			
+			$('input[name="CBO0"]').val(+data['CBO'][0]);
+			$('input[name="CBO1"]').val(+data['CBO'][1]);
+			$('input[name="CBO2"]').val(+data['CBO'][2]);
+			
+			$('input[name="CBO"]').on('change', function() {
+        		contentChange();
+            	if (parseInt($('input[name="CBO"]').prop('checked') ? 1 : 0) == 1) {
+                	$('input[name="CBO0"]').removeAttr("disabled");
+                	$('input[name="CBO1"]').removeAttr("disabled");
+                	$('input[name="CBO2"]').removeAttr("disabled");
+            	} else {
+                	$('input[name="CBO0"]').attr('disabled', 'true');
+                	$('input[name="CBO1"]').attr('disabled', 'true');
+                	$('input[name="CBO2"]').attr('disabled', 'true');
+            	}
+        	});
+			
         } else {
         	/* Some fixes for backward compatibility */
         	$("select[name^='aux'] option[value='14']").remove();
-        	$("select[name='BoardRotation'] option[value='4']").remove();
-        	$("select[name='BoardRotation'] option[value='5']").remove();
-        	$("select[name='BoardRotation'] option[value='6']").remove();
-        	$("select[name='BoardRotation'] option[value='7']").remove();
         	$(".rxType option[value='15']").remove();
         }
 
@@ -337,10 +350,6 @@ CONTENT.configuration.initialize = function(callback) {
             contentChange();
         });
         $('input[name="oneShot"]').prop('checked', data['ESConeshot125']);
-        $('select[name="BoardRotation"]').val(data['BoardRotation']);
-        $('select[name="BoardRotation"]').on('change', function() {
-            contentChange();
-        });
 
         $('input[name="failsaveseconds"]').val(data['failsaveseconds']);
         $('input[name="failsaveseconds"]').on('input', function() {
@@ -515,7 +524,20 @@ CONTENT.configuration.initialize = function(callback) {
         $('input[name="LVP2"]').val(data['voltgePercent2']);
         $('input[name="LVP3"]').val(data['voltgePercent3']);
 
-        if (data['BatteryInfluence'] || data['CustomTPAInfluence']) {
+		var cbo = false;
+		if (data['ver'] > 103) {
+			if (+data['CBO'][0]!=0 || +data['CBO'][1]!=0 || +data['CBO'][2]!=0) {
+				cbo = true;
+			}
+			$('input[name="CBO"]').prop('checked', cbo);
+			if (cbo) {
+				 $('input[name="CBO0"]').removeAttr("disabled");
+           	 	 $('input[name="CBO1"]').removeAttr("disabled");
+            	 $('input[name="CBO2"]').removeAttr("disabled");
+			}
+		}
+
+        if (data['BatteryInfluence'] || data['CustomTPAInfluence'] || cbo) {
             document.getElementById('AC').style.visibility = "visible";
             document.getElementById('SAC').style.display = "none";
             document.body.style.overflow = "scroll";
@@ -568,7 +590,7 @@ CONTENT.configuration.initialize = function(callback) {
             data['Active3DMode'] = parseInt($('input[name="3dMode"]').prop('checked') ? 1 : 0);
             data['Active3DMode'] = parseInt($('input[name="3dMode"]').prop('checked') ? 1 : 0);
             data['failsaveseconds'] = parseInt($('input[name="failsaveseconds"]').val());
-            data['BoardRotation'] = parseInt($('select[name="BoardRotation"]').val());
+            data['BoardRotation'] = 0;
 
             // pid and rates
             // roll
@@ -640,6 +662,14 @@ CONTENT.configuration.initialize = function(callback) {
             data['RGB'][2]=parseInt(rgbArray[2]);
             
             data['vbatAlarm'] = parseFloat($('input[name="vbatAlarm"]').val());
+          
+          	if ($('input[name="CBO"]').prop('checked') ? 1 : 0 == 1) {
+            	data['CBO'][0] = parseInt($('input[name="CBO0"]').val());
+            	data['CBO'][1] = parseInt($('input[name="CBO1"]').val());
+            	data['CBO'][2] = parseInt($('input[name="CBO2"]').val());
+            } else {
+           	 	data['CBO'] = [0, 0, 0];
+            }
         }
         settingsFilled = 1;
 
