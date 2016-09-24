@@ -135,6 +135,22 @@ CONTENT.advanced.initialize = function(callback) {
         $('input[name^="LV"]').on("input", function() {
         	contentChange();
         });
+        
+        var MCUid = '';
+        for (var i = 0; i < 4; i++) {
+            if (data['SN'][i] < 16) MCUid += '0';
+            MCUid += data['SN'][i].toString(16).toUpperCase();
+        }
+        MCUid += '-';
+        for (var i = 4; i < 8; i++) {
+            if (data['SN'][i] < 16) MCUid += '0';
+            MCUid += data['SN'][i].toString(16).toUpperCase();
+        }
+        MCUid += '-';
+        for (var i = 8; i < 12; i++) {
+            if (data['SN'][i] < 16) MCUid += '0';
+            MCUid += data['SN'][i].toString(16).toUpperCase();
+        }
 
         function grabData() {
             // uav type and receiver
