@@ -406,23 +406,28 @@ CONTENT.configuration.initialize = function(callback) {
             });
         }
 
-        // aux settings
-        $('select[name="aux1"]').val(data['aux1Funk']);
-        $('select[name="aux1"]').on('change', function() {
-            contentChange();
-        });
-        $('select[name="aux2"]').val(data['aux2Funk']);
-        $('select[name="aux2"]').on('change', function() {
-            contentChange();
-        });
-        $('select[name="aux3"]').val(data['aux3Funk']);
-        $('select[name="aux3"]').on('change', function() {
-            contentChange();
-        });
-        $('select[name="aux4"]').val(data['aux4Funk']);
-        $('select[name="aux4"]').on('change', function() {
-            contentChange();
-        });
+		$("#aux0").kissAux({ name: 'Arm',    
+							 change: function() { contentChange(); },
+							 value: data['AUX'][0]
+						   });	
+		$("#aux1").kissAux({ name: 'Level',  
+							 change: function() { contentChange(); },
+							 value: data['AUX'][1]
+						   });	
+		$("#aux2").kissAux({ name: 'Buzzer', 
+		 					 change: function() { contentChange(); },
+		 					 value: data['AUX'][2]
+		 				   });	
+		$("#aux3").kissAux({ name: 'Led',    
+							 change: function() { contentChange(); },
+							 knob: true,
+							 value: data['AUX'][3]
+						   });	
+		$("#aux4").kissAux({ name: '3D',    
+							 change: function() { contentChange(); },
+							 value: data['AUX'][4]
+						   });	
+
         $('select[name="lpf"]').val(data['LPF']);
         $('select[name="lpf"]').on('change', function() {
             contentChange();
@@ -509,10 +514,11 @@ CONTENT.configuration.initialize = function(callback) {
             data['maxAng'] = parseFloat($('tr.level input').eq(3).val());
 
             // aux settings
-            data['aux1Funk'] = parseInt($('select[name="aux1"]').val());
-            data['aux2Funk'] = parseInt($('select[name="aux2"]').val());
-            data['aux3Funk'] = parseInt($('select[name="aux3"]').val());
-            data['aux4Funk'] = parseInt($('select[name="aux4"]').val());
+            //data['aux1Funk'] = parseInt($('select[name="aux1"]').val());
+            //data['aux2Funk'] = parseInt($('select[name="aux2"]').val());
+            //data['aux3Funk'] = parseInt($('select[name="aux3"]').val());
+            //data['aux4Funk'] = parseInt($('select[name="aux4"]').val());
+            
             data['LPF'] = parseInt($('select[name="lpf"]').val());
             
             data['secret'] = parseInt($('input[name="secret"]').val());
@@ -524,6 +530,12 @@ CONTENT.configuration.initialize = function(callback) {
             data['RGB'][0]=parseInt(rgbArray[0]);
             data['RGB'][1]=parseInt(rgbArray[1]);
             data['RGB'][2]=parseInt(rgbArray[2]);
+            
+            data['AUX'][0]=$("#aux0").kissAux('value');
+            data['AUX'][1]=$("#aux1").kissAux('value');
+            data['AUX'][2]=$("#aux2").kissAux('value');
+            data['AUX'][3]=$("#aux3").kissAux('value');
+            data['AUX'][4]=$("#aux4").kissAux('value');
             
             data['vbatAlarm'] = parseFloat($('input[name="vbatAlarm"]').val());
         }

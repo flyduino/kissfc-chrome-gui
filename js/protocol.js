@@ -273,6 +273,7 @@ kissProtocol.processPacket = function (code, obj) {
 				obj.TPA = [];
 				obj.RGB = [];
 				obj.CBO = [];
+				obj.AUX = [];
             }
 
             obj.G_P[0] = data.getUint16(0, 0) / 1000;
@@ -317,10 +318,10 @@ kissProtocol.processPacket = function (code, obj) {
             obj.ACCZero[0] = data.getInt16(67, 0);
             obj.ACCZero[1] = data.getInt16(69, 0);
             obj.ACCZero[2] = data.getInt16(71, 0);
-            obj.aux1Funk = data.getUint8(73);
-            obj.aux2Funk = data.getUint8(74);
-            obj.aux3Funk = data.getUint8(75);
-            obj.aux4Funk = data.getUint8(76);
+            obj.AUX[0] = data.getUint8(73);
+            obj.AUX[1] = data.getUint8(74);
+            obj.AUX[2] = data.getUint8(75);
+            obj.AUX[3] = data.getUint8(76);
 	    	obj.maxAng = data.getUint16(77) / 14.3;
 	    	obj.LPF = data.getUint8(79);
 	    
@@ -382,6 +383,8 @@ kissProtocol.processPacket = function (code, obj) {
 	        	obj.CBO[0] = data.getInt16(127, 0);
 	        	obj.CBO[1] = data.getInt16(129, 0);
 	        	obj.CBO[2] = data.getInt16(131, 0);
+	        	
+	        	obj.AUX[4] = data.getUint8(133);
 	    	} 
 	    	
 	    	console.log(obj);
@@ -506,10 +509,10 @@ kissProtocol.preparePacket = function (code, obj) {
             data.setInt16(67, obj.ACCZero[0], 0);
             data.setInt16(69, obj.ACCZero[1], 0);
             data.setInt16(71, obj.ACCZero[2], 0);
-            data.setUint8(73, obj.aux1Funk);
-            data.setUint8(74, obj.aux2Funk);
-            data.setUint8(75, obj.aux3Funk);
-            data.setUint8(76, obj.aux4Funk);
+            data.setUint8(73, obj.AUX[0]);
+            data.setUint8(74, obj.AUX[1]);
+            data.setUint8(75, obj.AUX[2]);
+            data.setUint8(76, obj.AUX[3]);
 	    	data.setUint16(77, obj.maxAng * 14.3);
 	    	data.setUint8(79, obj.LPF);
 	
@@ -561,6 +564,8 @@ kissProtocol.preparePacket = function (code, obj) {
 	    		data.setInt16(117, obj.CBO[0]);
 	    		data.setInt16(119, obj.CBO[1]);
 	    		data.setInt16(121, obj.CBO[2]);
+	    		
+	    		data.setUint8(123, obj.AUX[4]);
 	    	}
             break;
             

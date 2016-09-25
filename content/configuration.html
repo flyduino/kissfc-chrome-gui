@@ -169,97 +169,14 @@
         </table>
         <div class="general_settings" style="margin-top:20px; width:500px;">Firmware Version: <span  id="version"></span> | S/N: <span id="SN"></span><br /><br /></div>
     </div>
+    
     <div class="rightWrapper">
-        <div class="groupTitle">Aux Channel Settings</div>
-        <dl class="aux_settings">
-            <dt>AUX 1</dt>
-            <dd>
-                <select name="aux1">
-                    <option value="0">No Action</option>
-                    <option value="1">High: ARM</option>
-                    <option value="12">Mid: ARM</option>
-                    <option value="13">Low: ARM</option>
-                    <option value="2">High: Level Mode</option>
-                    <option value="3">High: 3D Mode</option>
-		 			<option value="6">Mid: Level, High: 3D</option>
-		 			<option value="7">PWM5 Servo Mid</option>
-					<option value="8">PWM5 Ser. AngX. Gain</option>
-		 			<option value="9">PWM6 Servo Mid</option>
-		 			<option value="10">PWM6 Ser. AngY. Gain</option>
-		 			<option value="11">High: Buzzer</option>
-		 			<option value="14">LED control</option>
-                </select>
-            </dd>
-            <dt>AUX 2</dt>
-            <dd>
-                <select name="aux2">
-                    <option value="0">No Action</option>
-                    <option value="1">High: ARM</option>
-                    <option value="12">Mid: ARM</option>
-                    <option value="13">Low: ARM</option>
-                    <option value="2">High: Level Mode</option>
-                    <option value="3">High: 3D Mode</option>
-		 			<option value="6">Mid: Level, High: 3D</option>
-		 			<option value="7">PWM5 Servo Mid</option>
-		 			<option value="8">PWM5 Ser. AngX. Gain</option>
-		 			<option value="9">PWM6 Servo Mid</option>
-		 			<option value="10">PWM6 Ser. AngY. Gain</option>
-		 			<option value="11">High: Buzzer</option>
-		 			<option value="14">LED control</option>
-                </select>
-            </dd>
-            <dt>AUX 3</dt>
-            <dd>
-                <select name="aux3">
-                    <option value="0">No Action</option>
-                    <option value="1">High: ARM</option>
-                    <option value="12">Mid: ARM</option>
-                    <option value="13">Low: ARM</option>
-                    <option value="2">High: Level Mode</option>
-                    <option value="3">High: 3D Mode</option>
-		 			<option value="6">Mid: Level, High: 3D</option>
-		 			<option value="7">PWM5 Servo Mid</option>
-		 			<option value="8">PWM5 Ser. AngX. Gain</option>
-		 			<option value="9">PWM6 Servo Mid</option>
-		 			<option value="10">PWM6 Ser. AngY. Gain</option>
-		 			<option value="11">High: Buzzer</option>
-		 			<option value="14">LED control</option>
-                </select>
-            </dd>
-            <dt>AUX 4</dt>
-            <dd>
-                <select name="aux4">
-                    <option value="0">No Action</option>
-                    <option value="1">High: ARM</option>
-                    <option value="12">Mid: ARM</option>
-                    <option value="13">Low: ARM</option>
-                    <option value="2">High: Level Mode</option>
-                    <option value="3">High: 3D Mode</option>
-		 			<option value="6">Mid: Level, High: 3D</option>
-		 			<option value="7">PWM5 Servo Mid</option>
-		 			<option value="8">PWM5 Ser. AngX. Gain</option>
-		 			<option value="9">PWM6 Servo Mid</option>
-		 			<option value="10">PWM6 Ser. AngY. Gain</option>
-		 			<option value="11">High: Buzzer</option>
-		 			<option value="14">LED control</option>
-                </select>
-            </dd>
-        <div class="groupTitle" style="margin-top:10px;">Filter</div>
-        <dt>LPF FRQ</dt>
-            <dd>
-                <select name="lpf">
-                    <option value="0">Off</option>
-                    <option value="1">High</option>
-                    <option value="2">Medium High</option>
-                    <option value="3">Medium</option>
-                    <option value="4">Medium Low</option>
-                    <option value="5">Low</option>
-                    <option value="6">Very Low</option>
-                </select>
-            </dd>
-        </dl>
-        
-       
+        <div class="groupTitle">AUX Functions</div>
+        <dl id="aux0"></dl>
+        <dl id="aux1"></dl>
+        <dl id="aux4"></dl>
+        <dl id="aux2"></dl>
+        <dl id="aux3"></dl>
     </div>
   
     <div class="config_buttons">
