@@ -738,6 +738,7 @@ CONTENT.configuration.initialize = function(callback) {
             restoreConfig(function(config) {
                 $('#content').load("./content/configuration.html", function() {
                 	var tmp = $.extend({}, kissProtocol.data[kissProtocol.GET_SETTINGS], config);
+                	tmp.ver = 104; // fix version
                 	kissProtocol.data[kissProtocol.GET_SETTINGS] = tmp;
                     htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
                     contentChange();
