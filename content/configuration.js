@@ -13,9 +13,14 @@ CONTENT.configuration.initialize = function(callback) {
     }
 
     kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-        $('#content').load("./content/configuration.html", function() {
-            htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
-        });
+    	if (kissProtocol.data[kissProtocol.GET_SETTINGS]["ver"] < 104) {
+    		$("#navigation").hide();
+    		$('#content').load("./content/upgrade.html", function() {});
+    	} else {
+        	$('#content').load("./content/configuration.html", function() {
+            	htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
+       	 	});
+        }
     });
 
 
