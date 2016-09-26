@@ -27,7 +27,7 @@
     			self.append(c);
     			$("select", self).on("change", function() {
     				data.value = (parseInt($(".kiss-aux-channel", self).val()) << 4) + parseInt($(".kiss-aux-mode", self).val());
-    				console.log("Changed to : " + data.value);
+    				privateMethods.changeModeState(self);
     			});
     			if (data.change !== undefined) $("select", self).on("change", data.change);
     			privateMethods.changeValue(self);
@@ -37,8 +37,14 @@
     			if (data.value !== undefined) {
     				$(".kiss-aux-channel", self).val(data.value >> 4);
     				$(".kiss-aux-mode", self).val(data.value & 0xf);
+    				privateMethods.changeModeState(self);
     			} 
-    		}	
+    		},
+    		changeModeState : function(self) {
+    			var data = pluginData(self);
+				if (data.value >> 4 == 0) $(".kiss-aux-mode", self).hide();
+				else $(".kiss-aux-mode", self).show();
+    		}
     };
 
     var publicMethods = {
@@ -66,7 +72,10 @@
         value : function() {
         	var self = $(this),
             data = pluginData(self);
-            return data.value;
+        	console.log(data.value >> 4);
+        	console.log(data.value & 15);
+        	if ((data.value >> 4 == 0) || ((data.value & 15) == 0)) return 0;
+        	else return data.value;
         },
         setValue : function(newValue) {
         	var self = $(this);

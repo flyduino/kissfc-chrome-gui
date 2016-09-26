@@ -341,7 +341,9 @@ CONTENT.configuration.initialize = function(callback) {
 
 
         $('input[name="3dMode"]').prop('checked', data['Active3DMode']);
+        if (data['Active3DMode']) $("#aux4").show(); else $("#aux4").hide();
         $('input[name="3dMode"]').on('click', function() {
+         	if ($(this).prop('checked')) $("#aux4").show(); else $("#aux4").hide();
             contentChange();
         });
 
@@ -426,7 +428,7 @@ CONTENT.configuration.initialize = function(callback) {
 		$("#aux4").kissAux({ name: '3D',    
 							 change: function() { contentChange(); },
 							 value: data['AUX'][4]
-						   });	
+						   });
 
         $('select[name="lpf"]').val(data['LPF']);
         $('select[name="lpf"]').on('change', function() {
@@ -472,7 +474,6 @@ CONTENT.configuration.initialize = function(callback) {
             data['ESConeshot125'] = outputMode == 1 ? 1 : 0;
             data['ESConeshot42'] = outputMode == 0 ? 1 : 0;
            
-            data['Active3DMode'] = parseInt($('input[name="3dMode"]').prop('checked') ? 1 : 0);
             data['Active3DMode'] = parseInt($('input[name="3dMode"]').prop('checked') ? 1 : 0);
             data['failsaveseconds'] = parseInt($('input[name="failsaveseconds"]').val());
             data['BoardRotation'] = 0;
@@ -535,7 +536,7 @@ CONTENT.configuration.initialize = function(callback) {
             data['AUX'][1]=$("#aux1").kissAux('value');
             data['AUX'][2]=$("#aux2").kissAux('value');
             data['AUX'][3]=$("#aux3").kissAux('value');
-            data['AUX'][4]=$("#aux4").kissAux('value');
+            data['AUX'][4]=data['Active3DMode'] ? $("#aux4").kissAux('value') : 0;
             
             data['vbatAlarm'] = parseFloat($('input[name="vbatAlarm"]').val());
         }
