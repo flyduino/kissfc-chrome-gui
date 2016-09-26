@@ -737,8 +737,9 @@ CONTENT.configuration.initialize = function(callback) {
         $('#restore').on('click', function() {
             restoreConfig(function(config) {
                 $('#content').load("./content/configuration.html", function() {
+                	var v = +kissProtocol.data[kissProtocol.GET_SETTINGS]['ver'];
                 	var tmp = $.extend({}, kissProtocol.data[kissProtocol.GET_SETTINGS], config);
-                	if (tmp.ver == 103) {
+                	if (tmp.ver < 104) {
                 		var bo = +tmp['BoardRotation'];
                 		if (bo==4) tmp['CBO'][2]=45;
                 		else if (bo==2) tmp['CBO'][2]=90;
@@ -748,8 +749,18 @@ CONTENT.configuration.initialize = function(callback) {
                 		else if (bo==3) tmp['CBO'][2]=-90;
                 		else if (bo==6) tmp['CBO'][2]=-135;
                 		tmp['BoardRotation']=0;
+                		for (var i=1; i<=4; i++) {
+                			var c = tmp['aux'+i+'Funk'];
+                			if (c==1)  tmp['AUX'][0]=(i * 16) + 5;
+                			if (c==12) tmp['AUX'][0]=(i * 16) + 3;
+                			if (c==13) tmp['AUX'][0]=(i * 16) + 1;
+                			if (c==2)  tmp['AUX'][1]=(i * 16) + 5;
+                			if (c==11) tmp['AUX'][2]=(i * 16) + 5;
+                			if (c==14) tmp['AUX'][3]=(i * 16) + 5;
+                			if (c==6)  tmp['AUX'][4]=(i * 16) + 5;
+                		}
                 	}
-                	tmp.ver = 104; // fix version
+                	tmp.ver = v; // fix version to one we get from FCs
                 	kissProtocol.data[kissProtocol.GET_SETTINGS] = tmp;
                     htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
                     contentChange();

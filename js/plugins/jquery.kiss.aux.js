@@ -72,8 +72,6 @@
         value : function() {
         	var self = $(this),
             data = pluginData(self);
-        	console.log(data.value >> 4);
-        	console.log(data.value & 15);
         	if ((data.value >> 4 == 0) || ((data.value & 15) == 0)) return 0;
         	else return data.value;
         },
