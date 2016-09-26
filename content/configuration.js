@@ -738,6 +738,17 @@ CONTENT.configuration.initialize = function(callback) {
             restoreConfig(function(config) {
                 $('#content').load("./content/configuration.html", function() {
                 	var tmp = $.extend({}, kissProtocol.data[kissProtocol.GET_SETTINGS], config);
+                	if (tmp.ver == 103) {
+                		var bo = +tmp['BoardRotation'];
+                		if (bo==4) tmp['CBO'][2]=45;
+                		else if (bo==2) tmp['CBO'][2]=90;
+                		else if (bo==5) tmp['CBO'][2]=135;
+                		else if (bo==1) tmp['CBO'][2]=180;
+                		else if (bo==7) tmp['CBO'][2]=-45;
+                		else if (bo==3) tmp['CBO'][2]=-90;
+                		else if (bo==6) tmp['CBO'][2]=-135;
+                		tmp['BoardRotation']=0;
+                	}
                 	tmp.ver = 104; // fix version
                 	kissProtocol.data[kissProtocol.GET_SETTINGS] = tmp;
                     htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
