@@ -303,7 +303,7 @@ kissProtocol.processPacket = function (code, obj) {
             obj.RPY_Curve[0] = data.getInt16(40, 0) / 1000;
             obj.RPY_Curve[1] = data.getInt16(42, 0) / 1000;
             obj.RPY_Curve[2] = data.getInt16(44, 0) / 1000;
-
+			obj.ver = data.getUint8(92);
             obj.RXType = data.getInt16(46, 0);
             obj.PPMchanOrder = data.getInt16(48, 0);
             obj.CopterType = data.getInt16(50, 0);
@@ -322,6 +322,12 @@ kissProtocol.processPacket = function (code, obj) {
             obj.AUX[1] = data.getUint8(74);
             obj.AUX[2] = data.getUint8(75);
             obj.AUX[3] = data.getUint8(76);
+            if (obj.ver < 104) {
+            	obj.aux1Funk = data.getUint8(73);
+            	obj.aux2Funk = data.getUint8(74);
+            	obj.aux3Funk = data.getUint8(75);
+            	obj.aux4Funk = data.getUint8(76);
+            }
 	    	obj.maxAng = data.getUint16(77) / 14.3;
 	    	obj.LPF = data.getUint8(79);
 	    
@@ -338,7 +344,7 @@ kissProtocol.processPacket = function (code, obj) {
 	    	obj.SN[10] = data.getUint8(90);
 	    	obj.SN[11] = data.getUint8(91);
 	    
-	    	obj.ver = data.getUint8(92);
+	    	//obj.ver = data.getUint8(92);
 	    
             obj.TPA[0] = data.getUint16(93, 0) / 1000;
             obj.TPA[1] = data.getUint16(95, 0) / 1000;
@@ -386,8 +392,7 @@ kissProtocol.processPacket = function (code, obj) {
 	        	
 	        	obj.AUX[4] = data.getUint8(133);
 	    	} 
-	    	
-	    	console.log(obj);
+	    	kissProtocol.upgradeTo104(obj);
             break;
         case this.SET_SETTINGS:
             console.log('Settings saved');
@@ -467,6 +472,9 @@ kissProtocol.preparePacket = function (code, obj) {
 
     switch (code) {
         case this.SET_SETTINGS:
+        
+        	kissProtocol.downgradeFrom104(obj);
+        
             data.setUint16(0, obj.G_P[0] * 1000, 0);
             data.setUint16(2, obj.G_P[1] * 1000, 0);
             data.setUint16(4, obj.G_P[2] * 1000, 0);
@@ -509,11 +517,18 @@ kissProtocol.preparePacket = function (code, obj) {
             data.setInt16(67, obj.ACCZero[0], 0);
             data.setInt16(69, obj.ACCZero[1], 0);
             data.setInt16(71, obj.ACCZero[2], 0);
-            data.setUint8(73, obj.AUX[0]);
-            data.setUint8(74, obj.AUX[1]);
-            data.setUint8(75, obj.AUX[2]);
-            data.setUint8(76, obj.AUX[3]);
-	    	data.setUint16(77, obj.maxAng * 14.3);
+            if (obj.ver>103) {
+           		data.setUint8(73, obj.AUX[0]);
+            	data.setUint8(74, obj.AUX[1]);
+            	data.setUint8(75, obj.AUX[2]);
+            	data.setUint8(76, obj.AUX[3]);
+            } else {
+            	data.setUint8(73, obj.aux1Funk);
+            	data.setUint8(74, obj.aux2Funk);
+            	data.setUint8(75, obj.aux3Funk);
+            	data.setUint8(76, obj.aux4Funk);
+            }
+ 	    	data.setUint16(77, obj.maxAng * 14.3);
 	    	data.setUint8(79, obj.LPF);
 	
             data.setUint16(80, obj.TPA[0] * 1000, 0);
@@ -531,7 +546,7 @@ kissProtocol.preparePacket = function (code, obj) {
 	    			data.setUint16(88, 0, 0);
 	    			data.setUint16(90, 0, 0);
 	    		}
-		    	data.setUint8(92, obj.BoardRotation,0);
+		    	data.setUint8(92, obj.BoardRotation, 0);
 	    	}
 	    	if(obj.ver > 101){
 		    	data.setUint8(93, obj.CustomTPAInfluence);
@@ -604,6 +619,107 @@ kissProtocol.readString = function(buffer, offset) {
 	 }
 	 return ret;
 };
+
+kissProtocol.upgradeTo104 = function(tmp) {
+	if (tmp.ver < 104) {
+		console.log('Data version: ' + tmp.ver);
+		var bo = +tmp['BoardRotation'];
+		console.log('Board Rotation: ' + bo);
+		tmp['CBO'] = [0, 0, 0];
+		tmp['AUX'] = [0, 0, 0, 0, 0];
+		if (bo==4) tmp['CBO'][2]=45;
+		else if (bo==2) tmp['CBO'][2]=90;
+		else if (bo==5) tmp['CBO'][2]=135;
+		else if (bo==1) tmp['CBO'][2]=180;
+		else if (bo==7) tmp['CBO'][2]=-45;
+		else if (bo==3) tmp['CBO'][2]=-90;
+		else if (bo==6) tmp['CBO'][2]=-135;
+		tmp['BoardRotation']=0;
+		for (var i=1; i<=4; i++) {
+			var c = +tmp['aux'+i+'Funk'];
+			console.log('aux'+i+'Funk: ' + c);
+			if (c==1)  tmp['AUX'][0]=(i * 16) + 5;
+			if (c==12) tmp['AUX'][0]=(i * 16) + 3;
+			if (c==13) tmp['AUX'][0]=(i * 16) + 1;
+			if (c==2)  tmp['AUX'][1]=(i * 16) + 5;
+			if (c==11) tmp['AUX'][2]=(i * 16) + 5;
+			if (c==14) tmp['AUX'][3]=(i * 16) + 5;
+			if (c==6)  tmp['AUX'][4]=(i * 16) + 5;
+		}
+	}
+}
+
+kissProtocol.upgradeTo104 = function(tmp) {
+	if (tmp.ver < 104) {
+		console.log('Data version: ' + tmp.ver + ' upgrading to 104');
+		var bo = +tmp['BoardRotation'];
+		console.log('Board Rotation: ' + bo);
+		tmp['CBO'] = [0, 0, 0];
+		tmp['AUX'] = [0, 0, 0, 0, 0];
+		if (bo==4) tmp['CBO'][2]=45;
+		else if (bo==2) tmp['CBO'][2]=90;
+		else if (bo==5) tmp['CBO'][2]=135;
+		else if (bo==1) tmp['CBO'][2]=180;
+		else if (bo==7) tmp['CBO'][2]=-45;
+		else if (bo==3) tmp['CBO'][2]=-90;
+		else if (bo==6) tmp['CBO'][2]=-135;
+		tmp['BoardRotation']=0;
+		for (var i=1; i<=4; i++) {
+			var c = +tmp['aux'+i+'Funk'];
+			console.log('aux'+i+'Funk: ' + c);
+			
+			if (c==1)  tmp['AUX'][0]=(i * 16) + 5;
+			if (c==12) tmp['AUX'][0]=(i * 16) + 3;
+			if (c==13) tmp['AUX'][0]=(i * 16) + 1;
+			if (c==2)  tmp['AUX'][1]=(i * 16) + 5;
+			if (c==11) tmp['AUX'][2]=(i * 16) + 5;
+			if (c==14) tmp['AUX'][3]=(i * 16) + 5;
+			if (c==3)  tmp['AUX'][4]=(i * 16) + 5;
+		}
+	}
+}
+
+kissProtocol.downgradeFrom104 = function(tmp) {
+	if (tmp.ver < 104) {
+		console.log('Data version: ' + tmp.ver + ' downgrade from 104');
+		tmp['BoardRotation']=0;
+		if (tmp.ver<103) {
+			if (tmp['CBO'][2]==180) tmp['BoardRotation']=1;
+		} else {
+			if (tmp['CBO'][2]==180) tmp['BoardRotation']=1;
+			else if (tmp['CBO'][2]==45) tmp['BoardRotation']=4;
+			else if (tmp['CBO'][2]==90) tmp['BoardRotation']=2;
+			else if (tmp['CBO'][2]==135) tmp['BoardRotation']=5;
+			else if (tmp['CBO'][2]==-45) tmp['BoardRotation']=7;
+			else if (tmp['CBO'][2]==-90) tmp['BoardRotation']=3;
+			else if (tmp['CBO'][2]==-135) tmp['BoardRotation']=6;
+		}
+		if (tmp['AUX'][0] != 0) {
+			var k = tmp['AUX'][0] >> 4;
+			var m = 1;
+			if ((tmp['AUX'][0] & 15) == 3) m = 12;
+			if ((tmp['AUX'][0] & 15) == 1) m = 13;
+			tmp['aux'+k+'Funk'] = m;
+		}
+		if (tmp['AUX'][1] != 0) {
+			var k = tmp['AUX'][1] >> 4;
+			tmp['aux'+k+'Funk'] = 2;
+		}
+		if (tmp['AUX'][2] != 0) {
+			var k = tmp['AUX'][2] >> 4;
+			tmp['aux'+k+'Funk'] = 11;
+		}
+		if (tmp['AUX'][3] != 0) {
+			var k = tmp['AUX'][3] >> 4;
+			tmp['aux'+k+'Funk'] = 14;
+		}
+		if (tmp['AUX'][4] != 0) {
+			var k = tmp['AUX'][4] >> 4;
+			tmp['aux'+k+'Funk'] = 3;
+		}
+	}
+	
+}
 
 kissProtocol.disconnectCleanup = function () {
     this.ready = false;

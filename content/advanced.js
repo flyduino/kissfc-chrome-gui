@@ -22,7 +22,7 @@ CONTENT.advanced.initialize = function(callback) {
         validateBounds('#content input[type="text"]');
         var settingsFilled = 0;
         
-        if (data['ver'] > 103) {
+        //if (data['ver'] > 103) {
 			$('input[name="CBO0"]').val(+data['CBO'][0]);
 			$('input[name="CBO1"]').val(+data['CBO'][1]);
 			$('input[name="CBO2"]').val(+data['CBO'][2]);
@@ -38,7 +38,7 @@ CONTENT.advanced.initialize = function(callback) {
                 	$('input[name="CBO2"]').attr('disabled', 'true');
             	}
         	});
-        } 
+        //} 
         
         $('input[name="UCTI"]').on('change', function() {
         	contentChange();
@@ -112,7 +112,8 @@ CONTENT.advanced.initialize = function(callback) {
         $('input[name="LVP3"]').val(data['voltgePercent3']);
 
 		var cbo = false;
-		if (data['ver'] > 103) {
+		//if (data['ver'] > 103) {
+			$('input[name="CBO"]').removeAttr("disabled");
 			if (+data['CBO'][0]!=0 || +data['CBO'][1]!=0 || +data['CBO'][2]!=0) {
 				cbo = true;
 			}
@@ -122,7 +123,7 @@ CONTENT.advanced.initialize = function(callback) {
            	 	 $('input[name="CBO1"]').removeAttr("disabled");
             	 $('input[name="CBO2"]').removeAttr("disabled");
 			}
-		}
+		//}
 
         if (data['BatteryInfluence'] || data['CustomTPAInfluence'] || cbo) {
             document.body.style.overflow = "scroll";

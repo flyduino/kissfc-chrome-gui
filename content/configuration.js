@@ -13,10 +13,10 @@ CONTENT.configuration.initialize = function(callback) {
     }
 
     kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-    	if (kissProtocol.data[kissProtocol.GET_SETTINGS]["ver"] < 104) {
+    	/* if (kissProtocol.data[kissProtocol.GET_SETTINGS]["ver"] < 104) {
     		$("#navigation").hide();
     		$('#content').load("./content/upgrade.html", function() {});
-    	} else {
+    	} else*/ {
         	$('#content').load("./content/configuration.html", function() {
             	htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
        	 	});
@@ -744,27 +744,7 @@ CONTENT.configuration.initialize = function(callback) {
                 $('#content').load("./content/configuration.html", function() {
                 	var v = +kissProtocol.data[kissProtocol.GET_SETTINGS]['ver'];
                 	var tmp = $.extend({}, kissProtocol.data[kissProtocol.GET_SETTINGS], config);
-                	if (tmp.ver < 104) {
-                		var bo = +tmp['BoardRotation'];
-                		if (bo==4) tmp['CBO'][2]=45;
-                		else if (bo==2) tmp['CBO'][2]=90;
-                		else if (bo==5) tmp['CBO'][2]=135;
-                		else if (bo==1) tmp['CBO'][2]=180;
-                		else if (bo==7) tmp['CBO'][2]=-45;
-                		else if (bo==3) tmp['CBO'][2]=-90;
-                		else if (bo==6) tmp['CBO'][2]=-135;
-                		tmp['BoardRotation']=0;
-                		for (var i=1; i<=4; i++) {
-                			var c = tmp['aux'+i+'Funk'];
-                			if (c==1)  tmp['AUX'][0]=(i * 16) + 5;
-                			if (c==12) tmp['AUX'][0]=(i * 16) + 3;
-                			if (c==13) tmp['AUX'][0]=(i * 16) + 1;
-                			if (c==2)  tmp['AUX'][1]=(i * 16) + 5;
-                			if (c==11) tmp['AUX'][2]=(i * 16) + 5;
-                			if (c==14) tmp['AUX'][3]=(i * 16) + 5;
-                			if (c==6)  tmp['AUX'][4]=(i * 16) + 5;
-                		}
-                	}
+                	kissProtocol.upgradeTo104(tmp);
                 	tmp.ver = v; // fix version to one we get from FCs
                 	kissProtocol.data[kissProtocol.GET_SETTINGS] = tmp;
                     htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
