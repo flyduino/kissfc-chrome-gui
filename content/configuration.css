@@ -114,3 +114,12 @@
 .tricopter {
 	display: none;
 }
+
+.configuration dt.lap-timer {
+	width: 160px;
+}
+
+.configuration select.lap-timer-transponder-id {
+	width: 40px;
+	margin-left: 6px;
+}

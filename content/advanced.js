@@ -133,15 +133,26 @@ CONTENT.advanced.initialize = function(callback) {
         	contentChange();
         });
         
-        $('input[name="lapTimerTransponderId"]').on("input", function() {
+        for (var i=0; i<64; i++) {
+        	$("select[name='lapTimerTransponderId']").append("<option value='"+i+"'>"+((i==0)? '--' : i)+"</option>");
+        }
+        
+        $('input[name^="lapTimer"]').on("change", function() {
         	contentChange();
         });
         
-        $('selecy[name="lapTimerTypeAndInterface"]').on("change", function() {
-        	contentChange();
+        $('select[name="lapTimerTypeAndInterface"]').on("change", function() {
+        	if ($(this).val()==0) $("select[name='lapTimerTransponderId']").hide();
+        	else $("select[name='lapTimerTransponderId']").show();
         });
         
-        
+        if (data.CopterType>3) {
+        	if (data.lapTimerTypeAndInterface==18 || data.lapTimerTypeAndInterface==19) {
+        		data.lapTimerTypeAndInterface=0;
+        	}
+        	$("select[name='lapTimerTypeAndInterface'] option[value='18']").remove();
+        	$("select[name='lapTimerTypeAndInterface'] option[value='19']").remove();
+        }
         
         var MCUid = '';
         for (var i = 0; i < 4; i++) {
@@ -159,10 +170,14 @@ CONTENT.advanced.initialize = function(callback) {
             MCUid += data['SN'][i].toString(16).toUpperCase();
         }
 
-        $('input[name="lapTimerTransponderId"]').val(data['lapTimerTransponderId']);
-        $('select[name="lapTimerTypeAndInterface"]').val(data['lapTimerTypeAndInterface']);
+        $('select[name="lapTimerTransponderId"]').val(data.lapTimerTransponderId);
+        $('select[name="lapTimerTypeAndInterface"]').val(data.lapTimerTypeAndInterface);
         
-        console.log(data);
+    	if (data.lapTimerTypeAndInterface==0) {
+    		$("select[name='lapTimerTransponderId']").hide();
+    	} else {
+    		$("select[name='lapTimerTransponderId']").show();
+    	}
         
         function grabData() {
             // uav type and receiver
@@ -192,7 +207,7 @@ CONTENT.advanced.initialize = function(callback) {
            	 	data['CBO'] = [0, 0, 0];
             }
           	data['lapTimerTypeAndInterface'] = parseInt($('select[name="lapTimerTypeAndInterface"]').val());
-        	data['lapTimerTransponderId'] = parseInt($('input[name="lapTimerTransponderId"]').val());
+        	data['lapTimerTransponderId'] = parseInt($('select[name="lapTimerTransponderId"]').val());
         }
         settingsFilled = 1;
 
