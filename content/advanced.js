@@ -22,7 +22,6 @@ CONTENT.advanced.initialize = function(callback) {
         validateBounds('#content input[type="text"]');
         var settingsFilled = 0;
         
-        //if (data['ver'] > 103) {
 			$('input[name="CBO0"]').val(+data['CBO'][0]);
 			$('input[name="CBO1"]').val(+data['CBO'][1]);
 			$('input[name="CBO2"]').val(+data['CBO'][2]);
@@ -38,7 +37,6 @@ CONTENT.advanced.initialize = function(callback) {
                 	$('input[name="CBO2"]').attr('disabled', 'true');
             	}
         	});
-        //} 
         
         $('input[name="UCTI"]').on('change', function() {
         	contentChange();
@@ -112,7 +110,6 @@ CONTENT.advanced.initialize = function(callback) {
         $('input[name="LVP3"]').val(data['voltgePercent3']);
 
 		var cbo = false;
-		//if (data['ver'] > 103) {
 			$('input[name="CBO"]').removeAttr("disabled");
 			if (+data['CBO'][0]!=0 || +data['CBO'][1]!=0 || +data['CBO'][2]!=0) {
 				cbo = true;
@@ -123,7 +120,6 @@ CONTENT.advanced.initialize = function(callback) {
            	 	 $('input[name="CBO1"]').removeAttr("disabled");
             	 $('input[name="CBO2"]').removeAttr("disabled");
 			}
-		//}
 
         if (data['BatteryInfluence'] || data['CustomTPAInfluence'] || cbo) {
             document.body.style.overflow = "scroll";
@@ -136,6 +132,16 @@ CONTENT.advanced.initialize = function(callback) {
         $('input[name^="LV"]').on("input", function() {
         	contentChange();
         });
+        
+        $('input[name="lapTimerTransponderId"]').on("input", function() {
+        	contentChange();
+        });
+        
+        $('selecy[name="lapTimerTypeAndInterface"]').on("change", function() {
+        	contentChange();
+        });
+        
+        
         
         var MCUid = '';
         for (var i = 0; i < 4; i++) {
@@ -153,6 +159,11 @@ CONTENT.advanced.initialize = function(callback) {
             MCUid += data['SN'][i].toString(16).toUpperCase();
         }
 
+        $('input[name="lapTimerTransponderId"]').val(data['lapTimerTransponderId']);
+        $('select[name="lapTimerTypeAndInterface"]').val(data['lapTimerTypeAndInterface']);
+        
+        console.log(data);
+        
         function grabData() {
             // uav type and receiver
             data['BoardRotation'] = 0;
@@ -180,6 +191,8 @@ CONTENT.advanced.initialize = function(callback) {
             } else {
            	 	data['CBO'] = [0, 0, 0];
             }
+          	data['lapTimerTypeAndInterface'] = parseInt($('select[name="lapTimerTypeAndInterface"]').val());
+        	data['lapTimerTransponderId'] = parseInt($('input[name="lapTimerTransponderId"]').val());
         }
         settingsFilled = 1;
 
@@ -218,22 +231,7 @@ CONTENT.advanced.initialize = function(callback) {
             	 });
             }
         });
-
-        $('#backup').on('click', function() {
-            grabData();
-            //backupConfig();
-        });
-
-        $('#restore').on('click', function() {
-            /*restoreConfig(function(config) {
-                $('#content').load("./content/advanced.html", function() {
-                	var tmp = $.extend({}, kissProtocol.data[kissProtocol.GET_SETTINGS], config);
-                	kissProtocol.data[kissProtocol.GET_SETTINGS] = tmp;
-                    htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
-                    contentChange();
-                });
-            });*/
-        });
+       
     }
 };
 
