@@ -123,27 +123,22 @@ kissProtocol.send = function (code, data, callback) {
 };
 
 kissProtocol.proceedRequest = function() {
-	if(!this.receiving){
+	if (!this.receiving){
 		this.ready = true;
 		if (this.requests.length) {
 			this.processingRequest = this.requests[0];
-
+			this.receiving = true;
+			this.errCase = 0;		
 			serial.send(this.processingRequest.buffer, function (sendInfo) {
 				kissProtocol.proceedRequest();
 			});
-			this.receiving = true;
-			this.errCase = 0;
 		}
 		if(this.ReceiveTimeout != 0 ){
 			clearTimeout(this.ReceiveTimeout);
 			this.ReceiveTimeout = 0;
 		}
-		this.ReceiveTimeout =  window.setTimeout(function(){kissProtocol.receiving = false;},100); 
+		this.ReceiveTimeout =  window.setTimeout(function(){kissProtocol.receiving = false;},5000); 
 	}
-	if(this.RequestInterval == 0){
-		this.RequestInterval = window.setInterval(function(){ kissProtocol.proceedRequest();},10);
-	}
-	
 }
 
 kissProtocol.processPacket = function (code, obj) {
@@ -376,6 +371,9 @@ kissProtocol.processPacket = function (code, obj) {
 	    	obj.loggerConfig = 0;
 	    	obj.secret = 0;
 	    	obj.vbatAlarm = 0;
+	    	obj.wifiPassword='kisskiss';
+	    	obj.debugVariables = 0;
+	    	
 	    	if (obj.ver > 102){
 	        	obj.secret = data.getUint8(120);
 	        	obj.loggerConfig = data.getUint8(121);
@@ -394,6 +392,9 @@ kissProtocol.processPacket = function (code, obj) {
 	        	
 	        	obj.lapTimerTypeAndInterface = data.getUint8(134);
 	        	obj.lapTimerTransponderId = data.getUint16(135, 0);
+	        	
+	        	obj.wifiPassword = kissProtocol.readBytesAsString(data, 137, 8);
+	        	obj.loggerDebugVariables =  data.getUint8(145);
 	    	} 
 	    	kissProtocol.upgradeTo104(obj);
             break;
@@ -589,7 +590,15 @@ kissProtocol.preparePacket = function (code, obj) {
 	    		data.setUint8(123, obj.AUX[4]);
 	    		data.setUint8(124, obj.lapTimerTypeAndInterface);
 	    		data.setUint16(125, obj.lapTimerTransponderId, 0);
-	    		blen=127;
+	    		
+	    		var password = obj.wifiPassword+'        '; // add some spacer @the end
+	    		for (i=0; i<8; i++) {
+	    			data.setUint8(127+i, password.charCodeAt(i));
+	    		}
+	    		
+	    		data.setUint8(135, obj.loggerDebugVariables);
+	    		
+	    		blen=136;
 	    	}
             break;
             
@@ -634,6 +643,15 @@ kissProtocol.readString = function(buffer, offset) {
 	 }
 	 return ret;
 };
+
+kissProtocol.readBytesAsString = function(buffer, offset, len) {
+	 var ret = "";
+	 for (var i = offset; i < (offset+len) ; i++) {
+	 	ret += String.fromCharCode(buffer.getUint8(i));
+	 }
+	 return ret;
+};
+
 
 kissProtocol.upgradeTo104 = function(tmp) {
 	if (tmp.ver < 104) {

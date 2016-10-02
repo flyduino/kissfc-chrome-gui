@@ -129,6 +129,8 @@
 		</tr>
 	</table>
 	
+	<div class="clear-both"></div>
+	
 	<div id="lapTimer">
 	<div class="groupTitle">Lap timer configuration</div>
 	<dl>
@@ -144,7 +146,40 @@
 			</select>
 		</dd>
 	</dl>
-	
 	</div>
 
+ 	
+ 
+	<div id="wifi">
+	
+	<div class="groupTitle">KISS WIFI network</div>
+	<dl>
+		<dt class="ssid-title">SSID and Password</dt>
+		<dd class="ssid-data">
+			<span class="ssid"></span>
+			<input id="wifiPassword" class="no_validation" type="text" size="8" maxlength="8" name="wifiPassword" value="123" />
+		</dd>
+	</dl>
+	</div>
+	
+	<div id="loggerDebug">
+	<div class="groupTitle">Logger Debug Configuration</div>
+	<dl>
+		<dt class="logger-debug">Debug fields</dt>
+		<dd class="logger-debug-variables">
+			<select  name="loggerDebugVariables">
+				<option value="0">--</option>
+				<option value="1">Raw Gyroscope</option>
+				<option value="2">Raw Accelerometer</option>
+				<!-- option value="3">Loop parameters</option-->
+				<option value="4">ESC Voltage</option>
+				<option value="5">ESC Current</option>
+				<option value="6">ESC Temperature</option>
+				<option value="7">ESC RPMs</option>
+				<option value="8">ESC Consumption</option>
+			</select>
+		</dd>
+	</dl>
+	</div>
+	
 </div>

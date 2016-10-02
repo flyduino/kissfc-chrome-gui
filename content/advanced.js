@@ -22,6 +22,13 @@ CONTENT.advanced.initialize = function(callback) {
         validateBounds('#content input[type="text"]');
         var settingsFilled = 0;
         
+        
+        	if (data['loggerConfig']>0) {
+        		$("#loggerDebug").show();
+        	} else {
+        		$("#loggerDebug").hide();
+        	}
+        
 			$('input[name="CBO0"]').val(+data['CBO'][0]);
 			$('input[name="CBO1"]').val(+data['CBO'][1]);
 			$('input[name="CBO2"]').val(+data['CBO'][2]);
@@ -165,11 +172,14 @@ CONTENT.advanced.initialize = function(callback) {
             MCUid += data['SN'][i].toString(16).toUpperCase();
         }
         MCUid += '-';
+        var SSID='KISS-';
         for (var i = 8; i < 12; i++) {
-            if (data['SN'][i] < 16) MCUid += '0';
+            if (data['SN'][i] < 16) { MCUid += '0'; SSID += '0' }
             MCUid += data['SN'][i].toString(16).toUpperCase();
+            SSID += data['SN'][i].toString(16).toUpperCase();
         }
 
+        $(".ssid").text('SSID: ' + SSID);
         $('select[name="lapTimerTransponderId"]').val(data.lapTimerTransponderId);
         $('select[name="lapTimerTypeAndInterface"]').val(data.lapTimerTypeAndInterface);
         
@@ -178,7 +188,19 @@ CONTENT.advanced.initialize = function(callback) {
     	} else {
     		$("select[name='lapTimerTransponderId']").show();
     	}
+    	
+    	$('input[name="wifiPassword"]').val(data['wifiPassword']);
+    	$('select[name="loggerDebugVariables"]').val(data['loggerDebugVariables']);
         
+    	  
+        $('input[name="wifiPassword"]').on("change", function() {
+        	contentChange();
+        });
+    	
+        $('select[name="loggerDebugVariables"]').on("change", function() {
+        	contentChange();
+        });
+    	
         function grabData() {
             // uav type and receiver
             data['BoardRotation'] = 0;
@@ -208,6 +230,10 @@ CONTENT.advanced.initialize = function(callback) {
             }
           	data['lapTimerTypeAndInterface'] = parseInt($('select[name="lapTimerTypeAndInterface"]').val());
         	data['lapTimerTransponderId'] = parseInt($('select[name="lapTimerTransponderId"]').val());
+        	
+        	data['wifiPassword'] = $('input[name="wifiPassword"]').val();
+        	data['loggerDebugVariables'] = parseInt($('select[name="loggerDebugVariables"]').val());
+        	
         }
         settingsFilled = 1;
 

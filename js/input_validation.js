@@ -1,7 +1,7 @@
 'use strict';
 
 function validateBounds(selector) {
-    var inputs = $(selector).not('.validation');
+    var inputs = $(selector).not('.validation').not('.no_validation');
 
     // add spinners
     var spinners = [];

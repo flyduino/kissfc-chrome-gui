@@ -15,6 +15,8 @@ $(document).ready(function () {
                     $('#port').prop('disabled', true);
                     $('a.connect').text('Connecting');
 
+                    serial = getSerialDriverForPort(selectedPort);
+                    
                     serial.connect(selectedPort, {bitrate: 115200}, connected);
                 } else {
                     GUI.timeoutKillAll();

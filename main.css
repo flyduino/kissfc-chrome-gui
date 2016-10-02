@@ -70,7 +70,7 @@ input[type="number"]::-webkit-inner-spin-button {
 #portArea #port {
     float: left;
     margin: 5px 0 0 5px;
-    width: 100px;
+    width: 150px;
     height: 20px;
     line-height: 20px;
     border: 1px solid #ad0d0d;

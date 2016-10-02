@@ -123,3 +123,16 @@
 	width: 40px;
 	margin-left: 6px;
 }
+
+.configuration dt.ssid-title {
+	width: 160px;
+}
+
+#wifiPassword {
+	text-align: left;
+	margin-left: 10px;
+	width: 100px;
+	font-size: 12px;
+}
+
+

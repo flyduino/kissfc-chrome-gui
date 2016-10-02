@@ -16,7 +16,7 @@ PortHandler.initialize = function () {
 PortHandler.check = function () {
     var self = this;
 
-    serial.getDevices(function(currentPorts) {
+    getAvailableSerialDevices(function(currentPorts) {
         // port got removed or initialPorts wasn't initialized yet
         if (self.arrayDifference(self.initialPorts, currentPorts).length > 0 || !self.initialPorts) {
             var removedPorts = self.arrayDifference(self.initialPorts, currentPorts);
