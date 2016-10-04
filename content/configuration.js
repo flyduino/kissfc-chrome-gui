@@ -68,7 +68,7 @@ CONTENT.configuration.initialize = function(callback) {
                         chosenFileEntry = fileEntryWritable;
                         var config = kissProtocol.data[kissProtocol.GET_SETTINGS];
                         var json = JSON.stringify(config, function(k, v) {
-                            if (k === 'buffer' || k === 'isActive' || k === 'actKey' || k === 'SN') {
+                            if (k === 'buffer' || k === 'isActive' || k === 'actKey' || k === 'SN' || k === 'wifiPassword') {
                                 return undefined;
                             } else {
                                 return v;
