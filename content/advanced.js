@@ -22,8 +22,19 @@ CONTENT.advanced.initialize = function(callback) {
         validateBounds('#content input[type="text"]');
         var settingsFilled = 0;
         
+        	if (data['ver'] > 102) {
+        		$('select[name="loggerConfig"]').removeAttr("disabled");
+        	} 
+
         	if (data['loggerConfig']>0) $("#loggerDebug").show();
         	else $("#loggerDebug").hide();
+        	
+        	$('select[name="loggerConfig"]').val(data['loggerConfig']);
+            $('select[name="loggerConfig"]').on('change', function() {
+            	if (+$(this).val()>0) $("#loggerDebug").show();
+            	else $("#loggerDebug").hide();
+                contentChange();
+            });
         
 			$('input[name="CBO0"]').val(+data['CBO'][0]);
 			$('input[name="CBO1"]').val(+data['CBO'][1]);
@@ -40,7 +51,7 @@ CONTENT.advanced.initialize = function(callback) {
                 	$('input[name="CBO2"]').attr('disabled', 'true');
             	}
         	});
-		var cbo = false;
+			var cbo = false;
 			$('input[name="CBO"]').removeAttr("disabled");
 			if (+data['CBO'][0]!=0 || +data['CBO'][1]!=0 || +data['CBO'][2]!=0) {
 				cbo = true;
@@ -95,7 +106,7 @@ CONTENT.advanced.initialize = function(callback) {
             SSID += data['SN'][i].toString(16).toUpperCase();
         }
 
-        $(".ssid").text('SSID: ' + SSID);
+        $(".ssid").text(SSID);
         $('select[name="lapTimerTransponderId"]').val(data.lapTimerTransponderId);
         $('select[name="lapTimerTypeAndInterface"]').val(data.lapTimerTypeAndInterface);
         
@@ -117,6 +128,57 @@ CONTENT.advanced.initialize = function(callback) {
         	contentChange();
         });
     	
+        if (data['ver'] > 103) {
+        	
+        	$('input[name="vbatAlarm"]').val(data['vbatAlarm']);
+			$('input[name="vbatAlarm"]').removeAttr("disabled");
+			
+            $('#colorPicker').minicolors({
+        		format: 'rgb',
+        		change: function(value, opacity) {
+        			var rgb = value.slice(4, -1).replace(/\s+/g, '');
+        		  	var found = false;
+        		  	$('select[name="RGBSelector"] > option').each(function() {
+    					if (this.value==rgb) {
+    						$('select[name="RGBSelector"]').val(this.value);
+    						found = true;
+    					}
+					});
+					if (!found) $('select[name="RGBSelector"]').val('');
+					$('input[name="RGB"]').val(rgb);
+					contentChange();
+        		},
+        		hide: function() {
+    				console.log('Hide event triggered!');
+    			},
+    			show: function() {
+        			console.log('Show event triggered!');
+   				}
+        	});
+         	var rgb = data['RGB'][0]+','+data['RGB'][1]+','+data['RGB'][2];
+         	$('input[name="RGB"]').val(rgb);
+         	$('#colorPicker').minicolors('value', {color: 'rgb('+rgb+')', opacity: 1,  position: 'bottom right'});
+         	$('select[name="RGBSelector"] > option').each(function() {
+    			if (this.value==rgb) {
+    				$('select[name="RGBSelector"]').val(this.value);
+    			}
+			});
+			$('select[name="RGBSelector"]').removeAttr("disabled");
+        }
+        
+        
+        $('select[name="RGBSelector"]').on('change', function() {
+        	if (this.value!=='') {
+            	$('input[name="RGB"]').val(this.value);
+            } else {
+            	// custom
+            	$('input[name="RGB"]').val('10,20,30');
+            }
+            var rgb = $('input[name="RGB"]').val();
+            $('#colorPicker').minicolors('value', {color: 'rgb('+rgb+')', opacity: 1});
+            contentChange();
+        });
+        
         function grabData() {
             data['BoardRotation'] = 0;
           	if ($('input[name="CBO"]').prop('checked') ? 1 : 0 == 1) {
@@ -130,6 +192,16 @@ CONTENT.advanced.initialize = function(callback) {
         	data['lapTimerTransponderId'] = parseInt($('select[name="lapTimerTransponderId"]').val());
         	data['wifiPassword'] = $('input[name="wifiPassword"]').val();
         	data['loggerDebugVariables'] = parseInt($('select[name="loggerDebugVariables"]').val());
+            data['loggerConfig'] = parseInt($('select[name="loggerConfig"]').val());
+            
+            var rgb = $('input[name="RGB"]').val();
+            if (rgb == '') rgb='0,0,0';
+            var rgbArray = rgb.split(',');
+            data['RGB'][0]=parseInt(rgbArray[0]);
+            data['RGB'][1]=parseInt(rgbArray[1]);
+            data['RGB'][2]=parseInt(rgbArray[2]);
+            
+            data['vbatAlarm'] = parseFloat($('input[name="vbatAlarm"]').val());
         }
         settingsFilled = 1;
 

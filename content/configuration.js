@@ -186,7 +186,6 @@ CONTENT.configuration.initialize = function(callback) {
         }
         
         if (data['ver'] > 102) {
-            $('select[name="loggerConfig"]').removeAttr("disabled");
             $('input[name="secret"]').removeAttr("disabled");
         } else {
         	$("select[name^='aux'] option[value='12']").remove();
@@ -194,39 +193,7 @@ CONTENT.configuration.initialize = function(callback) {
         }
         
         if (data['ver'] > 103) {
-            $('#colorPicker').minicolors({
-        		format: 'rgb',
-        		change: function(value, opacity) {
-        			var rgb = value.slice(4, -1).replace(/\s+/g, '');
-        		  	var found = false;
-        		  	$('select[name="RGBSelector"] > option').each(function() {
-    					if (this.value==rgb) {
-    						$('select[name="RGBSelector"]').val(this.value);
-    						found = true;
-    					}
-					});
-					if (!found) $('select[name="RGBSelector"]').val('');
-					$('input[name="RGB"]').val(rgb);
-					contentChange();
-        		},
-        		hide: function() {
-    				console.log('Hide event triggered!');
-    			},
-    			show: function() {
-        			console.log('Show event triggered!');
-   				}
-        	});
-         	var rgb = data['RGB'][0]+','+data['RGB'][1]+','+data['RGB'][2];
-         	$('input[name="RGB"]').val(rgb);
-         	$('#colorPicker').minicolors('value', {color: 'rgb('+rgb+')', opacity: 1,  position: 'bottom right'});
-         	$('select[name="RGBSelector"] > option').each(function() {
-    			if (this.value==rgb) {
-    				$('select[name="RGBSelector"]').val(this.value);
-    			}
-			});
-			$('select[name="RGBSelector"]').removeAttr("disabled");
-			$('input[name="vbatAlarm"]').val(data['vbatAlarm']);
-			$('input[name="vbatAlarm"]').removeAttr("disabled");
+			//
         } else {
         	/* Some fixes for backward compatibility */
         	$("select[name^='aux'] option[value='14']").remove();
@@ -440,28 +407,13 @@ CONTENT.configuration.initialize = function(callback) {
             contentChange();
         });
  
- 		$('select[name="loggerConfig"]').val(data['loggerConfig']);
-        $('select[name="loggerConfig"]').on('change', function() {
-            contentChange();
-        });
+ 		
         
         $('input[name="secret"]').val(data['secret']);
         $('input[name="secret"]').on('change', function() {
             contentChange();
         });
         
-        $('select[name="RGBSelector"]').on('change', function() {
-        	if (this.value!=='') {
-            	$('input[name="RGB"]').val(this.value);
-            } else {
-            	// custom
-            	$('input[name="RGB"]').val('10,20,30');
-            }
-            var rgb = $('input[name="RGB"]').val();
-            $('#colorPicker').minicolors('value', {color: 'rgb('+rgb+')', opacity: 1});
-            contentChange();
-        });
-
         function grabData() {
             // uav type and receiver
             data['CopterType'] = parseInt($('select.mixer').val());
@@ -528,22 +480,12 @@ CONTENT.configuration.initialize = function(callback) {
             data['LPF'] = parseInt($('select[name="lpf"]').val());
             
             data['secret'] = parseInt($('input[name="secret"]').val());
-            data['loggerConfig'] = parseInt($('select[name="loggerConfig"]').val());
-            
-            var rgb = $('input[name="RGB"]').val();
-            if (rgb == '') rgb='0,0,0';
-            var rgbArray = rgb.split(',');
-            data['RGB'][0]=parseInt(rgbArray[0]);
-            data['RGB'][1]=parseInt(rgbArray[1]);
-            data['RGB'][2]=parseInt(rgbArray[2]);
-            
+        
             data['AUX'][0]=$("#aux0").kissAux('value');
             data['AUX'][1]=$("#aux1").kissAux('value');
             data['AUX'][2]=$("#aux2").kissAux('value');
             data['AUX'][3]=$("#aux3").kissAux('value');
             data['AUX'][4]=data['Active3DMode'] ? $("#aux4").kissAux('value') : 0;
-            
-            data['vbatAlarm'] = parseFloat($('input[name="vbatAlarm"]').val());
         }
         settingsFilled = 1;
 
