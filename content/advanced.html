@@ -79,29 +79,7 @@
 				</dl>
 			</div>
 
-			<div id="led">
-				<div class="groupTitle">Led color</div>
-				<dl class="general-settings">
-					<dt>
-						<span title="Led Color">Select Color</span>
-					</dt>
-					<dd>
-						<select disabled="true" name="RGBSelector">
-							<option value="0,0,0">Black</option>
-							<option value="255,255,255">White</option>
-							<option value="255,255,0">Yellow</option>
-							<option value="255,123,0">Orange</option>
-							<option value="255,0,0">Red</option>
-							<option value="128,0,128">Purple</option>
-							<option value="0,0,255">Blue</option>
-							<option value="0,255,0">Green</option>
-							<option value="0,255,255">Cyan</option>
-							<option value="" selected>Custom</option>
-						</select><input type="hidden" id="colorPicker" /> <input type="hidden"
-							name="RGB" id="RGB" value="" />
-					</dd>
-				</dl>
-			</div>
+			
 
 		</div>
 	</div>
@@ -126,18 +104,6 @@
 			</dl>
 		</div>
 
-		<div id="wifi">
-			<div class="groupTitle">KISS WIFI network</div>
-			<dl class="general-settings">
-				<dt class="ssid-title">SSID and Password</dt>
-				<dd class="ssid-data">
-					<span class="ssid"></span> <input id="wifiPassword"
-						class="no_validation" type="text" size="8" maxlength="8"
-						name="wifiPassword" value="123" />
-				</dd>
-			</dl>
-		</div>
-
 		<div id="bat">
 			<div class="groupTitle">Lipo alarm</div>
 			<dl class="general-settings">
@@ -149,6 +115,30 @@
 				</dd>
 			</dl>
 		</div>
+		
+		<div id="led">
+				<div class="groupTitle">Led color</div>
+				<dl class="general-settings">
+					<dt>
+						<span title="Led Color">Select Color</span>
+					</dt>
+					<dd>
+						<select disabled="true" name="RGBSelector">
+							<option value="0,0,0">Black</option>
+							<option value="255,255,255">White</option>
+							<option value="255,255,0">Yellow</option>
+							<option value="255,123,0">Orange</option>
+							<option value="255,0,0">Red</option>
+							<option value="128,0,128">Purple</option>
+							<option value="0,0,255">Blue</option>
+							<option value="0,255,0">Green</option>
+							<option value="0,255,255">Cyan</option>
+							<option value="" selected>Custom</option>
+						</select><input type="hidden" id="colorPicker" /> <input type="hidden"
+							name="RGB" id="RGB" value="" />
+					</dd>
+				</dl>
+			</div>
 
 	</div>
 </div>

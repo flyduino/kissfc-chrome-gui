@@ -10,7 +10,7 @@ CONTENT.welcome.initialize = function (callback) {
     }
 
     $('#content').load("./content/welcome.html", htmlLoaded);
-
+    
     function checkDFU() {
     	 chrome.usb.getDevices(usbDevices.STM32DFU, function (result) {
  	        if (result.length) {

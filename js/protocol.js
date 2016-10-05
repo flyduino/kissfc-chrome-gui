@@ -371,7 +371,6 @@ kissProtocol.processPacket = function (code, obj) {
 	    	obj.loggerConfig = 0;
 	    	obj.secret = 0;
 	    	obj.vbatAlarm = 0;
-	    	obj.wifiPassword='kisskiss';
 	    	obj.debugVariables = 0;
 	    	
 	    	if (obj.ver > 102){
@@ -392,9 +391,8 @@ kissProtocol.processPacket = function (code, obj) {
 	        	
 	        	obj.lapTimerTypeAndInterface = data.getUint8(134);
 	        	obj.lapTimerTransponderId = data.getUint16(135, 0);
-	        	
-	        	obj.wifiPassword = kissProtocol.readBytesAsString(data, 137, 8);
-	        	obj.loggerDebugVariables =  data.getUint8(145);
+
+	        	obj.loggerDebugVariables =  data.getUint8(137);
 	    	} 
 	    	kissProtocol.upgradeTo104(obj);
             break;
@@ -590,13 +588,7 @@ kissProtocol.preparePacket = function (code, obj) {
 	    		data.setUint8(123, obj.AUX[4]);
 	    		data.setUint8(124, obj.lapTimerTypeAndInterface);
 	    		data.setUint16(125, obj.lapTimerTransponderId, 0);
-	    		
-	    		var password = obj.wifiPassword+'        '; // add some spacer @the end
-	    		for (i=0; i<8; i++) {
-	    			data.setUint8(127+i, password.charCodeAt(i));
-	    		}
-	    		
-	    		data.setUint8(135, obj.loggerDebugVariables);
+	    		data.setUint8(127, obj.loggerDebugVariables);
 	    		
 	    		blen=136;
 	    	}

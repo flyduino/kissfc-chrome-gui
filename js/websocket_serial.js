@@ -7,7 +7,7 @@ var websocketSerial = {
     bytesReceived:   0,
     bytesSent:       0,
     failed:          0,
-    url:			 "ws://kiss.fc:81/",
+    url:			 "ws://192.168.4.1:81/",
     ws:				 null,
     transmitting:    false,
     outputBuffer:    [],

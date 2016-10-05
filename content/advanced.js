@@ -116,14 +116,8 @@ CONTENT.advanced.initialize = function(callback) {
     		$("select[name='lapTimerTransponderId']").show();
     	}
     	
-    	$('input[name="wifiPassword"]').val(data['wifiPassword']);
     	$('select[name="loggerDebugVariables"]').val(data['loggerDebugVariables']);
-        
     	  
-        $('input[name="wifiPassword"]').on("change", function() {
-        	contentChange();
-        });
-    	
         $('select[name="loggerDebugVariables"]').on("change", function() {
         	contentChange();
         });
@@ -190,7 +184,6 @@ CONTENT.advanced.initialize = function(callback) {
             }
           	data['lapTimerTypeAndInterface'] = parseInt($('select[name="lapTimerTypeAndInterface"]').val());
         	data['lapTimerTransponderId'] = parseInt($('select[name="lapTimerTransponderId"]').val());
-        	data['wifiPassword'] = $('input[name="wifiPassword"]').val();
         	data['loggerDebugVariables'] = parseInt($('select[name="loggerDebugVariables"]').val());
             data['loggerConfig'] = parseInt($('select[name="loggerConfig"]').val());
             
