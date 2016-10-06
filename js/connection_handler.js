@@ -60,6 +60,7 @@ $(document).ready(function () {
             GUI.connectingTo = false;
 
             // save selected port with chrome.storage if the port differs
+            if (typeof chromeSerial !== 'undefined') {
             chrome.storage.local.get('lastUsedPort', function (result) {
                 if (result.lastUsedPort) {
                     if (result.lastUsedPort != GUI.connectedTo) {
@@ -71,6 +72,7 @@ $(document).ready(function () {
                     chrome.storage.local.set({'lastUsedPort': GUI.connectedTo});
                 }
             });
+            }
 
             $('a.connect').text('Disconnect').addClass('active');
 

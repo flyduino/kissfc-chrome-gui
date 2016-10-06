@@ -60,7 +60,7 @@ PortHandler.check = function () {
 
             // auto-select last used port (only during initialization)
             if (!self.initialPorts) {
-                chrome.storage.local.get('lastUsedPort', function (result) {
+                if (typeof chromeSerial !== 'undefined') { chrome.storage.local.get('lastUsedPort', function (result) {
                     // if lastUsedPort was set, we try to select it
                     if (result.lastUsedPort) {
                         currentPorts.forEach(function(port) {
@@ -73,7 +73,7 @@ PortHandler.check = function () {
                     } else {
                         console.log('Last used port wasn\'t saved "yet", auto-select disabled.');
                     }
-                });
+                });}
             }
 
             if (!self.initialPorts) {

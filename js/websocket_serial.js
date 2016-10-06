@@ -81,9 +81,6 @@ var websocketSerial = {
         }
     },
     getDevices: function (callback) {
-    	var devices = [];
-        devices.push(KISSFC_WIFI);
-        if (callback) callback(devices);
     },
     getInfo: function (callback) {
        
