@@ -18,11 +18,11 @@ function getAvailableSerialDevices(callback) {
      
      if (typeof chromeSerial !== 'undefined') {
 	    chromeSerial.getDevices(function(chromeDevices) {
-		     for (var i=0; i<chromeDevices.length; i++)  devices.push(chromeDevices[i]);
+		    for (var i=0; i<chromeDevices.length; i++)  devices.push(chromeDevices[i]);
             if (callback) callback(devices);
 	    });
 	 } else {
-	    if (callback) callback(devises);
+	    if (callback) callback(devices);
 	 }
 }
 

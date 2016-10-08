@@ -1,7 +1,5 @@
 'use strict';
 
-var KISSFC_WIFI = "KISSFC WIFI";
-
 var websocketSerial = {
 	request:		 null,
     bytesReceived:   0,
@@ -19,7 +17,8 @@ var websocketSerial = {
             options:        options,
             callback:       callback,
             fulfilled:      false,
-            canceled:       false
+            canceled:       false,
+        	binary : false
         };
         self.request = request;
 		console.log("Connecting to " + this.url);
@@ -83,13 +82,10 @@ var websocketSerial = {
     getDevices: function (callback) {
     },
     getInfo: function (callback) {
-       
     },
     getControlSignals: function (callback) {
-       
     },
     setControlSignals: function (signals, callback) {
-        
     },
     send: function (data, callback) {
         var self = this;
@@ -103,7 +99,13 @@ var websocketSerial = {
         	self.dump('<-', data);
         	
             if (self.ws) {
-            	self.ws.send(data, { binary: true });
+            	if (self.request.binary) {
+            		self.ws.send(data, { binary: true });
+            	} else {
+            		var str = self.bytesToHexString(data);
+            		console.log("Sending HEX: [" + str + "]");
+            		self.ws.send(str);
+            	}
                 self.bytesSent += data.length; 
                 if (callback) callback({});
                 self.outputBuffer.shift();
@@ -166,8 +168,14 @@ var websocketSerial = {
     wordToHex: function(byte) {
     	return this.byteToHex(byte>>8 & 0xff)+this.byteToHex(byte & 0xff);
     },
+    bytesToHexString: function toHexString(data) {
+    	var view = new Uint8Array(data);
+    	var line = '';
+    	for (var i = 0; i < view.length; i++) line +=  this.byteToHex(view[i]);
+    	return line;
+    },
     dump: function(direction, data) {
-    	/* var view = new Uint8Array(data);
+    	var view = new Uint8Array(data);
     	var line = '';
     	for (var i = 0; i < view.length; i++) {
     		if (i%16==0) {
@@ -176,6 +184,6 @@ var websocketSerial = {
     		}
     		line +=  this.byteToHex(view[i]) + ' ';
  		}
-    	console.log(line); */
+    	console.log(line);
     }
 };

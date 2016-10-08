@@ -1,7 +1,5 @@
 <div class="rates">
-
-	<div class="titlebar"></div>
-	<div class="sidebar block3">
+	<div class="wrapper-narrow">
     	<div class="receiver">
         <div class="groupTitle">Receiver</div>
         <div class="bars"></div>
@@ -34,8 +32,10 @@
 		</tr>
 	</table>
     </div>
+    
+    </div>
 
-	<div class="sidebar block4">
+	<div class="wrapper-wide">
         <div class="groupTitle">Charts</div>
 	<div id="charts">
 		<div id="rates_chart_roll" class="rc_chart"></div>
@@ -43,9 +43,11 @@
 		<div id="rates_chart_yaw" class="rc_chart"></div>
 		<div id="model" class="rc_chart"></div>
 	</div>
-    <a class="save" href="#" style="bottom:25px; right:25px;position: fixed; " title="Save Settings to EEPROM">Save Settings</a>
     </div>
-    
 
-
+		<div class="config_buttons">
+			<a id="save" class="config_button" href="#"
+				title="Save Settings to EEPROM">Save Settings</a>
+		</div>
+		<div class="clear-both"></div>
 </div>

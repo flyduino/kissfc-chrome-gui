@@ -209,8 +209,8 @@ CONTENT.data_output.initialize = function (callback) {
 		    $('#graph5').html('ESC on PWM5');
 		    $('#graph6').html('ESC on PWM6');		    
 	    }
-	    $('#idle').text(data['idleTime']);
-	    $('#Vbat').text((data['LiPoVolt']*10).toFixed(2));
+	    $('#idle').text(data['idleTime']+' %');
+	    $('#Vbat').text((data['LiPoVolt']*10).toFixed(2)+' v');
 
             // update bars with latest data
 	    var  receiverLabelArrayLength = receiverLabelArray.length;
@@ -225,18 +225,18 @@ CONTENT.data_output.initialize = function (callback) {
             }
 
             // other
-	    if(data['mode'] == 0) otherItems.eq(0).text('Acro');
-	    else if(data['mode'] == 1) otherItems.eq(0).text('Level');
-	    else if(data['mode'] == 2) otherItems.eq(0).text('3D');
-	    else otherItems.eq(0).text(data['mode']);
+	    if(data['mode'] == 0) $("#omode").text('Acro');
+	    else if(data['mode'] == 1) $("#omode").text('Level');
+	    else if(data['mode'] == 2) $("#omode").text('3D');
+	    else $("#omode").text(data['mode']);
 	
-	    if(data['Armed'] == 0) otherItems.eq(1).text('Disarmed');
-	    else if(data['Armed'] == 1) otherItems.eq(1).text('Armed!');
-	    else otherItems.eq(1).text(data['Armed']);
+	    if (data['Armed'] == 0) $("#ostatus").text('Disarmed');
+	    else if(data['Armed'] == 1) $("#ostatus").text('Armed!');
+	    else $("#ostatus").text(data['Armed']);
 	
-        otherItems.eq(2).text((data['angle'][0]*10).toFixed(2));
-	    otherItems.eq(3).text((data['angle'][1]*10).toFixed(2));
-	    otherItems.eq(4).text((data['angle'][2]*10).toFixed(2));
+        $("#oanglex").text((data['angle'][0]*10).toFixed(2));
+	    $("#oangley").text((data['angle'][1]*10).toFixed(2));
+	    $("#oanglez").text((data['angle'][2]*10).toFixed(2));
 	    
 	    
 	    if (data['Armed'] == 0) {

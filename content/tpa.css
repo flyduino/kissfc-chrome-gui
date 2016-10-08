@@ -1,18 +1,8 @@
-.tpa .groupTitle {
-    padding: 0 0 5px 0;
-    margin: 0 0 5px 0;
-    font-size: 16px;
-    color: #e09338;
-}
-.tpa .receiver {
-    float: left;
-    width: 40%;
-}
+
 .tpa .bars {
     float: left;
-    width: 90%;
+    width: 100%;
     font-weight: bold;
-    margin-bottom: 20px;
 }
 .tpa .bars ul {
     margin-bottom: 5px;
@@ -85,26 +75,6 @@
     line-height: 20px;
     text-align: right;
     border: 1px solid silver;
-}
-.tpa .save {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    color: white;
-    padding: 0 10px 0 10px;
-    height: 20px;
-    line-height: 20px;
-    background-color: #339933;
-}
-.tpa .saveAct {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    color: white;
-    padding: 0 10px 0 10px;
-    height: 20px;
-    line-height: 20px;
-    background-color: #830a0a;
 }
 
 .tpa .tpa_chart {

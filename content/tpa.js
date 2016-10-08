@@ -18,7 +18,7 @@ CONTENT.tpa.initialize = function(callback) {
 
     function contentChange(mode) {
         if (self.settingsFilled && mode) {
-            $('a.save').addClass("important saveAct");
+            $('#save').addClass("important saveAct");
         }
         var rowNames = ['roll', 'pitch', 'yaw'];
         var precision = [2, 3, 2];
@@ -320,9 +320,9 @@ CONTENT.tpa.initialize = function(callback) {
      
         fastDataPoll();
 
-        $('a.save').click(function() {
+        $('#save').click(function() {
             grabData();
-            $('a.save').removeClass("saveAct");
+            $('#save').removeClass("saveAct");
             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
         });
     }
@@ -330,9 +330,9 @@ CONTENT.tpa.initialize = function(callback) {
 
 
 CONTENT.tpa.resizeChart = function() {
-	var wrapper = $('#content');
+	var wrapper = $('#charts');
 	console.log("resize chart");
-    $('#tpa_chart').kissTPAChart('resize', {width: wrapper.width() * 0.6 });
+    $('#tpa_chart').kissTPAChart('resize', {width: wrapper.width() });
 }
 
 CONTENT.tpa.cleanup = function(callback) {

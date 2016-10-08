@@ -1,21 +1,4 @@
-.data_output .groupTitle {
-    padding: 0 0 5px 0;
-    margin: 0 0 5px 0;
-    font-size: 16px;
-    color: #e09338;
-}
-.data_output .receiver {
-    float: left;
-    width: 40%;
-}
-.data_output .motors {
-    float: left;
-    width: 40%;
-}
-.data_output .other {
-    float: left;
-    width: 20%;
-}
+
 .data_output .other dl {
 }
 .data_output .other dl dt {
@@ -37,13 +20,14 @@
     height: 20px;
     line-height: 20px;
     background-color: #830a0a;
+    text-align: center;
 }
 .data_output .other a:hover {
     background-color: #d01414;
 }
 .data_output .bars {
     float: left;
-    width: 90%;
+    width: 100%;
     font-weight: bold;
 }
 .data_output .bars ul {
@@ -61,7 +45,7 @@
     text-align: right;
 }
 .data_output .bars .meter {
-    width: calc(100% - 50px);
+    width: calc(100% - 80px);
 }
 .data_output .bars .motor {
     width: calc(100% - 80px);
@@ -195,5 +179,14 @@
     background-color: #d01414;
 }
 
+.data_output .otherValues {
+	width: 100%;
+}
 
+.data_output .otherValues td {
+	width: 25%;
+	text-align: right;
+}
+
+		
 

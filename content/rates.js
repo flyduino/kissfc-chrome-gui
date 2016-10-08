@@ -44,7 +44,7 @@ CONTENT.rates.initialize = function(callback) {
 
     function contentChange() {
         if (self.settingsFilled) {
-            $('a.save').addClass("important saveAct");
+            $('#save').addClass("important saveAct");
         }
         var rowNames = ['roll', 'pitch', 'yaw']
         for (var i = 0; i < 3; i++) {
@@ -245,9 +245,9 @@ CONTENT.rates.initialize = function(callback) {
      
         fastDataPoll();
 
-        $('a.save').click(function() {
+        $('#save').click(function() {
             grabData();
-            $('a.save').removeClass("saveAct");
+            $('#save').removeClass("saveAct");
             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
         });
     }

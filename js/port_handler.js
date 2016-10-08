@@ -125,7 +125,7 @@ PortHandler.check = function () {
 
         self.mainTimeoutReference = setTimeout(function () {
             self.check();
-        }, 250);
+        }, 2000);
     });
 };
 

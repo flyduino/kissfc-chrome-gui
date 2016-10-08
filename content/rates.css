@@ -1,18 +1,12 @@
-.rates .groupTitle {
-    padding: 0 0 5px 0;
-    margin: 0 0 5px 0;
-    font-size: 16px;
-    color: #e09338;
-}
+
 .rates .receiver {
     float: left;
-    width: 40%;
+    width: 100%;
 }
 .rates .bars {
     float: left;
-    width: 90%;
+    width: 100%;
     font-weight: bold;
-    margin-bottom: 20px;
 }
 .rates .bars ul {
     margin-bottom: 5px;
@@ -90,24 +84,4 @@
     width: 200px;
     height: 200px;
 	display: inline-block;    
-}
-.rates .save {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    color: white;
-    padding: 0 10px 0 10px;
-    height: 20px;
-    line-height: 20px;
-    background-color: #339933;
-}
-.rates .saveAct {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    color: white;
-    padding: 0 10px 0 10px;
-    height: 20px;
-    line-height: 20px;
-    background-color: #830a0a;
 }
