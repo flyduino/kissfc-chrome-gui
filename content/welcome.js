@@ -14,7 +14,7 @@ CONTENT.welcome.initialize = function (callback) {
     function checkDFU() {
     	 chrome.usb.getDevices(usbDevices.STM32DFU, function (result) {
  	        if (result.length) {
- 	        	$("#portArea").children().hide();
+ 	        	$("#portArea").hide();
  	        	GUI.contentSwitchInProgress = true;
  	            GUI.contentSwitchCleanup(function () {
  	                CONTENT['flasher'].initialize();
@@ -22,7 +22,7 @@ CONTENT.welcome.initialize = function (callback) {
  	        } else {
  	        	if (GUI.activeContent == 'welcome')  {
  	        		setTimeout(checkDFU, 2000);
- 	        		$("#portArea").children().show();
+ 	        		$("#portArea").show();
  	        	}
  	        }
  	    });

@@ -23,7 +23,7 @@ CONTENT.flasher.initialize = function(callback) {
     function checkDFU() {
     	 chrome.usb.getDevices(usbDevices.STM32DFU, function (result) {
  	        if (result.length==0) {
- 	        	$("#portArea").children().show();
+ 	        	$("#portArea").show();
  	        	GUI.contentSwitchInProgress = true;
  	            GUI.contentSwitchCleanup(function () {
  	                CONTENT['welcome'].initialize();

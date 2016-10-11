@@ -175,7 +175,7 @@ var websocketSerial = {
     	return line;
     },
     dump: function(direction, data) {
-    	var view = new Uint8Array(data);
+    	/*var view = new Uint8Array(data);
     	var line = '';
     	for (var i = 0; i < view.length; i++) {
     		if (i%16==0) {
@@ -184,6 +184,6 @@ var websocketSerial = {
     		}
     		line +=  this.byteToHex(view[i]) + ' ';
  		}
-    	console.log(line);
+    	console.log(line);*/
     }
 };

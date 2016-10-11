@@ -7,6 +7,8 @@ $(document).ready(function () {
     $('#navigation li').click(function () {
         var self = this;
         var content = $(self).attr('data-name');
+        
+    	$("#navigation").removeClass("active-menu");
 
         function content_ready() {
             GUI.contentSwitchInProgress = false;
@@ -18,6 +20,10 @@ $(document).ready(function () {
                 CONTENT[content].initialize();
             });
         }
+    });
+    
+    $(".navigation-menu-button").on("click", function() {
+    	$("#navigation").toggleClass("active-menu");
     });
 });
 
