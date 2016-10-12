@@ -575,13 +575,13 @@ CONTENT.configuration.initialize = function(callback) {
         $('#prePID').change(function() {
             if (document.getElementById('prePID').value == 'preset') {
                 document.getElementById('userSel').style.display = 'none';
-                document.getElementById('presetSel').style.display = 'block';
+                document.getElementById('presetSel').style.display = 'inline-block';
                 if (document.getElementById('presetSel').value == 'Preset1') {
                     shareButton.innerHTML = 'share';
                 }
             } else {
                 document.getElementById('presetSel').style.display = 'none';
-                document.getElementById('userSel').style.display = 'block';
+                document.getElementById('userSel').style.display = 'inline-block';
                 shareButton.innerHTML = 'use';
             }
         });

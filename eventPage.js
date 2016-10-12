@@ -8,7 +8,7 @@ function startApplication() {
         frame: 'chrome',
         innerBounds: {
             minWidth:  850,
-            minHeight: 600
+            minHeight: 650
         }
     }, function (createdWindow) {
         createdWindow.onClosed.addListener(function () {
