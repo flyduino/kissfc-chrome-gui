@@ -222,24 +222,6 @@ input[type="number"]::-webkit-inner-spin-button {
 	padding-left: 2px;
 }
 
-.configuration .rates tr > *:nth-child(1) {
-	display: none;	
-	width: 50px;
-}
-
-#userSel {
-	width: 200px;
-}
-
-.configuration .pids tr > *:nth-child(1) {
-	width: 50px;
-}
-
-.configuration .levels tr > *:nth-child(1) {
-	width: 50px;
-}
-
-
 .wrapper-full {
 		width: 100%;
 		padding: 5px;

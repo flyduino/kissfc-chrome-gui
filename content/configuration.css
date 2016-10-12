@@ -78,6 +78,24 @@
     height: 18px;
 }
 
+.configuration .rates tr > *:nth-child(1) {
+	display: none;	
+	width: 50px;
+}
+
+#userSel {
+	width: 200px;
+}
+
+.configuration .pids tr > *:nth-child(1) {
+	width: 50px;
+}
+
+.configuration .levels tr > *:nth-child(1) {
+	width: 50px;
+}
+
+
 .tricopter {
 	display: none;
 }
@@ -101,5 +119,16 @@
 
 .configuration {
 	padding-bottom: 50px;
+}
+
+
+#shareButton {
+	width: 60px;
+	text-align: center;
+	cursor:pointer; 
+	display:inline-block; 
+	background-color:#333; 
+	height:18px; 
+	padding-top:4px;
 }
 
