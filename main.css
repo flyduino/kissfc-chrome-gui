@@ -8,6 +8,7 @@
 
 html, body {
 	height: 100%;
+    overflow-y: visible;
 }
 
 body {
@@ -204,21 +205,50 @@ input[type="number"]::-webkit-inner-spin-button {
 	float: left;
 	width: 65%;
 	padding: 5px;
+	padding-left: 2px;
 }
 
 .wrapper-narrow {
 	float: left;
 	width: calc(33% - 20px);
 	padding: 5px;
+	padding-left: 2px;
 }
 
 .wrapper-half {
 	float: left;
 	width: calc(50% - 10px);
 	padding: 5px;
+	padding-left: 2px;
 }
 
-@media ( max-width : 800px) {
+.configuration .rates tr > *:nth-child(1) {
+	display: none;	
+	width: 50px;
+}
+
+#userSel {
+	width: 200px;
+}
+
+.configuration .pids tr > *:nth-child(1) {
+	width: 50px;
+}
+
+.configuration .levels tr > *:nth-child(1) {
+	width: 50px;
+}
+
+
+.wrapper-full {
+		width: 100%;
+		padding: 5px;
+		margin-bottom: 20px;
+		clear: both;
+		padding-left: 2px;
+}
+
+@media ( max-width : 824px) {
 	.wrapper-wide {
 		width: 100%;
 		padding: 5px;
@@ -264,4 +294,35 @@ input[type="number"]::-webkit-inner-spin-button {
         padding-right: 3px;
         padding-bottom: 1px;
 	}
+	
+	.configuration .rates tr > *:nth-child(1) {
+		display: inline;
+	}
+	
+	#portArea #port {
+		width: 90px;
+	}
+	
+	.mixer-image {
+	    width: 200px;
+    	position: absolute;
+    	left: 125px;
+    	top: 15px;
+    }
+    
+	.groupTitle {
+		padding: 0 0 2px 0;
+		margin: 0 0 2px 0;
+		font-size: 16px;
+		color: #e09338;
+	}
+	
+	#userSel {
+	width: 50px;
+}
+
+	#presetSel {
+		width: 50px;
+	}
+	
 }
