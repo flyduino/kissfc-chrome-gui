@@ -116,6 +116,10 @@
     background-color: white;
 }
 
+.data_output {
+	margin-bottom: 50px;
+}
+
 .data_output .motor-test {
 	margin-left: 10px;
 }
