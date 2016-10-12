@@ -234,20 +234,23 @@ input[type="number"]::-webkit-inner-spin-button {
 	.wrapper-wide {
 		width: 100%;
 		padding: 5px;
-		margin-bottom: 20px;
+		margin-bottom: 10px;
 		clear: both;
 	}
 	.wrapper-narrow {
 		width: 100%;
 		padding: 5px;
-		margin-bottom: 20px;
+		margin-bottom: 10px;
 		clear: both;
 	}
 	.wrapper-half {
 		width: 100%;
 		padding: 5px;
-		margin-bottom: 20px;
+		margin-bottom: 10px;
 		clear: both;
+	}
+	.wrapper-full {
+		margin-bottom: 10px;
 	}
 	.navigation-menu-button {
 		display: inline-block;
@@ -300,11 +303,15 @@ input[type="number"]::-webkit-inner-spin-button {
 	}
 	
 	#userSel {
-	width: 50px;
-}
+		width: 50px;
+	}
 
 	#presetSel {
 		width: 50px;
+	}
+	
+	#lapTimerTypeAndInterface {
+		width: 90px;
 	}
 	
 }
