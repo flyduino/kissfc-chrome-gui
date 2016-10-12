@@ -40,7 +40,7 @@ var chromeSerial = {
 
         chrome.serial.connect(request.path, request.options, function (connectionInfo) {
             if (chrome.runtime.lastError) {
-                console.error(chrome.runtime.lastError.message);
+                console.log(chrome.runtime.lastError.message);
             }
 
             if (connectionInfo && !request.canceled) {
@@ -57,7 +57,7 @@ var chromeSerial = {
                 });
 
                 self.onReceiveError.addListener(function watchForOnReceiveErrors(info) {
-                    console.error(info);
+                    console.log(info);
 
                     switch (info.error) {
                         case 'system_error': // we might be able to recover from this one
@@ -80,7 +80,7 @@ var chromeSerial = {
                                             }
                                         } else {
                                             if (chrome.runtime.lastError) {
-                                                console.error(chrome.runtime.lastError.message);
+                                                console.log(chrome.runtime.lastError.message);
                                             }
                                         }
                                     });
@@ -141,7 +141,7 @@ var chromeSerial = {
 
             chrome.serial.disconnect(self.connectionId, function (result) {
                 if (chrome.runtime.lastError) {
-                    console.error(chrome.runtime.lastError.message);
+                    console.log(chrome.runtime.lastError.message);
                 }
 
                 if (result) {
