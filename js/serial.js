@@ -1,7 +1,7 @@
 'use strict';
 
-var ANDROID_OTG_SERIAL = "Android OTG USB",
-    KISSFC_WIFI = "KISSFC WIFI";
+var ANDROID_OTG_SERIAL = "USB OTG",
+    KISSFC_WIFI = "KISS WIFI";
 
 var serial;
 
