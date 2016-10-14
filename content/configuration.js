@@ -297,14 +297,11 @@ CONTENT.configuration.initialize = function(callback) {
             contentChange();
         });
         
-        var outputMode = 2; // PWM
-        if (data['ESConeshot125']==1) outputMode = 1;
-        else if (data['ESConeshot42']==1) outputMode = 0;
- 
- 		$("#outputMode").val(outputMode);       
- 		$("#outputMode").on('change', function() {
-            contentChange();
-        });   
+	var outputMode = data['ESConeshot125'];
+	$("#outputMode").val(outputMode);       
+	$("#outputMode").on('change', function() {
+		contentChange();
+        });  
 
         $('input[name="failsaveseconds"]').val(data['failsaveseconds']);
         $('input[name="failsaveseconds"]').on('input', function() {
@@ -428,8 +425,8 @@ CONTENT.configuration.initialize = function(callback) {
             data['TYinv8'] = parseInt($('input[name="TYinv"]').prop('checked') ? 1 : 0);
             
             var outputMode = parseInt($('select[name="outputMode"]').val());
-            data['ESConeshot125'] = outputMode == 1 ? 1 : 0;
-            data['ESConeshot42'] = outputMode == 0 ? 1 : 0;
+            data['ESConeshot125'] = outputMode;
+            data['ESConeshot42'] = 0;
            
             data['Active3DMode'] = parseInt($('input[name="3dMode"]').prop('checked') ? 1 : 0);
             data['failsaveseconds'] = parseInt($('input[name="failsaveseconds"]').val());
