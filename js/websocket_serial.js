@@ -5,10 +5,40 @@ var websocketSerial = {
     bytesReceived:   0,
     bytesSent:       0,
     failed:          0,
-    url:			 "ws://192.168.4.1:81/",
     ws:				 null,
     transmitting:    false,
     outputBuffer:    [],
+    
+    onConnect : function(self, socket) {
+        self.ws = socket;
+        self.ws.binaryType = 'arraybuffer';
+        self.ws.onmessage = function (evt) { 
+        	var received_msg = evt.data;
+          	for (var i = (self.onReceive.listeners.length - 1); i >= 0; i--) {
+          		self.onReceive.listeners[i]({data:evt.data}); 
+          	} 
+        };
+				
+        self.ws.onclose = function() { 
+           	console.log("Connection is closed..."); 
+        };
+        
+        if (!self.request.canceled) {
+            self.bytesReceived = 0;
+            self.bytesSent = 0;
+            self.failed = 0;
+            self.request.fulfilled = true;
+            self.onReceive.addListener(function logBytesReceived(info) {
+                self.bytesReceived += info.data.byteLength;
+            	self.dump('->', info.data);
+            });
+            if (self.request.callback) self.request.callback({});
+        } else if (self.request.canceled) {
+           setTimeout(function initialization() {
+                self.ws.close();
+            }, 150);
+        } 
+    },
 
     connect: function (path, options, callback) {
         var self = this;
@@ -21,42 +51,16 @@ var websocketSerial = {
         	binary : false
         };
         self.request = request;
-		console.log("Connecting to " + this.url);
- 		self.ws = new WebSocket(this.url);
- 		self.ws.binaryType = 'arraybuffer';
-  		self.ws.onopen = function() {
-            console.log("Connected");
-            if (!request.canceled) {
-                self.bytesReceived = 0;
-                self.bytesSent = 0;
-                self.failed = 0;
-                request.fulfilled = true;
-                self.onReceive.addListener(function logBytesReceived(info) {
-                    self.bytesReceived += info.data.byteLength;
-                	self.dump('->', info.data);
-                });
-                if (request.callback) request.callback({});
-            } else if (request.canceled) {
-                setTimeout(function initialization() {
-                    self.ws.close();
-                }, 150);
-            } 
+		
+		var ws1 = new WebSocket("ws://kiss.fc:81/");
+		var ws2 = new WebSocket("ws://kiss.local:81/");
+		console.log(self);
+		ws1.onopen = function() {
+			self.onConnect(self, ws1);
         };
-				
-        self.ws.onmessage = function (evt) { 
-        	var received_msg = evt.data;
-            for (var i = (self.onReceive.listeners.length - 1); i >= 0; i--) {
-            	self.onReceive.listeners[i]({data:evt.data}); 
-            } 
+		ws2.onopen = function() {
+            self.onConnect(self, ws2);
         };
-				
-        self.ws.onclose = function() { 
-            console.log("Connection is closed..."); 
-        };
-        
-        self.ws.onerror = function(evt) {
-      		
-    	};
     },
     disconnect: function (callback) {
         var self = this;
@@ -103,7 +107,6 @@ var websocketSerial = {
             		self.ws.send(data, { binary: true });
             	} else {
             		var str = self.bytesToHexString(data);
-            		console.log("Sending HEX: [" + str + "]");
             		self.ws.send(str);
             	}
                 self.bytesSent += data.length; 
