@@ -582,7 +582,7 @@ CONTENT.configuration.initialize = function(callback) {
             } else {
                 document.getElementById('presetSel').style.display = 'none';
                 document.getElementById('userSel').style.display = 'inline-block';
-                shareButton.innerHTML = 'use';
+                shareButton.innerHTML = 'Use';
             }
         });
         $('#presetSel').change(function() {

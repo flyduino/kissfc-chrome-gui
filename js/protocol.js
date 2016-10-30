@@ -49,14 +49,13 @@ kissProtocol.read = function (readInfo) {
                     // wait for start byte
                     if (data[i] == 5) this.state++;
                     else this.state = 0;
-		    
-		    this.errCase++;
-		    if(this.errCase > 3){
-			    this.receiving = false;
-			    this.errCase = 0;
-			    this.state = 0;
-			    //console.log('kissProtocol: reset errCase');
-		    }
+		    			this.errCase++;
+		    		if(this.errCase > 3){
+			    		this.receiving = false;
+			    		this.errCase = 0;
+			    		this.state = 0;
+			    	//console.log('kissProtocol: reset errCase');
+		    		}
                     break;
                 case 1:
                     // amount of bytes, reset variables to default state and prepare buffers
@@ -79,6 +78,8 @@ kissProtocol.read = function (readInfo) {
                     break;
                 case 3:
                     // calculate crc, if crc matches -> process data, otherwise log an crc error
+                    //console.log("Calculated crc: " + (Math.floor(this.packetCrc / this.packetCrcCounter)) + " real: " + data[i]);
+                    
                     if (Math.floor(this.packetCrc / this.packetCrcCounter) == data[i]) {
                         if (this.data[this.processingRequest.code]) {
                             this.data[this.processingRequest.code]['buffer'] = this.packetBuffer;
@@ -89,10 +90,10 @@ kissProtocol.read = function (readInfo) {
 
                         this.processPacket(this.processingRequest.code, this.data[this.processingRequest.code]);
                     } else {
-			this.receiving = false;
-		        this.state = 0;
+						this.receiving = false;
+		        		this.state = 0;
                         console.log('kissProtocol: CRC Failed for last operation');
-			return;
+						return;
                     }
 
                     this.requests.splice(0, 1);
@@ -124,6 +125,8 @@ kissProtocol.send = function (code, data, callback) {
 
 kissProtocol.proceedRequest = function() {
 	if (!this.receiving){
+		//console.log("Not receiving");
+		
 		this.ready = true;
 		if (this.requests.length) {
 			this.processingRequest = this.requests[0];
@@ -138,6 +141,8 @@ kissProtocol.proceedRequest = function() {
 			this.ReceiveTimeout = 0;
 		}
 		this.ReceiveTimeout =  window.setTimeout(function(){kissProtocol.receiving = false;},5000); 
+	} else {
+		//console.log("Receiving");
 	}
 }
 

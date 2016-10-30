@@ -64,10 +64,12 @@ CONTENT.rates.initialize = function(callback) {
     // get config
     kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
     	self.settingsFilled = 1;
-        $('#content').load("./content/rates.html", htmlLoaded);
+        $('#content').load("./content/rates.html", function() {
+        	htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
+        });
     });
 
-    function htmlLoaded() {
+    function htmlLoaded(data) {
         // generate receiver bars
         var receiverNames = ['Roll', 'Pitch', 'Yaw']
         var chartDivSelectors = ['#rates_chart_roll', '#rates_chart_pitch', '#rates_chart_yaw']
@@ -125,12 +127,6 @@ CONTENT.rates.initialize = function(callback) {
             'min': 800,
             'max': 2200
         };
-
-        kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function() {
-            console.log("Loaded telemetry");
-        });
-
-        var data = kissProtocol.data[kissProtocol.GET_SETTINGS];
 
         function grabData() {
             data['RC_Rate'][0] = parseFloat($('tr.roll input').eq(0).val());

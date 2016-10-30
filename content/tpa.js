@@ -69,10 +69,12 @@ CONTENT.tpa.initialize = function(callback) {
     // get config
     kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
     	self.settingsFilled = 1;
-        $('#content').load("./content/tpa.html", htmlLoaded);
+    	$('#content').load("./content/tpa.html", function() {
+          	htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
+        });
     });
 
-    function htmlLoaded() {
+    function htmlLoaded(data) {
         // generate receiver bars
         var receiverNames = ['Throttle']
         var receiverChannels = [0];
@@ -130,11 +132,8 @@ CONTENT.tpa.initialize = function(callback) {
             'max': 2200
         };
 
-        kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function() {
-            console.log("Loaded telemetry");
-        });
 
-        var data = kissProtocol.data[kissProtocol.GET_SETTINGS];
+       
 
         function grabData() {
         	 // pid and rates
