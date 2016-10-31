@@ -132,7 +132,7 @@ kissProtocol.proceedRequest = function() {
 			this.processingRequest = this.requests[0];
 			this.receiving = true;
 			this.errCase = 0;		
-			serial.send(this.processingRequest.buffer, function (sendInfo) {
+			serialDevice.send(this.processingRequest.buffer, function (sendInfo) {
 				kissProtocol.proceedRequest();
 			});
 		}

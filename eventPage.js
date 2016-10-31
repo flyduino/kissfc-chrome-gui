@@ -12,10 +12,10 @@ function startApplication() {
         }
     }, function (createdWindow) {
         createdWindow.onClosed.addListener(function () {
-            var connectionId = createdWindow.contentWindow.serial.connectionId;
+            var connectionId = createdWindow.contentWindow.serialDevice.connectionId;
 
             if (connectionId) {
-                chrome.serial.disconnect(connectionId, function (result) {
+                chrome.serialDevice.disconnect(connectionId, function (result) {
                     console.log('SERIAL: Connection closed - ' + result);
                 });
             }

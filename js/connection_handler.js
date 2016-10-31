@@ -15,16 +15,16 @@ $(document).ready(function () {
                     $('#port').prop('disabled', true);
                     $('a.connect').text('Connecting');
 
-                    serial = getSerialDriverForPort(selectedPort);
+                    serialDevice = getSerialDriverForPort(selectedPort);
                     
-                    serial.connect(selectedPort, {bitrate: 115200}, connected);
+                    serialDevice.connect(selectedPort, {bitrate: 115200}, connected);
                 } else {
                     GUI.timeoutKillAll();
                     GUI.intervalKillAll();
                     GUI.contentSwitchCleanup();
                     GUI.contentSwitchInProgress = false;
 
-                    serial.disconnect(disconnected);
+                    serialDevice.disconnect(disconnected);
                     kissProtocol.disconnectCleanup();
 
                     GUI.connectedTo = false;
@@ -77,7 +77,7 @@ $(document).ready(function () {
             $('a.connect').text('Disconnect').addClass('active');
 
             // start reading
-            serial.onReceive.addListener(function (info) {
+            serialDevice.onReceive.addListener(function (info) {
                 kissProtocol.read(info);
             });
 
