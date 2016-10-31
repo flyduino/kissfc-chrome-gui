@@ -57,7 +57,7 @@ $(document).ready(function () {
 
     function connected(openInfo) {
         if (openInfo) {
-        	if ( GUI.connectingTo == KISSFC_WIFI) {
+        	if ((GUI.connectingTo == KISSFC_WIFI) || (GUI.connectingTo == ANDROID_OTG_SERIAL)) {
                 	$("li[data-name='esc_flasher']").hide();
             } else {
                 	$("li[data-name='esc_flasher']").show();
