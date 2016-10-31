@@ -414,6 +414,12 @@ CONTENT.configuration.initialize = function(callback) {
             contentChange();
         });
         
+        // Temp fix
+        if (typeof androidOTGSerial !== 'undefined') {
+        	$('#backup').hide();
+        	$('#restore').hide();
+     	}
+        
         function grabData() {
             // uav type and receiver
             data['CopterType'] = parseInt($('select.mixer').val());

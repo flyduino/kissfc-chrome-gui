@@ -9,6 +9,7 @@ $(document).ready(function () {
             if (selectedPort != '0') {
                 if (!clicks) {
                     console.log('Connecting to: ' + selectedPort);
+                                        
                     GUI.connectingTo = selectedPort;
 
                     // lock port select while we are connecting / connected
@@ -18,6 +19,8 @@ $(document).ready(function () {
                     serialDevice = getSerialDriverForPort(selectedPort);
                     
                     serialDevice.connect(selectedPort, {bitrate: 115200}, connected);
+                    
+                    
                 } else {
                     GUI.timeoutKillAll();
                     GUI.intervalKillAll();
@@ -38,6 +41,7 @@ $(document).ready(function () {
 
                     $('#navigation li:not([data-name="welcome"])').removeClass('unlocked');
 
+                    $("li[data-name='esc_flasher']").show();
 
                     if (GUI.activeContent != 'firmware') {
                         $('#content').empty();
@@ -53,6 +57,12 @@ $(document).ready(function () {
 
     function connected(openInfo) {
         if (openInfo) {
+        	if ( GUI.connectingTo == KISSFC_WIFI) {
+                	$("li[data-name='esc_flasher']").hide();
+            } else {
+                	$("li[data-name='esc_flasher']").show();
+            }
+        	  
             // update connectedTo
             GUI.connectedTo = GUI.connectingTo;
 
@@ -96,6 +106,8 @@ $(document).ready(function () {
             $('#navigation li').addClass('unlocked');
         } else {
             console.log('Failed to open serial port');
+            
+        	$("li[data-name='esc_flasher']").show();
 
             $('a.connect').text('Connect');
             $('a.connect').removeClass('active');
@@ -109,6 +121,7 @@ $(document).ready(function () {
     }
 
     function disconnected(result) {
+       	$("li[data-name='esc_flasher']").show();
         if (result) { // All went as expected
         } else { // Something went wrong
         }
