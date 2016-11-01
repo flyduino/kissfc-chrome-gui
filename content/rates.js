@@ -13,9 +13,14 @@ CONTENT.rates.initialize = function(callback) {
     self.hasInput = false;
 	self.lastTimestamp = null; 
 
-    if (GUI.activeContent != 'rates') {
-        GUI.activeContent = 'rates';
-    }
+	GUI.switchContent('rates', function() {
+    	kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
+    		self.settingsFilled = 1;
+        	$('#content').load("./content/rates.html", function() {
+        		htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
+       	 	});
+    	});
+	});
 
     function animateModel(timestamp) {
     	if (GUI.activeContent == 'rates') {
@@ -60,14 +65,6 @@ CONTENT.rates.initialize = function(callback) {
             }
         }
     }
-
-    // get config
-    kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-    	self.settingsFilled = 1;
-        $('#content').load("./content/rates.html", function() {
-        	htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
-        });
-    });
 
     function htmlLoaded(data) {
         // generate receiver bars
@@ -173,7 +170,7 @@ CONTENT.rates.initialize = function(callback) {
 
             if (GUI.activeContent == 'rates') self.updateTimeout = window.setTimeout(function() {
                 fastDataPoll();
-            }, 10);
+            }, 50);
         }
 
         // setup graph

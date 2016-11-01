@@ -8,14 +8,12 @@ CONTENT.advanced = {
 CONTENT.advanced.initialize = function(callback) {
     var self = this;
 
-    if (GUI.activeContent != 'advanced') {
-        GUI.activeContent = 'advanced';
-    }
-
-    kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-        $('#content').load("./content/advanced.html", function() {
-            htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
-        });
+    GUI.switchContent('advanced', function(){
+        kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
+            $('#content').load("./content/advanced.html", function() {
+                htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
+            });
+        });    	
     });
  
     function htmlLoaded(data) {

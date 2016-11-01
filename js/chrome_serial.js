@@ -195,33 +195,34 @@ var chromeSerial = {
                 chrome.serial.send(self.connectionId, data, function (sendInfo) {
                     // track sent bytes for statistics
                 	
-                
+                	if (typeof sendInfo !== 'undefined') {
                 	
-                    self.bytesSent += sendInfo.bytesSent;
+                    	self.bytesSent += sendInfo.bytesSent;
 
-                    // fire callback
-                    if (callback) callback(sendInfo);
+                    	// fire callback
+                    	if (callback) callback(sendInfo);
 
-                    // remove data for current transmission form the buffer
-                    self.outputBuffer.shift();
+                    	// remove data for current transmission form the buffer
+                    	self.outputBuffer.shift();
 
-                    // if there is any data in the queue fire send immediately, otherwise stop trasmitting
-                    if (self.outputBuffer.length) {
-                        // keep the buffer withing reasonable limits
-                        if (self.outputBuffer.length > 100) {
-                            var counter = 0;
+                    	// if there is any data in the queue fire send immediately, otherwise stop trasmitting
+                    	if (self.outputBuffer.length) {
+                        	// keep the buffer withing reasonable limits
+                        	if (self.outputBuffer.length > 100) {
+                            	var counter = 0;
 
-                            while (self.outputBuffer.length > 100) {
-                                self.outputBuffer.pop();
-                                counter++;
-                            }
+                            	while (self.outputBuffer.length > 100) {
+                                	self.outputBuffer.pop();
+                                	counter++;
+                            	}
 
-                            console.log('SERIAL: Send buffer overflowing, dropped: ' + counter + ' entries');
-                        }
+                            	console.log('SERIAL: Send buffer overflowing, dropped: ' + counter + ' entries');
+                        	}
 
-                        send();
-                    } else {
-                        self.transmitting = false;
+                        	send();
+                    	} else {
+                        	self.transmitting = false;
+                    	}
                     }
                 });
             }

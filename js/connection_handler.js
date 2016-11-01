@@ -7,6 +7,13 @@ $(document).ready(function () {
             var selectedPort = String($('#port').val());
 
             if (selectedPort != '0') {
+            	
+            	if ((selectedPort == KISSFC_WIFI) || (selectedPort == ANDROID_OTG_SERIAL)) {
+                	$("li[data-name='esc_flasher']").hide();
+            	} else {
+                	$("li[data-name='esc_flasher']").show();
+            	}
+            	
                 if (!clicks) {
                     console.log('Connecting to: ' + selectedPort);
                                         
@@ -27,8 +34,9 @@ $(document).ready(function () {
                     GUI.contentSwitchCleanup();
                     GUI.contentSwitchInProgress = false;
 
-                    serialDevice.disconnect(disconnected);
                     kissProtocol.disconnectCleanup();
+                    serialDevice.disconnect(disconnected);
+                 
 
                     GUI.connectedTo = false;
 
@@ -57,12 +65,7 @@ $(document).ready(function () {
 
     function connected(openInfo) {
         if (openInfo) {
-        	if ((GUI.connectingTo == KISSFC_WIFI) || (GUI.connectingTo == ANDROID_OTG_SERIAL)) {
-                	$("li[data-name='esc_flasher']").hide();
-            } else {
-                	$("li[data-name='esc_flasher']").show();
-            }
-        	  
+        
             // update connectedTo
             GUI.connectedTo = GUI.connectingTo;
 
@@ -91,24 +94,22 @@ $(document).ready(function () {
                 kissProtocol.read(info);
             });
 
+            kissProtocol.init();
             CONTENT.configuration.initialize();
 
             // TODO disconnect after 10 seconds with error if we don't get valid data
-            /*
-            GUI.timeoutAdd('connecting', function () {
-                console.log('Error: Config not received, closing connection...');
-
-                $('a.connect').trigger('click');
-            }, 10000);
-            */
+            
+            //GUI.timeoutAdd('connecting', function () {
+            //    console.log('Error: Config not received, closing connection...');
+            //    $('a.connect').trigger('click');
+            //}, 10000);
+            
 
             // unlock navigation
             $('#navigation li').addClass('unlocked');
         } else {
             console.log('Failed to open serial port');
-            
-        	$("li[data-name='esc_flasher']").show();
-
+       
             $('a.connect').text('Connect');
             $('a.connect').removeClass('active');
 
@@ -121,7 +122,6 @@ $(document).ready(function () {
     }
 
     function disconnected(result) {
-       	$("li[data-name='esc_flasher']").show();
         if (result) { // All went as expected
         } else { // Something went wrong
         }

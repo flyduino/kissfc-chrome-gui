@@ -12,9 +12,14 @@ CONTENT.tpa.initialize = function(callback) {
     self.settingsFilled = 0;
     self.hasInput = false;
 
-    if (GUI.activeContent != 'tpa') {
-        GUI.activeContent = 'tpa';
-    }
+    GUI.switchContent('tpa', function() {
+        kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
+        	self.settingsFilled = 1;
+        	$('#content').load("./content/tpa.html", function() {
+              	htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
+            });
+        });
+    });
 
     function contentChange(mode) {
         if (self.settingsFilled && mode) {
@@ -65,14 +70,6 @@ CONTENT.tpa.initialize = function(callback) {
         	}
         }
     }
-
-    // get config
-    kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-    	self.settingsFilled = 1;
-    	$('#content').load("./content/tpa.html", function() {
-          	htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
-        });
-    });
 
     function htmlLoaded(data) {
         // generate receiver bars
@@ -200,7 +197,7 @@ CONTENT.tpa.initialize = function(callback) {
 
             if (GUI.activeContent == 'tpa') self.updateTimeout = window.setTimeout(function() {
                 fastDataPoll();
-            }, 10);
+            }, 50);
         }
 
         // setup graph

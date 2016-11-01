@@ -31,9 +31,9 @@ var kissProtocol = {
     processingRequest:      null,
     data:                   [],
     requests:               [],
-    errCase:                  0,
-RequestInterval:   0,
-    ReceiveTimeout:   0,
+    errCase:                0,
+	RequestInterval:   		0,
+    ReceiveTimeout:   		0,
 };
 
 kissProtocol.read = function (readInfo) {
@@ -49,12 +49,12 @@ kissProtocol.read = function (readInfo) {
                     // wait for start byte
                     if (data[i] == 5) this.state++;
                     else this.state = 0;
-		    			this.errCase++;
-		    		if(this.errCase > 3){
+		    		this.errCase++;
+		    		if (this.errCase > 3) {
 			    		this.receiving = false;
 			    		this.errCase = 0;
 			    		this.state = 0;
-			    	//console.log('kissProtocol: reset errCase');
+			    		//console.loglog('kissProtocol: reset errCase');
 		    		}
                     break;
                 case 1:
@@ -92,7 +92,7 @@ kissProtocol.read = function (readInfo) {
                     } else {
 						this.receiving = false;
 		        		this.state = 0;
-                        console.log('kissProtocol: CRC Failed for last operation');
+                        //console.log('kissProtocol: CRC Failed for last operation');
 						return;
                     }
 
@@ -110,6 +110,8 @@ kissProtocol.read = function (readInfo) {
 };
 
 kissProtocol.send = function (code, data, callback) {
+	//console.log("Sending code: " + code);
+	//console.log("Sending data: " + data);
     var bufferOut = new ArrayBuffer(data.length);
     var bufferView = new Uint8Array(bufferOut);
 
@@ -120,29 +122,59 @@ kissProtocol.send = function (code, data, callback) {
         'buffer': bufferOut,
         'callback': (callback) ? callback : false
     });
+    //console.log("calling process request");
     kissProtocol.proceedRequest();
 };
 
+kissProtocol.init = function() {
+	console.log("Init");
+	this.requests=[];
+	this.receiving = false;
+	if (this.RequestInterval!=0) window.clearInterval(this.RequestInterval);
+	if (this.RequestTimeout!=0) window.clearTimeout(this.RequestTimeout);
+	this.RequestInterval=0;
+	this.RequestTimeout=0;
+	this.ready = false;
+}
+
+kissProtocol.clearPendingRequests = function(callback) {
+	 if (this.requests.length>0) {
+	 	console.log('.');
+	 	setTimeout(function() {
+			kissProtocol.clearPendingRequests(callback);	 		
+	 	}, 50);
+	 } else {
+	 	callback();
+	 }
+}
+
 kissProtocol.proceedRequest = function() {
-	if (!this.receiving){
+	//console.log("process request: " + this.receiving);
+	if (!this.receiving) {
 		//console.log("Not receiving");
 		
 		this.ready = true;
-		if (this.requests.length) {
-			this.processingRequest = this.requests[0];
+		if (this.requests.length > 0) {
 			this.receiving = true;
-			this.errCase = 0;		
+			this.errCase = 0;	
+			this.processingRequest = this.requests[0];
+			//console.log("Got request to send");
+			//console.log(this.processingRequest);
 			serialDevice.send(this.processingRequest.buffer, function (sendInfo) {
 				kissProtocol.proceedRequest();
 			});
+		
 		}
 		if(this.ReceiveTimeout != 0 ){
 			clearTimeout(this.ReceiveTimeout);
 			this.ReceiveTimeout = 0;
 		}
-		this.ReceiveTimeout =  window.setTimeout(function(){kissProtocol.receiving = false;},5000); 
-	} else {
-		//console.log("Receiving");
+		this.ReceiveTimeout =  window.setTimeout(function(){
+			kissProtocol.receiving = false; 
+		}, 100); 
+	}
+	if (this.RequestInterval == 0) {
+		this.RequestInterval = window.setInterval(function(){ kissProtocol.proceedRequest(); }, 10);
 	}
 }
 
@@ -751,8 +783,5 @@ kissProtocol.downgradeFrom104 = function(tmp) {
 }
 
 kissProtocol.disconnectCleanup = function () {
-    this.ready = false;
-    this.receiving = false;
-    this.data = [];
-    this.requests = [];
+    	kissProtocol.init();
 };

@@ -122,3 +122,15 @@ GUI.contentSwitchCleanup = function (callback) {
 
     CONTENT[this.activeContent].cleanup(callback);
 };
+
+GUI.switchContent = function(newContent, callback) {
+    if (GUI.activeContent != newContent) {
+    	console.log('Switching content to ' + newContent);
+        GUI.activeContent = newContent;
+        kissProtocol.clearPendingRequests(function() {
+        	callback();
+        });
+    } else {
+    	callback();
+    }
+}

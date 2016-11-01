@@ -8,21 +8,13 @@ CONTENT.configuration = {
 CONTENT.configuration.initialize = function(callback) {
     var self = this;
 
-    if (GUI.activeContent != 'configuration') {
-        GUI.activeContent = 'configuration';
-    }
-
-    kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-    	/* if (kissProtocol.data[kissProtocol.GET_SETTINGS]["ver"] < 104) {
-    		$("#navigation").hide();
-    		$('#content').load("./content/upgrade.html", function() {});
-    	} else*/ {
+	GUI.switchContent('configuration', function() {
+	 	kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
         	$('#content').load("./content/configuration.html", function() {
-            	htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
-       	 	});
-        }
-    });
-
+              	htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
+            });
+        });
+ 	});
 
 	function copyTextToClipboard(text) {
     	var copyFrom = $('<textarea/>');

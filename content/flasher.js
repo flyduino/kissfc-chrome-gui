@@ -13,12 +13,9 @@ CONTENT.flasher.initialize = function(callback) {
     
     self.parsed_hex = false;
 
-    if (GUI.activeContent != 'flasher') {
-        GUI.activeContent = 'flasher';
-    }
-
-    $('#content').load("./content/flasher.html", htmlLoaded);
-    
+    GUI.switchContent('flasher', function() {
+      	$('#content').load("./content/flasher.html", htmlLoaded);
+    });
 
     function checkDFU() {
     	 chrome.usb.getDevices(usbDevices.STM32DFU, function (result) {

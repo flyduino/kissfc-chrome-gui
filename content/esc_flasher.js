@@ -11,11 +11,9 @@ CONTENT.esc_flasher.initialize = function(callback) {
     self.flasherAvailable = false;
     self.pollEscInfo = false;
 
-    if (GUI.activeContent != 'esc_flasher') {
-        GUI.activeContent = 'esc_flasher';
-    }
-
-    $('#content').load("./content/esc_flasher.html", htmlLoaded);
+	GUI.switchContent('esc_flasher', function() {
+		 $('#content').load("./content/esc_flasher.html", htmlLoaded);
+	});
 
 	function Write(data) {
 		var bufferOut = new ArrayBuffer(data.length);
