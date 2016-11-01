@@ -252,5 +252,6 @@ CONTENT.rates.resizeCanvas = function() {}
 CONTENT.rates.cleanup = function(callback) {
     $(window).off('resize', this.barResize);
     $(window).off('resize', this.resizeCanvas);
+    window.clearTimeout(this.updateTimeout);
     if (callback) callback();
 };

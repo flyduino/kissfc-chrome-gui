@@ -33,29 +33,29 @@ $(document).ready(function () {
                     GUI.intervalKillAll();
                     GUI.contentSwitchCleanup();
                     GUI.contentSwitchInProgress = false;
+                    
+                    serialDevice.disconnect(function() {
+                    	  kissProtocol.disconnectCleanup();
+                    	  disconnected();
+                    	  GUI.connectedTo = false;
 
-                    kissProtocol.disconnectCleanup();
-                    serialDevice.disconnect(disconnected);
-                 
+                          // unlock port select
+                          $('#port').prop('disabled', false);
 
-                    GUI.connectedTo = false;
+                          // reset connect / disconnect button
+                          $('a.connect').text('Connect');
+                          $('a.connect').removeClass('active');
 
-                    // unlock port select
-                    $('#port').prop('disabled', false);
+                          $('#navigation li:not([data-name="welcome"])').removeClass('unlocked');
 
-                    // reset connect / disconnect button
-                    $(this).text('Connect');
-                    $(this).removeClass('active');
+                          $("li[data-name='esc_flasher']").show();
 
-                    $('#navigation li:not([data-name="welcome"])').removeClass('unlocked');
-
-                    $("li[data-name='esc_flasher']").show();
-
-                    if (GUI.activeContent != 'firmware') {
-                        $('#content').empty();
-                        // load welcome content
-                        CONTENT.welcome.initialize();
-                    }
+                          if (GUI.activeContent != 'firmware') {
+                              $('#content').empty();
+                              // load welcome content
+                              CONTENT.welcome.initialize();
+                          }
+                    });
                 }
 
                 $(this).data("clicks", !clicks);
@@ -89,12 +89,13 @@ $(document).ready(function () {
 
             $('a.connect').text('Disconnect').addClass('active');
 
+            kissProtocol.init();
+            
             // start reading
             serialDevice.onReceive.addListener(function (info) {
                 kissProtocol.read(info);
             });
-
-            kissProtocol.init();
+           
             CONTENT.configuration.initialize();
 
             // TODO disconnect after 10 seconds with error if we don't get valid data

@@ -142,7 +142,7 @@ kissProtocol.clearPendingRequests = function(callback) {
 	 	console.log('.');
 	 	setTimeout(function() {
 			kissProtocol.clearPendingRequests(callback);	 		
-	 	}, 50);
+	 	}, 100);
 	 } else {
 	 	callback();
 	 }
@@ -783,5 +783,6 @@ kissProtocol.downgradeFrom104 = function(tmp) {
 }
 
 kissProtocol.disconnectCleanup = function () {
+	console.log('Disconnect cleanup');
     	kissProtocol.init();
 };

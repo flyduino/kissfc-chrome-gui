@@ -334,5 +334,6 @@ CONTENT.tpa.resizeChart = function() {
 CONTENT.tpa.cleanup = function(callback) {
     $(window).off('resize', this.barResize);
     $(window).off('resize', this.resizeChart);
+    window.clearTimeout(this.updateTimeout);
     if (callback) callback();
 };

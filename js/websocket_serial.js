@@ -8,6 +8,7 @@ var websocketSerial = {
     ws:				 null,
     transmitting:    false,
     outputBuffer:    [],
+    closeCallback:   false,
     
     onConnect : function(self, socket) {
         self.ws = socket;
@@ -21,6 +22,7 @@ var websocketSerial = {
 				
         self.ws.onclose = function() { 
            	console.log("Connection is closed..."); 
+           	if (self.closeCallback) self.closeCallback({});
         };
         
         if (!self.request.canceled) {
@@ -53,14 +55,16 @@ var websocketSerial = {
         self.request = request;
 		
 		var ws1 = new WebSocket("ws://kiss.fc:81/");
-		var ws2 = new WebSocket("ws://kiss.local:81/");
-		console.log(self);
 		ws1.onopen = function() {
 			self.onConnect(self, ws1);
         };
-		ws2.onopen = function() {
-            self.onConnect(self, ws2);
-        };
+		
+		if (typeof androidOTGSerial === 'undefined') {
+        	var ws2 = new WebSocket("ws://kiss.local:81/");
+			ws2.onopen = function() {
+            	self.onConnect(self, ws2);
+        	};
+     	}
     },
     disconnect: function (callback) {
         var self = this;
@@ -74,9 +78,9 @@ var websocketSerial = {
             for (var i = (self.onReceiveError.listeners.length - 1); i >= 0; i--) {
                 self.onReceiveError.removeListener(self.onReceiveError.listeners[i]);
             }
+            self.closeCallback = callback;
             self.ws.close();
-  
-            if (callback) callback({});
+
         } else {
             // connection wasn't opened, so we won't try to close anything
             // instead we will rise canceled flag which will prevent connect from continueing further after being canceled
