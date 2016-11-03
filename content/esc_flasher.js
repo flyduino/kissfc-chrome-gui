@@ -152,7 +152,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
 			  	  serialDevice.onReceive.removeListener(Read);
 			  	  if (self.flasherAvailable) {
 			  	  	console.log("Flasher available, lets flash");
-			  	  	$("#portArea").children().hide();
+			  	  	$("#portArea").children().addClass('flashing-in-progress');
 			  	    WritePage(self.pages.length-1);	   
 			  	  } else {
 			  	  	console.log('got no answer. check your com port selection and see if you have the lastest KISSFC version.');
