@@ -74,6 +74,8 @@ CONTENT.advanced.initialize = function(callback) {
 		$('input[name="NFCF"]').val(data['NotchFilterCenter']);
 		$('input[name="NFCO"]').val(data['NotchFilterCut']);
 	}
+	
+	if(data['YawCfilter']) $('input[name="YCF"]').val(data['YawCfilter']);
         
         $('input[name^="lapTimer"]').on("change", function() {
         	contentChange();
@@ -205,8 +207,10 @@ CONTENT.advanced.initialize = function(callback) {
 	    }else{
 		data['NotchFilterEnable'] = 0;	    
 	    }
-		data['NotchFilterCenter'] = $('input[name="NFCF"]').val();
-		data['NotchFilterCut'] = $('input[name="NFCO"]').val();
+	    data['NotchFilterCenter'] = $('input[name="NFCF"]').val();
+	    data['NotchFilterCut'] = $('input[name="NFCO"]').val();
+	    
+	    data['YawCfilter'] = $('input[name="YCF"]').val(); 
         }
         settingsFilled = 1;
 
