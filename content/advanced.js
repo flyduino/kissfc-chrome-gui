@@ -68,6 +68,12 @@ CONTENT.advanced.initialize = function(callback) {
         for (var i=0; i<64; i++) {
         	$("select[name='lapTimerTransponderId']").append("<option value='"+i+"'>"+((i==0)? '--' : i)+"</option>");
         }
+	
+	if(data['NotchFilterEnable']){
+		$('input[name="NFE"]').prop('checked', 1);
+		$('input[name="NFCF"]').val(data['NotchFilterCenter']);
+		$('input[name="NFCO"]').val(data['NotchFilterCut']);
+	}
         
         $('input[name^="lapTimer"]').on("change", function() {
         	contentChange();
@@ -193,6 +199,14 @@ CONTENT.advanced.initialize = function(callback) {
             data['RGB'][2]=parseInt(rgbArray[2]);
             
             data['vbatAlarm'] = parseFloat($('input[name="vbatAlarm"]').val());
+	    
+	    if ($('input[name="NFE"]').prop('checked') ? 1 : 0 == 1) {
+		data['NotchFilterEnable'] = 1;
+	    }else{
+		data['NotchFilterEnable'] = 0;	    
+	    }
+		data['NotchFilterCenter'] = $('input[name="NFCF"]').val();
+		data['NotchFilterCut'] = $('input[name="NFCO"]').val();
         }
         settingsFilled = 1;
 
