@@ -11,17 +11,15 @@ CONTENT.esc_flasher.initialize = function(callback) {
     self.flasherAvailable = false;
     self.pollEscInfo = false;
 
-    if (GUI.activeContent != 'esc_flasher') {
-        GUI.activeContent = 'esc_flasher';
-    }
-
-    $('#content').load("./content/esc_flasher.html", htmlLoaded);
+	GUI.switchContent('esc_flasher', function() {
+		 $('#content').load("./content/esc_flasher.html", htmlLoaded);
+	});
 
 	function Write(data) {
 		var bufferOut = new ArrayBuffer(data.length);
     	var bufferView = new Uint8Array(bufferOut);
     	bufferView.set(data, 0);	
-		serial.send(bufferOut, function(a) {
+		serialDevice.send(bufferOut, function(a) {
 		
 		});
 	}
@@ -40,7 +38,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
 			console.log('done.');
 			$("#status").html("SUCCESS!");
 			$(".esc-flasher-complete").show();
-			serial.disconnect();
+			serialDevice.disconnect();
 			return;
 		} else {
 			var percentage = 100-100*(actPage/self.pages.length);
@@ -147,14 +145,14 @@ CONTENT.esc_flasher.initialize = function(callback) {
     		  self.flasherAvailable = false;
 			  console.log('Setting KISS FC to ESC write mode');
 			  var flasherAvailable = false;
-			  serial.onReceive.addListener(Read);
+			  serialDevice.onReceive.addListener(Read);
 			  Write([65]);
 			  console.log('Waiting for FC');
 			  setTimeout(function() {
-			  	  serial.onReceive.removeListener(Read);
+			  	  serialDevice.onReceive.removeListener(Read);
 			  	  if (self.flasherAvailable) {
 			  	  	console.log("Flasher available, lets flash");
-			  	  	$("#portArea").children().hide();
+			  	  	$("#portArea").children().addClass('flashing-in-progress');
 			  	    WritePage(self.pages.length-1);	   
 			  	  } else {
 			  	  	console.log('got no answer. check your com port selection and see if you have the lastest KISSFC version.');

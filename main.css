@@ -49,6 +49,10 @@ input[type="number"]::-webkit-inner-spin-button {
 	top: 1px;
 }
 
+.flashing-in-progress {
+	display: none;
+}
+
 .inputSpinners div {
 	display: block;
 	width: 15px;

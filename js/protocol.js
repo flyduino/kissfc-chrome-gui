@@ -31,9 +31,9 @@ var kissProtocol = {
     processingRequest:      null,
     data:                   [],
     requests:               [],
-    errCase:                  0,
-RequestInterval:   0,
-    ReceiveTimeout:   0,
+    errCase:                0,
+	RequestInterval:   		0,
+    ReceiveTimeout:   		0,
 };
 
 kissProtocol.read = function (readInfo) {
@@ -49,14 +49,13 @@ kissProtocol.read = function (readInfo) {
                     // wait for start byte
                     if (data[i] == 5) this.state++;
                     else this.state = 0;
-		    
-		    this.errCase++;
-		    if(this.errCase > 3){
-			    this.receiving = false;
-			    this.errCase = 0;
-			    this.state = 0;
-			    //console.log('kissProtocol: reset errCase');
-		    }
+		    		this.errCase++;
+		    		if (this.errCase > 3) {
+			    		this.receiving = false;
+			    		this.errCase = 0;
+			    		this.state = 0;
+			    		//console.loglog('kissProtocol: reset errCase');
+		    		}
                     break;
                 case 1:
                     // amount of bytes, reset variables to default state and prepare buffers
@@ -79,6 +78,8 @@ kissProtocol.read = function (readInfo) {
                     break;
                 case 3:
                     // calculate crc, if crc matches -> process data, otherwise log an crc error
+                    //console.log("Calculated crc: " + (Math.floor(this.packetCrc / this.packetCrcCounter)) + " real: " + data[i]);
+                    
                     if (Math.floor(this.packetCrc / this.packetCrcCounter) == data[i]) {
                         if (this.data[this.processingRequest.code]) {
                             this.data[this.processingRequest.code]['buffer'] = this.packetBuffer;
@@ -89,10 +90,10 @@ kissProtocol.read = function (readInfo) {
 
                         this.processPacket(this.processingRequest.code, this.data[this.processingRequest.code]);
                     } else {
-			this.receiving = false;
-		        this.state = 0;
-                        console.log('kissProtocol: CRC Failed for last operation');
-			return;
+						this.receiving = false;
+		        		this.state = 0;
+                        //console.log('kissProtocol: CRC Failed for last operation');
+						return;
                     }
 
                     this.requests.splice(0, 1);
@@ -109,6 +110,8 @@ kissProtocol.read = function (readInfo) {
 };
 
 kissProtocol.send = function (code, data, callback) {
+	//console.log("Sending code: " + code);
+	//console.log("Sending data: " + data);
     var bufferOut = new ArrayBuffer(data.length);
     var bufferView = new Uint8Array(bufferOut);
 
@@ -119,25 +122,59 @@ kissProtocol.send = function (code, data, callback) {
         'buffer': bufferOut,
         'callback': (callback) ? callback : false
     });
+    //console.log("calling process request");
     kissProtocol.proceedRequest();
 };
 
+kissProtocol.init = function() {
+	console.log("Init");
+	this.requests=[];
+	this.receiving = false;
+	if (this.RequestInterval!=0) window.clearInterval(this.RequestInterval);
+	if (this.RequestTimeout!=0) window.clearTimeout(this.RequestTimeout);
+	this.RequestInterval=0;
+	this.RequestTimeout=0;
+	this.ready = false;
+}
+
+kissProtocol.clearPendingRequests = function(callback) {
+	 if (this.requests.length>0) {
+	 	console.log('.');
+	 	setTimeout(function() {
+			kissProtocol.clearPendingRequests(callback);	 		
+	 	}, 100);
+	 } else {
+	 	callback();
+	 }
+}
+
 kissProtocol.proceedRequest = function() {
-	if (!this.receiving){
+	//console.log("process request: " + this.receiving);
+	if (!this.receiving) {
+		//console.log("Not receiving");
+		
 		this.ready = true;
-		if (this.requests.length) {
-			this.processingRequest = this.requests[0];
+		if (this.requests.length > 0) {
 			this.receiving = true;
-			this.errCase = 0;		
-			serial.send(this.processingRequest.buffer, function (sendInfo) {
+			this.errCase = 0;	
+			this.processingRequest = this.requests[0];
+			//console.log("Got request to send");
+			//console.log(this.processingRequest);
+			serialDevice.send(this.processingRequest.buffer, function (sendInfo) {
 				kissProtocol.proceedRequest();
 			});
+		
 		}
 		if(this.ReceiveTimeout != 0 ){
 			clearTimeout(this.ReceiveTimeout);
 			this.ReceiveTimeout = 0;
 		}
-		this.ReceiveTimeout =  window.setTimeout(function(){kissProtocol.receiving = false;},5000); 
+		this.ReceiveTimeout =  window.setTimeout(function(){
+			kissProtocol.receiving = false; 
+		}, 100); 
+	}
+	if (this.RequestInterval == 0) {
+		this.RequestInterval = window.setInterval(function(){ kissProtocol.proceedRequest(); }, 10);
 	}
 }
 
@@ -746,8 +783,6 @@ kissProtocol.downgradeFrom104 = function(tmp) {
 }
 
 kissProtocol.disconnectCleanup = function () {
-    this.ready = false;
-    this.receiving = false;
-    this.data = [];
-    this.requests = [];
+	console.log('Disconnect cleanup');
+    	kissProtocol.init();
 };

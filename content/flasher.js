@@ -13,17 +13,14 @@ CONTENT.flasher.initialize = function(callback) {
     
     self.parsed_hex = false;
 
-    if (GUI.activeContent != 'flasher') {
-        GUI.activeContent = 'flasher';
-    }
-
-    $('#content').load("./content/flasher.html", htmlLoaded);
-    
+    GUI.switchContent('flasher', function() {
+      	$('#content').load("./content/flasher.html", htmlLoaded);
+    });
 
     function checkDFU() {
     	 chrome.usb.getDevices(usbDevices.STM32DFU, function (result) {
  	        if (result.length==0) {
- 	        	$("#portArea").show();
+ 	        	$("#portArea").children().removeClass('flashing-in-progress');
  	        	GUI.contentSwitchInProgress = true;
  	            GUI.contentSwitchCleanup(function () {
  	                CONTENT['welcome'].initialize();
@@ -35,9 +32,8 @@ CONTENT.flasher.initialize = function(callback) {
     }
 
     function htmlLoaded() {
-    	
+    	$("#portArea").children().addClass('flashing-in-progress');
     	checkDFU();
-
     	$("#select_file").on("click", function() {
     		  if (!$(this).hasClass("disabled")) {
     			  $("#status").html("");
@@ -83,6 +79,7 @@ CONTENT.flasher.initialize = function(callback) {
     	
     	$("#flash").on("click", function() {
     		if (!$(this).hasClass('disabled')) {
+    		  $("#portArea").children().addClass('flashing-in-progress');
     	      $("#status").html("");
     		  $("#flash").addClass('disabled');
     		  $("#select_file").addClass('disabled');

@@ -37,6 +37,14 @@ PortHandler.check = function () {
                         $('a.connect').click();
                     }
                 }
+                if (GUI.activeContent == 'esc_flasher') {
+                	$("#portArea").children().removeClass('flashing-in-progress');
+                	 $('a.connect').text('Connect');
+     	        	GUI.contentSwitchInProgress = true;
+     	            GUI.contentSwitchCleanup(function () {
+     	                CONTENT['welcome'].initialize();
+     	            });
+                }
             }
 
             self.updatePortSelect(currentPorts);

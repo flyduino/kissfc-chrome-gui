@@ -11,12 +11,10 @@ CONTENT.data_output.initialize = function (callback) {
     self.updateTimeout;
     self.motorTestEnabled = false;
 
-    if (GUI.activeContent != 'data_output') {
-        GUI.activeContent = 'data_output';
-    }
-
-    kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
-        $('#content').load("./content/data_output.html", htmlLoaded);
+    GUI.switchContent('data_output', function() {
+    	kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
+        	$('#content').load("./content/data_output.html", htmlLoaded);
+   	 	});
     });
 
     function htmlLoaded() {
@@ -26,8 +24,8 @@ CONTENT.data_output.initialize = function (callback) {
         var receiverFillArray = [];
         var receiverLabelArray = [];
         self.ESCTelemetry = 0;
-	self.startedUIupdate = 0;
-	window.clearTimeout(self.updateTimeout);
+		self.startedUIupdate = 0;
+		window.clearTimeout(self.updateTimeout);
 
         for (var i = 0; i < receiverNames.length; i++) {
             var name = receiverNames[i];

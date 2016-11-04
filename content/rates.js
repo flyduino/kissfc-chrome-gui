@@ -13,9 +13,14 @@ CONTENT.rates.initialize = function(callback) {
     self.hasInput = false;
 	self.lastTimestamp = null; 
 
-    if (GUI.activeContent != 'rates') {
-        GUI.activeContent = 'rates';
-    }
+	GUI.switchContent('rates', function() {
+    	kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
+    		self.settingsFilled = 1;
+        	$('#content').load("./content/rates.html", function() {
+        		htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
+       	 	});
+    	});
+	});
 
     function animateModel(timestamp) {
     	if (GUI.activeContent == 'rates') {
@@ -61,13 +66,7 @@ CONTENT.rates.initialize = function(callback) {
         }
     }
 
-    // get config
-    kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-    	self.settingsFilled = 1;
-        $('#content').load("./content/rates.html", htmlLoaded);
-    });
-
-    function htmlLoaded() {
+    function htmlLoaded(data) {
         // generate receiver bars
         var receiverNames = ['Roll', 'Pitch', 'Yaw']
         var chartDivSelectors = ['#rates_chart_roll', '#rates_chart_pitch', '#rates_chart_yaw']
@@ -126,12 +125,6 @@ CONTENT.rates.initialize = function(callback) {
             'max': 2200
         };
 
-        kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function() {
-            console.log("Loaded telemetry");
-        });
-
-        var data = kissProtocol.data[kissProtocol.GET_SETTINGS];
-
         function grabData() {
             data['RC_Rate'][0] = parseFloat($('tr.roll input').eq(0).val());
             data['RPY_Expo'][0] = parseFloat($('tr.roll input').eq(1).val());
@@ -177,7 +170,7 @@ CONTENT.rates.initialize = function(callback) {
 
             if (GUI.activeContent == 'rates') self.updateTimeout = window.setTimeout(function() {
                 fastDataPoll();
-            }, 10);
+            }, 50);
         }
 
         // setup graph
@@ -259,5 +252,6 @@ CONTENT.rates.resizeCanvas = function() {}
 CONTENT.rates.cleanup = function(callback) {
     $(window).off('resize', this.barResize);
     $(window).off('resize', this.resizeCanvas);
+    window.clearTimeout(this.updateTimeout);
     if (callback) callback();
 };
