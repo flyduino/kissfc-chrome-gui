@@ -1,14 +1,14 @@
 'use strict';
 
-$(document).ready(function () {
+$(document).ready(function() {
     PortHandler.initialize();
     CONTENT.welcome.initialize();
 
-    $('#navigation li').click(function () {
+    $('#navigation li').click(function() {
         var self = this;
         var content = $(self).attr('data-name');
-        
-    	$("#navigation").removeClass("active-menu");
+
+        $("#navigation").removeClass("active-menu");
 
         function content_ready() {
             GUI.contentSwitchInProgress = false;
@@ -16,14 +16,14 @@ $(document).ready(function () {
 
         if ($(self).hasClass('unlocked') && GUI.activeContent != content) {
             GUI.contentSwitchInProgress = true;
-            GUI.contentSwitchCleanup(function () {
+            GUI.contentSwitchCleanup(function() {
                 CONTENT[content].initialize();
             });
         }
     });
-    
+
     $(".navigation-menu-button").on("click", function() {
-    	$("#navigation").toggleClass("active-menu");
+        $("#navigation").toggleClass("active-menu");
     });
 });
 

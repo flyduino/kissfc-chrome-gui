@@ -3,16 +3,23 @@
 var CONTENT = {}; // filled by individual content js file
 
 var GUI = {
-    connectingTo:               false,
-    connectedTo:                false,
-    activeContent:              null,
-    contentSwitchInProgress:    false,
-    intervalArray:              [],
-    timeoutArray:               []
+    connectingTo : false,
+    connectedTo : false,
+    activeContent : null,
+    contentSwitchInProgress : false,
+    intervalArray : [],
+    timeoutArray : []
 };
 
-GUI.intervalAdd = function (name, code, interval, first) {
-    var data = {'name': name, 'timer': null, 'code': code, 'interval': interval, 'fired': 0, 'paused': false};
+GUI.intervalAdd = function(name, code, interval, first) {
+    var data = {
+        'name' : name,
+        'timer' : null,
+        'code' : code,
+        'interval' : interval,
+        'fired' : 0,
+        'paused' : false
+    };
 
     if (first == true) {
         code(); // execute code
@@ -31,12 +38,13 @@ GUI.intervalAdd = function (name, code, interval, first) {
     return data;
 };
 
-GUI.intervalRemove = function (name) {
+GUI.intervalRemove = function(name) {
     for (var i = 0; i < this.intervalArray.length; i++) {
         if (this.intervalArray[i].name == name) {
             clearInterval(this.intervalArray[i].timer); // stop timer
 
-            this.intervalArray.splice(i, 1); // remove element/object from array
+            this.intervalArray.splice(i, 1); // remove element/object from
+                                                // array
 
             return true;
         }
@@ -45,14 +53,15 @@ GUI.intervalRemove = function (name) {
     return false;
 };
 
-GUI.intervalKillAll = function (keepArray) {
+GUI.intervalKillAll = function(keepArray) {
     var self = this;
     var timersKilled = 0;
 
-    for (var i = (this.intervalArray.length - 1); i >= 0; i--) { // reverse iteration
+    for (var i = (this.intervalArray.length - 1); i >= 0; i--) { // reverse
+                                                                    // iteration
         var keep = false;
         if (keepArray) { // only run through the array if it exists
-            keepArray.forEach(function (name) {
+            keepArray.forEach(function(name) {
                 if (self.intervalArray[i].name == name) {
                     keep = true;
                 }
@@ -62,7 +71,8 @@ GUI.intervalKillAll = function (keepArray) {
         if (!keep) {
             clearInterval(this.intervalArray[i].timer); // stop timer
 
-            this.intervalArray.splice(i, 1); // remove element/object from array
+            this.intervalArray.splice(i, 1); // remove element/object from
+                                                // array
 
             timersKilled++;
         }
@@ -71,9 +81,13 @@ GUI.intervalKillAll = function (keepArray) {
     return timersKilled;
 };
 
-GUI.timeoutAdd = function (name, code, timeout) {
+GUI.timeoutAdd = function(name, code, timeout) {
     var self = this;
-    var data = {'name': name, 'timer': null, 'timeout': timeout};
+    var data = {
+        'name' : name,
+        'timer' : null,
+        'timeout' : timeout
+    };
 
     // start timer with "cleaning" callback
     data.timer = setTimeout(function() {
@@ -81,7 +95,8 @@ GUI.timeoutAdd = function (name, code, timeout) {
 
         // remove object from array
         var index = self.timeoutArray.indexOf(data);
-        if (index > -1) self.timeoutArray.splice(index, 1);
+        if (index > -1)
+            self.timeoutArray.splice(index, 1);
     }, timeout);
 
     this.timeoutArray.push(data); // push to primary timeout array
@@ -89,7 +104,7 @@ GUI.timeoutAdd = function (name, code, timeout) {
     return data;
 };
 
-GUI.timeoutRemove = function (name) {
+GUI.timeoutRemove = function(name) {
     for (var i = 0; i < this.timeoutArray.length; i++) {
         if (this.timeoutArray[i].name == name) {
             clearTimeout(this.timeoutArray[i].timer); // stop timer
@@ -103,7 +118,7 @@ GUI.timeoutRemove = function (name) {
     return false;
 };
 
-GUI.timeoutKillAll = function () {
+GUI.timeoutKillAll = function() {
     var timersKilled = 0;
 
     for (var i = 0; i < this.timeoutArray.length; i++) {
@@ -117,20 +132,21 @@ GUI.timeoutKillAll = function () {
     return timersKilled;
 };
 
-GUI.contentSwitchCleanup = function (callback) {
-    GUI.intervalKillAll(); // all intervals (mostly data pulling) needs to be removed on tab switch
+GUI.contentSwitchCleanup = function(callback) {
+    GUI.intervalKillAll(); // all intervals (mostly data pulling) needs to be
+                            // removed on tab switch
 
     CONTENT[this.activeContent].cleanup(callback);
 };
 
 GUI.switchContent = function(newContent, callback) {
     if (GUI.activeContent != newContent) {
-    	console.log('Switching content to ' + newContent);
+        console.log('Switching content to ' + newContent);
         GUI.activeContent = newContent;
         kissProtocol.clearPendingRequests(function() {
-        	callback();
+            callback();
         });
     } else {
-    	callback();
+        callback();
     }
 }

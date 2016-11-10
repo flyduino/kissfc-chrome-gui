@@ -116,7 +116,10 @@ CONTENT.rates.initialize = function(callback) {
             }
         };
 
-        $(window).on('resize', self.barResize).resize(); // trigger so labels get correctly aligned on creation
+        $(window).on('resize', self.barResize).resize(); // trigger so labels
+                                                            // get correctly
+                                                            // aligned on
+                                                            // creation
 
         var legendItems = $('dl.legend dd');
         var otherItems = $('dl.otherValues dd')

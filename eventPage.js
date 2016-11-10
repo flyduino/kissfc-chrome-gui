@@ -50,5 +50,6 @@ chrome.runtime.onInstalled.addListener(function (details) {
 });
 
 chrome.notifications.onButtonClicked.addListener(function (notificationId, buttonIndex) {
-    if (notificationId == 'update') startApplication();
+    if (notificationId == 'update')
+        startApplication();
 });

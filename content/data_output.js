@@ -147,7 +147,10 @@ CONTENT.data_output.initialize = function (callback) {
             }
         };
 
-        $(window).on('resize', self.barResize).resize(); // trigger so labels get correctly aligned on creation
+        $(window).on('resize', self.barResize).resize(); // trigger so labels
+                                                            // get correctly
+                                                            // aligned on
+                                                            // creation
 
         $('a.calibrateAccelerometer').click(function () {
             var config = kissProtocol.data[kissProtocol.GET_SETTINGS];
@@ -170,7 +173,10 @@ CONTENT.data_output.initialize = function (callback) {
 			
 	    var useGraphData = parseInt($('select[name="graphTitle"]').val());
 		
-	    if(/*data && (data['ESC_Telemetrie0'][1] != 0 || data['ESC_Telemetrie0'][0] != 0) &&*/ !self.ESCTelemetry){
+	    if(/*
+             * data && (data['ESC_Telemetrie0'][1] != 0 ||
+             * data['ESC_Telemetrie0'][0] != 0) &&
+             */ !self.ESCTelemetry){
 		    self.ESCTelemetry = 1;
 		    $('select[name="graphTitle"]').html('<option value="0">Gyro &amp; ACC Data:</option><option value="1">ESC Temperatures:</option><option id="ESCTelemetrie" value="2">ESC Voltanges:</option><option value="3">ESC Currents:</option><option value="4">ESC used A/h</option><option value="5">ESC E-RpM / 1000</option><option value="6">ESC TLM Stats</option>');
 	    }
@@ -259,7 +265,11 @@ CONTENT.data_output.initialize = function (callback) {
 		    legendItems.eq(5).text(data['ACCRaw'][2].toFixed(3));
 		    
 		    for (var i = 0; i < 3; i++) {
-                        sampleBlock.push(data['GyroRaw'][i]*4*(self.motorTestEnabled ? 100 : 1)); // to have it more visible
+                        sampleBlock.push(data['GyroRaw'][i]*4*(self.motorTestEnabled ? 100 : 1)); // to
+                                                                                                    // have
+                                                                                                    // it
+                                                                                                    // more
+                                                                                                    // visible
                         sampleBlock.push(data['ACCRaw'][i]);
 			if(i == 0){
 				if(data['GyroRaw'][i]*2000 >  parseInt($('#gxmax').text())) $('#gxmax').text(data['GyroRaw'][i]*2000);
@@ -380,11 +390,12 @@ CONTENT.data_output.initialize = function (callback) {
                 kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
                     if (GUI.activeContent == 'data_output') {
                         if(self.startedUIupdate == 0){
-				//window.clearTimeout(self.updateTimeout);
+				// window.clearTimeout(self.updateTimeout);
 				updateUI();
-				//self.startedUIupdate = 1;
+				// self.startedUIupdate = 1;
 			}
-			//self.updateTimeout = window.setTimeout(function(){fastDataPoll();},10); 
+			// self.updateTimeout =
+            // window.setTimeout(function(){fastDataPoll();},10);
                     }
                 });
         }
@@ -393,12 +404,13 @@ CONTENT.data_output.initialize = function (callback) {
         fastDataPoll();
 
         /*
-        // old code that uses interval for data polling, at this time period it will build up a catastrophic request buffer and eventually crash !!!
-        // we will poll data at 50 fps
-        GUI.intervalAdd('telemetryDataPoll', function () {
-            kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], updateUI);
-        }, 20, true);
-        */
+         * // old code that uses interval for data polling, at this time period
+         * it will build up a catastrophic request buffer and eventually crash
+         * !!! // we will poll data at 50 fps
+         * GUI.intervalAdd('telemetryDataPoll', function () {
+         * kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], updateUI); },
+         * 20, true);
+         */
     }
 };
 
@@ -472,17 +484,15 @@ CONTENT.data_output.drawGraph = function (graph, scale) {
     ctx.lineWidth = 1;
     ctx.strokeStyle = '#dddddd';
     /*
-    // vertical
-    var tickSize = width / graph.ticks[1];
-    for (var x = tickSize + margin.left, pos; x < width; x += tickSize) {
-        pos = Math.round(x) + 0.5;
-
-        ctx.moveTo(pos, 0);
-        ctx.lineTo(pos, height);
-    }*/
+     * // vertical var tickSize = width / graph.ticks[1]; for (var x = tickSize +
+     * margin.left, pos; x < width; x += tickSize) { pos = Math.round(x) + 0.5;
+     * 
+     * ctx.moveTo(pos, 0); ctx.lineTo(pos, height); }
+     */
 
     // horizontal
-    var tickSize = (height - 2) / graph.ticks[0]; // -2px for bottom axis outline
+    var tickSize = (height - 2) / graph.ticks[0]; // -2px for bottom axis
+                                                    // outline
     for (var y = tickSize, pos; y < height; y += tickSize) {
         pos = Math.round(y) + 0.5;
 
