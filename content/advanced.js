@@ -69,13 +69,20 @@ CONTENT.advanced.initialize = function(callback) {
         	$("select[name='lapTimerTransponderId']").append("<option value='"+i+"'>"+((i==0)? '--' : i)+"</option>");
         }
 	
-	if(data['NotchFilterEnable']){
-		$('input[name="NFE"]').prop('checked', 1);
-		$('input[name="NFCF"]').val(data['NotchFilterCenter']);
-		$('input[name="NFCO"]').val(data['NotchFilterCut']);
+	if (data['ver'] > 104){
+		$('input[name="NFE"]').removeAttr("disabled");
+		$('input[name="NFCF"]').removeAttr("disabled");
+		$('input[name="NFCO"]').removeAttr("disabled");
+		$('input[name="YCF"]').removeAttr("disabled");
+		
+		if(data['NotchFilterEnable']){
+			$('input[name="NFE"]').prop('checked', 1);
+			$('input[name="NFCF"]').val(data['NotchFilterCenter']);
+			$('input[name="NFCO"]').val(data['NotchFilterCut']);
+		}
+
+		if(data['YawCfilter']) $('input[name="YCF"]').val(data['YawCfilter']);
 	}
-	
-	if(data['YawCfilter']) $('input[name="YCF"]').val(data['YawCfilter']);
         
         $('input[name^="lapTimer"]').on("change", function() {
         	contentChange();
