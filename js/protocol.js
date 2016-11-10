@@ -431,6 +431,12 @@ kissProtocol.processPacket = function (code, obj) {
 
 	        	obj.loggerDebugVariables =  data.getUint8(137);
 	    	} 
+		if (obj.ver > 104){
+			obj.NotchFilterEnable = data.getUint8(138);
+	    		obj.NotchFilterCenter = data.getUint16(139, 0);
+	    		obj.NotchFilterCut = data.getUint16(141, 0);
+			obj.YawCfilter = data.getUint8(143);
+		}
 	    	kissProtocol.upgradeTo104(obj);
             break;
         case this.SET_SETTINGS:
@@ -629,6 +635,14 @@ kissProtocol.preparePacket = function (code, obj) {
 	    		
 	    		blen=136;
 	    	}
+		if (obj.ver > 104) {
+	    		data.setUint8(128, obj.NotchFilterEnable);
+	    		data.setUint16(129, obj.NotchFilterCenter,0);
+	    		data.setUint16(131, obj.NotchFilterCut,0);
+			data.setUint8(133, obj.YawCfilter);
+			
+			blen=142;
+		}
             break;
             
           case this.MOTOR_TEST:

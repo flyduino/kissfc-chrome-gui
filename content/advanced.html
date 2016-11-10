@@ -144,6 +144,30 @@
 					</dd>
 				</dl>
 			</div>
+		<div id="Notch" class="wrapper-full">
+			<div class="groupTitle">Notch Filter</div>
+			<dl class="general-settings">
+				<dt style="width:180px"><input disabled="true" type="checkbox" name="NFE" /> &nbsp;Use Notch Filter</dt>
+				<dd>
+					<dt style="width:180px;">Center Frequency: (Hz)&nbsp;</dt>
+					<input disabled="true" type="text" name="NFCF" data-step="1"
+						data-min="0" data-max="1000" data-precision="0" value="200" />
+				</dd>
+				<dd>
+					<dt style="width:180px;">Cutoff Frequency: (Hz)&nbsp;</dt>
+					<input disabled="true" type="text" name="NFCO" data-step="1"
+						data-min="0" data-max="1000" data-precision="0" value="100" />
+				</dd>
+			</dl>
+		</div>
+		<div id="yawCF" class="wrapper-full">
+			<div class="groupTitle">Yaw Filter</div>
+			<dl class="general-settings">
+				<dt style="width:180px;">Yaw Filter strength:&nbsp;</dt>
+				<input disabled="true" type="text" name="YCF" data-step="1"
+					data-min="0" data-max="97" data-precision="0" value="92" />
+			</dl>
+		</div>
 
 	</div>
 </div>
