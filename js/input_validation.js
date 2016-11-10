@@ -110,10 +110,10 @@ function validateBounds(selector) {
     inputs.on('keydown', function(e) {
         // whitelist all that we need for numeric control
         var whitelist = [ 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, // numpad
-                                                                                                                // and
-                                                                                                                // standard
-                                                                                                                // number
-                                                                                                                // keypad
+        // and
+        // standard
+        // number
+        // keypad
         109, 189, // minus on numpad and in standard keyboard
         8, 46, 9, // backspace, delete, tab
         190, 110, // decimal point

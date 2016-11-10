@@ -44,7 +44,7 @@ GUI.intervalRemove = function(name) {
             clearInterval(this.intervalArray[i].timer); // stop timer
 
             this.intervalArray.splice(i, 1); // remove element/object from
-                                                // array
+            // array
 
             return true;
         }
@@ -58,7 +58,7 @@ GUI.intervalKillAll = function(keepArray) {
     var timersKilled = 0;
 
     for (var i = (this.intervalArray.length - 1); i >= 0; i--) { // reverse
-                                                                    // iteration
+        // iteration
         var keep = false;
         if (keepArray) { // only run through the array if it exists
             keepArray.forEach(function(name) {
@@ -72,7 +72,7 @@ GUI.intervalKillAll = function(keepArray) {
             clearInterval(this.intervalArray[i].timer); // stop timer
 
             this.intervalArray.splice(i, 1); // remove element/object from
-                                                // array
+            // array
 
             timersKilled++;
         }
@@ -134,7 +134,7 @@ GUI.timeoutKillAll = function() {
 
 GUI.contentSwitchCleanup = function(callback) {
     GUI.intervalKillAll(); // all intervals (mostly data pulling) needs to be
-                            // removed on tab switch
+    // removed on tab switch
 
     CONTENT[this.activeContent].cleanup(callback);
 };

@@ -1,11 +1,11 @@
 'use strict';
 
 var websocketSerial = {
-	request:		 null,
+    request:         null,
     bytesReceived:   0,
     bytesSent:       0,
     failed:          0,
-    ws:				 null,
+    ws:                 null,
     transmitting:    false,
     outputBuffer:    [],
     closeCallback:   false,
@@ -14,15 +14,15 @@ var websocketSerial = {
         self.ws = socket;
         self.ws.binaryType = 'arraybuffer';
         self.ws.onmessage = function (evt) { 
-        	var received_msg = evt.data;
-          	for (var i = (self.onReceive.listeners.length - 1); i >= 0; i--) {
-          		self.onReceive.listeners[i]({data:evt.data}); 
-          	} 
+            var received_msg = evt.data;
+              for (var i = (self.onReceive.listeners.length - 1); i >= 0; i--) {
+                  self.onReceive.listeners[i]({data:evt.data}); 
+              } 
         };
-				
+                
         self.ws.onclose = function() { 
-           	console.log("Connection is closed..."); 
-           	if (self.closeCallback) self.closeCallback({});
+               console.log("Connection is closed..."); 
+               if (self.closeCallback) self.closeCallback({});
         };
         
         if (!self.request.canceled) {
@@ -32,7 +32,7 @@ var websocketSerial = {
             self.request.fulfilled = true;
             self.onReceive.addListener(function logBytesReceived(info) {
                 self.bytesReceived += info.data.byteLength;
-            	self.dump('->', info.data);
+                self.dump('->', info.data);
             });
             if (self.request.callback) self.request.callback({});
         } else if (self.request.canceled) {
@@ -45,26 +45,26 @@ var websocketSerial = {
     connect: function (path, options, callback) {
         var self = this;
         var request = {
-        	path:           path,
+            path:           path,
             options:        options,
             callback:       callback,
             fulfilled:      false,
             canceled:       false,
-        	binary : false
+            binary : false
         };
         self.request = request;
-		
-		var ws1 = new WebSocket("ws://kiss.fc:81/");
-		ws1.onopen = function() {
-			self.onConnect(self, ws1);
+        
+        var ws1 = new WebSocket("ws://kiss.fc:81/");
+        ws1.onopen = function() {
+            self.onConnect(self, ws1);
         };
-		
-		if (typeof androidOTGSerial === 'undefined') {
-        	var ws2 = new WebSocket("ws://kiss.local:81/");
-			ws2.onopen = function() {
-            	self.onConnect(self, ws2);
-        	};
-     	}
+        
+        if (typeof androidOTGSerial === 'undefined') {
+            var ws2 = new WebSocket("ws://kiss.local:81/");
+            ws2.onopen = function() {
+                self.onConnect(self, ws2);
+            };
+         }
     },
     disconnect: function (callback) {
         var self = this;
@@ -104,31 +104,31 @@ var websocketSerial = {
             var data = self.outputBuffer[0].data,
                 callback = self.outputBuffer[0].callback;
 
-        	self.dump('<-', data);
-        	
+            self.dump('<-', data);
+            
             if (self.ws) {
-            	if (self.request.binary) {
-            		self.ws.send(data, { binary: true });
-            	} else {
-            		var str = self.bytesToHexString(data);
-            		self.ws.send(str);
-            	}
+                if (self.request.binary) {
+                    self.ws.send(data, { binary: true });
+                } else {
+                    var str = self.bytesToHexString(data);
+                    self.ws.send(str);
+                }
                 self.bytesSent += data.length; 
                 if (callback) callback({});
                 self.outputBuffer.shift();
                 if (self.outputBuffer.length) {
-                	if (self.outputBuffer.length > 100) {
-                    	var counter = 0;
+                    if (self.outputBuffer.length > 100) {
+                        var counter = 0;
                         while (self.outputBuffer.length > 100) {
-                        	self.outputBuffer.pop();
+                            self.outputBuffer.pop();
                             counter++;
                         }
                         console.log('SERIAL: Send buffer overflowing, dropped: ' + counter + ' entries');
                     }
                     send();
                 } else {
-                	self.transmitting = false;
-               	}
+                    self.transmitting = false;
+                   }
             }
         }
         if (!self.transmitting) {
@@ -169,28 +169,28 @@ var websocketSerial = {
         this.transmitting = false;
     },
     byteToHex: function(byte) {
-    	var hexChar = ["0", "1", "2", "3", "4", "5", "6", "7","8", "9", "A", "B", "C", "D", "E", "F"];
-    	return hexChar[(byte >> 4) & 0x0f] + hexChar[byte & 0x0f];
+        var hexChar = ["0", "1", "2", "3", "4", "5", "6", "7","8", "9", "A", "B", "C", "D", "E", "F"];
+        return hexChar[(byte >> 4) & 0x0f] + hexChar[byte & 0x0f];
     },
     wordToHex: function(byte) {
-    	return this.byteToHex(byte>>8 & 0xff)+this.byteToHex(byte & 0xff);
+        return this.byteToHex(byte>>8 & 0xff)+this.byteToHex(byte & 0xff);
     },
     bytesToHexString: function toHexString(data) {
-    	var view = new Uint8Array(data);
-    	var line = '';
-    	for (var i = 0; i < view.length; i++) line +=  this.byteToHex(view[i]);
-    	return line;
+        var view = new Uint8Array(data);
+        var line = '';
+        for (var i = 0; i < view.length; i++) line +=  this.byteToHex(view[i]);
+        return line;
     },
     dump: function(direction, data) {
-    	/*var view = new Uint8Array(data);
-    	var line = '';
-    	for (var i = 0; i < view.length; i++) {
-    		if (i%16==0) {
-    			if (i>0) console.log(line);
-    			line=direction + ' ' + this.wordToHex(i) + ': ';
-    		}
-    		line +=  this.byteToHex(view[i]) + ' ';
- 		}
-    	console.log(line); */
+        /*var view = new Uint8Array(data);
+        var line = '';
+        for (var i = 0; i < view.length; i++) {
+            if (i%16==0) {
+                if (i>0) console.log(line);
+                line=direction + ' ' + this.wordToHex(i) + ': ';
+            }
+            line +=  this.byteToHex(view[i]) + ' ';
+         }
+        console.log(line); */
     }
 };

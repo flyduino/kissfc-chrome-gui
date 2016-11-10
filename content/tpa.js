@@ -14,9 +14,9 @@ CONTENT.tpa.initialize = function(callback) {
 
     GUI.switchContent('tpa', function() {
         kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-        	self.settingsFilled = 1;
-        	$('#content').load("./content/tpa.html", function() {
-              	htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
+            self.settingsFilled = 1;
+            $('#content').load("./content/tpa.html", function() {
+                  htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
             });
         });
     });
@@ -31,43 +31,43 @@ CONTENT.tpa.initialize = function(callback) {
               { throttle:   0, influence: 30},
               { throttle:  30, influence: 0},
               { throttle:  50, influence: 0},
-              { throttle: 100, influence: 100 }];	
+              { throttle: 100, influence: 100 }];    
         if ($('input[name="UCTI"]').prop('checked')) {
-        	breakpoints = [
-        	  { throttle: 0, 									  influence: parseInt($('input[name="BPI1"]').val())},
+            breakpoints = [
+              { throttle: 0,                                       influence: parseInt($('input[name="BPI1"]').val())},
               { throttle: parseInt($('input[name="BP1"]').val()), influence: parseInt($('input[name="BPI2"]').val())},
               { throttle: parseInt($('input[name="BP2"]').val()), influence: parseInt($('input[name="BPI3"]').val())},
-              { throttle: 100, 									  influence: parseInt($('input[name="BPI4"]').val())}];
+              { throttle: 100,                                       influence: parseInt($('input[name="BPI4"]').val())}];
         }
         
         var vPIDc = 1;
         if ($('input[name="UVPID"]').prop('checked')) {
-			var useVoltage = parseFloat($("#simulatedVoltage").val());
-			var IV = [parseFloat($('input[name="LV1"]').val()), parseFloat($('input[name="LV2"]').val()), parseFloat($('input[name="LV3"]').val())];
-			var IVP = [parseInt($('input[name="LVP1"]').val()), parseInt($('input[name="LVP2"]').val()), parseInt($('input[name="LVP3"]').val())];
-			var useRangeFactor = 0;
-			if (useVoltage < IV[0]) vPIDc = IVP[0]/100;
-			else if(useVoltage < IV[1]){
-				useRangeFactor = 1/(IV[1]-IV[0])*(useVoltage-IV[0]);
-				vPIDc = (IVP[0]/100)*(1-useRangeFactor)+(IVP[1]/100)*useRangeFactor;
-			} else if(useVoltage < IV[2]){
-				useRangeFactor = 1/(IV[2]-IV[1])*(useVoltage-IV[1]);
-				vPIDc = (IVP[1]/100)*(1-useRangeFactor)+(IVP[2]/100)*useRangeFactor;
-			} else vPIDc = IVP[2]/100;
-		}
+            var useVoltage = parseFloat($("#simulatedVoltage").val());
+            var IV = [parseFloat($('input[name="LV1"]').val()), parseFloat($('input[name="LV2"]').val()), parseFloat($('input[name="LV3"]').val())];
+            var IVP = [parseInt($('input[name="LVP1"]').val()), parseInt($('input[name="LVP2"]').val()), parseInt($('input[name="LVP3"]').val())];
+            var useRangeFactor = 0;
+            if (useVoltage < IV[0]) vPIDc = IVP[0]/100;
+            else if(useVoltage < IV[1]){
+                useRangeFactor = 1/(IV[1]-IV[0])*(useVoltage-IV[0]);
+                vPIDc = (IVP[0]/100)*(1-useRangeFactor)+(IVP[1]/100)*useRangeFactor;
+            } else if(useVoltage < IV[2]){
+                useRangeFactor = 1/(IV[2]-IV[1])*(useVoltage-IV[1]);
+                vPIDc = (IVP[1]/100)*(1-useRangeFactor)+(IVP[2]/100)*useRangeFactor;
+            } else vPIDc = IVP[2]/100;
+        }
       
         var tmp = vPIDc*100;
         $("#simulatedBatteryInfluence").text(tmp.toFixed(0)+'%');
         
         $("#tpa_chart").kissTPAChart('setBreakpoints', breakpoints);
         var influence = $("#tpa_chart").kissTPAChart('getInfluence');
-    	var tpa = [ parseFloat($('tr.TPA input').eq(0).val()), parseFloat($('tr.TPA input').eq(1).val()), parseFloat($('tr.TPA input').eq(2).val()) ];
+        var tpa = [ parseFloat($('tr.TPA input').eq(0).val()), parseFloat($('tr.TPA input').eq(1).val()), parseFloat($('tr.TPA input').eq(2).val()) ];
         for (var x = 0; x < 3; x++) {
-        	for (var a = 0; a<3; a++) {
-        		var pid = parseFloat($('tr.' + rowNames[x] + ' input').eq(a).val());
-        		pid = pid*(1-tpa[a]*influence)*vPIDc;
-        		$('tr.' + rowNames[x] + ' td').eq(4+a).children().first().text(pid.toFixed(precision[a]));
-        	}
+            for (var a = 0; a<3; a++) {
+                var pid = parseFloat($('tr.' + rowNames[x] + ' input').eq(a).val());
+                pid = pid*(1-tpa[a]*influence)*vPIDc;
+                $('tr.' + rowNames[x] + ' td').eq(4+a).children().first().text(pid.toFixed(precision[a]));
+            }
         }
     }
 
@@ -133,7 +133,7 @@ CONTENT.tpa.initialize = function(callback) {
        
 
         function grabData() {
-        	 // pid and rates
+             // pid and rates
             // roll
             data['G_P'][0] = parseFloat($('tr.roll input').eq(0).val());
             data['G_I'][0] = parseFloat($('tr.roll input').eq(1).val());
@@ -255,7 +255,7 @@ CONTENT.tpa.initialize = function(callback) {
         }
         
         $('input[name="UCTI"]').on('change', function() {
-        	contentChange(true);
+            contentChange(true);
             if (parseInt($('input[name="UCTI"]').prop('checked') ? 1 : 0) == 1) {
                 $('input[name^="BP"]').removeAttr("disabled");
             } else {
@@ -275,7 +275,7 @@ CONTENT.tpa.initialize = function(callback) {
         $('input[name="BPI4"]').val(data['TPABPI4']);
 
         $('input[name="UVPID"]').on('change', function() {
-        	contentChange(true);
+            contentChange(true);
             if (parseInt($('input[name="UVPID"]').prop('checked') ? 1 : 0) == 1) {
                 $('input[name^="LV"]').removeAttr("disabled");
             } else {
@@ -299,11 +299,11 @@ CONTENT.tpa.initialize = function(callback) {
         }
         
         $('input[name^="BP"]').on("input", function() {
-        	 contentChange(true);
+             contentChange(true);
         });
         
         $('input[name^="LV"]').on("input", function() {
-       	 	contentChange(true);
+                contentChange(true);
         });
         
         $('#simulatedVoltage').on('change', function() {
@@ -326,8 +326,8 @@ CONTENT.tpa.initialize = function(callback) {
 
 
 CONTENT.tpa.resizeChart = function() {
-	var wrapper = $('#charts');
-	console.log("resize chart");
+    var wrapper = $('#charts');
+    console.log("resize chart");
     $('#tpa_chart').kissTPAChart('resize', {width: wrapper.width() });
 }
 

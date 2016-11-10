@@ -32,8 +32,8 @@ var kissProtocol = {
     data:                   [],
     requests:               [],
     errCase:                0,
-	RequestInterval:   		0,
-    ReceiveTimeout:   		0,
+    RequestInterval:           0,
+    ReceiveTimeout:           0,
 };
 
 kissProtocol.read = function (readInfo) {
@@ -42,20 +42,20 @@ kissProtocol.read = function (readInfo) {
     var dataLength = data.length;
     for (var i = 0; i < dataLength; i++) {
         if (this.block) continue; // skip any data until the timeout expires
-	
+    
         if (this.receiving) {
             switch (this.state) {
                 case 0:
                     // wait for start byte
                     if (data[i] == 5) this.state++;
                     else this.state = 0;
-		    		this.errCase++;
-		    		if (this.errCase > 3) {
-			    		this.receiving = false;
-			    		this.errCase = 0;
-			    		this.state = 0;
-			    		//console.loglog('kissProtocol: reset errCase');
-		    		}
+                    this.errCase++;
+                    if (this.errCase > 3) {
+                        this.receiving = false;
+                        this.errCase = 0;
+                        this.state = 0;
+                        //console.loglog('kissProtocol: reset errCase');
+                    }
                     break;
                 case 1:
                     // amount of bytes, reset variables to default state and prepare buffers
@@ -90,10 +90,10 @@ kissProtocol.read = function (readInfo) {
 
                         this.processPacket(this.processingRequest.code, this.data[this.processingRequest.code]);
                     } else {
-						this.receiving = false;
-		        		this.state = 0;
+                        this.receiving = false;
+                        this.state = 0;
                         //console.log('kissProtocol: CRC Failed for last operation');
-						return;
+                        return;
                     }
 
                     this.requests.splice(0, 1);
@@ -110,8 +110,8 @@ kissProtocol.read = function (readInfo) {
 };
 
 kissProtocol.send = function (code, data, callback) {
-	//console.log("Sending code: " + code);
-	//console.log("Sending data: " + data);
+    //console.log("Sending code: " + code);
+    //console.log("Sending data: " + data);
     var bufferOut = new ArrayBuffer(data.length);
     var bufferView = new Uint8Array(bufferOut);
 
@@ -127,55 +127,55 @@ kissProtocol.send = function (code, data, callback) {
 };
 
 kissProtocol.init = function() {
-	console.log("Init");
-	this.requests=[];
-	this.receiving = false;
-	if (this.RequestInterval!=0) window.clearInterval(this.RequestInterval);
-	if (this.RequestTimeout!=0) window.clearTimeout(this.RequestTimeout);
-	this.RequestInterval=0;
-	this.RequestTimeout=0;
-	this.ready = false;
+    console.log("Init");
+    this.requests=[];
+    this.receiving = false;
+    if (this.RequestInterval!=0) window.clearInterval(this.RequestInterval);
+    if (this.RequestTimeout!=0) window.clearTimeout(this.RequestTimeout);
+    this.RequestInterval=0;
+    this.RequestTimeout=0;
+    this.ready = false;
 }
 
 kissProtocol.clearPendingRequests = function(callback) {
-	 if (this.requests.length>0) {
-	 	console.log('.');
-	 	setTimeout(function() {
-			kissProtocol.clearPendingRequests(callback);	 		
-	 	}, 100);
-	 } else {
-	 	callback();
-	 }
+     if (this.requests.length>0) {
+         console.log('.');
+         setTimeout(function() {
+            kissProtocol.clearPendingRequests(callback);             
+         }, 100);
+     } else {
+         callback();
+     }
 }
 
 kissProtocol.proceedRequest = function() {
-	//console.log("process request: " + this.receiving);
-	if (!this.receiving) {
-		//console.log("Not receiving");
-		
-		this.ready = true;
-		if (this.requests.length > 0) {
-			this.receiving = true;
-			this.errCase = 0;	
-			this.processingRequest = this.requests[0];
-			//console.log("Got request to send");
-			//console.log(this.processingRequest);
-			serialDevice.send(this.processingRequest.buffer, function (sendInfo) {
-				kissProtocol.proceedRequest();
-			});
-		
-		}
-		if(this.ReceiveTimeout != 0 ){
-			clearTimeout(this.ReceiveTimeout);
-			this.ReceiveTimeout = 0;
-		}
-		this.ReceiveTimeout =  window.setTimeout(function(){
-			kissProtocol.receiving = false; 
-		}, 100); 
-	}
-	if (this.RequestInterval == 0) {
-		this.RequestInterval = window.setInterval(function(){ kissProtocol.proceedRequest(); }, 10);
-	}
+    //console.log("process request: " + this.receiving);
+    if (!this.receiving) {
+        //console.log("Not receiving");
+        
+        this.ready = true;
+        if (this.requests.length > 0) {
+            this.receiving = true;
+            this.errCase = 0;    
+            this.processingRequest = this.requests[0];
+            //console.log("Got request to send");
+            //console.log(this.processingRequest);
+            serialDevice.send(this.processingRequest.buffer, function (sendInfo) {
+                kissProtocol.proceedRequest();
+            });
+        
+        }
+        if(this.ReceiveTimeout != 0 ){
+            clearTimeout(this.ReceiveTimeout);
+            this.ReceiveTimeout = 0;
+        }
+        this.ReceiveTimeout =  window.setTimeout(function(){
+            kissProtocol.receiving = false; 
+        }, 100); 
+    }
+    if (this.RequestInterval == 0) {
+        this.RequestInterval = window.setInterval(function(){ kissProtocol.proceedRequest(); }, 10);
+    }
 }
 
 kissProtocol.processPacket = function (code, obj) {
@@ -193,13 +193,13 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.ACCtrim = [];
                 obj.ACCAng = [];
                 obj.PWMOutVals = [];
-				obj.ESC_Telemetrie0 = [];
-				obj.ESC_Telemetrie1 = [];
-				obj.ESC_Telemetrie2 = [];
-				obj.ESC_Telemetrie3 = [];
-				obj.ESC_Telemetrie4 = [];
-				obj.ESC_Telemetrie5 = [];
-				obj.ESC_TelemetrieStats = [];
+                obj.ESC_Telemetrie0 = [];
+                obj.ESC_Telemetrie1 = [];
+                obj.ESC_Telemetrie2 = [];
+                obj.ESC_Telemetrie3 = [];
+                obj.ESC_Telemetrie4 = [];
+                obj.ESC_Telemetrie5 = [];
+                obj.ESC_TelemetrieStats = [];
             }
 
             obj.RXcommands[0] = 1000 + ((data.getInt16(0, 0) / 1000) * 1000);
@@ -247,49 +247,49 @@ kissProtocol.processPacket = function (code, obj) {
             obj.PWMOutVals[5] = data.getInt16(78, 0);
             obj.debug2 = data.getUint16(80, 0) / 1000;
             obj.idleTime = data.getUint8(82);
-	    
+        
             obj.ESC_Telemetrie0[0] = data.getInt16(83, 0);
             obj.ESC_Telemetrie0[1] = data.getInt16(85, 0);
             obj.ESC_Telemetrie0[2] = data.getInt16(87, 0);
             obj.ESC_Telemetrie0[3] = data.getInt16(89, 0);
             obj.ESC_Telemetrie0[4] = data.getInt16(91, 0);
-	    
+        
             obj.ESC_Telemetrie1[0] = data.getInt16(93, 0);
             obj.ESC_Telemetrie1[1] = data.getInt16(95, 0);
             obj.ESC_Telemetrie1[2] = data.getInt16(97, 0);
             obj.ESC_Telemetrie1[3] = data.getInt16(99, 0);
             obj.ESC_Telemetrie1[4] = data.getInt16(101, 0);
-	    
+        
             obj.ESC_Telemetrie2[0] = data.getInt16(103, 0);
             obj.ESC_Telemetrie2[1] = data.getInt16(105, 0);
             obj.ESC_Telemetrie2[2] = data.getInt16(107, 0);
             obj.ESC_Telemetrie2[3] = data.getInt16(109, 0);
             obj.ESC_Telemetrie2[4] = data.getInt16(111, 0);
-	    
+        
             obj.ESC_Telemetrie3[0] = data.getInt16(113, 0);
             obj.ESC_Telemetrie3[1] = data.getInt16(115, 0);
             obj.ESC_Telemetrie3[2] = data.getInt16(117, 0);
             obj.ESC_Telemetrie3[3] = data.getInt16(119, 0);
             obj.ESC_Telemetrie3[4] = data.getInt16(121, 0);
-	    
+        
             obj.ESC_Telemetrie4[0] = data.getInt16(123, 0);
             obj.ESC_Telemetrie4[1] = data.getInt16(125, 0);
             obj.ESC_Telemetrie4[2] = data.getInt16(127, 0);
             obj.ESC_Telemetrie4[3] = data.getInt16(129, 0);
             obj.ESC_Telemetrie4[4] = data.getInt16(131, 0);
-	    
+        
             obj.ESC_Telemetrie5[0] = data.getInt16(133, 0);
             obj.ESC_Telemetrie5[1] = data.getInt16(135, 0);
             obj.ESC_Telemetrie5[2] = data.getInt16(137, 0);
             obj.ESC_Telemetrie5[3] = data.getInt16(139, 0);
             obj.ESC_Telemetrie5[4] = data.getInt16(141, 0);
-	
+    
             obj.ESC_TelemetrieStats[0] = data.getInt16(142, 0);
             obj.ESC_TelemetrieStats[1] = data.getInt16(144, 0);
             obj.ESC_TelemetrieStats[2] = data.getInt16(146, 0);
             obj.ESC_TelemetrieStats[3] = data.getInt16(148, 0);
             obj.ESC_TelemetrieStats[4] = data.getInt16(150, 0);
-	    	obj.ESC_TelemetrieStats[5] = data.getInt16(152, 0);
+            obj.ESC_TelemetrieStats[5] = data.getInt16(152, 0);
             break;
         case this.GET_SETTINGS:
             if (!obj.G_P) {
@@ -301,11 +301,11 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.RPY_Expo = [];
                 obj.RPY_Curve = [];
                 obj.ACCZero = [];
-	        	obj.SN = [];
-				obj.TPA = [];
-				obj.RGB = [];
-				obj.CBO = [];
-				obj.AUX = [];
+                obj.SN = [];
+                obj.TPA = [];
+                obj.RGB = [];
+                obj.CBO = [];
+                obj.AUX = [];
             }
 
             obj.G_P[0] = data.getUint16(0, 0) / 1000;
@@ -335,7 +335,7 @@ kissProtocol.processPacket = function (code, obj) {
             obj.RPY_Curve[0] = data.getInt16(40, 0) / 1000;
             obj.RPY_Curve[1] = data.getInt16(42, 0) / 1000;
             obj.RPY_Curve[2] = data.getInt16(44, 0) / 1000;
-			obj.ver = data.getUint8(92);
+            obj.ver = data.getUint8(92);
             obj.RXType = data.getInt16(46, 0);
             obj.PPMchanOrder = data.getInt16(48, 0);
             obj.CopterType = data.getInt16(50, 0);
@@ -345,8 +345,8 @@ kissProtocol.processPacket = function (code, obj) {
             obj.MidCommand16 = data.getInt16(58, 0)+1000;
             obj.MinThrottle16 = data.getInt16(60, 0)+1000;
             obj.MaxThrottle16 = data.getInt16(62, 0)+1000;
-	    	obj.TYmid16 = data.getInt16(64, 0);
-	    	obj.TYinv8 = data.getUint8(66, 0);
+            obj.TYmid16 = data.getInt16(64, 0);
+            obj.TYinv8 = data.getUint8(66, 0);
             obj.ACCZero[0] = data.getInt16(67, 0);
             obj.ACCZero[1] = data.getInt16(69, 0);
             obj.ACCZero[2] = data.getInt16(71, 0);
@@ -355,89 +355,89 @@ kissProtocol.processPacket = function (code, obj) {
             obj.AUX[2] = data.getUint8(75);
             obj.AUX[3] = data.getUint8(76);
             if (obj.ver < 104) {
-            	obj.aux1Funk = data.getUint8(73);
-            	obj.aux2Funk = data.getUint8(74);
-            	obj.aux3Funk = data.getUint8(75);
-            	obj.aux4Funk = data.getUint8(76);
+                obj.aux1Funk = data.getUint8(73);
+                obj.aux2Funk = data.getUint8(74);
+                obj.aux3Funk = data.getUint8(75);
+                obj.aux4Funk = data.getUint8(76);
             }
-	    	obj.maxAng = data.getUint16(77) / 14.3;
-	    	obj.LPF = data.getUint8(79);
-	    
-	    	obj.SN[0] = data.getUint8(80);
-	    	obj.SN[1] = data.getUint8(81);
-	    	obj.SN[2] = data.getUint8(82);
-	    	obj.SN[3] = data.getUint8(83);
-	    	obj.SN[4] = data.getUint8(84);
-	    	obj.SN[5] = data.getUint8(85);
-	    	obj.SN[6] = data.getUint8(86);
-	    	obj.SN[7] = data.getUint8(87);
-	    	obj.SN[8] = data.getUint8(88);
-	    	obj.SN[9] = data.getUint8(89);
-	    	obj.SN[10] = data.getUint8(90);
-	    	obj.SN[11] = data.getUint8(91);
-	    
-	    	//obj.ver = data.getUint8(92);
-	    
+            obj.maxAng = data.getUint16(77) / 14.3;
+            obj.LPF = data.getUint8(79);
+        
+            obj.SN[0] = data.getUint8(80);
+            obj.SN[1] = data.getUint8(81);
+            obj.SN[2] = data.getUint8(82);
+            obj.SN[3] = data.getUint8(83);
+            obj.SN[4] = data.getUint8(84);
+            obj.SN[5] = data.getUint8(85);
+            obj.SN[6] = data.getUint8(86);
+            obj.SN[7] = data.getUint8(87);
+            obj.SN[8] = data.getUint8(88);
+            obj.SN[9] = data.getUint8(89);
+            obj.SN[10] = data.getUint8(90);
+            obj.SN[11] = data.getUint8(91);
+        
+            //obj.ver = data.getUint8(92);
+        
             obj.TPA[0] = data.getUint16(93, 0) / 1000;
             obj.TPA[1] = data.getUint16(95, 0) / 1000;
             obj.TPA[2] = data.getUint16(97, 0) / 1000;
-	    	obj.ESConeshot42 = data.getUint8(99);
-	    	obj.failsaveseconds = data.getUint8(100);
-	    	if (obj.ver > 100){
-		    	obj.BoardRotation = data.getUint8(101);
-		    	obj.isActive = data.getUint8(102);
-		    	obj.actKey = 0;
-	    	}
-	    	if(obj.ver > 101){
-		    	obj.CustomTPAInfluence = data.getUint8(103);
-		    	obj.TPABP1 = data.getUint8(104);
-		    	obj.TPABP2 = data.getUint8(105);
-		    	obj.TPABPI1 = data.getUint8(106);
-		    	obj.TPABPI2 = data.getUint8(107);
-		    	obj.TPABPI3 = data.getUint8(108);
-		    	obj.TPABPI4 = data.getUint8(109);
-		    
-		    	obj.BatteryInfluence = data.getUint8(110);
-		    	obj.voltage1 = data.getInt16(111, 0) / 10;
-		    	obj.voltage2 = data.getInt16(113, 0) / 10;
-		    	obj.voltage3 = data.getInt16(115, 0) / 10;
-		    	obj.voltgePercent1 = data.getUint8(117);
-		    	obj.voltgePercent2 = data.getUint8(118);
-		    	obj.voltgePercent3 = data.getUint8(119);
-	    	}
-	    	obj.loggerConfig = 0;
-	    	obj.secret = 0;
-	    	obj.vbatAlarm = 0;
-	    	obj.debugVariables = 0;
-	    	
-	    	if (obj.ver > 102){
-	        	obj.secret = data.getUint8(120);
-	        	obj.loggerConfig = data.getUint8(121);
-	    	} 
-	    	if (obj.ver > 103){
-	        	obj.RGB[0] = data.getUint8(122);
-	        	obj.RGB[1] = data.getUint8(123);
-	        	obj.RGB[2] = data.getUint8(124);
-	        	obj.vbatAlarm = data.getUint16(125, 0) / 10;
-	        	
-	        	obj.CBO[0] = data.getInt16(127, 0);
-	        	obj.CBO[1] = data.getInt16(129, 0);
-	        	obj.CBO[2] = data.getInt16(131, 0);
-	        	
-	        	obj.AUX[4] = data.getUint8(133);
-	        	
-	        	obj.lapTimerTypeAndInterface = data.getUint8(134);
-	        	obj.lapTimerTransponderId = data.getUint16(135, 0);
+            obj.ESConeshot42 = data.getUint8(99);
+            obj.failsaveseconds = data.getUint8(100);
+            if (obj.ver > 100){
+                obj.BoardRotation = data.getUint8(101);
+                obj.isActive = data.getUint8(102);
+                obj.actKey = 0;
+            }
+            if(obj.ver > 101){
+                obj.CustomTPAInfluence = data.getUint8(103);
+                obj.TPABP1 = data.getUint8(104);
+                obj.TPABP2 = data.getUint8(105);
+                obj.TPABPI1 = data.getUint8(106);
+                obj.TPABPI2 = data.getUint8(107);
+                obj.TPABPI3 = data.getUint8(108);
+                obj.TPABPI4 = data.getUint8(109);
+            
+                obj.BatteryInfluence = data.getUint8(110);
+                obj.voltage1 = data.getInt16(111, 0) / 10;
+                obj.voltage2 = data.getInt16(113, 0) / 10;
+                obj.voltage3 = data.getInt16(115, 0) / 10;
+                obj.voltgePercent1 = data.getUint8(117);
+                obj.voltgePercent2 = data.getUint8(118);
+                obj.voltgePercent3 = data.getUint8(119);
+            }
+            obj.loggerConfig = 0;
+            obj.secret = 0;
+            obj.vbatAlarm = 0;
+            obj.debugVariables = 0;
+            
+            if (obj.ver > 102){
+                obj.secret = data.getUint8(120);
+                obj.loggerConfig = data.getUint8(121);
+            } 
+            if (obj.ver > 103){
+                obj.RGB[0] = data.getUint8(122);
+                obj.RGB[1] = data.getUint8(123);
+                obj.RGB[2] = data.getUint8(124);
+                obj.vbatAlarm = data.getUint16(125, 0) / 10;
+                
+                obj.CBO[0] = data.getInt16(127, 0);
+                obj.CBO[1] = data.getInt16(129, 0);
+                obj.CBO[2] = data.getInt16(131, 0);
+                
+                obj.AUX[4] = data.getUint8(133);
+                
+                obj.lapTimerTypeAndInterface = data.getUint8(134);
+                obj.lapTimerTransponderId = data.getUint16(135, 0);
 
-	        	obj.loggerDebugVariables =  data.getUint8(137);
-	    	} 
-			if (obj.ver > 104){
-				obj.NotchFilterEnable = data.getUint8(138);
-	    		obj.NotchFilterCenter = data.getUint16(139, 0);
-	    		obj.NotchFilterCut = data.getUint16(141, 0);
-				obj.YawCfilter = data.getUint8(143);
-			}
-	    	kissProtocol.upgradeTo104(obj);
+                obj.loggerDebugVariables =  data.getUint8(137);
+            } 
+            if (obj.ver > 104){
+                obj.NotchFilterEnable = data.getUint8(138);
+                obj.NotchFilterCenter = data.getUint16(139, 0);
+                obj.NotchFilterCut = data.getUint16(141, 0);
+                obj.YawCfilter = data.getUint8(143);
+            }
+            kissProtocol.upgradeTo104(obj);
             break;
             
         case this.SET_SETTINGS:
@@ -455,43 +455,43 @@ kissProtocol.processPacket = function (code, obj) {
             obj.firmvareVersion = kissProtocol.readString(data, p);
             p += obj.firmvareVersion.length + 1;
           
-          	if (p < data.byteLength) { 
-            	// if we have data left
-   				obj.escInfoCount =  data.getUint8(p++);
-   				for (var i = 0; i < obj.escInfoCount; i++) {
-   					var info = { SN: '', version: 0, type: 'UNKNOWN ESC' };
-   					var SN = [];
-   					var CPUID = '';
-   					for (var j = 0; j < 12; j++) SN[j] = data.getUint8(p++);
-   				
-        			for (var r = 0; r < 4; r++) {
-           				CPUID += ((SN[r] < 16) ? '0' : '') + SN[r].toString(16).toUpperCase();
-        			}
-        			CPUID += '-';
-        			for (var r = 4; r < 8; r++) {
-            			CPUID += ((SN[r] < 16) ? '0' : '') + SN[r].toString(16).toUpperCase();
-       				}
-        			CPUID += '-';
-        			for (var r = 8; r < 12; r++) {
-            			CPUID += ((SN[r] < 16) ? '0' : '') + SN[r].toString(16).toUpperCase();
-        			}
-        			info.SN = CPUID;
-   					info.version  = data.getUint8(p++) / 100;
-   					var found = info.version!=0;
-   					info.version += String.fromCharCode(data.getUint8(p++));
-   					var type = +data.getUint8(p++);
-   					if (type == 1) {
-   						info.type='KISS 8A';
-   					} else if (type == 2) {
-   						info.type='KISS 16A';
-   					} else if (type == 3) {
-   						info.type='KISS 24A';
-   					}
-   					if (!found) info = undefined;
-   					obj.escInfo[i] = info;
-   				}
-   			}	
-   			 
+              if (p < data.byteLength) { 
+                // if we have data left
+                   obj.escInfoCount =  data.getUint8(p++);
+                   for (var i = 0; i < obj.escInfoCount; i++) {
+                       var info = { SN: '', version: 0, type: 'UNKNOWN ESC' };
+                       var SN = [];
+                       var CPUID = '';
+                       for (var j = 0; j < 12; j++) SN[j] = data.getUint8(p++);
+                   
+                    for (var r = 0; r < 4; r++) {
+                           CPUID += ((SN[r] < 16) ? '0' : '') + SN[r].toString(16).toUpperCase();
+                    }
+                    CPUID += '-';
+                    for (var r = 4; r < 8; r++) {
+                        CPUID += ((SN[r] < 16) ? '0' : '') + SN[r].toString(16).toUpperCase();
+                       }
+                    CPUID += '-';
+                    for (var r = 8; r < 12; r++) {
+                        CPUID += ((SN[r] < 16) ? '0' : '') + SN[r].toString(16).toUpperCase();
+                    }
+                    info.SN = CPUID;
+                       info.version  = data.getUint8(p++) / 100;
+                       var found = info.version!=0;
+                       info.version += String.fromCharCode(data.getUint8(p++));
+                       var type = +data.getUint8(p++);
+                       if (type == 1) {
+                           info.type='KISS 8A';
+                       } else if (type == 2) {
+                           info.type='KISS 16A';
+                       } else if (type == 3) {
+                           info.type='KISS 24A';
+                       }
+                       if (!found) info = undefined;
+                       obj.escInfo[i] = info;
+                   }
+               }    
+                
             break;
 
         case this.ESC_INFO:
@@ -516,9 +516,9 @@ kissProtocol.preparePacket = function (code, obj) {
     switch (code) {
         case this.SET_SETTINGS:
         
-        	kissProtocol.downgradeFrom104(obj);
-        	
-        	//console.log(obj);
+            kissProtocol.downgradeFrom104(obj);
+            
+            //console.log(obj);
         
             data.setUint16(0, obj.G_P[0] * 1000, 0);
             data.setUint16(2, obj.G_P[1] * 1000, 0);
@@ -557,112 +557,112 @@ kissProtocol.preparePacket = function (code, obj) {
             data.setInt16(58, obj.MidCommand16-1000, 0);
             data.setInt16(60, obj.MinThrottle16-1000, 0);
             data.setInt16(62, obj.MaxThrottle16-1000, 0);
-	    	data.setInt16(64, obj.TYmid16, 0);
-	    	data.setUint8(66, obj.TYinv8, 0);
+            data.setInt16(64, obj.TYmid16, 0);
+            data.setUint8(66, obj.TYinv8, 0);
             data.setInt16(67, obj.ACCZero[0], 0);
             data.setInt16(69, obj.ACCZero[1], 0);
             data.setInt16(71, obj.ACCZero[2], 0);
 
             if (obj.ver>103) {
-           		data.setUint8(73, obj.AUX[0]);
-            	data.setUint8(74, obj.AUX[1]);
-            	data.setUint8(75, obj.AUX[2]);
-            	data.setUint8(76, obj.AUX[3]);
+                   data.setUint8(73, obj.AUX[0]);
+                data.setUint8(74, obj.AUX[1]);
+                data.setUint8(75, obj.AUX[2]);
+                data.setUint8(76, obj.AUX[3]);
             } else {
-            	data.setUint8(73, obj.aux1Funk);
-            	data.setUint8(74, obj.aux2Funk);
-            	data.setUint8(75, obj.aux3Funk);
-            	data.setUint8(76, obj.aux4Funk);
+                data.setUint8(73, obj.aux1Funk);
+                data.setUint8(74, obj.aux2Funk);
+                data.setUint8(75, obj.aux3Funk);
+                data.setUint8(76, obj.aux4Funk);
             }
- 	    	data.setUint16(77, obj.maxAng * 14.3);
-	    	data.setUint8(79, obj.LPF);
-	
+             data.setUint16(77, obj.maxAng * 14.3);
+            data.setUint8(79, obj.LPF);
+    
             data.setUint16(80, obj.TPA[0] * 1000, 0);
             data.setUint16(82, obj.TPA[1] * 1000, 0);
             data.setUint16(84, obj.TPA[2] * 1000, 0);
-	    	data.setUint8(86, obj.ESConeshot42,0);
-	    	data.setUint8(87, obj.failsaveseconds,0);
-	    	blen=88;
+            data.setUint8(86, obj.ESConeshot42,0);
+            data.setUint8(87, obj.failsaveseconds,0);
+            blen=88;
 
-	    	if (obj.ver > 100){
-	    		if (!obj.isActive) {
-	    			console.log('The controller is not activated, let activate it with ' + obj.actKey);
-	    			data.setUint16(88, obj.actKey>>16,0);
-	    			data.setUint16(90, (obj.actKey&0xFFFF),0);
-	    		} else {
-	    			console.log('The controller is active');
-	    			data.setUint16(88, 0, 0);
-	    			data.setUint16(90, 0, 0);
-	    		}
-		    	data.setUint8(92, obj.BoardRotation, 0);
-		    	blen=93;
-	    	}
+            if (obj.ver > 100){
+                if (!obj.isActive) {
+                    console.log('The controller is not activated, let activate it with ' + obj.actKey);
+                    data.setUint16(88, obj.actKey>>16,0);
+                    data.setUint16(90, (obj.actKey&0xFFFF),0);
+                } else {
+                    console.log('The controller is active');
+                    data.setUint16(88, 0, 0);
+                    data.setUint16(90, 0, 0);
+                }
+                data.setUint8(92, obj.BoardRotation, 0);
+                blen=93;
+            }
 
-	    	if (obj.ver > 101){
-		    	data.setUint8(93, obj.CustomTPAInfluence);
-		    	data.setUint8(94, obj.TPABP1);
-		    	data.setUint8(95, obj.TPABP2);
-		    	data.setUint8(96, obj.TPABPI1);
-		    	data.setUint8(97, obj.TPABPI2);
-		    	data.setUint8(98, obj.TPABPI3);
-		    	data.setUint8(99, obj.TPABPI4);
-		    	data.setUint8(100, obj.BatteryInfluence);
-		    	data.setUint16(101, obj.voltage1 * 10, 0);
-		    	data.setUint16(103, obj.voltage2 * 10, 0);
-		    	data.setUint16(105, obj.voltage3 * 10, 0);
-		    	data.setUint8(107, obj.voltgePercent1);
-		    	data.setUint8(108, obj.voltgePercent2);
-		    	data.setUint8(109, obj.voltgePercent3);
-		    	blen=110;
-	    	}
-	    	if (obj.ver > 102) {
-	    		data.setUint8(110, obj.secret);
-	    		data.setUint8(111, obj.loggerConfig);
-	    		blen=112;
-	    	}
+            if (obj.ver > 101){
+                data.setUint8(93, obj.CustomTPAInfluence);
+                data.setUint8(94, obj.TPABP1);
+                data.setUint8(95, obj.TPABP2);
+                data.setUint8(96, obj.TPABPI1);
+                data.setUint8(97, obj.TPABPI2);
+                data.setUint8(98, obj.TPABPI3);
+                data.setUint8(99, obj.TPABPI4);
+                data.setUint8(100, obj.BatteryInfluence);
+                data.setUint16(101, obj.voltage1 * 10, 0);
+                data.setUint16(103, obj.voltage2 * 10, 0);
+                data.setUint16(105, obj.voltage3 * 10, 0);
+                data.setUint8(107, obj.voltgePercent1);
+                data.setUint8(108, obj.voltgePercent2);
+                data.setUint8(109, obj.voltgePercent3);
+                blen=110;
+            }
+            if (obj.ver > 102) {
+                data.setUint8(110, obj.secret);
+                data.setUint8(111, obj.loggerConfig);
+                blen=112;
+            }
 
-	    	if (obj.ver > 103) {
-	    		data.setUint8(112, obj.RGB[0]);
-	    		data.setUint8(113, obj.RGB[1]);
-	    		data.setUint8(114, obj.RGB[2]);
-	    		data.setUint16(115, obj.vbatAlarm * 10, 0);
-	    		data.setInt16(117, obj.CBO[0]);
-	    		data.setInt16(119, obj.CBO[1]);
-	    		data.setInt16(121, obj.CBO[2]);
-	    		data.setUint8(123, obj.AUX[4]);
-	    		data.setUint8(124, obj.lapTimerTypeAndInterface);
-	    		data.setUint16(125, obj.lapTimerTransponderId, 0);
-	    		data.setUint8(127, obj.loggerDebugVariables);
-	    		
-	    		blen=136;
-	    	}
-			if (obj.ver > 104) {
-	    		data.setUint8(128, obj.NotchFilterEnable);
-	    		data.setUint16(129, obj.NotchFilterCenter,0);
-	    		data.setUint16(131, obj.NotchFilterCut,0);
-				data.setUint8(133, obj.YawCfilter);
-			
-				blen=142;
-			}
+            if (obj.ver > 103) {
+                data.setUint8(112, obj.RGB[0]);
+                data.setUint8(113, obj.RGB[1]);
+                data.setUint8(114, obj.RGB[2]);
+                data.setUint16(115, obj.vbatAlarm * 10, 0);
+                data.setInt16(117, obj.CBO[0]);
+                data.setInt16(119, obj.CBO[1]);
+                data.setInt16(121, obj.CBO[2]);
+                data.setUint8(123, obj.AUX[4]);
+                data.setUint8(124, obj.lapTimerTypeAndInterface);
+                data.setUint16(125, obj.lapTimerTransponderId, 0);
+                data.setUint8(127, obj.loggerDebugVariables);
+                
+                blen=136;
+            }
+            if (obj.ver > 104) {
+                data.setUint8(128, obj.NotchFilterEnable);
+                data.setUint16(129, obj.NotchFilterCenter,0);
+                data.setUint16(131, obj.NotchFilterCut,0);
+                data.setUint8(133, obj.YawCfilter);
+            
+                blen=142;
+            }
             break;
             
           case this.MOTOR_TEST:
-          	 	data.setUint8(0, obj.motorTestEnabled, 0);
-          	 	data.setUint8(1, obj.motorTest[0], 0);
-          	 	data.setUint8(2, obj.motorTest[1], 0);
-          	 	data.setUint8(3, obj.motorTest[2], 0);
-          	 	data.setUint8(4, obj.motorTest[3], 0);
-          	 	data.setUint8(5, obj.motorTest[4], 0);
-          	 	data.setUint8(6, obj.motorTest[5], 0);
-          	 	blen=7;
+                   data.setUint8(0, obj.motorTestEnabled, 0);
+                   data.setUint8(1, obj.motorTest[0], 0);
+                   data.setUint8(2, obj.motorTest[1], 0);
+                   data.setUint8(3, obj.motorTest[2], 0);
+                   data.setUint8(4, obj.motorTest[3], 0);
+                   data.setUint8(5, obj.motorTest[4], 0);
+                   data.setUint8(6, obj.motorTest[5], 0);
+                   blen=7;
           break; 
           
           case this.ESC_INFO:
-          	
+              
           break;     
     }
-	
-	var bufferU8 = new Uint8Array(buffer);
+    
+    var bufferU8 = new Uint8Array(buffer);
     var outputBuffer = new ArrayBuffer(blen + 4);
     var outputU8 = new Uint8Array(outputBuffer);
     
@@ -681,123 +681,123 @@ kissProtocol.preparePacket = function (code, obj) {
 };
 
 kissProtocol.readString = function(buffer, offset) {
-	 var ret = "";
-	 for (var i = offset; i < buffer.byteLength ; i++) {
-	 	if (buffer.getUint8(i, 0) != 0) ret += String.fromCharCode(buffer.getUint8(i)); else break;
-	 }
-	 return ret;
+     var ret = "";
+     for (var i = offset; i < buffer.byteLength ; i++) {
+         if (buffer.getUint8(i, 0) != 0) ret += String.fromCharCode(buffer.getUint8(i)); else break;
+     }
+     return ret;
 };
 
 kissProtocol.readBytesAsString = function(buffer, offset, len) {
-	 var ret = "";
-	 for (var i = offset; i < (offset+len) ; i++) {
-	 	ret += String.fromCharCode(buffer.getUint8(i));
-	 }
-	 return ret;
+     var ret = "";
+     for (var i = offset; i < (offset+len) ; i++) {
+         ret += String.fromCharCode(buffer.getUint8(i));
+     }
+     return ret;
 };
 
 
 kissProtocol.upgradeTo104 = function(tmp) {
-	if (tmp.ver < 104) {
-		console.log('Data version: ' + tmp.ver);
-		var bo = +tmp['BoardRotation'];
-		console.log('Board Rotation: ' + bo);
-		tmp['CBO'] = [0, 0, 0];
-		tmp['AUX'] = [0, 0, 0, 0, 0];
-		if (bo==4) tmp['CBO'][2]=45;
-		else if (bo==2) tmp['CBO'][2]=90;
-		else if (bo==5) tmp['CBO'][2]=135;
-		else if (bo==1) tmp['CBO'][2]=180;
-		else if (bo==7) tmp['CBO'][2]=-45;
-		else if (bo==3) tmp['CBO'][2]=-90;
-		else if (bo==6) tmp['CBO'][2]=-135;
-		tmp['BoardRotation']=0;
-		for (var i=1; i<=4; i++) {
-			var c = +tmp['aux'+i+'Funk'];
-			console.log('aux'+i+'Funk: ' + c);
-			if (c==1)  tmp['AUX'][0]=(i * 16) + 5;
-			if (c==12) tmp['AUX'][0]=(i * 16) + 3;
-			if (c==13) tmp['AUX'][0]=(i * 16) + 1;
-			if (c==2)  tmp['AUX'][1]=(i * 16) + 5;
-			if (c==11) tmp['AUX'][2]=(i * 16) + 5;
-			if (c==14) tmp['AUX'][3]=(i * 16) + 5;
-			if (c==6)  tmp['AUX'][4]=(i * 16) + 5;
-		}
-	}
+    if (tmp.ver < 104) {
+        console.log('Data version: ' + tmp.ver);
+        var bo = +tmp['BoardRotation'];
+        console.log('Board Rotation: ' + bo);
+        tmp['CBO'] = [0, 0, 0];
+        tmp['AUX'] = [0, 0, 0, 0, 0];
+        if (bo==4) tmp['CBO'][2]=45;
+        else if (bo==2) tmp['CBO'][2]=90;
+        else if (bo==5) tmp['CBO'][2]=135;
+        else if (bo==1) tmp['CBO'][2]=180;
+        else if (bo==7) tmp['CBO'][2]=-45;
+        else if (bo==3) tmp['CBO'][2]=-90;
+        else if (bo==6) tmp['CBO'][2]=-135;
+        tmp['BoardRotation']=0;
+        for (var i=1; i<=4; i++) {
+            var c = +tmp['aux'+i+'Funk'];
+            console.log('aux'+i+'Funk: ' + c);
+            if (c==1)  tmp['AUX'][0]=(i * 16) + 5;
+            if (c==12) tmp['AUX'][0]=(i * 16) + 3;
+            if (c==13) tmp['AUX'][0]=(i * 16) + 1;
+            if (c==2)  tmp['AUX'][1]=(i * 16) + 5;
+            if (c==11) tmp['AUX'][2]=(i * 16) + 5;
+            if (c==14) tmp['AUX'][3]=(i * 16) + 5;
+            if (c==6)  tmp['AUX'][4]=(i * 16) + 5;
+        }
+    }
 }
 
 kissProtocol.upgradeTo104 = function(tmp) {
-	if (tmp.ver < 104) {
-		console.log('Data version: ' + tmp.ver + ' upgrading to 104');
-		var bo = +tmp['BoardRotation'];
-		console.log('Board Rotation: ' + bo);
-		tmp['CBO'] = [0, 0, 0];
-		tmp['AUX'] = [0, 0, 0, 0, 0];
-		if (bo==4) tmp['CBO'][2]=45;
-		else if (bo==2) tmp['CBO'][2]=90;
-		else if (bo==5) tmp['CBO'][2]=135;
-		else if (bo==1) tmp['CBO'][2]=180;
-		else if (bo==7) tmp['CBO'][2]=-45;
-		else if (bo==3) tmp['CBO'][2]=-90;
-		else if (bo==6) tmp['CBO'][2]=-135;
-		tmp['BoardRotation']=0;
-		for (var i=1; i<=4; i++) {
-			var c = +tmp['aux'+i+'Funk'];
-			console.log('aux'+i+'Funk: ' + c);
-			
-			if (c==1)  tmp['AUX'][0]=(i * 16) + 5;
-			if (c==12) tmp['AUX'][0]=(i * 16) + 3;
-			if (c==13) tmp['AUX'][0]=(i * 16) + 1;
-			if (c==2)  tmp['AUX'][1]=(i * 16) + 5;
-			if (c==11) tmp['AUX'][2]=(i * 16) + 5;
-			if (c==14) tmp['AUX'][3]=(i * 16) + 5;
-			if (c==3)  tmp['AUX'][4]=(i * 16) + 5;
-		}
-	}
+    if (tmp.ver < 104) {
+        console.log('Data version: ' + tmp.ver + ' upgrading to 104');
+        var bo = +tmp['BoardRotation'];
+        console.log('Board Rotation: ' + bo);
+        tmp['CBO'] = [0, 0, 0];
+        tmp['AUX'] = [0, 0, 0, 0, 0];
+        if (bo==4) tmp['CBO'][2]=45;
+        else if (bo==2) tmp['CBO'][2]=90;
+        else if (bo==5) tmp['CBO'][2]=135;
+        else if (bo==1) tmp['CBO'][2]=180;
+        else if (bo==7) tmp['CBO'][2]=-45;
+        else if (bo==3) tmp['CBO'][2]=-90;
+        else if (bo==6) tmp['CBO'][2]=-135;
+        tmp['BoardRotation']=0;
+        for (var i=1; i<=4; i++) {
+            var c = +tmp['aux'+i+'Funk'];
+            console.log('aux'+i+'Funk: ' + c);
+            
+            if (c==1)  tmp['AUX'][0]=(i * 16) + 5;
+            if (c==12) tmp['AUX'][0]=(i * 16) + 3;
+            if (c==13) tmp['AUX'][0]=(i * 16) + 1;
+            if (c==2)  tmp['AUX'][1]=(i * 16) + 5;
+            if (c==11) tmp['AUX'][2]=(i * 16) + 5;
+            if (c==14) tmp['AUX'][3]=(i * 16) + 5;
+            if (c==3)  tmp['AUX'][4]=(i * 16) + 5;
+        }
+    }
 }
 
 kissProtocol.downgradeFrom104 = function(tmp) {
-	if (tmp.ver < 104) {
-		console.log('Data version: ' + tmp.ver + ' downgrade from 104');
-		tmp['BoardRotation']=0;
-		if (tmp.ver<103) {
-			if (tmp['CBO'][2]==180) tmp['BoardRotation']=1;
-		} else {
-			if (tmp['CBO'][2]==180) tmp['BoardRotation']=1;
-			else if (tmp['CBO'][2]==45) tmp['BoardRotation']=4;
-			else if (tmp['CBO'][2]==90) tmp['BoardRotation']=2;
-			else if (tmp['CBO'][2]==135) tmp['BoardRotation']=5;
-			else if (tmp['CBO'][2]==-45) tmp['BoardRotation']=7;
-			else if (tmp['CBO'][2]==-90) tmp['BoardRotation']=3;
-			else if (tmp['CBO'][2]==-135) tmp['BoardRotation']=6;
-		}
-		if (tmp['AUX'][0] != 0) {
-			var k = tmp['AUX'][0] >> 4;
-			var m = 1;
-			if ((tmp['AUX'][0] & 15) == 3) m = 12;
-			if ((tmp['AUX'][0] & 15) == 1) m = 13;
-			tmp['aux'+k+'Funk'] = m;
-		}
-		if (tmp['AUX'][1] != 0) {
-			var k = tmp['AUX'][1] >> 4;
-			tmp['aux'+k+'Funk'] = 2;
-		}
-		if (tmp['AUX'][2] != 0) {
-			var k = tmp['AUX'][2] >> 4;
-			tmp['aux'+k+'Funk'] = 11;
-		}
-		if (tmp['AUX'][3] != 0) {
-			var k = tmp['AUX'][3] >> 4;
-			tmp['aux'+k+'Funk'] = 14;
-		}
-		if (tmp['AUX'][4] != 0) {
-			var k = tmp['AUX'][4] >> 4;
-			tmp['aux'+k+'Funk'] = 3;
-		}
-	}
+    if (tmp.ver < 104) {
+        console.log('Data version: ' + tmp.ver + ' downgrade from 104');
+        tmp['BoardRotation']=0;
+        if (tmp.ver<103) {
+            if (tmp['CBO'][2]==180) tmp['BoardRotation']=1;
+        } else {
+            if (tmp['CBO'][2]==180) tmp['BoardRotation']=1;
+            else if (tmp['CBO'][2]==45) tmp['BoardRotation']=4;
+            else if (tmp['CBO'][2]==90) tmp['BoardRotation']=2;
+            else if (tmp['CBO'][2]==135) tmp['BoardRotation']=5;
+            else if (tmp['CBO'][2]==-45) tmp['BoardRotation']=7;
+            else if (tmp['CBO'][2]==-90) tmp['BoardRotation']=3;
+            else if (tmp['CBO'][2]==-135) tmp['BoardRotation']=6;
+        }
+        if (tmp['AUX'][0] != 0) {
+            var k = tmp['AUX'][0] >> 4;
+            var m = 1;
+            if ((tmp['AUX'][0] & 15) == 3) m = 12;
+            if ((tmp['AUX'][0] & 15) == 1) m = 13;
+            tmp['aux'+k+'Funk'] = m;
+        }
+        if (tmp['AUX'][1] != 0) {
+            var k = tmp['AUX'][1] >> 4;
+            tmp['aux'+k+'Funk'] = 2;
+        }
+        if (tmp['AUX'][2] != 0) {
+            var k = tmp['AUX'][2] >> 4;
+            tmp['aux'+k+'Funk'] = 11;
+        }
+        if (tmp['AUX'][3] != 0) {
+            var k = tmp['AUX'][3] >> 4;
+            tmp['aux'+k+'Funk'] = 14;
+        }
+        if (tmp['AUX'][4] != 0) {
+            var k = tmp['AUX'][4] >> 4;
+            tmp['aux'+k+'Funk'] = 3;
+        }
+    }
 }
 
 kissProtocol.disconnectCleanup = function () {
-	console.log('Disconnect cleanup');
-    	kissProtocol.init();
+    console.log('Disconnect cleanup');
+        kissProtocol.init();
 };

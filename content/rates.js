@@ -11,40 +11,40 @@ CONTENT.rates.initialize = function(callback) {
     self.updateTimeout;
     self.settingsFilled = 0;
     self.hasInput = false;
-	self.lastTimestamp = null; 
+    self.lastTimestamp = null; 
 
-	GUI.switchContent('rates', function() {
-    	kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-    		self.settingsFilled = 1;
-        	$('#content').load("./content/rates.html", function() {
-        		htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
-       	 	});
-    	});
-	});
+    GUI.switchContent('rates', function() {
+        kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
+            self.settingsFilled = 1;
+            $('#content').load("./content/rates.html", function() {
+                htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
+                });
+        });
+    });
 
     function animateModel(timestamp) {
-    	if (GUI.activeContent == 'rates') {
-    		requestAnimationFrame(animateModel);
-    		
-    		if (!self.lastTimestamp) {
-    			self.lastTimestamp = timestamp;
-			}
-    		var frameTime = timestamp - self.lastTimestamp; 
-    		self.lastTimestamp = timestamp;
-    		
-    		if (frameTime>0) {	
-    			var freq = 1000/frameTime;
-    			var rowNames = ['roll', 'pitch', 'yaw']
-				var axisRate = { 'roll' : 0, 'pitch': 0, 'yaw': 0};
-    			if (self.hasInput) {	
-    				for (var i = 0; i < 3; i++) {
-    					axisRate[rowNames[i]] = -Math.PI * 2 * $("#rates_chart_" + rowNames[i]).kissRatesChart('axisRate') / freq;
-    				}
-    			} 
-    			$("#model").kissModel('updateRate', axisRate);
-    			$("#model").kissModel('refresh');
-    		}
-    	}
+        if (GUI.activeContent == 'rates') {
+            requestAnimationFrame(animateModel);
+            
+            if (!self.lastTimestamp) {
+                self.lastTimestamp = timestamp;
+            }
+            var frameTime = timestamp - self.lastTimestamp; 
+            self.lastTimestamp = timestamp;
+            
+            if (frameTime>0) {    
+                var freq = 1000/frameTime;
+                var rowNames = ['roll', 'pitch', 'yaw']
+                var axisRate = { 'roll' : 0, 'pitch': 0, 'yaw': 0};
+                if (self.hasInput) {    
+                    for (var i = 0; i < 3; i++) {
+                        axisRate[rowNames[i]] = -Math.PI * 2 * $("#rates_chart_" + rowNames[i]).kissRatesChart('axisRate') / freq;
+                    }
+                } 
+                $("#model").kissModel('updateRate', axisRate);
+                $("#model").kissModel('refresh');
+            }
+        }
     }
 
     function contentChange() {
@@ -53,15 +53,15 @@ CONTENT.rates.initialize = function(callback) {
         }
         var rowNames = ['roll', 'pitch', 'yaw']
         for (var i = 0; i < 3; i++) {
-        	var rate = parseFloat($('tr.' + rowNames[i] + ' input').eq(0).val());
-        	var grate = parseFloat($('tr.' + rowNames[i] + ' input').eq(1).val());
-        	var usecurve = parseFloat($('tr.' + rowNames[i] + ' input').eq(2).val());
-        	if (!isNaN(rate) && !isNaN(grate) && !isNaN(usecurve)) {
-            	$('#rates_chart_' + rowNames[i]).kissRatesChart('updateRcRates', {
-                	'rate': rate,
-                	'grate': grate,
-                	'usecurve': usecurve
-            	});
+            var rate = parseFloat($('tr.' + rowNames[i] + ' input').eq(0).val());
+            var grate = parseFloat($('tr.' + rowNames[i] + ' input').eq(1).val());
+            var usecurve = parseFloat($('tr.' + rowNames[i] + ' input').eq(2).val());
+            if (!isNaN(rate) && !isNaN(grate) && !isNaN(usecurve)) {
+                $('#rates_chart_' + rowNames[i]).kissRatesChart('updateRcRates', {
+                    'rate': rate,
+                    'grate': grate,
+                    'usecurve': usecurve
+                });
             }
         }
     }
@@ -158,7 +158,7 @@ CONTENT.rates.initialize = function(callback) {
             for (var i = 0; i < receiverLabelArrayLength; i++) {
                 var channel = receiverChannels[i];
                 if (telem['RXcommands'][channel]!=1000) {
-                	hi = true;
+                    hi = true;
                 }
                 receiverFillArray[i].css('width', ((telem['RXcommands'][channel] - meterScale.min) / (meterScale.max - meterScale.min) * 100).clamp(0, 100) + '%');
                 receiverLabelArray[i].text(telem['RXcommands'][channel]);

@@ -8,22 +8,22 @@ CONTENT.configuration = {
 CONTENT.configuration.initialize = function(callback) {
     var self = this;
 
-	GUI.switchContent('configuration', function() {
-	 	kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-        	$('#content').load("./content/configuration.html", function() {
-              	htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
+    GUI.switchContent('configuration', function() {
+         kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
+            $('#content').load("./content/configuration.html", function() {
+                  htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
             });
         });
- 	});
+     });
 
-	function copyTextToClipboard(text) {
-    	var copyFrom = $('<textarea/>');
-    	copyFrom.text(text);
-    	$('body').append(copyFrom);
-    	copyFrom.select();
-    	document.execCommand('copy');
-    	copyFrom.remove();
-	}
+    function copyTextToClipboard(text) {
+        var copyFrom = $('<textarea/>');
+        copyFrom.text(text);
+        $('body').append(copyFrom);
+        copyFrom.select();
+        document.execCommand('copy');
+        copyFrom.remove();
+    }
 
     function backupConfig() {
         var chosenFileEntry = null;
@@ -155,7 +155,7 @@ CONTENT.configuration.initialize = function(callback) {
         validateBounds('#content input[type="text"]');
         var settingsFilled = 0;
 
-  		if (data['ver'] < 100) {
+          if (data['ver'] < 100) {
             $('#version').text('0.' + data['ver']);
         } else if (data['ver'] == 100) {
             $('#version').text((data['ver'] / 100) + '.00');
@@ -165,11 +165,11 @@ CONTENT.configuration.initialize = function(callback) {
         }
         
         if (data['ver'] > 102) {
-			kissProtocol.send(kissProtocol.GET_INFO, [0x21], function() {
-				var info = kissProtocol.data[kissProtocol.GET_INFO];
-				$('#version').text(info.firmvareVersion);
-			});
-		}
+            kissProtocol.send(kissProtocol.GET_INFO, [0x21], function() {
+                var info = kissProtocol.data[kissProtocol.GET_INFO];
+                $('#version').text(info.firmvareVersion);
+            });
+        }
 
         if (data['ver'] > 101) {
             document.getElementById('ppmadd1').style.display = "inline";
@@ -180,16 +180,16 @@ CONTENT.configuration.initialize = function(callback) {
         if (data['ver'] > 102) {
             $('input[name="secret"]').removeAttr("disabled");
         } else {
-        	$("select[name^='aux'] option[value='12']").remove();
-        	$("select[name^='aux'] option[value='13']").remove();
+            $("select[name^='aux'] option[value='12']").remove();
+            $("select[name^='aux'] option[value='13']").remove();
         }
         
         if (data['ver'] > 103) {
-			//
+            //
         } else {
-        	/* Some fixes for backward compatibility */
-        	$("select[name^='aux'] option[value='14']").remove();
-        	$(".rxType option[value='15']").remove();
+            /* Some fixes for backward compatibility */
+            $("select[name^='aux'] option[value='14']").remove();
+            $(".rxType option[value='15']").remove();
         }
 
         var MCUid = '';
@@ -208,16 +208,16 @@ CONTENT.configuration.initialize = function(callback) {
             MCUid += data['SN'][i].toString(16).toUpperCase();
         }
 
-  		var sntext = MCUid + ' (' + (data['isActive'] ? 'Activated' : 'Not Activated') + ')';
-  		$('#SN').text(sntext);
- 		$('#SN').on('click', function(e) {
-			console.log("Copy to clipboard: " + MCUid);
-			copyTextToClipboard(MCUid);
-			$('#SN').text("Serial number has been copied to clipboard");
-			setTimeout(function() {
-				$('#SN').text(sntext);
-			}, 1000);
-		});
+          var sntext = MCUid + ' (' + (data['isActive'] ? 'Activated' : 'Not Activated') + ')';
+          $('#SN').text(sntext);
+         $('#SN').on('click', function(e) {
+            console.log("Copy to clipboard: " + MCUid);
+            copyTextToClipboard(MCUid);
+            $('#SN').text("Serial number has been copied to clipboard");
+            setTimeout(function() {
+                $('#SN').text(sntext);
+            }, 1000);
+        });
 
         var mixerList = [{
             name: 'Tricopter',
@@ -289,23 +289,23 @@ CONTENT.configuration.initialize = function(callback) {
             contentChange();
         });
         
-		var outputMode = data['ESConeshot125'];
-		if (data['ver'] > 104) {
-			$("#outputMode").val(outputMode);       
-			$("#outputMode").on('change', function() {
-				contentChange();
-			});  
-		} else {
-			document.getElementById('outputMode').style.display="none";
-			document.getElementById('outputModeOld').style.display="inline";
-			outputMode = 2; // PWM
-			if (data['ESConeshot125']==1) outputMode = 1;
-			else if (data['ESConeshot42']==1) outputMode = 0;
-			$("#outputModeOld").val(outputMode);       
-			$("#outputModeOld").on('change', function() {
-				contentChange();
-			}); 	
-		}
+        var outputMode = data['ESConeshot125'];
+        if (data['ver'] > 104) {
+            $("#outputMode").val(outputMode);       
+            $("#outputMode").on('change', function() {
+                contentChange();
+            });  
+        } else {
+            document.getElementById('outputMode').style.display="none";
+            document.getElementById('outputModeOld').style.display="inline";
+            outputMode = 2; // PWM
+            if (data['ESConeshot125']==1) outputMode = 1;
+            else if (data['ESConeshot42']==1) outputMode = 0;
+            $("#outputModeOld").val(outputMode);       
+            $("#outputModeOld").on('change', function() {
+                contentChange();
+            });     
+        }
 
         $('input[name="failsaveseconds"]').val(data['failsaveseconds']);
         $('input[name="failsaveseconds"]').on('input', function() {
@@ -316,7 +316,7 @@ CONTENT.configuration.initialize = function(callback) {
         $('input[name="3dMode"]').prop('checked', data['Active3DMode']);
         if (data['Active3DMode']) $("#aux4").show(); else $("#aux4").hide();
         $('input[name="3dMode"]').on('click', function() {
-         	if ($(this).prop('checked')) $("#aux4").show(); else $("#aux4").hide();
+             if ($(this).prop('checked')) $("#aux4").show(); else $("#aux4").hide();
             contentChange();
         });
 
@@ -381,34 +381,34 @@ CONTENT.configuration.initialize = function(callback) {
             });
         }
 
-		$("#aux0").kissAux({ name: 'Arm',    
-							 change: function() { contentChange(); },
-							 value: data['AUX'][0]
-						   });	
-		$("#aux1").kissAux({ name: 'Level',  
-							 change: function() { contentChange(); },
-							 value: data['AUX'][1]
-						   });	
-		$("#aux2").kissAux({ name: 'Buzzer', 
-		 					 change: function() { contentChange(); },
-		 					 value: data['AUX'][2]
-		 				   });	
-		$("#aux3").kissAux({ name: 'Led',    
-							 change: function() { contentChange(); },
-							 knob: true,
-							 value: data['AUX'][3]
-						   });	
-		$("#aux4").kissAux({ name: '3D',    
-							 change: function() { contentChange(); },
-							 value: data['AUX'][4]
-						   });
+        $("#aux0").kissAux({ name: 'Arm',    
+                             change: function() { contentChange(); },
+                             value: data['AUX'][0]
+                           });    
+        $("#aux1").kissAux({ name: 'Level',  
+                             change: function() { contentChange(); },
+                             value: data['AUX'][1]
+                           });    
+        $("#aux2").kissAux({ name: 'Buzzer', 
+                              change: function() { contentChange(); },
+                              value: data['AUX'][2]
+                            });    
+        $("#aux3").kissAux({ name: 'Led',    
+                             change: function() { contentChange(); },
+                             knob: true,
+                             value: data['AUX'][3]
+                           });    
+        $("#aux4").kissAux({ name: '3D',    
+                             change: function() { contentChange(); },
+                             value: data['AUX'][4]
+                           });
 
         $('select[name="lpf"]').val(data['LPF']);
         $('select[name="lpf"]').on('change', function() {
             contentChange();
         });
  
- 		
+         
         
         $('input[name="secret"]').val(data['secret']);
         $('input[name="secret"]').on('change', function() {
@@ -417,9 +417,9 @@ CONTENT.configuration.initialize = function(callback) {
         
         // Temp fix
         if (typeof androidOTGSerial !== 'undefined') {
-        	$('#backup').hide();
-        	$('#restore').hide();
-     	}
+            $('#backup').hide();
+            $('#restore').hide();
+         }
         
         function grabData() {
             // uav type and receiver
@@ -434,16 +434,16 @@ CONTENT.configuration.initialize = function(callback) {
             data['TYmid16'] = parseInt($('input[name="TYmid"]').val());
             data['TYinv8'] = parseInt($('input[name="TYinv"]').prop('checked') ? 1 : 0);
             
-	     	var outputMode = 0;
-	    	if (data['ver'] > 104) {
-		    	outputMode = parseInt($('select[name="outputMode"]').val());
-		    	data['ESConeshot125'] = outputMode;
-		    	data['ESConeshot42'] = 0;
-	    	} else {
-		    	outputMode = parseInt($('select[name="outputModeOld"]').val());
-		    	data['ESConeshot125'] = outputMode == 1 ? 1 : 0;
-		    	data['ESConeshot42'] = outputMode == 0 ? 1 : 0;
-           	}
+             var outputMode = 0;
+            if (data['ver'] > 104) {
+                outputMode = parseInt($('select[name="outputMode"]').val());
+                data['ESConeshot125'] = outputMode;
+                data['ESConeshot42'] = 0;
+            } else {
+                outputMode = parseInt($('select[name="outputModeOld"]').val());
+                data['ESConeshot125'] = outputMode == 1 ? 1 : 0;
+                data['ESConeshot42'] = outputMode == 0 ? 1 : 0;
+               }
            
             data['Active3DMode'] = parseInt($('input[name="3dMode"]').prop('checked') ? 1 : 0);
             data['failsaveseconds'] = parseInt($('input[name="failsaveseconds"]').val());
@@ -682,11 +682,11 @@ CONTENT.configuration.initialize = function(callback) {
             $('#save').removeClass("saveAct");
             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
             if (!data['isActive']) {
-            	 kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-            	        $('#content').load("./content/configuration.html", function() {
-            	            htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
-            	        });
-            	 });
+                 kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
+                        $('#content').load("./content/configuration.html", function() {
+                            htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
+                        });
+                 });
             }
         });
 
@@ -698,11 +698,11 @@ CONTENT.configuration.initialize = function(callback) {
         $('#restore').on('click', function() {
             restoreConfig(function(config) {
                 $('#content').load("./content/configuration.html", function() {
-                	var v = +kissProtocol.data[kissProtocol.GET_SETTINGS]['ver'];
-                	var tmp = $.extend({}, kissProtocol.data[kissProtocol.GET_SETTINGS], config);
-                	kissProtocol.upgradeTo104(tmp);
-                	tmp.ver = v; // fix version to one we get from FCs
-                	kissProtocol.data[kissProtocol.GET_SETTINGS] = tmp;
+                    var v = +kissProtocol.data[kissProtocol.GET_SETTINGS]['ver'];
+                    var tmp = $.extend({}, kissProtocol.data[kissProtocol.GET_SETTINGS], config);
+                    kissProtocol.upgradeTo104(tmp);
+                    tmp.ver = v; // fix version to one we get from FCs
+                    kissProtocol.data[kissProtocol.GET_SETTINGS] = tmp;
                     htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
                     contentChange();
                 });

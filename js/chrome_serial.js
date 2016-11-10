@@ -53,7 +53,7 @@ var chromeSerial = {
 
                 self.onReceive.addListener(function logBytesReceived(info) {
                     self.bytesReceived += info.data.byteLength;
-                	self.dump('->', info.data);
+                    self.dump('->', info.data);
                 });
 
                 self.onReceiveError.addListener(function watchForOnReceiveErrors(info) {
@@ -189,40 +189,40 @@ var chromeSerial = {
             var data = self.outputBuffer[0].data,
                 callback = self.outputBuffer[0].callback;
 
-        	self.dump('<-', data);
-        	
+            self.dump('<-', data);
+            
             if (self.connectionId) {
                 chrome.serial.send(self.connectionId, data, function (sendInfo) {
                     // track sent bytes for statistics
-                	
-                	if (typeof sendInfo !== 'undefined') {
-                	
-                    	self.bytesSent += sendInfo.bytesSent;
+                    
+                    if (typeof sendInfo !== 'undefined') {
+                    
+                        self.bytesSent += sendInfo.bytesSent;
 
-                    	// fire callback
-                    	if (callback) callback(sendInfo);
+                        // fire callback
+                        if (callback) callback(sendInfo);
 
-                    	// remove data for current transmission form the buffer
-                    	self.outputBuffer.shift();
+                        // remove data for current transmission form the buffer
+                        self.outputBuffer.shift();
 
-                    	// if there is any data in the queue fire send immediately, otherwise stop trasmitting
-                    	if (self.outputBuffer.length) {
-                        	// keep the buffer withing reasonable limits
-                        	if (self.outputBuffer.length > 100) {
-                            	var counter = 0;
+                        // if there is any data in the queue fire send immediately, otherwise stop trasmitting
+                        if (self.outputBuffer.length) {
+                            // keep the buffer withing reasonable limits
+                            if (self.outputBuffer.length > 100) {
+                                var counter = 0;
 
-                            	while (self.outputBuffer.length > 100) {
-                                	self.outputBuffer.pop();
-                                	counter++;
-                            	}
+                                while (self.outputBuffer.length > 100) {
+                                    self.outputBuffer.pop();
+                                    counter++;
+                                }
 
-                            	console.log('SERIAL: Send buffer overflowing, dropped: ' + counter + ' entries');
-                        	}
+                                console.log('SERIAL: Send buffer overflowing, dropped: ' + counter + ' entries');
+                            }
 
-                        	send();
-                    	} else {
-                        	self.transmitting = false;
-                    	}
+                            send();
+                        } else {
+                            self.transmitting = false;
+                        }
                     }
                 });
             }
@@ -274,22 +274,22 @@ var chromeSerial = {
         this.transmitting = false;
     },
     byteToHex: function(byte) {
-    	var hexChar = ["0", "1", "2", "3", "4", "5", "6", "7","8", "9", "A", "B", "C", "D", "E", "F"];
-    	return hexChar[(byte >> 4) & 0x0f] + hexChar[byte & 0x0f];
+        var hexChar = ["0", "1", "2", "3", "4", "5", "6", "7","8", "9", "A", "B", "C", "D", "E", "F"];
+        return hexChar[(byte >> 4) & 0x0f] + hexChar[byte & 0x0f];
     },
     wordToHex: function(byte) {
-    	return this.byteToHex(byte>>8 & 0xff)+this.byteToHex(byte & 0xff);
+        return this.byteToHex(byte>>8 & 0xff)+this.byteToHex(byte & 0xff);
     },
     dump: function(direction, data) {
-    	/* var view = new Uint8Array(data);
-    	var line = '';
-    	for (var i = 0; i < view.length; i++) {
-    		if (i%16==0) {
-    			if (i>0) console.log(line);
-    			line=direction + ' ' + this.wordToHex(i) + ': ';
-    		}
-    		line +=  this.byteToHex(view[i]) + ' ';
- 		}
-    	console.log(line); */
+        /* var view = new Uint8Array(data);
+        var line = '';
+        for (var i = 0; i < view.length; i++) {
+            if (i%16==0) {
+                if (i>0) console.log(line);
+                line=direction + ' ' + this.wordToHex(i) + ': ';
+            }
+            line +=  this.byteToHex(view[i]) + ' ';
+         }
+        console.log(line); */
     }
 };
