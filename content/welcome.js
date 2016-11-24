@@ -8,6 +8,10 @@ CONTENT.welcome.initialize = function(callback) {
     GUI.switchContent('welcome', function() {
         $('#content').load("./content/welcome.html", htmlLoaded);
     });
+    
+    function canDFU() {
+        if (navigator.appVersion.indexOf("Win")!=-1) return false; else return true;
+    }
 
     function checkDFU() {
         chrome.usb.getDevices(usbDevices.STM32DFU, function(result) {
@@ -26,7 +30,7 @@ CONTENT.welcome.initialize = function(callback) {
     }
 
     function htmlLoaded() {
-        checkDFU();
+        if (canDFU()) checkDFU();
     }
 };
 
