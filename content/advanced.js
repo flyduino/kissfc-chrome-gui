@@ -23,18 +23,37 @@ CONTENT.advanced.initialize = function(callback) {
         if (data['ver'] > 102) {
             $('select[name="loggerConfig"]').removeAttr("disabled");
         }
-
-        if (data['loggerConfig'] > 0)
+        
+        if (data['ver'] > 106) {
+            $('#vtx').show();
+        } else {
+            $("select[name='loggerConfig'] option[value='11']").remove();
+        }
+   
+        if (data['loggerConfig'] > 0 && data['loggerConfig'] < 11)
             $("#loggerDebug").show();
         else
             $("#loggerDebug").hide();
 
         $('select[name="loggerConfig"]').val(data['loggerConfig']);
+        
+        $('select[name="vtxType"]').val(data['vtxType']);
+        $('input[name="vtxPowerLow"]').val(+data['vtxPowerLow']);
+        $('input[name="vtxPowerHigh"]').val(+data['vtxPowerHigh']);
+        
         $('select[name="loggerConfig"]').on('change', function() {
-            if (+$(this).val() > 0)
+            if ((+$(this).val() > 0) && ( (+$(this).val() < 11))) {
                 $("#loggerDebug").show();
-            else
+                $('#vtx').hide();
+            }    
+            else {
                 $("#loggerDebug").hide();
+                if (data['ver'] > 106) {
+                    if (+$(this).val() == 11) {
+                        $('#vtx').show();
+                    }
+                } 
+            }
             contentChange();
         });
 
@@ -73,6 +92,10 @@ CONTENT.advanced.initialize = function(callback) {
             $("select[name='lapTimerTransponderId']").append("<option value='" + i + "'>" + ((i == 0) ? '--' : i) + "</option>");
         }
 
+        if (data['ver'] > 102) {
+            $("select[name='vtxChannel']").val(data['vtxChannel']);
+        }
+        
         if (data['ver'] > 104) {
             $('input[name="NFE"]').removeAttr("disabled");
             $('input[name="NFCF"]').removeAttr("disabled");
@@ -85,8 +108,7 @@ CONTENT.advanced.initialize = function(callback) {
                 $('input[name="NFCO"]').val(data['NotchFilterCut']);
             }
 
-            if (data['YawCfilter'])
-                $('input[name="YCF"]').val(data['YawCfilter']);
+            if (data['YawCfilter']) $('input[name="YCF"]').val(data['YawCfilter']);
         }
 
         $('input[name^="lapTimer"]').on("change", function() {
@@ -238,6 +260,10 @@ CONTENT.advanced.initialize = function(callback) {
             data['NotchFilterCut'] = $('input[name="NFCO"]').val();
 
             data['YawCfilter'] = $('input[name="YCF"]').val();
+            data['vtxType'] =  parseInt($('select[name="vtxType"]').val());
+            data['vtxPowerLow'] = $('input[name="vtxPowerLow"]').val();
+            data['vtxPowerHigh'] = $('input[name="vtxPowerHigh"]').val();
+            data['vtxChannel'] =  parseInt($('select[name="vtxChannel"]').val());
         }
         settingsFilled = 1;
 

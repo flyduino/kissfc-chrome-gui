@@ -178,7 +178,7 @@ CONTENT.configuration.initialize = function(callback) {
         }
         
         if (data['ver'] > 102) {
-            $('input[name="secret"]').removeAttr("disabled");
+            //$('input[name="secret"]').removeAttr("disabled");
         } else {
             $("select[name^='aux'] option[value='12']").remove();
             $("select[name^='aux'] option[value='13']").remove();
@@ -407,14 +407,7 @@ CONTENT.configuration.initialize = function(callback) {
         $('select[name="lpf"]').on('change', function() {
             contentChange();
         });
- 
          
-        
-        $('input[name="secret"]').val(data['secret']);
-        $('input[name="secret"]').on('change', function() {
-            contentChange();
-        });
-        
         // Temp fix
         if (typeof androidOTGSerial !== 'undefined') {
             $('#backup').hide();
@@ -493,7 +486,7 @@ CONTENT.configuration.initialize = function(callback) {
             
             data['LPF'] = parseInt($('select[name="lpf"]').val());
             
-            data['secret'] = parseInt($('input[name="secret"]').val());
+         //   data['secret'] = parseInt($('input[name="secret"]').val());
         
             data['AUX'][0]=$("#aux0").kissAux('value');
             data['AUX'][1]=$("#aux1").kissAux('value');

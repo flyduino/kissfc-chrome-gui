@@ -406,12 +406,12 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.voltgePercent3 = data.getUint8(119);
             }
             obj.loggerConfig = 0;
-            obj.secret = 0;
+            obj.vtxChannel = 32;
             obj.vbatAlarm = 0;
             obj.debugVariables = 0;
             
             if (obj.ver > 102){
-                obj.secret = data.getUint8(120);
+                obj.vtxChannel = data.getUint8(120);
                 obj.loggerConfig = data.getUint8(121);
             } 
             if (obj.ver > 103){
@@ -437,6 +437,12 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.NotchFilterCut = data.getUint16(141, 0);
                 obj.YawCfilter = data.getUint8(143);
             }
+            if (obj.ver > 106){
+                obj.vtxType = data.getUint8(144);
+                obj.vtxPowerLow = data.getUint16(145, 0);
+                obj.vtxPowerHigh = data.getUint16(147, 0);
+            }
+            
             kissProtocol.upgradeTo104(obj);
             break;
             
@@ -616,7 +622,7 @@ kissProtocol.preparePacket = function (code, obj) {
                 blen=110;
             }
             if (obj.ver > 102) {
-                data.setUint8(110, obj.secret);
+                data.setUint8(110, obj.vtxChannel);
                 data.setUint8(111, obj.loggerConfig);
                 blen=112;
             }
@@ -643,6 +649,13 @@ kissProtocol.preparePacket = function (code, obj) {
                 data.setUint8(133, obj.YawCfilter);
             
                 blen=142;
+            }
+            if (obj.ver > 106) {
+                data.setUint8(134, obj.vtxType);
+                data.setUint16(135, obj.vtxPowerLow,0);
+                data.setUint16(137, obj.vtxPowerHigh,0);
+ 
+                blen=147;
             }
             break;
             
