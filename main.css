@@ -1,4 +1,4 @@
-* {
+/** {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -318,4 +318,4 @@ input[type="number"]::-webkit-inner-spin-button {
 		width: 90px;
 	}
 	
-}
+}*/
