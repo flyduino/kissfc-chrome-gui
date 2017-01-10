@@ -45,30 +45,42 @@
 		<script type="text/javascript" src="./content/esc_flasher.js"></script>
 		<script type="text/javascript" src="./js/libraries/jquery.minicolors.min.js"></script>
 		
-		  <link type="text/css" rel="stylesheet" href="./main.css" media="all" />
+        <link type="text/css" rel="stylesheet" href="./main.css" media="all" />
+        <link type="text/css" rel="stylesheet" href="./base.css" media="all" />
+        <link type="text/css" rel="stylesheet" href="./share.css" media="all" />
     </head>
     <body>
-        <div id="mainWrapper">
-            <div id="portArea">
-                <select id="port" title="Port">
-                    <!-- ports -->
-                </select>
-                <a class="connect" href="#">Connect</a>
-                <a class="navigation-menu-button" href="#">Menu</a>
-                <div id="navigation">
-                    <ul id="menu">
-                        <li data-name="configuration">Configuration</li>
-                        <li data-name="advanced">Advanced</li>
-                        <li data-name="data_output">Data Output</li>
-                        <li data-name="rates">Rates</li>
-                        <li data-name="tpa">TPA</li>
-                        <li data-name="esc_flasher">ESC Flasher</li>
-                    </ul>
+        <div class="layout-container">
+            <div class="layout-main">
+                <sidebar class="layout-sidebar">
+                    <a class="navigation-menu-button" href="#">Menu</a>
+                    <nav id="navigation">
+                        <ul id="menu" class="left-nav">
+                            <li data-name="welcome">Welcome</li>
+                            <li data-name="configuration">Configuration</li>
+                            <li data-name="advanced">Advanced</li>
+                            <li data-name="data_output">Data Output</li>
+                            <li data-name="rates">Rates</li>
+                            <li data-name="tpa">TPA</li>
+                            <li data-name="esc_flasher">ESC Flasher</li>
+                        </ul>
+                    </nav>
+                </sidebar>
+
+                <div id="content" class="layout-content">
                 </div>
             </div>
-            <div id="content">
-            </div>
+
+            <footer class="layout-footer">
+                <div id="portArea">
+                    <select id="port" title="Port" class="select mr2">
+                        <!-- ports -->
+                    </select>
+                    <a class="button highlight connect" href="#">Connect</a>
+                </div>
+            </footer>
         </div>
+
          <script type="text/javascript" src="cordova.js"></script>
          <script type="text/javascript" src="js/startup.js"></script>
     </body>
