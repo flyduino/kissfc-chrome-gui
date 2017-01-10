@@ -45,7 +45,7 @@ $(document).ready(function() {
 
                         // reset connect / disconnect button
                         $('a.connect').text('Connect');
-                        $('a.connect').removeClass('active');
+                        $('a.connect').addClass('highlight');
 
                         $('#navigation li:not([data-name="welcome"])').removeClass('unlocked');
 
@@ -93,7 +93,7 @@ $(document).ready(function() {
                 });
             }
 
-            $('a.connect').text('Disconnect').addClass('active');
+            $('a.connect').text('Disconnect').removeClass('highlight');
 
             kissProtocol.init();
 
@@ -118,7 +118,7 @@ $(document).ready(function() {
             console.log('Failed to open serial port');
 
             $('a.connect').text('Connect');
-            $('a.connect').removeClass('active');
+            $('a.connect').addClass('highlight');
 
             // unlock port select
             $('#port').prop('disabled', false);
