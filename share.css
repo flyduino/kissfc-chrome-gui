@@ -12,12 +12,15 @@
 }
 
 .button {
+  display: inline-block;
+  line-height: 1rem;
 	font-size: 0.875rem;
 	color: var(--near-white);
 	background: var(--less-dark);
 	border-radius: 2px;
 	box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
 	padding: 0.5rem 1rem;
+  cursor: pointer;
 }
 
 .button:hover {
@@ -30,24 +33,28 @@
 
 .button.disabled {
 	background: var(--dark);
+  cursor: default;
 }
 
-.select {
-	-webkit-appearance: none;
-	border-radius: 2px;
-	font-size: 0.875rem;
-	line-height: 1rem;
-	color: var(--near-white);
-	padding: 0.5rem 1.5rem 0.5rem 0.5rem;
-	background: url(../images/arrow-down-normal.svg) no-repeat right center;
-	background-color: var(--dark);
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
+.topic {
+  display: block;
+  font-size: 1rem;
+  color: var(--near-white);
+  font-weight: bold;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--much-dark);
+  margin-bottom: 1rem;
+  min-width: 100%;
 }
 
-.select:disabled {
-	color: var(--much-gray);
-	background: url(../images/arrow-down-disabled.svg) no-repeat right center;
-  background-color: var(--dark);
+.fl { float: left; display: inline-block;}
+.fr { float: right; display: inline-block;}
+.fn { float: none; }
+
+@media (--breakpoint-not-small) {
+  .fl-ns { float: left; _display: inline; }
+  .fr-ns { float: right; _display: inline; }
+  .fn-ns { float: none; }
 }
 
 :root {

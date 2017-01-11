@@ -1,87 +1,150 @@
 *, *:before, *:after {
     box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-	border: 0;
-	list-style: none;
-	outline: none;
-}
-
-html {
-	font: 100%/1.5 -apple-system, BlinkMacSystemFont, 'avenir next', avenir, helvetica, "helvetica neue", ubuntu, roboto, noto, "segoe ui", arial, sans-serif;//"Circular Std", Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-weight: normal;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+    outline: none;
 }
 
 body {
-	color: var(--near-white);
-	background: var(--still-dark);
+    font: 100%/1 -apple-system, BlinkMacSystemFont, 'avenir next', avenir, helvetica, "helvetica neue", ubuntu, roboto, noto, "segoe ui", arial, sans-serif;//"Circular Std", Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    color: var(--near-white);
+    background: var(--still-dark);
 }
 
 a {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 .layout-container {
-	display: flex;
-	flex-direction: column;
-	height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 .layout-main {
-	display: flex;
-	min-height: calc(100vh - 4rem);
-	flex-direction: row;
+    display: flex;
+    min-height: calc(100vh - 4rem);
+    flex-direction: row;
 }
 
 .layout-sidebar {
-	flex: 1;
-	min-width: 16rem;
-	max-width: 16rem;
-	background: var(--still-dark);
-	border-right: 1px solid var(--much-dark);
+    flex: 1;
+    min-width: 16rem;
+    max-width: 16rem;
+    background: var(--still-dark);
+    border-right: 1px solid var(--much-dark);
 }
 
 .layout-content {
-	overflow: auto;
-	flex: 1;
-	padding: 1.5rem 2rem;
+    overflow: auto;
+    flex: 1;
+    padding: 1.5rem 2rem;
 }
 
 .layout-footer {
-	width: 100%;
-	height: 4rem;
-	padding: 1rem;
-	background-color: var(--much-dark);
-	box-shadow: 0px -1px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    height: 4rem;
+    padding: 1rem;
+    background-color: var(--much-dark);
+    box-shadow: 0px -1px 4px rgba(0,0,0,0.1);
 }
 
 .left-nav {
-	padding: 1.5rem 1rem;
+    padding: 1.5rem 1rem;
 }
 
 .left-nav li {
-	padding: 0.5rem 1rem 0.5rem 3rem;
-	margin-bottom: 0.5rem;
-	line-height: 1rem;
-	font-weight: 600;
-	font-size: 0.75rem;
-	text-transform: uppercase;
-	color: var(--much-gray);
-	border-radius: 2px;
+    padding: 0.5rem 1rem 0.5rem 3rem;
+    margin-bottom: 0.5rem;
+    line-height: 1rem;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--much-gray);
+    border-radius: 2px;
 }
 
 .left-nav li.unlocked:hover:not(.active) {
-	background: var(--dark);
+    background: var(--dark);
 }
 
 .left-nav li.unlocked:not(.active) {
-	cursor: pointer;
-	color: var(--gray);
+    cursor: pointer;
+    color: var(--gray);
 }
 
 .left-nav li.active {
-	color: var(--near-white);
-	background: var(--red);
+    color: var(--near-white);
+    background: var(--red);
+}
+
+select {
+    display: inline-block;
+    -webkit-appearance: none;
+    border-radius: 2px;
+    font-size: 0.875rem;
+    line-height: 1rem;
+    color: var(--near-white);
+    padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+    background: url(../images/arrow-down-normal.svg) no-repeat right center;
+    background-color: var(--dark);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
+}
+
+select:disabled {
+    color: var(--much-gray);
+    background: url(../images/arrow-down-disabled.svg) no-repeat right center;
+    background-color: var(--dark);
+}
+
+label {
+    font-size: 0.875rem;
+}
+
+input[type="text"],
+input[type="number"] {
+    display: inline-block;
+    -webkit-appearance: none;
+    background: var(--dark);
+    font-size: 0.875rem;
+    line-height: 1rem;
+    border-radius: 2px;
+    color: var(--near-white);
+    min-width: 2rem;
+    width: 5rem;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
+}
+
+input[type="text"] {
+    padding: 0.5rem;
+}
+
+input:placeholder {
+    color: var(--much-gray);
+}
+
+input[type="number"] {
+    position: relative;
+    text-align: right;
+    padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 1rem;
+    height: 2rem;
+    opacity: 1;
+    border-left: 1px solid rgba(255,255,255,0.1);
+    background: url(../images/input-number.svg) no-repeat;
 }
