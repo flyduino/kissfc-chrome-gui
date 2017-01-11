@@ -48,6 +48,7 @@
         <link type="text/css" rel="stylesheet" href="./main.css" media="all" />
         <link type="text/css" rel="stylesheet" href="./base.css" media="all" />
         <link type="text/css" rel="stylesheet" href="./share.css" media="all" />
+        <link type="text/css" rel="stylesheet" href="./flex.css" media="all" />
     </head>
     <body>
         <div class="layout-container">
@@ -67,16 +68,27 @@
                     </nav>
                 </sidebar>
 
-                <div id="content" class="layout-content">
+                <div class="layout-content">
+                    <div id="content" class="container">
+                    </div>
                 </div>
             </div>
 
             <footer class="layout-footer">
-                <div id="portArea">
-                    <select id="port" title="Port" class="select mr2">
-                        <!-- ports -->
-                    </select>
-                    <a class="button highlight connect" href="#">Connect</a>
+                <div class="row">
+                    <div class="col-s-4">
+                        <div id="portArea">
+                            <select id="port" title="Port" class="select mr2">
+                                <!-- ports -->
+                            </select>
+                            <a class="button highlight connect" href="#">Connect</a>
+                        </div>
+                    </div>
+                    <div class="col-s-4 end-s fuck">
+                        <a id="backup" class="button mr2" href="#"  title="Backup to file">Backup</a>
+                        <a id="restore" class="button mr2" href="#" title="Restore from file">Restore</a>
+                        <a id="save" class="button highlight" href="#" title="Save Settings to EEPROM">Save</a>
+                    </div>
                 </div>
             </footer>
         </div>
