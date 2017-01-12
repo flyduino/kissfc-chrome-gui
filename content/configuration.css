@@ -1,4 +1,4 @@
-
+/*
 .configuration .mixer {
     float: left;
 }
@@ -131,6 +131,8 @@
 	height:18px; 
 	padding-top:4px;
 }
+
+*/
 
 #userSel {
 	display: none;
