@@ -155,43 +155,6 @@ CONTENT.configuration.initialize = function(callback) {
         validateBounds('#content input[type="number"]');
         var settingsFilled = 0;
 
-          if (data['ver'] < 100) {
-            $('#version').text('0.' + data['ver']);
-        } else if (data['ver'] == 100) {
-            $('#version').text((data['ver'] / 100) + '.00');
-        } else {
-            $('#version').text((data['ver'] / 100));
-            $('input[name="3dMode"]').removeAttr("disabled");
-        }
-        
-        if (data['ver'] > 102) {
-            kissProtocol.send(kissProtocol.GET_INFO, [0x21], function() {
-                var info = kissProtocol.data[kissProtocol.GET_INFO];
-                $('#version').text(info.firmvareVersion);
-            });
-        }
-
-        if (data['ver'] > 101) {
-            document.getElementById('ppmadd1').style.display = "inline";
-            document.getElementById('ppmadd2').style.display = "inline";
-            document.getElementById('mpxSRXL').style.display = "inline";
-        }
-        
-        if (data['ver'] > 102) {
-            $('input[name="secret"]').removeAttr("disabled");
-        } else {
-            $("select[name^='aux'] option[value='12']").remove();
-            $("select[name^='aux'] option[value='13']").remove();
-        }
-        
-        if (data['ver'] > 103) {
-            //
-        } else {
-            /* Some fixes for backward compatibility */
-            $("select[name^='aux'] option[value='14']").remove();
-            $(".rxType option[value='15']").remove();
-        }
-
         var MCUid = '';
         for (var i = 0; i < 4; i++) {
             if (data['SN'][i] < 16) MCUid += '0';
