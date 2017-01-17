@@ -34,8 +34,8 @@ a {
 
 .layout-sidebar {
     flex: 1;
-    min-width: 16rem;
-    max-width: 16rem;
+    min-width: 4.5rem;
+    max-width: 4.5rem; 
     background: var(--still-dark);
     border-right: 1px solid var(--much-dark);
 }
@@ -55,18 +55,29 @@ a {
 }
 
 .left-nav {
-    padding: 1.5rem 1rem;
+    position: absolute;
+    z-index: 9999;
+    top: 1.5rem;
+    left: 1rem;
 }
 
 .left-nav li {
-    padding: 0.5rem 1rem 0.5rem 3rem;
+    position: relative;
+    display: block;
     margin-bottom: 0.5rem;
+    padding: 0.5rem 1rem;
+    min-height: 2rem;
+    min-width: 2.5rem;
+    width: 2.5rem;
     line-height: 1rem;
     font-weight: 600;
-    font-size: 0.75rem;
-    text-transform: uppercase;
+    font-size: 0.875rem;
     color: var(--much-gray);
     border-radius: 2px;
+}
+
+.left-nav li span {
+    display: none;
 }
 
 .left-nav li.unlocked:hover:not(.active) {
@@ -83,6 +94,68 @@ a {
     background: var(--red);
 }
 
+.left-nav li.active:hover,
+.left-nav li.unlocked:hover {
+    width: auto;
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+}
+
+.left-nav li.active:hover span,
+.left-nav li.unlocked:hover span {
+    display: inline;
+}
+
+.left-nav li svg.icon {
+    position: absolute;
+    top: 0.25rem;
+    left: 0.5rem;
+}
+
+.left-nav li svg.icon path,
+.left-nav li svg.icon polygon {
+    fill: var(--much-gray);
+}
+
+.left-nav li.unlocked svg.icon path,
+.left-nav li.unlocked svg.icon polygon {
+    fill: var(--gray);
+}
+
+.left-nav li.active svg.icon path,
+.left-nav li.active svg.icon polygon {
+    fill: var(--near-white);
+}
+
+@media only screen and (min-width: 80rem) {
+    .layout-sidebar {
+        min-width: 16rem;
+        max-width: 16rem;
+    }
+
+    .left-nav li {
+        width: 14rem;
+    }
+
+    .left-nav li,
+    .left-nav li.active:hover,
+    .left-nav li.unlocked:hover {
+        padding: 0.5rem 1rem 0.5rem 3rem;
+    }
+
+    .left-nav li span {
+        display: inline;
+    }
+
+    .left-nav li svg.icon {
+        left: 1rem;
+    }
+}
+
+table {
+    display: block;
+    border: 0;
+}
+
 select {
     display: inline-block;
     -webkit-appearance: none;
@@ -92,7 +165,7 @@ select {
     color: var(--near-white);
     padding: 0.5rem 1.5rem 0.5rem 0.5rem;
     background: url(../images/arrow-down-normal.svg) no-repeat right center;
-    background-color: var(--dark);
+    background-color: var(--dark-gray);
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
 }
 
@@ -104,24 +177,25 @@ select:disabled {
 
 label {
     font-size: 0.875rem;
+    color: var(--gray);
 }
 
 input[type="text"],
 input[type="number"] {
     display: inline-block;
     -webkit-appearance: none;
-    background: var(--dark);
+    background: var(--dark-gray);
     font-size: 0.875rem;
     line-height: 1rem;
     border-radius: 2px;
     color: var(--near-white);
-    min-width: 2rem;
-    width: 5rem;
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
 }
 
 input[type="text"] {
     padding: 0.5rem;
+    min-width: 2rem;
+    width: 5rem;
 }
 
 input:placeholder {
@@ -129,6 +203,8 @@ input:placeholder {
 }
 
 input[type="number"] {
+    min-width: 2rem;
+    width: 5rem;
     position: relative;
     text-align: right;
     padding: 0.5rem 1.5rem 0.5rem 0.5rem;
