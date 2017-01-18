@@ -8,8 +8,8 @@
     		build : function(self) {
     			var data = pluginData(self);
     			var c = "";
-    			c+='<dt class="kiss-aux-function">' + data.name + '</dt>';
-                c+='<dd class="kiss-aux-function"><select class="kiss-aux-channel">';
+    			c+='<td class="kiss-aux-function pb2"><label class="mr1" title="' + data.name + '">' + data.name + '</label></td>';
+                c+='<td class="kiss-aux-function pb2"><select class="kiss-aux-channel">';
                 c+='<option value="0">--</option>';
                 c+='<option value="1">AUX1</option>';
                 c+='<option value="2">AUX2</option>';
@@ -23,7 +23,7 @@
                 c+='<option value="4">Medium + High</option>';
                 c+='<option value="5">High</option>';
                 if (data.knob) c+='<option value="6">Knob</option>';
-                c+='</select></dd>'; 
+                c+='</select></td>'; 
     			self.append(c);
     			$("select", self).on("change", function() {
     				data.value = (parseInt($(".kiss-aux-channel", self).val()) << 4) + parseInt($(".kiss-aux-mode", self).val());
