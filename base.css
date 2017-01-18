@@ -8,7 +8,7 @@
 }
 
 body {
-    font: 100%/1 -apple-system, BlinkMacSystemFont, 'avenir next', avenir, helvetica, "helvetica neue", ubuntu, roboto, noto, "segoe ui", arial, sans-serif;//"Circular Std", Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font: 100%/1 -apple-system, BlinkMacSystemFont, "avenir next", avenir, helvetica, "helvetica neue", ubuntu, roboto, noto, "segoe ui", arial, sans-serif;//"Circular Std", Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
     font-weight: normal;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -151,11 +151,6 @@ a {
     }
 }
 
-table {
-    display: block;
-    border: 0;
-}
-
 select {
     display: inline-block;
     -webkit-appearance: none;
@@ -165,7 +160,7 @@ select {
     color: var(--near-white);
     padding: 0.5rem 1.5rem 0.5rem 0.5rem;
     background: url(../images/arrow-down-normal.svg) no-repeat right center;
-    background-color: var(--dark-gray);
+    background-color: var(--dark);
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
 }
 
@@ -184,7 +179,7 @@ input[type="text"],
 input[type="number"] {
     display: inline-block;
     -webkit-appearance: none;
-    background: var(--dark-gray);
+    background: var(--dark);
     font-size: 0.875rem;
     line-height: 1rem;
     border-radius: 2px;
@@ -203,9 +198,10 @@ input:placeholder {
 }
 
 input[type="number"] {
-    min-width: 2rem;
-    width: 5rem;
     position: relative;
+    width: 100%;
+    min-width: 2rem;
+    max-width: 7rem;
     text-align: right;
     padding: 0.5rem 1.5rem 0.5rem 0.5rem;
 }
@@ -223,4 +219,61 @@ input[type="number"]::-webkit-outer-spin-button {
     opacity: 1;
     border-left: 1px solid rgba(255,255,255,0.1);
     background: url(../images/input-number.svg) no-repeat;
+}
+
+input[type="checkbox"]:checked,
+input[type="checkbox"]:not(:checked),
+input[type="radio"]:checked,
+input[type="radio"]:not(:checked) {
+    background: transparent;
+    position: relative;
+    visibility: hidden;
+    margin:0;
+    padding:0;
+}
+
+input[type="checkbox"] + label,
+input[type="radio"] + label {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    padding-left: 2rem;
+    line-height: 2rem;
+}
+
+input[type="checkbox"]:checked + label::before,
+input[type="checkbox"]:not(:checked) + label::before,
+input[type="radio"]:checked + label::before,
+input[type="radio"]:not(:checked) + label::before {
+    content:" ";
+    display:inline-block;
+    width: 1.5rem;
+    height:1.5rem;
+    position: absolute;
+    left: 0;
+    top: 0.25rem;
+    background-color: var(--dark);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
+    border-radius: 2px;
+}
+
+input[type=radio]:checked + label::before,
+input[type=radio]:not(:checked) + label::before {
+    border-radius: 1rem;
+}
+
+input[type="checkbox"]:hover  + label::before,
+input[type="radio"]:hover  + label::before {
+    background:#ddd;
+}
+
+input[type="checkbox"]:checked  + label::before,
+input[type="radio"]:checked  + label::before {
+    background:black;
+}
+
+.global-buttons {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
 }
