@@ -26,6 +26,9 @@ CONTENT.advanced.initialize = function(callback) {
         
         if (data['ver'] > 106) {
             $('#vtx').show();
+            $('input[name="mahAlarm"]').val(data['mahAlarm']);
+            $('input[name="mahAlarm"]').removeAttr("disabled");
+            
         } else {
             $("select[name='loggerConfig'] option[value='11']").remove();
         }
@@ -168,7 +171,7 @@ CONTENT.advanced.initialize = function(callback) {
         $('select[name="loggerDebugVariables"]').on("change", function() {
             contentChange();
         });
-
+        
         if (data['ver'] > 103) {
 
             $('input[name="vbatAlarm"]').val(data['vbatAlarm']);
@@ -264,6 +267,8 @@ CONTENT.advanced.initialize = function(callback) {
             data['vtxPowerLow'] = $('input[name="vtxPowerLow"]').val();
             data['vtxPowerHigh'] = $('input[name="vtxPowerHigh"]').val();
             data['vtxChannel'] =  parseInt($('select[name="vtxChannel"]').val());
+            
+            data['mahAlarm'] = parseInt($('input[name="mahAlarm"]').val());
         }
         settingsFilled = 1;
 

@@ -191,7 +191,13 @@ CONTENT.configuration.initialize = function(callback) {
             $("select[name^='aux'] option[value='14']").remove();
             $(".rxType option[value='15']").remove();
         }
-
+        
+        if (data['ver'] < 107 || data['loggerConfig']!=11 || data['vtxType']==0) {
+            $('#aux5').hide();
+            $('#aux6').hide();
+            $('#aux7').hide();
+        }
+        
         var MCUid = '';
         for (var i = 0; i < 4; i++) {
             if (data['SN'][i] < 16) MCUid += '0';
@@ -403,6 +409,22 @@ CONTENT.configuration.initialize = function(callback) {
                              value: data['AUX'][4]
                            });
 
+        $("#aux5").kissAux({ name: 'VTX Power',    
+            change: function() { contentChange(); },
+            knob: true,
+            value: data['AUX'][5]
+        });
+        
+        $("#aux6").kissAux({ name: 'VTX Band',    
+            change: function() { contentChange(); },
+            value: data['AUX'][6]
+        });
+        
+        $("#aux7").kissAux({ name: 'VTX Channel',    
+            change: function() { contentChange(); },
+            value: data['AUX'][7]
+        });
+        
         $('select[name="lpf"]').val(data['LPF']);
         $('select[name="lpf"]').on('change', function() {
             contentChange();
@@ -478,21 +500,16 @@ CONTENT.configuration.initialize = function(callback) {
             data['A_D'] = parseFloat($('tr.level input').eq(2).val());
             data['maxAng'] = parseFloat($('tr.level input').eq(3).val());
 
-            // aux settings
-            //data['aux1Funk'] = parseInt($('select[name="aux1"]').val());
-            //data['aux2Funk'] = parseInt($('select[name="aux2"]').val());
-            //data['aux3Funk'] = parseInt($('select[name="aux3"]').val());
-            //data['aux4Funk'] = parseInt($('select[name="aux4"]').val());
-            
             data['LPF'] = parseInt($('select[name="lpf"]').val());
             
-         //   data['secret'] = parseInt($('input[name="secret"]').val());
-        
             data['AUX'][0]=$("#aux0").kissAux('value');
             data['AUX'][1]=$("#aux1").kissAux('value');
             data['AUX'][2]=$("#aux2").kissAux('value');
             data['AUX'][3]=$("#aux3").kissAux('value');
             data['AUX'][4]=data['Active3DMode'] ? $("#aux4").kissAux('value') : 0;
+            data['AUX'][5]=$("#aux5").kissAux('value');
+            data['AUX'][6]=$("#aux6").kissAux('value');
+            data['AUX'][7]=$("#aux7").kissAux('value');
         }
         settingsFilled = 1;
 

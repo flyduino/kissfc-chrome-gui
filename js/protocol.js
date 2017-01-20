@@ -409,6 +409,7 @@ kissProtocol.processPacket = function (code, obj) {
             obj.vtxChannel = 32;
             obj.vbatAlarm = 0;
             obj.debugVariables = 0;
+            obj.mahAlarm = 0;
             
             if (obj.ver > 102){
                 obj.vtxChannel = data.getUint8(120);
@@ -441,6 +442,11 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.vtxType = data.getUint8(144);
                 obj.vtxPowerLow = data.getUint16(145, 0);
                 obj.vtxPowerHigh = data.getUint16(147, 0);
+                obj.AUX[5] = data.getUint8(149);
+                obj.AUX[6] = data.getUint8(150);
+                obj.AUX[7] = data.getUint8(151);
+                
+                obj.mahAlarm = data.getUint16(152, 0);
             }
             
             kissProtocol.upgradeTo104(obj);
@@ -654,8 +660,13 @@ kissProtocol.preparePacket = function (code, obj) {
                 data.setUint8(134, obj.vtxType);
                 data.setUint16(135, obj.vtxPowerLow,0);
                 data.setUint16(137, obj.vtxPowerHigh,0);
- 
-                blen=147;
+                data.setUint8(139, obj.AUX[5]);
+                data.setUint8(140, obj.AUX[6]);
+                data.setUint8(141, obj.AUX[7]);
+                
+                data.setUint16(142, obj.mahAlarm, 0);
+                
+                blen=152;
             }
             break;
             
