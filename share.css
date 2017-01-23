@@ -42,10 +42,16 @@
     color: var(--white);
     font-weight: bold;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--much-dark);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
     margin-bottom: 1rem;
     min-width: 100%;
     text-transform: uppercase;
+}
+
+.global-buttons {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
 }
 
 .w1 {    width: 1rem; }

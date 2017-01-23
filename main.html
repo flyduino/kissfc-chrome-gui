@@ -50,6 +50,18 @@
     </head>
     <body>
         <div class="layout-container">
+            <div class="layout-header">
+                <div class="row">
+                    <div class="col">
+                        <div id="portArea">
+                            <select id="port" title="Port" class="select mr2">
+                                <!-- ports -->
+                            </select>
+                            <a class="button highlight connect" href="#">Connect</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="layout-main">
                 <sidebar class="layout-sidebar">
                     <nav id="navigation">
@@ -128,19 +140,6 @@
                     </div>
                 </div>
             </div>
-
-            <footer class="layout-footer">
-                <div class="row">
-                    <div class="col">
-                        <div id="portArea">
-                            <select id="port" title="Port" class="select mr2">
-                                <!-- ports -->
-                            </select>
-                            <a class="button highlight connect" href="#">Connect</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
 
          <script type="text/javascript" src="cordova.js"></script>
