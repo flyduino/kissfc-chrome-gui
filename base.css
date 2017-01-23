@@ -71,9 +71,10 @@ a {
     width: 2.5rem;
     line-height: 1rem;
     font-weight: 600;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     color: var(--much-gray);
     border-radius: 2px;
+    text-transform: uppercase;
 }
 
 .left-nav li span {
@@ -183,7 +184,7 @@ input[type="number"] {
     font-size: 0.875rem;
     line-height: 1rem;
     border-radius: 2px;
-    color: var(--near-white);
+    color: var(--white);
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
 }
 

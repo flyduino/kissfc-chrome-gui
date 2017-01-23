@@ -39,12 +39,13 @@
 .topic {
     display: block;
     font-size: 1rem;
-    color: var(--near-white);
+    color: var(--white);
     font-weight: bold;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--much-dark);
     margin-bottom: 1rem;
     min-width: 100%;
+    text-transform: uppercase;
 }
 
 .w1 {    width: 1rem; }
