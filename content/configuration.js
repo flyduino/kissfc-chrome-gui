@@ -192,7 +192,7 @@ CONTENT.configuration.initialize = function(callback) {
             $(".rxType option[value='15']").remove();
         }
         
-        if (data['ver'] < 107 || data['loggerConfig']!=11 || data['vtxType']==0) {
+        if (data['ver'] < 107 || data['vtxType']==0) {
             $('#aux5').hide();
             $('#aux6').hide();
             $('#aux7').hide();
@@ -510,6 +510,8 @@ CONTENT.configuration.initialize = function(callback) {
             data['AUX'][5]=$("#aux5").kissAux('value');
             data['AUX'][6]=$("#aux6").kissAux('value');
             data['AUX'][7]=$("#aux7").kissAux('value');
+            
+            console.log(data);
         }
         settingsFilled = 1;
 

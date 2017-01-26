@@ -47,15 +47,15 @@ CONTENT.advanced.initialize = function(callback) {
         $('select[name="loggerConfig"]').on('change', function() {
             if ((+$(this).val() > 0) && ( (+$(this).val() < 11))) {
                 $("#loggerDebug").show();
-                $('#vtx').hide();
+                //$('#vtx').hide();
             }    
             else {
                 $("#loggerDebug").hide();
-                if (data['ver'] > 106) {
-                    if (+$(this).val() == 11) {
-                        $('#vtx').show();
-                    }
-                } 
+                //if (data['ver'] > 106) {
+                  //  if (+$(this).val() == 11) {
+                        //$('#vtx').show();
+                   // }
+                //} 
             }
             contentChange();
         });
@@ -213,6 +213,12 @@ CONTENT.advanced.initialize = function(callback) {
                 }
             });
             $('select[name="RGBSelector"]').removeAttr("disabled");
+            
+            if (data['vtxType'] == 0) {
+                $(".vtx_opts").hide();
+            } else {
+                $(".vtx_opts").show();
+            }
         }
 
         $('select[name="RGBSelector"]').on('change', function() {
@@ -228,6 +234,20 @@ CONTENT.advanced.initialize = function(callback) {
                 opacity : 1
             });
             contentChange();
+        });
+        
+        $('select[name="vtxType"]').on('change', function() {
+            if (this.value == "0") {
+               $(".vtx_opts").hide();
+               if ($("#loggerConfig").val()=="11") {
+                   $("#loggerConfig").val("0");
+               }
+            } else {
+                if (this.value=="2") {
+                    $("#loggerConfig").val("11");
+                }
+                $(".vtx_opts").show();
+            }
         });
 
         function grabData() {

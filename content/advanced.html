@@ -93,80 +93,69 @@
 				</dt>
 				<dd>
 					<select name="vtxType" id="vtxType">
-						<option value="0">NONE</option>
-						<option value="1">Test</option>
+						<option value="0">--</option>
 						<option value="2">IRC Tramp HV</option>
+						<!-- option value="1">Test</option -->
 					</select>
 				</dd>
-				<dt>
+				<dt class="vtx_opts">
 					<span title="VTX freq">Frequency</span>
 				</dt>
-				<dd>
+				<dd  class="vtx_opts">
 					<select name="vtxChannel" id="vtxChannel">
-						<option value="32">Raceband: 1 (5658 MHz)</option>
-						<option value="33">Raceband: 2 (5695 MHz)</option>
-						<option value="34">Raceband: 3 (5732 MHz)</option>
-						<option value="35">Raceband: 4 (5769 MHz)</option>
-						<option value="36">Raceband: 5 (5806 MHz)</option>
-						<option value="37">Raceband: 6 (5843 MHz)</option>
-						<option value="38">Raceband: 7 (5880 MHz)</option>
-						<option value="39">Raceband: 8 (5917 MHz)</option>
+						<option value="0">A:1 (5865 MHz)</option>
+						<option value="1">A:2 (5845 MHz)</option>
+						<option value="2">A:3 (5825 MHz)</option>
+						<option value="3">A:4 (5805 MHz)</option>
+						<option value="4">A:5 (5785 MHz)</option>
+						<option value="5">A:6 (5765 MHz)</option>
+						<option value="6">A:7 (5745 MHz)</option>
+						<option value="7">A:8 (5725 MHz)</option>
 						
-						<option value="24">IRC/FS: 1 (5740 MHz)</option>
-						<option value="25">IRC/FS: 2 (5760 MHz)</option>
-						<option value="26">IRC/FS: 3 (5780 MHz)</option>
-						<option value="27">IRC/FS: 4 (5800 MHz)</option>
-						<option value="28">IRC/FS: 5 (5820 MHz)</option>
-						<option value="29">IRC/FS: 6 (5840 MHz)6</option>
-						<option value="30">IRC/FS: 7 (5860 MHz)</option>
-						<option value="31">IRC/FS: 8 (5880 MHz)</option>
-						
-						<option value="32">Raceband: 1 (5658 MHz)</option>
-						<option value="33">Raceband: 2 (5695 MHz)</option>
-						<option value="34">Raceband: 3 (5732 MHz)</option>
-						<option value="35">Raceband: 4 (5769 MHz)</option>
-						<option value="36">Raceband: 5 (5806 MHz)</option>
-						<option value="37">Raceband: 6 (5843 MHz)</option>
-						<option value="38">Raceband: 7 (5880 MHz)</option>
-						<option value="39">Raceband: 8 (5917 MHz)</option>
-						
-						<option value="0">Band A: 1 (5865 MHz)</option>
-						<option value="1">Band A: 2 (5845 MHz)</option>
-						<option value="2">Band A: 3 (5825 MHz)</option>
-						<option value="3">Band A: 4 (5805 MHz)</option>
-						<option value="4">Band A: 5 (5785 MHz)</option>
-						<option value="5">Band A: 6 (5765 MHz)</option>
-						<option value="6">Band A: 7 (5745 MHz)</option>
-						<option value="7">Band A: 8 (5725 MHz)</option>
-						
-						<option value="8">Band B: 1 (5733 MHz)</option>
-						<option value="9">Band B: 2 (5752 MHz)</option>
-						<option value="10">Band B: 3 (5771 MHz)</option>
-						<option value="11">Band B: 4 (5790 MHz)</option>
-						<option value="12">Band B: 5 (5809 MHz)</option>
-						<option value="13">Band B: 6 (5828 MHz)</option>
-						<option value="14">Band B: 7 (5847 MHz)</option>
-						<option value="15">Band B: 8 (5866 MHz)</option>
+						<option value="8">B:1 (5733 MHz)</option>
+						<option value="9">B:2 (5752 MHz)</option>
+						<option value="10">B:3 (5771 MHz)</option>
+						<option value="11">B:4 (5790 MHz)</option>
+						<option value="12">B:5 (5809 MHz)</option>
+						<option value="13">B:6 (5828 MHz)</option>
+						<option value="14">B:7 (5847 MHz)</option>
+						<option value="15">B:8 (5866 MHz)</option>
 
-						<option value="16">Band E: 1 (5705 MHz)</option>
-						<option value="17">Band E: 2 (5685 MHz)</option>
-						<option value="18">Band E: 3 (5665 MHz)</option>
-						<option value="19">Band E: 4 (5645 MHz)</option>
-						<option value="20">Band E: 5 (5885 MHz)</option>
-						<option value="21">Band E: 6 (5905 MHz)</option>
-						<option value="22">Band E: 7 (5925 MHz)</option>
-						<option value="23">Band E: 8 (5945 MHz)</option>
-
+						<option value="16">E:1 (5705 MHz)</option>
+						<option value="17">E:2 (5685 MHz)</option>
+						<option value="18">E:3 (5665 MHz)</option>
+						<option value="19">E:4 (5645 MHz)</option>
+						<option value="20">E:5 (5885 MHz)</option>
+						<option value="21">E:6 (5905 MHz)</option>
+						<option value="22">E:7 (5925 MHz)</option>
+						<option value="23">E:8 (5945 MHz)</option>
 						
+						<option value="24">IRC/FS:1 (5740 MHz)</option>
+						<option value="25">IRC/FS:2 (5760 MHz)</option>
+						<option value="26">IRC/FS:3 (5780 MHz)</option>
+						<option value="27">IRC/FS:4 (5800 MHz)</option>
+						<option value="28">IRC/FS:5 (5820 MHz)</option>
+						<option value="29">IRC/FS:6 (5840 MHz)</option>
+						<option value="30">IRC/FS:7 (5860 MHz)</option>
+						<option value="31">IRC/FS:8 (5880 MHz)</option>	
+						
+						<option value="32">RaceBand:1 (5658 MHz)</option>
+						<option value="33">RaceBand:2 (5695 MHz)</option>
+						<option value="34">RaceBand:3 (5732 MHz)</option>
+						<option value="35">RaceBand:4 (5769 MHz)</option>
+						<option value="36">RaceBand:5 (5806 MHz)</option>
+						<option value="37">RaceBand:6 (5843 MHz)</option>
+						<option value="38">RaceBand:7 (5880 MHz)</option>
+						<option value="39">RaceBand:8 (5917 MHz)</option>					
 					</select>
 				</dd>
-				<dt style="width:180px;">Low Power: (mW)&nbsp;</dt>
-				<dd>
+				<dt  class="vtx_opts" style="width:180px;">Low Power: (mW)&nbsp;</dt>
+				<dd  class="vtx_opts">
 					<input type="text" name="vtxPowerLow" data-step="1"
 						data-min="0" data-max="800" data-precision="0" value="25" />
 				</dd>
-				<dt style="width:180px;">High Power: (mW)&nbsp;</dt>
-				<dd>
+				<dt  class="vtx_opts" style="width:180px;">High Power: (mW)&nbsp;</dt>
+				<dd  class="vtx_opts">
 					<input type="text" name="vtxPowerHigh" data-step="1"
 						data-min="0" data-max="800" data-precision="0" value="25" />
 				</dd>
