@@ -31,6 +31,7 @@ CONTENT.advanced.initialize = function(callback) {
             
         } else {
             $("select[name='loggerConfig'] option[value='11']").remove();
+            $('#vtx').hide();
         }
    
         if (data['loggerConfig'] > 0 && data['loggerConfig'] < 11)
@@ -45,17 +46,20 @@ CONTENT.advanced.initialize = function(callback) {
         $('input[name="vtxPowerHigh"]').val(+data['vtxPowerHigh']);
         
         $('select[name="loggerConfig"]').on('change', function() {
-            if ((+$(this).val() > 0) && ( (+$(this).val() < 11))) {
-                $("#loggerDebug").show();
-                //$('#vtx').hide();
-            }    
-            else {
+            if (+$(this).val() < 11) {
+                if (+$(this).val()>0) {
+                    $("#loggerDebug").show();
+                } else {
+                    $("#loggerDebug").hide();
+                }
+                if ($("select[name='vtxType']").val()=="2") {
+                    $("select[name='vtxType']").val("0").trigger("change");
+                }
+            } else {
                 $("#loggerDebug").hide();
-                //if (data['ver'] > 106) {
-                  //  if (+$(this).val() == 11) {
-                        //$('#vtx').show();
-                   // }
-                //} 
+                if (data['ver'] > 106) {
+                   $("select[name='vtxType']").val("2");
+                } 
             }
             contentChange();
         });
@@ -240,11 +244,13 @@ CONTENT.advanced.initialize = function(callback) {
             if (this.value == "0") {
                $(".vtx_opts").hide();
                if ($("#loggerConfig").val()=="11") {
-                   $("#loggerConfig").val("0");
+                   $("#loggerConfig").val("0").trigger("change");
                }
             } else {
                 if (this.value=="2") {
-                    $("#loggerConfig").val("11");
+                    $("#loggerConfig").val("11").trigger("change");
+                } else {
+                    $("#loggerConfig").val("0").trigger("change");
                 }
                 $(".vtx_opts").show();
             }
