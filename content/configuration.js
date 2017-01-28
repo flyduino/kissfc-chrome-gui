@@ -154,6 +154,9 @@ CONTENT.configuration.initialize = function(callback) {
     function htmlLoaded(data) {
         validateBounds('#content input[type="text"]');
         var settingsFilled = 0;
+        
+        console.log("RECEIVED:");
+        console.log(data);
 
           if (data['ver'] < 100) {
             $('#version').text('0.' + data['ver']);
@@ -434,8 +437,14 @@ CONTENT.configuration.initialize = function(callback) {
         if (typeof androidOTGSerial !== 'undefined') {
             $('#backup').hide();
             $('#restore').hide();
-         }
+        }
         
+        if (data.lipoConnected==1) {
+            $(".unsafe").prop('disabled', true).addClass("unsafe_active");
+        } else {
+            $(".unsafe").prop('disabled', false).removeClass("unsafe_active");
+        }
+                
         function grabData() {
             // uav type and receiver
             data['CopterType'] = parseInt($('select.mixer').val());
@@ -511,6 +520,7 @@ CONTENT.configuration.initialize = function(callback) {
             data['AUX'][6]=$("#aux6").kissAux('value');
             data['AUX'][7]=$("#aux7").kissAux('value');
             
+            console.log("SENT:");
             console.log(data);
         }
         settingsFilled = 1;
@@ -693,13 +703,11 @@ CONTENT.configuration.initialize = function(callback) {
             grabData();
             $('#save').removeClass("saveAct");
             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
-            if (!data['isActive']) {
                  kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
                         $('#content').load("./content/configuration.html", function() {
                             htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
                         });
                  });
-            }
         });
 
         $('#backup').on('click', function() {

@@ -249,6 +249,12 @@ CONTENT.advanced.initialize = function(callback) {
                 $(".vtx_opts").show();
             }
         });
+        
+        if (data.lipoConnected==1) {
+            $(".unsafe").prop('disabled', true).addClass("unsafe_active");
+        } else {
+            $(".unsafe").prop('disabled', false).removeClass("unsafe_active");
+        }
 
         function grabData() {
             data['BoardRotation'] = 0;

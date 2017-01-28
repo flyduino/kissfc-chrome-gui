@@ -14,7 +14,7 @@
 
 		<table style="border: 0px;">
 			<tr>
-				<td width="100%" colspan="4"><input type="checkbox"
+				<td width="100%" colspan="4"><input class="unsafe" type="checkbox"
 					disabled="true" name="CBO" /> &nbsp;Use custom FC orientation</td>
 			</tr>
 			<tr>
@@ -25,13 +25,13 @@
 			</tr>
 			<tr>
 				<td>FC orientation &deg;</td>
-				<td><input disabled="true" type="text" size="3" name="CBO0"
+				<td><input class="unsafe" disabled="true" type="text" size="3" name="CBO0"
 					data-min="-180" data-max="180" data-step="1" data-precision="0"
 					value="0" /></td>
-				<td><input disabled="true" type="text" size="3" name="CBO1"
+				<td><input class="unsafe" disabled="true" type="text" size="3" name="CBO1"
 					data-min="-180" data-max="180" data-step="1" data-precision="0"
 					value="0" /></td>
-				<td><input disabled="true" type="text" size="3" name="CBO2"
+				<td><input class="unsafe" disabled="true" type="text" size="3" name="CBO2"
 					data-min="-180" data-max="180" data-step="1" data-precision="0"
 					value="0" /></td>
 			</tr>
@@ -47,7 +47,7 @@
 					<span title="Serial config">Device</span>
 				</dt>
 				<dd>
-					<select disabled="true" name="loggerConfig" id="loggerConfig">
+					<select class="unsafe" disabled="true" name="loggerConfig" id="loggerConfig">
 						<option value="0">OSD</option>
 						<option value="11">VTX</option>
 						<option value="1">Logger / 10%</option>
@@ -92,7 +92,7 @@
 					<span title="VTX type">Type</span>
 				</dt>
 				<dd>
-					<select name="vtxType" id="vtxType">
+					<select class="unsafe" name="vtxType" id="vtxType">
 						<option value="0">--</option>
 						<option value="2">IRC Tramp HV</option>
 						<!-- option value="1">Test</option -->
@@ -171,13 +171,13 @@
 			<dl class="general-settings">
 				<dt class="lap-timer">Type and connection</dt>
 				<dd class="lap-timer-type-and-interface">
-					<select id="lapTimerTypeAndInterface"
+					<select  class="unsafe" id="lapTimerTypeAndInterface"
 						name="lapTimerTypeAndInterface">
 						<option value="0">--</option>
 						<option value="17">EeasyRaceLapTimer on BUZZER pin</option>
 						<option value="18">EeasyRaceLapTimer on PWM5 pin</option>
 						<option value="19">EeasyRaceLapTimer on PWM6 pin</option>
-					</select> <select class="lap-timer-transponder-id"
+					</select> <select class="lap-timer-transponder-id unsafe"
 						name="lapTimerTransponderId">
 					</select>
 				</dd>

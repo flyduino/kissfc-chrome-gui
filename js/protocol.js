@@ -410,6 +410,7 @@ kissProtocol.processPacket = function (code, obj) {
             obj.vbatAlarm = 0;
             obj.debugVariables = 0;
             obj.mahAlarm = 0;
+            obj.lipoConnected = 0;
             
             if (obj.ver > 102){
                 obj.vtxChannel = data.getUint8(120);
@@ -447,6 +448,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.AUX[7] = data.getUint8(151);
                 
                 obj.mahAlarm = data.getUint16(152, 0);
+                obj.lipoConnected = data.getUint8(154, 0);
             }
             
             kissProtocol.upgradeTo104(obj);
