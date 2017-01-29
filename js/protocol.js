@@ -306,6 +306,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.RGB = [];
                 obj.CBO = [];
                 obj.AUX = [];
+                obj.DB = [];
             }
 
             obj.G_P[0] = data.getUint16(0, 0) / 1000;
@@ -449,6 +450,10 @@ kissProtocol.processPacket = function (code, obj) {
                 
                 obj.mahAlarm = data.getUint16(152, 0);
                 obj.lipoConnected = data.getUint8(154, 0);
+                
+                obj.DB[0] = data.getUint8(155, 0);
+                obj.DB[1] = data.getUint8(156, 0);
+                obj.DB[2] = data.getUint8(157, 0);
             }
             
             kissProtocol.upgradeTo104(obj);
@@ -668,7 +673,11 @@ kissProtocol.preparePacket = function (code, obj) {
                 
                 data.setUint16(142, obj.mahAlarm, 0);
                 
-                blen=152;
+                data.setUint8(144, obj.DB[0]);
+                data.setUint8(145, obj.DB[1]);
+                data.setUint8(146, obj.DB[2]);
+                
+                blen=155;
             }
             break;
             

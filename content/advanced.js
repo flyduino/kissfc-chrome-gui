@@ -28,7 +28,12 @@ CONTENT.advanced.initialize = function(callback) {
             $('#vtx').show();
             $('input[name="mahAlarm"]').val(data['mahAlarm']);
             $('input[name="mahAlarm"]').removeAttr("disabled");
-            
+            $('input[name="DB0"]').removeAttr("disabled");
+            $('input[name="DB1"]').removeAttr("disabled");
+            $('input[name="DB2"]').removeAttr("disabled");
+            $('input[name="DB0"]').val(+data['DB'][0]);
+            $('input[name="DB1"]').val(+data['DB'][1]);
+            $('input[name="DB2"]').val(+data['DB'][2]);
         } else {
             $("select[name='loggerConfig'] option[value='11']").remove();
             $('#vtx').hide();
@@ -64,6 +69,8 @@ CONTENT.advanced.initialize = function(callback) {
             contentChange();
         });
 
+      
+        
         $('input[name="CBO0"]').val(+data['CBO'][0]);
         $('input[name="CBO1"]').val(+data['CBO'][1]);
         $('input[name="CBO2"]').val(+data['CBO'][2]);
@@ -301,6 +308,13 @@ CONTENT.advanced.initialize = function(callback) {
             data['vtxChannel'] =  parseInt($('select[name="vtxChannel"]').val());
             
             data['mahAlarm'] = parseInt($('input[name="mahAlarm"]').val());
+            
+            data['DB'][0] = parseInt($('input[name="DB0"]').val());
+            data['DB'][1] = parseInt($('input[name="DB1"]').val());
+            data['DB'][2] = parseInt($('input[name="DB2"]').val());
+            
+            console.log("SENT:");
+            console.log(data);
         }
         settingsFilled = 1;
 
