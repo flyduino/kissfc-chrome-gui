@@ -20,7 +20,7 @@ CONTENT.data_output.initialize = function (callback) {
     function htmlLoaded() {
         // generate receiver bars
         var receiverNames = ['Throttle', 'Roll', 'Pitch', 'Yaw', 'Aux 1', 'Aux 2', 'Aux 3', 'Aux 4'];
-        var receiverContainer = $('.data_output .receiver .bars');
+        var receiverContainer = $('.receiver-bars');
         var receiverFillArray = [];
         var receiverLabelArray = [];
         self.ESCTelemetry = 0;
@@ -31,17 +31,15 @@ CONTENT.data_output.initialize = function (callback) {
             var name = receiverNames[i];
         
             receiverContainer.append('\
-                <ul>\
-                    <li class="name">' + name + '</li>\
-                    <li class="meter">\
+                <tr>\
+                    <td class="name pr2 pb1 f2 nowrap">' + name + '</td>\
+                    <td class="meter w-100 pb1">\
                         <div class="meter-bar">\
+                            <div class="fill"></div>\
                             <div class="label"></div>\
-                            <div class="fill">\
-                                <div class="label"></div>\
-                            </div>\
                         </div>\
-                    </li>\
-                </ul>\
+                    </td>\
+                </tr>\
             ');
         }
 
@@ -55,7 +53,7 @@ CONTENT.data_output.initialize = function (callback) {
 
         // generate motor bars
         var motorNames = ['PWM 1', 'PWM 2', 'PWM 3', 'PWM 4', 'PWM 5', 'PWM 6'];
-        var motorContainer = $('.data_output .motors .bars');
+        var motorContainer = $('.motor-bars');
         var motorFillArray = [];
         var motorLabelArray = [];
 
@@ -63,18 +61,16 @@ CONTENT.data_output.initialize = function (callback) {
             var name = motorNames[i];
 
             motorContainer.append('\
-                <ul>\
-                    <li class="name">' + name + '</li>\
-                    <li class="motor">\
+                <tr>\
+                    <td class="name pr2 pb1 f2 nowrap">' + name + '</td>\
+                    <td class="motor w-100 pb1">\
                         <div class="meter-bar">\
                             <div class="label"></div>\
-                            <div class="fill">\
-                                <div class="label"></div>\
-                            </div>\
+                            <div class="fill"></div>\
                         </div>\
-                    </li>\
-                    <li class="test"><input style="display:none" type="checkbox" class="motor-test" value="'+i+'"></li> \
-                </ul>\
+                    </td>\
+                    <td class="test"><input style="display:none" type="checkbox" class="motor-test" value="'+i+'"></td> \
+                </tr>\
             ');
         }
 
@@ -165,7 +161,7 @@ CONTENT.data_output.initialize = function (callback) {
 
         });
 
-        var legendItems = $('dl.legend dd');
+        var legendItems = $('table.legend tr td .output');
         var otherItems = $('dl.otherValues dd')
         var meterScale = {'min': 800, 'max': 2200};
         function updateUI() {
@@ -482,7 +478,7 @@ CONTENT.data_output.drawGraph = function (graph, scale) {
     // draw grid
     ctx.beginPath();
     ctx.lineWidth = 1;
-    ctx.strokeStyle = '#dddddd';
+    ctx.strokeStyle = '#424343';
     /*
      * // vertical var tickSize = width / graph.ticks[1]; for (var x = tickSize +
      * margin.left, pos; x < width; x += tickSize) { pos = Math.round(x) + 0.5;
@@ -491,7 +487,7 @@ CONTENT.data_output.drawGraph = function (graph, scale) {
      */
 
     // horizontal
-    var tickSize = (height - 2) / graph.ticks[0]; // -2px for bottom axis
+    var tickSize = (height) / graph.ticks[0];
                                                     // outline
     for (var y = tickSize, pos; y < height; y += tickSize) {
         pos = Math.round(y) + 0.5;
@@ -529,8 +525,11 @@ CONTENT.data_output.drawGraph = function (graph, scale) {
 };
 
 CONTENT.data_output.resizeCanvas = function () {
-    var wrapper = $('#content');
-    $('#graph').prop('width', wrapper.width() - 160); // -160px for legend
+    var contentWidth = $("#content").width();
+    var legendWidth = $(".legend").width();
+    var newGraphWidth = contentWidth - legendWidth;
+
+    $('#graph').prop('width', newGraphWidth);
 
     CONTENT.data_output.renderGraph();
 }
