@@ -76,6 +76,7 @@ a {
     color: var(--much-gray);
     border-radius: 2px;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .left-nav li span {
