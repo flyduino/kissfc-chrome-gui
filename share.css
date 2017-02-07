@@ -54,6 +54,44 @@
     right: 1rem;
 }
 
+.meter-bar {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: 1.25rem;
+    border-radius: 2px;
+    background: var(--less-dark);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.4);
+}
+
+.meter-bar .fill {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background: var(--red);
+    height: 1.25rem;
+}
+
+.meter-bar .label {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1.25rem;
+    line-height: 1.25rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: var(--white);
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.ws-normal { white-space: normal; }
+.nowrap { white-space: nowrap; }
+.pre { white-space: pre; }
+
 .w1 {    width: 1rem; }
 .w2 {    width: 2rem; }
 .w3 {    width: 4rem; }
@@ -87,6 +125,18 @@
 .f4 { font-size: 1.25rem; }
 .f5 { font-size: 1.5rem; }
 .f6 { font-size: 2rem; }
+
+.normal { font-weight: normal; }
+.b      { font-weight: bold; }
+.fw1    { font-weight: 100; }
+.fw2    { font-weight: 200; }
+.fw3    { font-weight: 300; }
+.fw4    { font-weight: 400; }
+.fw5    { font-weight: 500; }
+.fw6    { font-weight: 600; }
+.fw7    { font-weight: 700; }
+.fw8    { font-weight: 800; }
+.fw9    { font-weight: 900; }
 
 :root {
       --spacing-none: 0;
