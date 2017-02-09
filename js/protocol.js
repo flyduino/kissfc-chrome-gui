@@ -454,6 +454,8 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.DB[0] = data.getUint8(155, 0);
                 obj.DB[1] = data.getUint8(156, 0);
                 obj.DB[2] = data.getUint8(157, 0);
+                
+                obj.motorBuzzer = data.getUint8(158, 0);
             }
             
             kissProtocol.upgradeTo104(obj);
@@ -677,7 +679,9 @@ kissProtocol.preparePacket = function (code, obj) {
                 data.setUint8(145, obj.DB[1]);
                 data.setUint8(146, obj.DB[2]);
                 
-                blen=155;
+                data.setUint8(147, obj.motorBuzzer);
+                
+                blen=156;
             }
             break;
             

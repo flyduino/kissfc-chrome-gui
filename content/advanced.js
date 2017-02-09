@@ -34,6 +34,10 @@ CONTENT.advanced.initialize = function(callback) {
             $('input[name="DB0"]').val(+data['DB'][0]);
             $('input[name="DB1"]').val(+data['DB'][1]);
             $('input[name="DB2"]').val(+data['DB'][2]);
+            $('input[name="motorBuzzer"]').removeAttr("disabled");
+            if (data['motorBuzzer']) {
+                $('input[name="motorBuzzer"]').prop('checked', 1);
+            }
         } else {
             $("select[name='loggerConfig'] option[value='11']").remove();
             $('#vtx').hide();
@@ -313,8 +317,11 @@ CONTENT.advanced.initialize = function(callback) {
             data['DB'][1] = parseInt($('input[name="DB1"]').val());
             data['DB'][2] = parseInt($('input[name="DB2"]').val());
             
-            console.log("SENT:");
-            console.log(data);
+            if ($('input[name="motorBuzzer"]').prop('checked') ? 1 : 0 == 1) {
+                data['motorBuzzer'] = 1;
+            } else {
+                data['motorBuzzer'] = 0;
+            }
         }
         settingsFilled = 1;
 
