@@ -444,7 +444,51 @@ CONTENT.configuration.initialize = function(callback) {
         } else {
             $(".unsafe").prop('disabled', false).removeClass("unsafe_active");
         }
-                
+        
+        if (data['ver']>MAX_CONFIG_VERSION) {
+            $("#navigation").hide();
+            $("#upgrade_gui").kissWarning({});  
+            $("#upgrade_gui").show();
+        } else if (data['ver']<MIN_CONFIG_VERSION) {
+            $("#navigation").hide();
+            $("#downgrade_gui").kissWarning({});  
+            $("#downgrade_gui").show();
+        } else if (!data['isActive']) {
+            $("#navigation").hide();
+            $("#activation").kissWarning({
+                title:'WARNING!!!', 
+                button:'ACTIVATE NOW', 
+                action: function() {
+                    // Activation procedure
+                    $(".button", "#activation").hide();
+                    $.ajax({
+                        url: 'http://ultraesc.de/KISSFC/getActivation/index.php?SN=' + MCUid + '&VER=' + data['ver'],
+                        cache: false,
+                        dataType: "text",
+                        success: function(key) {
+                            console.log('Got activation code ' + key);
+                            data['actKey'] = parseInt(key);
+                            kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
+                            kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
+                                   $('#content').load("./content/configuration.html", function() {
+                                       htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
+                                   });
+                            });
+                        },
+                        error: function() {
+                            $(".button", "#activation").show();
+                            console.log('getting activation code failed');
+                            data['actKey'] = 0;
+                            $(".button", "#activation").text("ACTIVATION FAILED, TRY AGAIN");
+                        }
+                    });
+                }
+            }); 
+            $("#activation").show();
+        } else {
+            $("#navigation").show();
+        }
+              
         function grabData() {
             // uav type and receiver
             data['CopterType'] = parseInt($('select.mixer').val());
