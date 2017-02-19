@@ -154,6 +154,9 @@ CONTENT.configuration.initialize = function(callback) {
     function htmlLoaded(data) {
         validateBounds('#content input[type="text"]');
         var settingsFilled = 0;
+        
+        console.log("RECEIVED:");
+        console.log(data);
 
           if (data['ver'] < 100) {
             $('#version').text('0.' + data['ver']);
@@ -178,7 +181,7 @@ CONTENT.configuration.initialize = function(callback) {
         }
         
         if (data['ver'] > 102) {
-            $('input[name="secret"]').removeAttr("disabled");
+            //$('input[name="secret"]').removeAttr("disabled");
         } else {
             $("select[name^='aux'] option[value='12']").remove();
             $("select[name^='aux'] option[value='13']").remove();
@@ -191,7 +194,13 @@ CONTENT.configuration.initialize = function(callback) {
             $("select[name^='aux'] option[value='14']").remove();
             $(".rxType option[value='15']").remove();
         }
-
+        
+        if (data['ver'] < 107 || data['vtxType']==0) {
+            $('#aux5').hide();
+            $('#aux6').hide();
+            $('#aux7').hide();
+        }
+        
         var MCUid = '';
         for (var i = 0; i < 4; i++) {
             if (data['SN'][i] < 16) MCUid += '0';
@@ -403,24 +412,83 @@ CONTENT.configuration.initialize = function(callback) {
                              value: data['AUX'][4]
                            });
 
+        $("#aux5").kissAux({ name: 'VTX Power',    
+            change: function() { contentChange(); },
+            knob: true,
+            value: data['AUX'][5]
+        });
+        
+        $("#aux6").kissAux({ name: 'VTX Band',    
+            change: function() { contentChange(); },
+            value: data['AUX'][6]
+        });
+        
+        $("#aux7").kissAux({ name: 'VTX Channel',    
+            change: function() { contentChange(); },
+            value: data['AUX'][7]
+        });
+        
         $('select[name="lpf"]').val(data['LPF']);
         $('select[name="lpf"]').on('change', function() {
             contentChange();
         });
- 
          
-        
-        $('input[name="secret"]').val(data['secret']);
-        $('input[name="secret"]').on('change', function() {
-            contentChange();
-        });
-        
         // Temp fix
         if (typeof androidOTGSerial !== 'undefined') {
             $('#backup').hide();
             $('#restore').hide();
-         }
+        }
         
+        if (data.lipoConnected==1) {
+            $(".unsafe").prop('disabled', true).addClass("unsafe_active");
+        } else {
+            $(".unsafe").prop('disabled', false).removeClass("unsafe_active");
+        }
+        
+        if (data['ver']>MAX_CONFIG_VERSION) {
+            $("#navigation").hide();
+            $("#upgrade_gui").kissWarning({});  
+            $("#upgrade_gui").show();
+        } else if (data['ver']<MIN_CONFIG_VERSION) {
+            $("#navigation").hide();
+            $("#downgrade_gui").kissWarning({});  
+            $("#downgrade_gui").show();
+        } else if (!data['isActive']) {
+            $("#navigation").hide();
+            $("#activation").kissWarning({
+                title:'WARNING!!!', 
+                button:'ACTIVATE NOW', 
+                action: function() {
+                    // Activation procedure
+                    $(".button", "#activation").hide();
+                    $.ajax({
+                        url: 'http://ultraesc.de/KISSFC/getActivation/index.php?SN=' + MCUid + '&VER=' + data['ver'],
+                        cache: false,
+                        dataType: "text",
+                        success: function(key) {
+                            console.log('Got activation code ' + key);
+                            data['actKey'] = parseInt(key);
+                            kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
+                            kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
+                                   $('#content').load("./content/configuration.html", function() {
+                                       htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
+                                   });
+                            });
+                        },
+                        error: function() {
+                            $(".button", "#activation").show();
+                            console.log('getting activation code failed');
+                            data['actKey'] = 0;
+                            $(".button", "#activation").text("ACTIVATION FAILED, TRY AGAIN");
+                        }
+                    });
+                }
+            }); 
+            $("#activation").show();
+        } else {
+            $("#navigation").show();
+        }
+              
         function grabData() {
             // uav type and receiver
             data['CopterType'] = parseInt($('select.mixer').val());
@@ -485,21 +553,19 @@ CONTENT.configuration.initialize = function(callback) {
             data['A_D'] = parseFloat($('tr.level input').eq(2).val());
             data['maxAng'] = parseFloat($('tr.level input').eq(3).val());
 
-            // aux settings
-            //data['aux1Funk'] = parseInt($('select[name="aux1"]').val());
-            //data['aux2Funk'] = parseInt($('select[name="aux2"]').val());
-            //data['aux3Funk'] = parseInt($('select[name="aux3"]').val());
-            //data['aux4Funk'] = parseInt($('select[name="aux4"]').val());
-            
             data['LPF'] = parseInt($('select[name="lpf"]').val());
             
-            data['secret'] = parseInt($('input[name="secret"]').val());
-        
             data['AUX'][0]=$("#aux0").kissAux('value');
             data['AUX'][1]=$("#aux1").kissAux('value');
             data['AUX'][2]=$("#aux2").kissAux('value');
             data['AUX'][3]=$("#aux3").kissAux('value');
             data['AUX'][4]=data['Active3DMode'] ? $("#aux4").kissAux('value') : 0;
+            data['AUX'][5]=$("#aux5").kissAux('value');
+            data['AUX'][6]=$("#aux6").kissAux('value');
+            data['AUX'][7]=$("#aux7").kissAux('value');
+            
+            console.log("SENT:");
+            console.log(data);
         }
         settingsFilled = 1;
 
@@ -681,13 +747,11 @@ CONTENT.configuration.initialize = function(callback) {
             grabData();
             $('#save').removeClass("saveAct");
             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
-            if (!data['isActive']) {
                  kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
                         $('#content').load("./content/configuration.html", function() {
                             htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
                         });
                  });
-            }
         });
 
         $('#backup').on('click', function() {

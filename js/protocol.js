@@ -306,6 +306,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.RGB = [];
                 obj.CBO = [];
                 obj.AUX = [];
+                obj.DB = [];
             }
 
             obj.G_P[0] = data.getUint16(0, 0) / 1000;
@@ -406,12 +407,14 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.voltgePercent3 = data.getUint8(119);
             }
             obj.loggerConfig = 0;
-            obj.secret = 0;
+            obj.vtxChannel = 32;
             obj.vbatAlarm = 0;
             obj.debugVariables = 0;
+            obj.mahAlarm = 0;
+            obj.lipoConnected = 0;
             
             if (obj.ver > 102){
-                obj.secret = data.getUint8(120);
+                obj.vtxChannel = data.getUint8(120);
                 obj.loggerConfig = data.getUint8(121);
             } 
             if (obj.ver > 103){
@@ -437,6 +440,24 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.NotchFilterCut = data.getUint16(141, 0);
                 obj.YawCfilter = data.getUint8(143);
             }
+            if (obj.ver > 106){
+                obj.vtxType = data.getUint8(144);
+                obj.vtxPowerLow = data.getUint16(145, 0);
+                obj.vtxPowerHigh = data.getUint16(147, 0);
+                obj.AUX[5] = data.getUint8(149);
+                obj.AUX[6] = data.getUint8(150);
+                obj.AUX[7] = data.getUint8(151);
+                
+                obj.mahAlarm = data.getUint16(152, 0);
+                obj.lipoConnected = data.getUint8(154, 0);
+                
+                obj.DB[0] = data.getUint8(155, 0);
+                obj.DB[1] = data.getUint8(156, 0);
+                obj.DB[2] = data.getUint8(157, 0);
+                
+                obj.motorBuzzer = data.getUint8(158, 0);
+            }
+            
             kissProtocol.upgradeTo104(obj);
             break;
             
@@ -616,7 +637,7 @@ kissProtocol.preparePacket = function (code, obj) {
                 blen=110;
             }
             if (obj.ver > 102) {
-                data.setUint8(110, obj.secret);
+                data.setUint8(110, obj.vtxChannel);
                 data.setUint8(111, obj.loggerConfig);
                 blen=112;
             }
@@ -643,6 +664,24 @@ kissProtocol.preparePacket = function (code, obj) {
                 data.setUint8(133, obj.YawCfilter);
             
                 blen=142;
+            }
+            if (obj.ver > 106) {
+                data.setUint8(134, obj.vtxType);
+                data.setUint16(135, obj.vtxPowerLow,0);
+                data.setUint16(137, obj.vtxPowerHigh,0);
+                data.setUint8(139, obj.AUX[5]);
+                data.setUint8(140, obj.AUX[6]);
+                data.setUint8(141, obj.AUX[7]);
+                
+                data.setUint16(142, obj.mahAlarm, 0);
+                
+                data.setUint8(144, obj.DB[0]);
+                data.setUint8(145, obj.DB[1]);
+                data.setUint8(146, obj.DB[2]);
+                
+                data.setUint8(147, obj.motorBuzzer);
+                
+                blen=156;
             }
             break;
             

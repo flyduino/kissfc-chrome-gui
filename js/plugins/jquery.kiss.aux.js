@@ -9,13 +9,13 @@
     			var data = pluginData(self);
     			var c = "";
     			c+='<dt class="kiss-aux-function">' + data.name + '</dt>';
-                c+='<dd class="kiss-aux-function"><select class="kiss-aux-channel">';
+                c+='<dd class="kiss-aux-function"><select class="kiss-aux-channel unsafe">';
                 c+='<option value="0">--</option>';
                 c+='<option value="1">AUX1</option>';
                 c+='<option value="2">AUX2</option>';
                 c+='<option value="3">AUX3</option>';
                 c+='<option value="4">AUX4</option>';
-                c+='</select><select class="kiss-aux-mode">';
+                c+='</select><select class="kiss-aux-mode unsafe">';
                 c+='<option value="0">--</option>';
                 c+='<option value="1">Low</option>';
                 c+='<option value="2">Low + Medium</option>';

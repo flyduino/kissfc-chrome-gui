@@ -1,14 +1,14 @@
 <div class="configuration">
     <div class="wrapper-wide">
         <div class="groupTitle">UAV Type</div>
-        <select class="mixer" name="mixer">
+        <select class="mixer unsafe" name="mixer">
             <!-- auto generated -->
         </select>
         <div class="mixerPreview">
             <img class="mixer-image" src="./images/mixer/0.png" />
         </div>
         <div class="groupTitle">Receiver</div>
-        <select class="rxType">
+        <select class="rxType unsafe">
             <option value="0" style="display:none">Autodetect</option>
             <option value="1">4-6 single Channel</option>
             <option value="2" title="Gr. SumO & Deltang RX">PPM:Thr.,Roll,Pitch,Yaw</option>
@@ -36,15 +36,15 @@
     <div class="wrapper-narrow">
         <div class="groupTitle">General Settings</div>
         <dl class="general_settings">
-            <dt title="the minimum throttle for the motors">Min. Throttle</dt><dd><input type="text" name="minThrottle" data-step="1" data-min="0" data-max="2200" /></dd>
-            <dt title="the maximum throttle for the motors">Max. Throttle</dt><dd><input type="text" name="maxThrottle" data-step="1" data-min="0" data-max="2200" /></dd>
-            <dt title="the throttle value where the PID controller starts acting">Min. Command</dt><dd><input type="text" name="minCommand" data-step="1" data-min="0" data-max="2200" /></dd>
-            <dt title="the ESC's middle command for 3D mode use">Mid. Command</dt><dd><input type="text" name="midCommand" data-step="1" data-min="0" data-max="2200" /></dd>
-	  		<dt class="tricopter">Tri Yaw Mid.</dt><dd class="tricopter"><input type="text" name="TYmid" data-step="1" data-min="0" data-max="2200" /></dd>
-	  		<dt class="tricopter">Tri Yaw Invert</dt><dd  class="tricopter"><input type="checkbox" name="TYinv" /></dd>
+            <dt title="the minimum throttle for the motors">Min. Throttle</dt><dd><input class="unsafe" type="text" name="minThrottle" data-step="1" data-min="0" data-max="2200" /></dd>
+            <dt title="the maximum throttle for the motors">Max. Throttle</dt><dd><input class="unsafe" type="text" name="maxThrottle" data-step="1" data-min="0" data-max="2200" /></dd>
+            <dt title="the throttle value where the PID controller starts acting">Min. Command</dt><dd><input class="unsafe" type="text" name="minCommand" data-step="1" data-min="0" data-max="2200" /></dd>
+            <dt title="the ESC's middle command for 3D mode use">Mid. Command</dt><dd><input class="unsafe" type="text" name="midCommand" data-step="1" data-min="0" data-max="2200" /></dd>
+	  		<dt class="tricopter">Tri Yaw Mid.</dt><dd class="tricopter"><input class="unsafe" type="text" name="TYmid" data-step="1" data-min="0" data-max="2200" /></dd>
+	  		<dt class="tricopter">Tri Yaw Invert</dt><dd  class="tricopter"><input class="unsafe" type="checkbox" name="TYinv" /></dd>
       		<dt><span title="ESC Mode">ESC Mode</span></dt>
 			<dd>
-				<select name="outputMode" id="outputMode">
+				<select class="unsafe" name="outputMode" id="outputMode">
 					<!--<option value="6">Dshot1200</option>-->
 					<option value="5">Dshot 600</option>
 					<option value="4">Dshot 300</option>
@@ -53,15 +53,14 @@
 					<option value="1" selected>OneShot 125</option>
 					<option value="0">PWM</option>
 				</select>
-				<select name="outputModeOld" id="outputModeOld" style="display:none;">
+				<select class="unsafe" name="outputModeOld" id="outputModeOld" style="display:none;">
 					<option value="0">OneShot 42</option>
 					<option value="1" selected>OneShot 125</option>
 					<option value="2">PWM</option>
 				</select>
 			</dd>
-      		<dt>3D Mode</dt><dd><input type="checkbox" disabled="true" name="3dMode"/></dd>
+      		<dt>3D Mode</dt><dd><input class="unsafe" type="checkbox" disabled="true" name="3dMode"/></dd>
         </dl>
-           <input type="hidden" name="secret" id="secret" value=""/>
     </div>
   
     <div class="wrapper-wide">
@@ -178,6 +177,9 @@
         <dl id="aux4"></dl>
         <dl id="aux2"></dl>
         <dl id="aux3"></dl>
+        <dl id="aux5"></dl>
+        <dl id="aux6"></dl>
+        <dl id="aux7"></dl>
     </div>    
     
      <div class="wrapper-narrow">
@@ -204,4 +206,20 @@
     	<a id="save" class="config_button" href="#" title="Save Settings to EEPROM">Save Settings</a>
     </div>
     <div class="clear-both"></div>
+    
+    <div id="activation" style="display:none">
+    	Your KISS Flight Controller is <b>NOT</b> activated.<br/><br/>
+    	Make sure you have a <b>proper internet connection</b> or the activation will fail.<br/><br/>
+    	<br/><br/>
+    </div> 	
+    
+    <div id="upgrade_gui" style="display:none">
+    	Your KISS Firmware version is <b>NEWER</b> than this GUI can handle.<br/><br/>
+    	<br/><br/>
+    </div> 	
+    
+    <div id="downgrade_gui" style="display:none">
+    	Your KISS Firmware version is <b>OLDER</b> than this GUI can handle.<br/><br/>
+    	<br/><br/>
+    </div> 
 </div>

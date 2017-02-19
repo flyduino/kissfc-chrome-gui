@@ -23,21 +23,58 @@ CONTENT.advanced.initialize = function(callback) {
         if (data['ver'] > 102) {
             $('select[name="loggerConfig"]').removeAttr("disabled");
         }
-
-        if (data['loggerConfig'] > 0)
+        
+        if (data['ver'] > 106) {
+            $('#vtx').show();
+            $('input[name="mahAlarm"]').val(data['mahAlarm']);
+            $('input[name="mahAlarm"]').removeAttr("disabled");
+            $('input[name="DB0"]').removeAttr("disabled");
+            $('input[name="DB1"]').removeAttr("disabled");
+            $('input[name="DB2"]').removeAttr("disabled");
+            $('input[name="DB0"]').val(+data['DB'][0]);
+            $('input[name="DB1"]').val(+data['DB'][1]);
+            $('input[name="DB2"]').val(+data['DB'][2]);
+            $('input[name="motorBuzzer"]').removeAttr("disabled");
+            if (data['motorBuzzer']) {
+                $('input[name="motorBuzzer"]').prop('checked', 1);
+            }
+        } else {
+            $("select[name='loggerConfig'] option[value='11']").remove();
+            $('#vtx').hide();
+        }
+   
+        if (data['loggerConfig'] > 0 && data['loggerConfig'] < 11)
             $("#loggerDebug").show();
         else
             $("#loggerDebug").hide();
 
         $('select[name="loggerConfig"]').val(data['loggerConfig']);
+        
+        $('select[name="vtxType"]').val(data['vtxType']);
+        $('input[name="vtxPowerLow"]').val(+data['vtxPowerLow']);
+        $('input[name="vtxPowerHigh"]').val(+data['vtxPowerHigh']);
+        
         $('select[name="loggerConfig"]').on('change', function() {
-            if (+$(this).val() > 0)
-                $("#loggerDebug").show();
-            else
+            if (+$(this).val() < 11) {
+                if (+$(this).val()>0) {
+                    $("#loggerDebug").show();
+                } else {
+                    $("#loggerDebug").hide();
+                }
+                if ($("select[name='vtxType']").val()=="2") {
+                    $("select[name='vtxType']").val("0").trigger("change");
+                }
+            } else {
                 $("#loggerDebug").hide();
+                if (data['ver'] > 106) {
+                   $("select[name='vtxType']").val("2");
+                } 
+            }
             contentChange();
         });
 
+      
+        
         $('input[name="CBO0"]').val(+data['CBO'][0]);
         $('input[name="CBO1"]').val(+data['CBO'][1]);
         $('input[name="CBO2"]').val(+data['CBO'][2]);
@@ -73,6 +110,10 @@ CONTENT.advanced.initialize = function(callback) {
             $("select[name='lapTimerTransponderId']").append("<option value='" + i + "'>" + ((i == 0) ? '--' : i) + "</option>");
         }
 
+        if (data['ver'] > 102) {
+            $("select[name='vtxChannel']").val(data['vtxChannel']);
+        }
+        
         if (data['ver'] > 104) {
             $('input[name="NFE"]').removeAttr("disabled");
             $('input[name="NFCF"]').removeAttr("disabled");
@@ -85,8 +126,7 @@ CONTENT.advanced.initialize = function(callback) {
                 $('input[name="NFCO"]').val(data['NotchFilterCut']);
             }
 
-            if (data['YawCfilter'])
-                $('input[name="YCF"]').val(data['YawCfilter']);
+            if (data['YawCfilter']) $('input[name="YCF"]').val(data['YawCfilter']);
         }
 
         $('input[name^="lapTimer"]').on("change", function() {
@@ -146,7 +186,7 @@ CONTENT.advanced.initialize = function(callback) {
         $('select[name="loggerDebugVariables"]').on("change", function() {
             contentChange();
         });
-
+        
         if (data['ver'] > 103) {
 
             $('input[name="vbatAlarm"]').val(data['vbatAlarm']);
@@ -188,6 +228,12 @@ CONTENT.advanced.initialize = function(callback) {
                 }
             });
             $('select[name="RGBSelector"]').removeAttr("disabled");
+            
+            if (data['vtxType'] == 0) {
+                $(".vtx_opts").hide();
+            } else {
+                $(".vtx_opts").show();
+            }
         }
 
         $('select[name="RGBSelector"]').on('change', function() {
@@ -204,6 +250,28 @@ CONTENT.advanced.initialize = function(callback) {
             });
             contentChange();
         });
+        
+        $('select[name="vtxType"]').on('change', function() {
+            if (this.value == "0") {
+               $(".vtx_opts").hide();
+               if ($("#loggerConfig").val()=="11") {
+                   $("#loggerConfig").val("0").trigger("change");
+               }
+            } else {
+                if (this.value=="2") {
+                    $("#loggerConfig").val("11").trigger("change");
+                } else {
+                    $("#loggerConfig").val("0").trigger("change");
+                }
+                $(".vtx_opts").show();
+            }
+        });
+        
+        if (data.lipoConnected==1) {
+            $(".unsafe").prop('disabled', true).addClass("unsafe_active");
+        } else {
+            $(".unsafe").prop('disabled', false).removeClass("unsafe_active");
+        }
 
         function grabData() {
             data['BoardRotation'] = 0;
@@ -238,6 +306,22 @@ CONTENT.advanced.initialize = function(callback) {
             data['NotchFilterCut'] = $('input[name="NFCO"]').val();
 
             data['YawCfilter'] = $('input[name="YCF"]').val();
+            data['vtxType'] =  parseInt($('select[name="vtxType"]').val());
+            data['vtxPowerLow'] = $('input[name="vtxPowerLow"]').val();
+            data['vtxPowerHigh'] = $('input[name="vtxPowerHigh"]').val();
+            data['vtxChannel'] =  parseInt($('select[name="vtxChannel"]').val());
+            
+            data['mahAlarm'] = parseInt($('input[name="mahAlarm"]').val());
+            
+            data['DB'][0] = parseInt($('input[name="DB0"]').val());
+            data['DB'][1] = parseInt($('input[name="DB1"]').val());
+            data['DB'][2] = parseInt($('input[name="DB2"]').val());
+            
+            if ($('input[name="motorBuzzer"]').prop('checked') ? 1 : 0 == 1) {
+                data['motorBuzzer'] = 1;
+            } else {
+                data['motorBuzzer'] = 0;
+            }
         }
         settingsFilled = 1;
 

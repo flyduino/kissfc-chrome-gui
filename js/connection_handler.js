@@ -48,7 +48,7 @@ $(document).ready(function() {
                         $('a.connect').removeClass('active');
 
                         $('#navigation li:not([data-name="welcome"])').removeClass('unlocked');
-
+                        $('#navigation').show();
                         $("li[data-name='esc_flasher']").show();
 
                         if (GUI.activeContent != 'firmware') {
