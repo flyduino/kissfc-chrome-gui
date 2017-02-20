@@ -40,31 +40,31 @@
                 </div>
                 <div>
                     <label class="mr2">FS. levelmode in seconds</label>
-                    <input type="number" name="failsaveseconds" data-step="1" data-min="0" data-max="20">
+                    <input type="number" name="failsaveseconds" step="1" data-min="0" data-max="20">
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb6">
+                <div class="topic">Presets</div>
+                <select id="prePID" class="select">
+                    <option value="preset" selected="selected">Preset</option>
+                    <option value="user">User</option>
+                </select>         
+                <select id="presetSel" class="select">
+                    <option value="Preset1" selected="selected">custom</option>
+                </select>
+                <select id="userSel" class="select">
+                </select>
+                <span id="shareButton" class="button">Share</span>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <div class="topic">PID &amp; Rates</div>
                 <div class="row">
-                    <div class="col mb2">
-                        <select id="prePID" class="select">
-                            <option value="preset" selected="selected">Preset</option>
-                            <option value="user">User</option>
-                        </select>         
-                        <select id="presetSel" class="select">
-                            <option value="Preset1" selected="selected">custom</option>
-                        </select>
-                        <select id="userSel" class="select">
-                        </select>
-                        <span id="shareButton" class="button">Share</span>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
                     <div class="col-8">
-                        <table class="w-100">
+                        <table cellpadding="0" cellspacing="0">
                             <tr>
                                 <th class="name"></th>
                                 <th class="p pb1 f2">P</th>
@@ -76,46 +76,46 @@
                             </tr>
                             <tr class="roll">
                                 <td class="w2 pr2 f2">Roll</td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.001" data-precision="3" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.001" data-precision="3" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
                             </tr>
                             <tr class="pitch">
                                 <td class="w2 pr2 f2">Pitch</td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.001" data-precision="3" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.001" data-precision="3" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
                             </tr>
                             <tr class="yaw">
                                 <td class="w2 pr1 f2">Yaw</td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.001" data-precision="3" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.001" data-precision="3" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
                             </tr>
                             <tr class="TPA">
                                 <td class="w2 pr1 f2">TPA</td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="0.9" data-step="0.01" data-precision="2" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="0.9" data-step="0.01" data-precision="2" /></td>
-                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="0.9" data-step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="0.9" step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="0.9" step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pr1"><input type="number" data-min="0" data-max="0.9" step="0.01" data-precision="2" /></td>
                             </tr>
                             <tr class="level">
                                 <td class="pb1 pt5 pr2 w2 f2">Level</td>
-                                <td class="pb1 pt5 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                                <td class="pb1 pt5 pr1"><input type="number" data-min="0" data-max="65" data-step="0.001" data-precision="3" /></td>
-                                <td class="pb1 pt5 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pt5 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
+                                <td class="pb1 pt5 pr1"><input type="number" data-min="0" data-max="65" step="0.001" data-precision="3" /></td>
+                                <td class="pb1 pt5 pr1"><input type="number" data-min="0" data-max="65" step="0.01" data-precision="2" /></td>
                             </tr>
                             <tr class="level">
                                 <td class="w2 pr2 f2">Max&deg;</td>
-                                <td class="pr1"><input type="number" data-min="0" data-max="60" data-step="1" data-precision="0" /></td>
+                                <td class="pr1"><input type="number" data-min="0" data-max="60" step="1" data-precision="0" /></td>
                             </tr>
                         </table>
                     </div>
@@ -133,7 +133,7 @@
                             <label title="the minimum throttle for the motors" class="mr1">Min. Throttle</label>
                         </td>
                         <td class="pb2">
-                            <input type="number" name="minThrottle" data-step="1" data-min="0" data-max="2200">
+                            <input type="number" name="minThrottle" step="1" data-min="0" data-max="2200">
                         </td>
                     </tr>
                     <tr>
@@ -141,7 +141,7 @@
                             <label title="the maximum throttle for the motors" class="mr1">Max. Throttle</label>
                         </td>
                         <td class="pb2">
-                            <input type="number" name="maxThrottle" data-step="1" data-min="0" data-max="2200">
+                            <input type="number" name="maxThrottle" step="1" data-min="0" data-max="2200">
                         </td>
                     </tr>
                     <tr>
@@ -149,7 +149,7 @@
                             <label title="the throttle value where the PID controller starts acting" class="mr1">Min. Command</label>
                         </td>
                         <td class="pb2">
-                            <input type="number" name="minCommand" data-step="1" data-min="0" data-max="2200">
+                            <input type="number" name="minCommand" step="1" data-min="0" data-max="2200">
                         </td>
                     </tr>
                     <tr>
@@ -157,12 +157,12 @@
                             <label title="the ESC's middle command for 3D mode use" class="mr1">Mid. Command</label>
                         </td>
                         <td class="pb2">
-                            <input type="number" name="midCommand" data-step="1" data-min="0" data-max="2200">
+                            <input type="number" name="midCommand" step="1" data-min="0" data-max="2200">
                         </td>
                     </tr>
                     <tr class="tricopter">
                         <td class="pb2">
-                            <input type="number" name="TYmid" data-step="1" data-min="0" data-max="2200">
+                            <input type="number" name="TYmid" step="1" data-min="0" data-max="2200">
                         </td>
                         <td class="pb2">
                             <label class="mr1">Tri Yaw Mid.</label>
