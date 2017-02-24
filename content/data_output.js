@@ -118,15 +118,23 @@ CONTENT.data_output.initialize = function (callback) {
         });
 
         $(".motor-test-button").on("click", function() {
-            $(".motor-test-disclaimer").show();
+            $(".content-locker").show();
         });
         
-        $(".warning-button").on("click", function() {
+        $(".modal-button").on("click", function() {
             $(".motor-test-button").hide();
             $(".motor-test").show();
             $(".motor-test-enabled").show();
             $("#motorTestTitle span").first().text('Enable Motors Test ');
-            $(".motor-test-disclaimer").hide();
+            $(".content-locker").hide();
+        });
+
+        $(".modal-cancel").on("click", function(){
+            $(".content-locker").hide();
+        });
+
+        $(document).keyup(function(e) {
+            if (e.keyCode === 27) $('.modal-cancel').click();
         });
 
         self.barResize = function () {

@@ -89,6 +89,34 @@
     text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
+.content-locker {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    width: 32rem;
+    background: var(--dark);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4);
+}
+
 .ws-normal { white-space: normal; }
 .nowrap { white-space: nowrap; }
 .pre { white-space: pre; }
@@ -126,6 +154,10 @@
 .f4 { font-size: 1.25rem; }
 .f5 { font-size: 1.5rem; }
 .f6 { font-size: 2rem; }
+
+.lh-solid { line-height: 1; }
+.lh-title { line-height: 1.25; }
+.lh-copy  { line-height: 1.5; }
 
 .i         { font-style: italic; }
 .fs-normal { font-style: normal; }
