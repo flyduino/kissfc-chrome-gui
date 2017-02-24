@@ -209,7 +209,7 @@ input[type="number"] {
     position: relative;
     width: 100%;
     min-width: 2rem;
-    max-width: 7rem;
+    max-width: 6rem;
     text-align: right;
     padding: 0.5rem 1.5rem 0.5rem 0.5rem;
 }
@@ -285,4 +285,25 @@ input[type="radio"]:checked  + label::before {
     overflow: hidden;
     border-radius: 2px;
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.4);
+}
+
+.chart-container {
+    width: 50%;
+    display: inline-block;
+    position: relative;
+}
+
+.chart-container:after {
+    padding-top: 100%;
+    display: block;
+    content: "";
+}
+
+.chart-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: purple;
 }
