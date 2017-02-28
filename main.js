@@ -1,7 +1,7 @@
 'use strict';
 
-var MIN_CONFIG_VERSION = 107; // this gui can manage versions in this range
-var MAX_CONFIG_VERSION = 107;
+var MIN_CONFIG_VERSION = 108; // this gui can manage versions in this range
+var MAX_CONFIG_VERSION = 108;
 
 $(document).ready(function() {
     PortHandler.initialize();

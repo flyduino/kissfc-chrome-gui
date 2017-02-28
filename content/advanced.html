@@ -265,22 +265,31 @@
 					</dd>
 				</dl>
 			</div>
+
 		<div id="Notch" class="wrapper-full">
-			<div class="groupTitle">Notch Filter</div>
-			<dl class="general-settings">
-				<dt style="width:180px"><input disabled="true" type="checkbox" name="NFE" /> &nbsp;Use Notch Filter</dt>
-				<dd>
-					<dt style="width:180px;">Center Frequency: (Hz)&nbsp;</dt>
-					<input disabled="true" type="text" name="NFCF" data-step="1"
-						data-min="0" data-max="1000" data-precision="0" value="200" />
-				</dd>
-				<dd>
-					<dt style="width:180px;">Cutoff Frequency: (Hz)&nbsp;</dt>
-					<input disabled="true" type="text" name="NFCO" data-step="1"
-						data-min="0" data-max="1000" data-precision="0" value="100" />
-				</dd>
-			</dl>
+		<table style="border: 0px;">
+			<tr>
+				<td width="176px">&nbsp;</td>
+				<td width="60px">Roll &nbsp; &nbsp;<input type="checkbox" name="NFE0"  disabled="true"/></td>
+				<td width="60px">Pitch &nbsp; &nbsp;<input type="checkbox" name="NFE1"  disabled="true"/></td>
+			</tr>
+			<tr>
+				<td>Center Frequency: (Hz)</td>
+				<td><input disabled="true" type="text" name="NFCF0" data-step="1"
+						data-min="0" data-max="490" data-precision="0" value="200" size="3"/></td>
+				<td><input disabled="true" type="text" name="NFCF1" data-step="1"
+						data-min="0" data-max="490" data-precision="0" value="200" size="3"/></td>
+			</tr>
+			<tr>
+				<td>Cutoff Frequency: (Hz)</td>
+				<td><input disabled="true" type="text" name="NFCO0" data-step="1"
+						data-min="0" data-max="490" data-precision="0" value="100" size="3"/></td>
+				<td><input disabled="true" type="text" name="NFCO1" data-step="1"
+						data-min="0" data-max="490" data-precision="0" value="100" size="3"/></td>
+			</tr>
+		</table>
 		</div>
+		
 		<div id="yawCF" class="wrapper-full">
 			<div class="groupTitle">Yaw Filter</div>
 			<dl class="general-settings">

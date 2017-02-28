@@ -307,6 +307,9 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.CBO = [];
                 obj.AUX = [];
                 obj.DB = [];
+                obj.NFE = [];
+                obj.NFCF = [];
+                obj.NFCO = [];
             }
 
             obj.G_P[0] = data.getUint16(0, 0) / 1000;
@@ -435,27 +438,32 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.loggerDebugVariables =  data.getUint8(137);
             } 
             if (obj.ver > 104){
-                obj.NotchFilterEnable = data.getUint8(138);
-                obj.NotchFilterCenter = data.getUint16(139, 0);
-                obj.NotchFilterCut = data.getUint16(141, 0);
-                obj.YawCfilter = data.getUint8(143);
+                obj.NFE[0] = data.getUint8(138);
+                obj.NFCF[0] = data.getUint16(139, 0);
+                obj.NFCO[0] = data.getUint16(141, 0);
+                
+                obj.NFE[1] = data.getUint8(143);
+                obj.NFCF[1] = data.getUint16(144, 0);
+                obj.NFCO[1] = data.getUint16(146, 0);
+                
+                obj.YawCfilter = data.getUint8(148);
             }
             if (obj.ver > 106){
-                obj.vtxType = data.getUint8(144);
-                obj.vtxPowerLow = data.getUint16(145, 0);
-                obj.vtxPowerHigh = data.getUint16(147, 0);
-                obj.AUX[5] = data.getUint8(149);
-                obj.AUX[6] = data.getUint8(150);
-                obj.AUX[7] = data.getUint8(151);
+                obj.vtxType = data.getUint8(149);
+                obj.vtxPowerLow = data.getUint16(150, 0);
+                obj.vtxPowerHigh = data.getUint16(152, 0);
+                obj.AUX[5] = data.getUint8(154);
+                obj.AUX[6] = data.getUint8(155);
+                obj.AUX[7] = data.getUint8(156);
                 
-                obj.mahAlarm = data.getUint16(152, 0);
-                obj.lipoConnected = data.getUint8(154, 0);
+                obj.mahAlarm = data.getUint16(157, 0);
+                obj.lipoConnected = data.getUint8(159, 0);
                 
-                obj.DB[0] = data.getUint8(155, 0);
-                obj.DB[1] = data.getUint8(156, 0);
-                obj.DB[2] = data.getUint8(157, 0);
+                obj.DB[0] = data.getUint8(160, 0);
+                obj.DB[1] = data.getUint8(161, 0);
+                obj.DB[2] = data.getUint8(162, 0);
                 
-                obj.motorBuzzer = data.getUint8(158, 0);
+                obj.motorBuzzer = data.getUint8(163, 0);
             }
             
             kissProtocol.upgradeTo104(obj);
@@ -658,30 +666,35 @@ kissProtocol.preparePacket = function (code, obj) {
                 blen=136;
             }
             if (obj.ver > 104) {
-                data.setUint8(128, obj.NotchFilterEnable);
-                data.setUint16(129, obj.NotchFilterCenter,0);
-                data.setUint16(131, obj.NotchFilterCut,0);
-                data.setUint8(133, obj.YawCfilter);
+                data.setUint8(128, obj.NFE[0]);
+                data.setUint16(129, obj.NFCF[0],0);
+                data.setUint16(131, obj.NFCO[0],0);
+                
+                data.setUint8(133, obj.NFE[1]);
+                data.setUint16(134, obj.NFCF[1],0);
+                data.setUint16(136, obj.NFCO[1],0);
+                
+                data.setUint8(138, obj.YawCfilter);
             
-                blen=142;
+                blen=147;
             }
             if (obj.ver > 106) {
-                data.setUint8(134, obj.vtxType);
-                data.setUint16(135, obj.vtxPowerLow,0);
-                data.setUint16(137, obj.vtxPowerHigh,0);
-                data.setUint8(139, obj.AUX[5]);
-                data.setUint8(140, obj.AUX[6]);
-                data.setUint8(141, obj.AUX[7]);
+                data.setUint8(139, obj.vtxType);
+                data.setUint16(140, obj.vtxPowerLow,0);
+                data.setUint16(142, obj.vtxPowerHigh,0);
+                data.setUint8(144, obj.AUX[5]);
+                data.setUint8(145, obj.AUX[6]);
+                data.setUint8(146, obj.AUX[7]);
                 
-                data.setUint16(142, obj.mahAlarm, 0);
+                data.setUint16(147, obj.mahAlarm, 0);
                 
-                data.setUint8(144, obj.DB[0]);
-                data.setUint8(145, obj.DB[1]);
-                data.setUint8(146, obj.DB[2]);
+                data.setUint8(149, obj.DB[0]);
+                data.setUint8(150, obj.DB[1]);
+                data.setUint8(151, obj.DB[2]);
                 
-                data.setUint8(147, obj.motorBuzzer);
+                data.setUint8(152, obj.motorBuzzer);
                 
-                blen=156;
+                blen=161;
             }
             break;
             
@@ -766,6 +779,8 @@ kissProtocol.upgradeTo104 = function(tmp) {
 }
 
 kissProtocol.upgradeTo104 = function(tmp) {
+    console.log("Upgrading config:");
+    console.log(tmp);
     if (tmp.ver < 104) {
         console.log('Data version: ' + tmp.ver + ' upgrading to 104');
         var bo = +tmp['BoardRotation'];
@@ -793,6 +808,15 @@ kissProtocol.upgradeTo104 = function(tmp) {
             if (c==3)  tmp['AUX'][4]=(i * 16) + 5;
         }
     }
+    if (tmp.ver<108 && tmp.ver>104) {
+        console.log('Data version: ' + tmp.ver + ' upgrading to 108');    
+        tmp['NFE'][0]=+tmp['NotchFilterEnable'];
+        tmp['NFE'][1]=+tmp['NotchFilterEnable'];
+        tmp['NFCF'][0]=tmp['NotchFilterCenter'];
+        tmp['NFCF'][1]=tmp['NotchFilterCenter'];
+        tmp['NFCO'][0]=tmp['NotchFilterCut'];
+        tmp['NFCO'][1]=tmp['NotchFilterCut'];
+    }    
 }
 
 kissProtocol.downgradeFrom104 = function(tmp) {

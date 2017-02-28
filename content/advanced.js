@@ -115,16 +115,20 @@ CONTENT.advanced.initialize = function(callback) {
         }
         
         if (data['ver'] > 104) {
-            $('input[name="NFE"]').removeAttr("disabled");
-            $('input[name="NFCF"]').removeAttr("disabled");
-            $('input[name="NFCO"]').removeAttr("disabled");
+            $('input[name="NFE0"]').removeAttr("disabled");
+            $('input[name="NFCF0"]').removeAttr("disabled");
+            $('input[name="NFCO0"]').removeAttr("disabled");
+            $('input[name="NFE1"]').removeAttr("disabled");
+            $('input[name="NFCF1"]').removeAttr("disabled");
+            $('input[name="NFCO1"]').removeAttr("disabled");
             $('input[name="YCF"]').removeAttr("disabled");
 
-            if (data['NotchFilterEnable']) {
-                $('input[name="NFE"]').prop('checked', 1);
-                $('input[name="NFCF"]').val(data['NotchFilterCenter']);
-                $('input[name="NFCO"]').val(data['NotchFilterCut']);
-            }
+            if (data['NFE'][0]==1)  $('input[name="NFE0"]').prop('checked', 1);
+            $('input[name="NFCF0"]').val(data['NFCF'][0]);
+            $('input[name="NFCO0"]').val(data['NFCO'][0]);
+            if (data['NFE'][1]==1) $('input[name="NFE1"]').prop('checked', 1);
+            $('input[name="NFCF1"]').val(data['NFCF'][1]);
+            $('input[name="NFCO1"]').val(data['NFCO'][1]);
 
             if (data['YawCfilter']) $('input[name="YCF"]').val(data['YawCfilter']);
         }
@@ -297,13 +301,12 @@ CONTENT.advanced.initialize = function(callback) {
 
             data['vbatAlarm'] = parseFloat($('input[name="vbatAlarm"]').val());
 
-            if ($('input[name="NFE"]').prop('checked') ? 1 : 0 == 1) {
-                data['NotchFilterEnable'] = 1;
-            } else {
-                data['NotchFilterEnable'] = 0;
-            }
-            data['NotchFilterCenter'] = $('input[name="NFCF"]').val();
-            data['NotchFilterCut'] = $('input[name="NFCO"]').val();
+            data['NFE'][0] = $('input[name="NFE0"]').prop('checked') ? 1 : 0;
+            data['NFCF'][0] = $('input[name="NFCF0"]').val();
+            data['NFCO'][0] = $('input[name="NFCO0"]').val();
+            data['NFE'][1] = $('input[name="NFE1"]').prop('checked') ? 1 : 0;
+            data['NFCF'][1] = $('input[name="NFCF1"]').val();
+            data['NFCO'][1] = $('input[name="NFCO1"]').val();
 
             data['YawCfilter'] = $('input[name="YCF"]').val();
             data['vtxType'] =  parseInt($('select[name="vtxType"]').val());
