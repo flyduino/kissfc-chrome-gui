@@ -127,7 +127,9 @@
                 var text2 = Math.abs(Math.round(rcInputRotation * 100 / 360)) / 100 + " " + data.message + "/sec";
                 context.fillText(text2, width - context.measureText(text2).width - 2, height - 2);
                 context.fillText(data.name, 2, 12);
-                
+                var maxRotationText = "max " + maxRotation + " °/sec";
+                context.fillText(maxRotationText, 2, 24);
+
                 if (Math.abs(maxRotation)>=2000) {
                 	context.fillStyle = "rgba(80,0,0,0.8)";
                     context.fillRect(0, 0, width, height);
