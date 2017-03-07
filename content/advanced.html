@@ -4,26 +4,27 @@
             <div class="col mb6">
                 <div class="topic">Custom FC Orientation</div>
                 <div class="mb4">
-                    <label for="cbo">Use custom FC orientation</label>
-                    <input type="checkbox" disabled="true" name="CBO" id="cbo">
+                    <label>Use custom FC orientation</label>
+                    <input type="checkbox" disabled name="CBO" id="cbo" disabled>
+                    <label for="cbo"></label>
                 </div>
-                <table>
+                <table cellpadding="0" cellspacing="0">
                     <tr>
-                        <td>&nbsp;</td>
+                        <td></td>
                         <td class="pb1 f2">Roll</td>
                         <td class="pb1 f2">Pitch</td>
                         <td class="pb1 f2">Yaw</td>
                     </tr>
                     <tr>
                         <td class="pr2 f2">FC orientation &deg;</td>
-                        <td>
-                            <input disabled="true" type="text" size="3" name="CBO0" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0" />
+                        <td class="pb1 pr1">
+                            <input disabled type="number" size="3" name="CBO0" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0">
                         </td>
-                        <td>
-                            <input disabled="true" type="text" size="3" name="CBO1" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0" />
+                        <td class="pb1 pr1">
+                            <input disabled type="number" size="3" name="CBO1" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0">
                         </td>
-                        <td>
-                            <input disabled="true" type="text" size="3" name="CBO2" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0" />
+                        <td class="pb1 pr1">
+                            <input disabled type="number" size="3" name="CBO2" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0">
                         </td>
                     </tr>
                 </table>
@@ -86,7 +87,7 @@
             <div class="col mb6">
                 <div class="topic">Lipo alarm</div>
                 <label title="low battery alarm" style="width:180px">Alarm when voltage is less then </label>
-                <input disabled="true" type="text" name="vbatAlarm" data-step="0.1" data-min="0" data-max="26" data-precision="1" value="0.0" />
+                <input type="number" name="vbatAlarm" data-step="0.1" data-min="0" data-max="26" data-precision="1" value="0.0">
                 <input type="hidden" name="vbatAlarm" id="vbatAlarm" value="" />
             </div>
         </div>
@@ -123,7 +124,7 @@
                             <label class="mr1">Center Frequency: (Hz)</label>
                         </td>
                         <td class="pb2">
-                            <input disabled="true" type="text" name="NFCF" data-step="1" data-min="0" data-max="1000" data-precision="0" value="200" />
+                            <input disabled type="number" name="NFCF" data-step="1" data-min="0" data-max="1000" data-precision="0" value="200">
                         </td>
                     </tr>
                     <tr>
@@ -131,7 +132,7 @@
                             <label>Cutoff Frequency: (Hz)</label>
                         </td>
                         <td>
-                            <input disabled="true" type="text" name="NFCO" data-step="1" data-min="0" data-max="1000" data-precision="0" value="100" />
+                            <input disabled type="number" name="NFCO" data-step="1" data-min="0" data-max="1000" data-precision="0" value="100">
                         </td>
                     </tr>
                 </table>
@@ -141,7 +142,7 @@
             <div class="col mb6">
                 <div class="topic">Yaw Filter</div>
                 <label>Yaw Filter strength</label>
-                <input disabled="true" type="text" name="YCF" data-step="1" data-min="0" data-max="97" data-precision="0" value="92" />
+                <input disabled type="number" name="YCF" data-step="1" data-min="0" data-max="97" data-precision="0" value="92">
             </div>
         </div>
     </div>
