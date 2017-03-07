@@ -69,10 +69,20 @@ a:hover {
     border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
+.left-title h1 {
+    display: none;
+}
+
+.left-title .gui-version {
+    width: 2.5rem;
+    margin-left: 1rem;
+    text-align: center;
+}
+
 .left-nav {
     position: absolute;
     z-index: 9999;
-    top: 5rem;
+    top: 6rem;
     left: 1rem;
 }
 
@@ -147,6 +157,15 @@ a:hover {
     .layout-sidebar {
         min-width: 16rem;
         max-width: 16rem;
+    }
+
+    .left-title h1 {
+        display: inline-block;
+    }
+
+    .left-title .gui-version {
+        margin: 0;
+        width: auto;
     }
 
     .left-nav li {

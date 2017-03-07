@@ -151,10 +151,7 @@ CONTENT.data_output.initialize = function (callback) {
             }
         };
 
-        $(window).on('resize', self.barResize).resize(); // trigger so labels
-                                                            // get correctly
-                                                            // aligned on
-                                                            // creation
+        $(window).on('resize', self.barResize).resize();
 
         $('a.calibrateAccelerometer').click(function () {
             var config = kissProtocol.data[kissProtocol.GET_SETTINGS];

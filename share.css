@@ -37,7 +37,7 @@
 }
 
 .button.disabled {
-    background: var(--dark);
+    opacity: 0.6;
     cursor: default;
 }
 
@@ -56,7 +56,7 @@
     color: var(--white);
     font-weight: bold;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
     margin-bottom: 1rem;
     min-width: 100%;
     text-transform: uppercase;
@@ -102,8 +102,6 @@
     text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
-/* Modal */
-
 .content-locker {
     display: none;
     position: fixed;
@@ -139,7 +137,7 @@
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.4);
 }
 
-/* Using Tachyons classes http://tachyons.io/ */
+/* Using Tachyons classes http://tachyons.io/ or https://github.com/tachyons-css/tachyons/ */
 
 .ws-normal { white-space: normal; }
 .nowrap { white-space: nowrap; }
