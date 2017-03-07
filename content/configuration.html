@@ -17,50 +17,6 @@
         </div>
         <div class="row">
             <div class="col mb6">
-                <div class="topic">Receiver</div>
-                <div class="mb4">
-                    <select class="rxType mr2">
-                        <option value="0" style="display:none">Autodetect</option>
-                        <option value="1">4-6 single Channel</option>
-                        <option value="2" title="Gr. SumO & Deltang RX">PPM:Thr.,Roll,Pitch,Yaw</option>
-                        <option value="3" title="OrangeRX">PPM:Pitch,Thr.,Roll,Yaw</option>
-                        <option value="4">PPM:Thr.,Pitch,Yaw,Roll</option>
-                        <option value="5">PPM:Roll,Pitch,Yaw,Thr.</option>
-                        <option id="ppmadd1" value="12" style="display:none;">PPM:Pitch,Roll,Thr.,Yaw</option>
-                        <option id="ppmadd2" value="13" style="display:none;">PPM:Roll,Pitch,Thr.,Yaw</option>
-                        <option value="6">Spekt. Sat. DSM2</option>
-                        <option value="7">Spekt. Sat. DSMX</option>
-                        <option value="8">FrSky S-BUS</option>
-                        <option value="15">FrSky S-BUS (not inverted)</option>
-                        <option value="11">Futaba S-BUS</option>
-                        <option value="9">Gr. SUMD</option>
-                        <option value="10">Jeti EX Bus</option>
-                        <option id="mpxSRXL" value="14" style="display:none;">Multiplex SRXL</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="mr2">FS. levelmode in seconds</label>
-                    <input type="number" name="failsaveseconds" step="1" data-min="0" data-max="20">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col mb6">
-                <div class="topic">Presets</div>
-                <select id="prePID" class="select">
-                    <option value="preset" selected="selected">Preset</option>
-                    <option value="user">User</option>
-                </select>         
-                <select id="presetSel" class="select">
-                    <option value="Preset1" selected="selected">custom</option>
-                </select>
-                <select id="userSel" class="select dn">
-                </select>
-                <span id="shareButton" class="button">Share</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
                 <div class="topic">PID &amp; Rates</div>
                 <div class="row">
                     <div class="col-8">
@@ -122,12 +78,45 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="topic">Firmware</div>
+            <span id="version"></span>S/N: <span id="SN"></span>
+        </div>
     </div>
     <div class="col-3">
         <div class="row">
             <div class="col mb6">
+                <div class="topic">Receiver</div>
+                <div class="mb4">
+                    <select class="rxType mr2">
+                        <option value="0" style="display:none">Autodetect</option>
+                        <option value="1">4-6 single Channel</option>
+                        <option value="2" title="Gr. SumO & Deltang RX">PPM:Thr.,Roll,Pitch,Yaw</option>
+                        <option value="3" title="OrangeRX">PPM:Pitch,Thr.,Roll,Yaw</option>
+                        <option value="4">PPM:Thr.,Pitch,Yaw,Roll</option>
+                        <option value="5">PPM:Roll,Pitch,Yaw,Thr.</option>
+                        <option id="ppmadd1" value="12" style="display:none;">PPM:Pitch,Roll,Thr.,Yaw</option>
+                        <option id="ppmadd2" value="13" style="display:none;">PPM:Roll,Pitch,Thr.,Yaw</option>
+                        <option value="6">Spekt. Sat. DSM2</option>
+                        <option value="7">Spekt. Sat. DSMX</option>
+                        <option value="8">FrSky S-BUS</option>
+                        <option value="15">FrSky S-BUS (not inverted)</option>
+                        <option value="11">Futaba S-BUS</option>
+                        <option value="9">Gr. SUMD</option>
+                        <option value="10">Jeti EX Bus</option>
+                        <option id="mpxSRXL" value="14" style="display:none;">Multiplex SRXL</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="mr2">FS. levelmode in seconds</label>
+                    <input type="number" name="failsaveseconds" step="1" data-min="0" data-max="20">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb6">
                 <div class="topic">General Settings</div>
-                <table>
+                <table cellpadding="0" cellspacing="0">
                     <tr>
                         <td class="pb2">
                             <label title="the minimum throttle for the motors" class="mr1">Min. Throttle</label>
@@ -146,7 +135,7 @@
                     </tr>
                     <tr>
                         <td class="pb2">
-                            <label title="the throttle value where the PID controller starts acting" class="mr1">Min. Command</label>
+                            <label title="the throttle value where the PID controller starts acting" class="mr2">Min. Command</label>
                         </td>
                         <td class="pb2">
                             <input type="number" name="minCommand" step="1" data-min="0" data-max="2200">
@@ -154,7 +143,7 @@
                     </tr>
                     <tr>
                         <td class="pb2">
-                            <label title="the ESC's middle command for 3D mode use" class="mr1">Mid. Command</label>
+                            <label title="the ESC's middle command for 3D mode use" class="mr2">Mid. Command</label>
                         </td>
                         <td class="pb2">
                             <input type="number" name="midCommand" step="1" data-min="0" data-max="2200">
@@ -202,8 +191,8 @@
                             <label>3D Mode</label>
                         </td>
                         <td class="pb2">
-                            <label for="3dMode">d</label>
-                            <input type="checkbox" disabled="true" name="3dMode" id="3dMode">
+                            <input type="checkbox" name="3dMode" id="3dMode">
+                            <label for="3dMode"></label>
                         </td>
                     </tr>
                 </table>
@@ -236,9 +225,6 @@
                     <option value="6">Very Low</option>
                 </select>
             </div>
-        </div>
-        <div class="row">
-            <div class="general_settings" style="margin-top:20px;">Firmware Version: <span  id="version"></span> | S/N: <span id="SN"></span><br /><br /></div>
         </div>
     </div>
 </div>
