@@ -280,11 +280,6 @@ input[type="radio"]:checked  + label::before {
     background:black;
 }
 
-#graph {
-    background: var(--less-dark);
-    overflow: hidden;
-    border-radius: 2px;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.4);
 }
 
 .chart-container {
