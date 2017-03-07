@@ -1,11 +1,11 @@
 :root {
-    --much-dark: #242425;
-    --still-dark: #343435;
-    --dark: #424343;
-    --less-dark: #5E5E5F;
+    --much-dark: #2B2B2B;
+    --still-dark: #3D3D3D;
+    --dark: #4E4E4E;
+    --less-dark: #5F5F5F;
     --much-gray: #929394;
     --gray: #D8D9DB;
-    --near-white: #F4F4F5;
+    --near-white: #F4F4F4;
     --white: #fff;
 
     --red: #EF3333;
@@ -35,6 +35,15 @@
 .button.disabled {
     background: var(--dark);
     cursor: default;
+}
+
+.pile {
+    background: var(--much-gray);
+    padding: 0.125rem 0.25rem;
+    font-weight: bold;
+    font-size: .75rem;
+    color: var(--much-dark);
+    border-radius: 4px;
 }
 
 .topic {
