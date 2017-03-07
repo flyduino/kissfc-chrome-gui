@@ -9,8 +9,8 @@
             var data = pluginData(self);
             var id = self.attr("id");
             var width = self.width();
-            var height = self.height();
-            var c = $('<canvas>').attr('id', id + "_canvas").attr("width", width).attr("height", height);
+            var height = "200px";
+            var c = $('<canvas>').attr('id', id + "_canvas").attr("class", "graph").attr("width", width).attr("height", height);
             c.appendTo(self);
         },
         calculateTPA: function(input, breakpoints) {
@@ -101,7 +101,7 @@
             var id = self.attr("id");
             var canvas = document.getElementById(id + "_canvas");
             var context = canvas.getContext('2d');
-            context.fillStyle = "rgb(244, 244, 244)";
+            context.fillStyle = "rgb(95, 95, 95)";
             var width = canvas.width,
                 height = canvas.height,
                 hw = width >> 1,
@@ -113,7 +113,7 @@
                 
             context.fillRect(0, 0, width, height);
             
-            context.strokeStyle = "rgb(80, 80, 80)";
+            context.strokeStyle = "rgb(244, 244, 244)";
             
             context.beginPath();
             context.moveTo(padding, height - padding);
@@ -143,7 +143,7 @@
 
            // chart goes here
             context.beginPath();
-            context.strokeStyle = "rgb(131, 10, 10)";
+            context.strokeStyle = "rgb(238, 51, 51)";
             i=0;
             x=0;
             while(x<(width-padding))  {
@@ -168,12 +168,12 @@
                 context.moveTo(x, y);
                 context.lineTo(x, height-padding);
                 context.stroke();
-                context.fillStyle = "rgb(131, 10, 10)";
+                context.fillStyle = "rgb(238, 51, 51)";
                 context.fillRect(x - 2, y - 2, 4, 4);
                 var text1 = (influence *100).toFixed(0) + "%";
                 var tw = context.measureText(text1).width;
                 context.font = "12px sans-serif ";
-                context.fillStyle = "rgb(71, 71, 71)";
+                context.fillStyle = "rgb(255, 255, 255)";
                 var tx = x - tw/2;
                 var ty = y - 4;
                 if (tx<padding) tx=padding+4;
