@@ -1,3 +1,5 @@
+/* Color palette */
+
 :root {
     --much-dark: #2B2B2B;
     --still-dark: #3D3D3D;
@@ -10,6 +12,8 @@
 
     --red: #EF3333;
 }
+
+/* Shared components */
 
 .button {
     display: inline-block;
@@ -98,6 +102,8 @@
     text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
+/* Modal */
+
 .content-locker {
     display: none;
     position: fixed;
@@ -132,6 +138,8 @@
     border-radius: 2px;
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.4);
 }
+
+/* Using Tachyons classes http://tachyons.io/ */
 
 .ws-normal { white-space: normal; }
 .nowrap { white-space: nowrap; }
@@ -429,6 +437,8 @@
     margin-left: var(--spacing-extra-extra-extra-large);
     margin-right: var(--spacing-extra-extra-extra-large);
 }
+
+/* Simple flex grid */
 
 .container {
     max-width: 90rem;
