@@ -71,7 +71,7 @@ CONTENT.rates.initialize = function(callback) {
         var receiverNames = ['Roll', 'Pitch', 'Yaw']
         var chartDivSelectors = ['#rates_chart_roll', '#rates_chart_pitch', '#rates_chart_yaw']
         var receiverChannels = [1, 2, 3];
-        var receiverContainer = $('.rates .receiver .bars');
+        var receiverContainer = $('.receiver-bars');
         var receiverFillArray = [];
         var receiverLabelArray = [];
         self.ESCTelemetry = 0;
@@ -84,17 +84,15 @@ CONTENT.rates.initialize = function(callback) {
             var name = receiverNames[i];
 
             receiverContainer.append('\
-                <ul>\
-                    <li class="name">' + name + '</li>\
-                    <li class="meter">\
+                <tr>\
+                    <td class="name pr2 pb1 f2 nowrap">' + name + '</td>\
+                    <td class="meter w-100 pb1">\
                         <div class="meter-bar">\
+                            <div class="fill"></div>\
                             <div class="label"></div>\
-                            <div class="fill">\
-                                <div class="label"></div>\
-                            </div>\
                         </div>\
-                    </li>\
-                </ul>\
+                    </td>\
+                </tr>\
             ');
         }
 
@@ -106,20 +104,20 @@ CONTENT.rates.initialize = function(callback) {
             receiverLabelArray.push($('.label', this));
         });
 
-        self.barResize = function() {
-            var containerWidth = $('.meter:first', receiverContainer).width(),
-                labelWidth = $('.meter .label:first', receiverContainer).width(),
-                margin = (containerWidth / 2) - (labelWidth / 2);
+        // self.barResize = function() {
+        //     var containerWidth = $('.meter:first', receiverContainer).width(),
+        //         labelWidth = $('.meter .label:first', receiverContainer).width(),
+        //         margin = (containerWidth / 2) - (labelWidth / 2);
 
-            for (var i = 0; i < receiverLabelArray.length; i++) {
-                receiverLabelArray[i].css('margin-left', margin);
-            }
-        };
+        //     for (var i = 0; i < receiverLabelArray.length; i++) {
+        //         receiverLabelArray[i].css('margin-left', margin);
+        //     }
+        // };
 
-        $(window).on('resize', self.barResize).resize(); // trigger so labels
-                                                            // get correctly
-                                                            // aligned on
-                                                            // creation
+        // $(window).on('resize', self.barResize).resize(); // trigger so labels
+        //                                                     // get correctly
+        //                                                     // aligned on
+        //                                                     // creation
 
         var legendItems = $('dl.legend dd');
         var otherItems = $('dl.otherValues dd')
@@ -250,7 +248,8 @@ CONTENT.rates.initialize = function(callback) {
 };
 
 
-CONTENT.rates.resizeCanvas = function() {}
+CONTENT.rates.resizeCanvas = function() {
+}
 
 CONTENT.rates.cleanup = function(callback) {
     $(window).off('resize', this.barResize);

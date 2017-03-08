@@ -66,7 +66,7 @@ CONTENT.tpa.initialize = function(callback) {
             for (var a = 0; a<3; a++) {
                 var pid = parseFloat($('tr.' + rowNames[x] + ' input').eq(a).val());
                 pid = pid*(1-tpa[a]*influence)*vPIDc;
-                $('tr.' + rowNames[x] + ' td').eq(4+a).children().first().text(pid.toFixed(precision[a]));
+                $('tr.' + rowNames[x] + ' td').eq(4+a).children().first().val(pid.toFixed(precision[a]));
             }
         }
     }
@@ -75,7 +75,7 @@ CONTENT.tpa.initialize = function(callback) {
         // generate receiver bars
         var receiverNames = ['Throttle']
         var receiverChannels = [0];
-        var receiverContainer = $('.tpa .receiver .bars');
+        var receiverContainer = $('.receiver-bars');
         var receiverFillArray = [];
         var receiverLabelArray = [];
         self.ESCTelemetry = 0;
@@ -88,17 +88,15 @@ CONTENT.tpa.initialize = function(callback) {
             var name = receiverNames[i];
 
             receiverContainer.append('\
-                <ul>\
-                    <li class="name">' + name + '</li>\
-                    <li class="meter">\
+                <tr>\
+                    <td class="name pr2 pb1 f2 nowrap">' + name + '</td>\
+                    <td class="meter w-100 pb1">\
                         <div class="meter-bar">\
+                            <div class="fill"></div>\
                             <div class="label"></div>\
-                            <div class="fill">\
-                                <div class="label"></div>\
-                            </div>\
                         </div>\
-                    </li>\
-                </ul>\
+                    </td>\
+                </tr>\
             ');
         }
 
@@ -128,9 +126,6 @@ CONTENT.tpa.initialize = function(callback) {
             'min': 800,
             'max': 2200
         };
-
-
-       
 
         function grabData() {
              // pid and rates

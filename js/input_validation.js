@@ -1,110 +1,7 @@
 'use strict';
 
 function validateBounds(selector) {
-    var inputs = $(selector).not('.validation').not('.no_validation');
-
-    // add spinners
-    var spinners = [];
-
-    inputs.each(function() {
-        var input = $(this);
-
-        input.addClass('validation').css({
-            'width' : input.width() - 20,
-            'padding-right' : parseInt(input.css('padding-right')) + 20
-        });
-
-        var wrapper = $('<div class="validationWrapper"></div>').css({
-            'position' : 'relative',
-            'float' : 'left'
-        });
-        input.wrap(wrapper);
-
-        var spinner = $('<div class="inputSpinners"><div></div><div></div></div>').css({
-            'left' : (input.outerWidth() - parseInt(input.css('border-left-width'))) - 15
-        });
-        input.parent().append(spinner);
-        spinners.push(spinner);
-    });
-
-    var interval;
-
-    function stepUp(trigger) {
-        var element = $(trigger), disabled = element.is(':disabled'), val = parseFloat(element.val()), max = parseFloat(element.attr('data-max')), step = parseFloat(element.attr('data-step')), precision = parseInt(element.attr('data-precision'));
-
-        if (isNaN(val) || disabled)
-            return;
-        if (isNaN(precision))
-            precision = 0;
-
-        var newVal = val + ((!isNaN(step)) ? step : 1);
-
-        if (!isNaN(max)) {
-            if (max >= newVal) {
-            } else {
-                newVal = max;
-            }
-        }
-
-        element.val(newVal.toFixed(precision)).trigger('input');
-    }
-
-    function stepDown(trigger) {
-        var element = $(trigger), disabled = element.is(':disabled'), val = parseFloat(element.val()), min = parseFloat(element.attr('data-min')), step = parseFloat(element.attr('data-step')), precision = parseInt(element.attr('data-precision'));
-
-        if (isNaN(val) || disabled)
-            return;
-        if (isNaN(precision))
-            precision = 0;
-
-        var newVal = val - ((!isNaN(step)) ? step : 1);
-
-        if (!isNaN(min)) {
-            if (min <= newVal) {
-            } else {
-                newVal = min;
-            }
-        }
-
-        element.val(newVal.toFixed(precision)).trigger('input');
-    }
-
-    function spinUp(event) {
-        var trigger = $(this).parent().prev();
-
-        if (event.which == 1) { // left click
-            interval = setInterval(function() {
-                stepUp(trigger);
-            }, 200);
-
-            // single click fires here
-            stepUp(trigger);
-        }
-    }
-
-    function spinDown(event) {
-        var trigger = $(this).parent().prev();
-
-        if (event.which == 1) { // left click
-            interval = setInterval(function() {
-                stepDown(trigger);
-            }, 200);
-
-            // single click fires here
-            stepDown(trigger);
-        }
-    }
-
-    function spinStop() {
-        clearInterval(interval);
-    }
-
-    spinners.forEach(function(spinner) {
-        $('div:eq(0)', spinner).on('mousedown', spinUp);
-        $('div:eq(0)', spinner).on('mouseup', spinStop);
-        $('div:eq(1)', spinner).on('mousedown', spinDown);
-        $('div:eq(1)', spinner).on('mouseup', spinStop);
-    });
+    var inputs = $(selector);
 
     // regular events
     inputs.on('keydown', function(e) {
@@ -126,10 +23,12 @@ function validateBounds(selector) {
     });
 
     inputs.on('focus', function(e) {
-        var element = $(this), val = element.val();
+        var element = $(this),
+        val = element.val();
 
-        if (!isNaN(val))
+        if (!isNaN(val)) {
             element.data('previousValue', parseFloat(val));
+        }
     });
 
     inputs.on('blur', function(e) {
