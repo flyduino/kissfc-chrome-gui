@@ -20,7 +20,7 @@
     	        c+='</div>';
     	        self.addClass('kiss-warning');
     	        self.append(c);
-    	        $(self, ".button").on("click", data.action);
+    	        $(".button", self).on("click", data.action);
     		}
     };
 

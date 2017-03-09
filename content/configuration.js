@@ -217,14 +217,16 @@ CONTENT.configuration.initialize = function(callback) {
             MCUid += data['SN'][i].toString(16).toUpperCase();
         }
 
-          var sntext = MCUid + ' (' + (data['isActive'] ? 'Activated' : 'Not Activated') + ')';
-          $('#SN').text(sntext);
-         $('#SN').on('click', function(e) {
+        var sntext = MCUid + ' (' + (data['isActive'] ? 'Activated' : 'Not Activated') + ')';
+        $('#SN').text(sntext);
+        $('#SN2').text("Serial number: " + MCUid);
+
+        $('#SN').on('click', function(e) {
             console.log("Copy to clipboard: " + MCUid);
             copyTextToClipboard(MCUid);
-            $('#SN').text("Serial number has been copied to clipboard");
+            $(this).text("Serial number has been copied to clipboard");
             setTimeout(function() {
-                $('#SN').text(sntext);
+                $(this).text(sntext);
             }, 1000);
         });
 
@@ -455,6 +457,7 @@ CONTENT.configuration.initialize = function(callback) {
             $("#downgrade_gui").show();
         } else if (!data['isActive']) {
             $("#navigation").hide();
+            
             $("#activation").kissWarning({
                 title:'WARNING!!!', 
                 button:'ACTIVATE NOW', 
