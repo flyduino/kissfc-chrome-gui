@@ -180,6 +180,10 @@ CONTENT.configuration.initialize = function(callback) {
             document.getElementById('mpxSRXL').style.display = "inline";
         }
         
+        if (data['ver'] > 107) {
+            document.getElementById('jrxbusb').style.display = "inline";
+        }
+        
         if (data['ver'] > 102) {
             //$('input[name="secret"]').removeAttr("disabled");
         } else {
