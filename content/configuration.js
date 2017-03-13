@@ -228,9 +228,9 @@ CONTENT.configuration.initialize = function(callback) {
         $('#SN').on('click', function(e) {
             console.log("Copy to clipboard: " + MCUid);
             copyTextToClipboard(MCUid);
-            $(this).text("Serial number has been copied to clipboard");
+            $('#SN').text("Serial number has been copied to clipboard");
             setTimeout(function() {
-                $(this).text(sntext);
+                $('#SN').text(sntext);
             }, 1000);
         });
 
