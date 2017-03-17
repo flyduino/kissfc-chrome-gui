@@ -49,8 +49,18 @@
 		<script type="text/javascript" src="./content/flasher.js"></script>
 		<script type="text/javascript" src="./content/esc_flasher.js"></script>
 		<script type="text/javascript" src="./js/libraries/jquery.minicolors.min.js"></script>
+
+		<script type="text/javascript" src="./js/libraries/i18n/jquery.i18n.js"></script>
+		<script type="text/javascript" src="./js/libraries/i18n/jquery.i18n.messagestore.js"></script>
+		<script type="text/javascript" src="./js/libraries/i18n/jquery.i18n.fallbacks.js"></script>
+		<script type="text/javascript" src="./js/libraries/i18n/jquery.i18n.language.js"></script>
+		<script type="text/javascript" src="./js/libraries/i18n/jquery.i18n.parser.js"></script>
+		<script type="text/javascript" src="./js/libraries/i18n/jquery.i18n.emitter.js"></script>
+		<script type="text/javascript" src="./js/libraries/i18n/jquery.i18n.emitter.bidi.js"></script>
 		
-		  <link type="text/css" rel="stylesheet" href="./main.css" media="all" />
+		<script type="text/javascript" src="./js/libraries/i18n/languages/ru.js"></script>
+
+<link type="text/css" rel="stylesheet" href="./main.css" media="all" />
     </head>
     <body>
         <div id="mainWrapper">
@@ -58,16 +68,16 @@
                 <select id="port" title="Port">
                     <!-- ports -->
                 </select>
-                <a class="connect" href="#">Connect</a>
-                <a class="navigation-menu-button" href="#">Menu</a>
+                <a class="connect" href="#" data-i18n="menu.connect">Connect</a>
+                <a class="navigation-menu-button" href="#" data-i18n="menu.menu">Menu</a>
                 <div id="navigation">
                     <ul id="menu">
-                        <li data-name="configuration">Configuration</li>
-                        <li data-name="advanced">Advanced</li>
-                        <li data-name="data_output">Data Output</li>
-                        <li data-name="rates">Rates</li>
-                        <li data-name="tpa">TPA</li>
-                        <li data-name="esc_flasher">ESC Flasher</li>
+                        <li data-name="configuration" data-i18n="menu.configuration">Configuration</li>
+                        <li data-name="advanced" data-i18n="menu.advanced">Advanced</li>
+                        <li data-name="data_output" data-i18n="menu.data-output">Data Output</li>
+                        <li data-name="rates" data-i18n="menu.rates">Rates</li>
+                        <li data-name="tpa" data-i18n="menu.tpa">TPA</li>
+                        <li data-name="esc_flasher" data-i18n="menu.esc-flasher">ESC Flasher</li>
                     </ul>
                 </div>
             </div>

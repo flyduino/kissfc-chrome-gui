@@ -40,7 +40,7 @@ PortHandler.check = function() {
                 }
                 if (GUI.activeContent == 'esc_flasher') {
                     $("#portArea").children().removeClass('flashing-in-progress');
-                    $('a.connect').text('Connect');
+                    $('a.connect').text($.i18n("menu.connect"));
                     GUI.contentSwitchInProgress = true;
                     GUI.contentSwitchCleanup(function() {
                         CONTENT['welcome'].initialize();

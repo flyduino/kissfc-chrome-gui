@@ -21,7 +21,7 @@ $(document).ready(function() {
 
                     // lock port select while we are connecting / connected
                     $('#port').prop('disabled', true);
-                    $('a.connect').text('Connecting');
+                    $('a.connect').text($.i18n("menu.connecting"));
 
                     serialDevice = getSerialDriverForPort(selectedPort);
 
@@ -44,7 +44,7 @@ $(document).ready(function() {
                         $('#port').prop('disabled', false);
 
                         // reset connect / disconnect button
-                        $('a.connect').text('Connect');
+                        $('a.connect').text($.i18n('menu.connect'));
                         $('a.connect').removeClass('active');
 
                         $('#navigation li:not([data-name="welcome"])').removeClass('unlocked');
@@ -93,7 +93,7 @@ $(document).ready(function() {
                 });
             }
 
-            $('a.connect').text('Disconnect').addClass('active');
+            $('a.connect').text($.i18n("menu.disconnect")).addClass('active');
 
             kissProtocol.init();
 
@@ -117,7 +117,7 @@ $(document).ready(function() {
         } else {
             console.log('Failed to open serial port');
 
-            $('a.connect').text('Connect');
+            $('a.connect').text($.i18n("menu.connect"));
             $('a.connect').removeClass('active');
 
             // unlock port select

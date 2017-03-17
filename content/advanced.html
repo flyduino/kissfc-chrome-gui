@@ -4,27 +4,27 @@
 
 		<div class="config_buttons">
 			<a id="save" class="config_button" href="#"
-				title="Save Settings to EEPROM">Save Settings</a>
+				title="Save Settings to EEPROM" data-i18n="button.save">Save Settings</a>
 		</div>
 		<div class="clear-both"></div>
 
 		<div class="wrapper-full">
 
-		<div class="groupTitle">Custom FC orientation</div>
+		<div class="groupTitle" data-i18n="title.custom-orientation">Custom FC orientation</div>
 
 		<table style="border: 0px;">
 			<tr>
 				<td width="100%" colspan="4"><input class="unsafe" type="checkbox"
-					disabled="true" name="CBO" /> &nbsp;Use custom FC orientation</td>
+					disabled="true" name="CBO" />&nbsp;<span data-i18n="column.use-custom-orientation" class="display:inline-block">Use custom FC orientation</span></td>
 			</tr>
 			<tr>
 				<td width="40%">&nbsp;</td>
-				<td width="20%">Roll</td>
-				<td width="20%">Pitch</td>
-				<td width="20%">Yaw</td>
+				<td width="20%" data-i18n="column.roll">Roll</td>
+				<td width="20%" data-i18n="column.pitch">Pitch</td>
+				<td width="20%" data-i18n="column.yaw">Yaw</td>
 			</tr>
 			<tr>
-				<td>FC orientation &deg;</td>
+				<td data-i18n="[html]column.fc-orientation">FC orientation &deg;</td>
 				<td><input class="unsafe" disabled="true" type="text" size="3" name="CBO0"
 					data-min="-180" data-max="180" data-step="1" data-precision="0"
 					value="0" /></td>
@@ -41,17 +41,17 @@
 		
 		<div class="wrapper-full">
 		
-		<div class="groupTitle">RX deadbands</div>
+		<div class="groupTitle" data-i18n="title.rx-deadbands">RX deadbands</div>
 
 		<table style="border: 0px;">
 			<tr>
 				<td width="40%">&nbsp;</td>
-				<td width="20%">Roll</td>
-				<td width="20%">Pitch</td>
-				<td width="20%">Yaw</td>
+				<td width="20%" data-i18n="column.roll">Roll</td>
+				<td width="20%" data-i18n="column.pitch">Pitch</td>
+				<td width="20%" data-i18n="column.yaw">Yaw</td>
 			</tr>
 			<tr>
-				<td>RX deadband</td>
+				<td data-i18n="column.rx-deadband">RX deadband</td>
 				<td><input class="unsafe" disabled="true" type="text" size="3" name="DB0"
 					data-min="0" data-max="250" data-step="1" data-precision="0"
 					value="0" /></td>
@@ -63,53 +63,47 @@
 					value="0" /></td>
 			</tr>
 		</table>
-		
 		</div>
-		
-		
-		
-		
-		
 
 		<div id="serial" class="wrapper-full">
-			<div class="groupTitle">Serial config</div>
+			<div class="groupTitle" data-i18n="title.serial-config">Serial config</div>
 			<dl class="general-settings">
 				<dt>
-					<span title="Serial config">Device</span>
+					<span data-i18n="column.device">Device</span>
 				</dt>
 				<dd>
 					<select class="unsafe" disabled="true" name="loggerConfig" id="loggerConfig">
-						<option value="0">OSD</option>
-						<option value="11">VTX</option>
-						<option value="1">Logger / 10%</option>
-						<option value="2">Logger / 20%</option>
-						<option value="3">Logger / 30%</option>
-						<option value="4">Logger / 40%</option>
-						<option value="5">Logger / 50%</option>
-						<option value="6">Logger / 60%</option>
-						<option value="7">Logger / 70%</option>
-						<option value="8">Logger / 80%</option>
-						<option value="9">Logger / 90%</option>
-						<option value="10">Logger / 100%</option>
+						<option value="0" data-i18n="serial.0">OSD</option>
+						<option value="11" data-i18n="serial.11">VTX</option>
+						<option value="1" data-i18n="serial.1">Logger / 10%</option>
+						<option value="2" data-i18n="serial.2">Logger / 20%</option>
+						<option value="3" data-i18n="serial.3">Logger / 30%</option>
+						<option value="4" data-i18n="serial.4">Logger / 40%</option>
+						<option value="5" data-i18n="serial.5">Logger / 50%</option>
+						<option value="6" data-i18n="serial.6">Logger / 60%</option>
+						<option value="7" data-i18n="serial.7">Logger / 70%</option>
+						<option value="8" data-i18n="serial.8">Logger / 80%</option>
+						<option value="9" data-i18n="serial.9">Logger / 90%</option>
+						<option value="10" data-i18n="serial.10">Logger / 100%</option>
 					</select>
 				</dd>
 			</dl>
 
 			<div id="loggerDebug" class="wrapper-full">
-				<div class="groupTitle">Logger Debug Configuration</div>
+				<div class="groupTitle" data-i18n="title.logger-debug-configuration">Logger Debug Configuration</div>
 				<dl class="general-settings">
-					<dt class="logger-debug">Debug fields</dt>
+					<dt class="logger-debug" data-i18n="column.debug-fields">Debug fields</dt>
 					<dd class="logger-debug-variables">
 						<select name="loggerDebugVariables">
-							<option value="0">--</option>
-							<option value="1">Raw Gyroscope</option>
-							<option value="2">Raw Accelerometer</option>
-							<!-- option value="3">Loop parameters</option-->
-							<option value="4">ESC Voltage</option>
-							<option value="5">ESC Current</option>
-							<option value="6">ESC Temperature</option>
-							<option value="7">ESC RPMs</option>
-							<option value="8">ESC Consumption</option>
+							<option value="0" data-i18n="debug.0">--</option>
+							<option value="1" data-i18n="debug.1">Raw Gyroscope</option>
+							<option value="2" data-i18n="debug.2">Raw Accelerometer</option>
+							<!-- option value="3" data-i18n="debug.3">Loop parameters</option-->
+							<option value="4" data-i18n="debug.4">ESC Voltage</option>
+							<option value="5" data-i18n="debug.5">ESC Current</option>
+							<option value="6" data-i18n="debug.6">ESC Temperature</option>
+							<option value="7" data-i18n="debug.7">ESC RPMs</option>
+							<option value="8" data-i18n="debug.8">ESC Consumption</option>
 						</select>
 					</dd>
 				</dl>
@@ -117,76 +111,76 @@
 		</div>
 		
 		<div id="vtx" class="wrapper-full" style="display:none">
-			<div class="groupTitle">VTX config</div>
+			<div class="groupTitle" data-i18n="title.vtx-config">VTX config</div>
 			<dl class="general-settings">
 				<dt>
-					<span title="VTX type">Type</span>
+					<span title="VTX type" data-i18n="column.vtx-type">Type</span>
 				</dt>
 				<dd>
 					<select class="unsafe" name="vtxType" id="vtxType">
-						<option value="0">--</option>
-						<option value="1">Dummy VTX</option>
-						<option value="2">IRC Tramp HV</option>
+						<option value="0" data-i18n="vtx.0">--</option>
+						<option value="1" data-i18n="vtx.1">Dummy VTX</option>
+						<option value="2" data-i18n="vtx.2">IRC Tramp HV</option>
 						
 					</select>
 				</dd>
 				<dt class="vtx_opts">
-					<span title="VTX freq">Frequency</span>
+					<span title="VTX freq" data-i18n="column.vtx-frequency">Frequency</span>
 				</dt>
 				<dd  class="vtx_opts">
 					<select name="vtxChannel" id="vtxChannel">
-						<option value="0">A:1 (5865 MHz)</option>
-						<option value="1">A:2 (5845 MHz)</option>
-						<option value="2">A:3 (5825 MHz)</option>
-						<option value="3">A:4 (5805 MHz)</option>
-						<option value="4">A:5 (5785 MHz)</option>
-						<option value="5">A:6 (5765 MHz)</option>
-						<option value="6">A:7 (5745 MHz)</option>
-						<option value="7">A:8 (5725 MHz)</option>
+						<option value="0" data-i18n="vtx-freq.0">A:1 (5865 MHz)</option>
+						<option value="1" data-i18n="vtx-freq.1">A:2 (5845 MHz)</option>
+						<option value="2" data-i18n="vtx-freq.2">A:3 (5825 MHz)</option>
+						<option value="3" data-i18n="vtx-freq.3">A:4 (5805 MHz)</option>
+						<option value="4" data-i18n="vtx-freq.4">A:5 (5785 MHz)</option>
+						<option value="5" data-i18n="vtx-freq.5">A:6 (5765 MHz)</option>
+						<option value="6" data-i18n="vtx-freq.6">A:7 (5745 MHz)</option>
+						<option value="7" data-i18n="vtx-freq.7">A:8 (5725 MHz)</option>
 						
-						<option value="8">B:1 (5733 MHz)</option>
-						<option value="9">B:2 (5752 MHz)</option>
-						<option value="10">B:3 (5771 MHz)</option>
-						<option value="11">B:4 (5790 MHz)</option>
-						<option value="12">B:5 (5809 MHz)</option>
-						<option value="13">B:6 (5828 MHz)</option>
-						<option value="14">B:7 (5847 MHz)</option>
-						<option value="15">B:8 (5866 MHz)</option>
+						<option value="8" data-i18n="vtx-freq.8">B:1 (5733 MHz)</option>
+						<option value="9" data-i18n="vtx-freq.9">B:2 (5752 MHz)</option>
+						<option value="10" data-i18n="vtx-freq.10">B:3 (5771 MHz)</option>
+						<option value="11" data-i18n="vtx-freq.11">B:4 (5790 MHz)</option>
+						<option value="12" data-i18n="vtx-freq.12">B:5 (5809 MHz)</option>
+						<option value="13" data-i18n="vtx-freq.13">B:6 (5828 MHz)</option>
+						<option value="14" data-i18n="vtx-freq.14">B:7 (5847 MHz)</option>
+						<option value="15" data-i18n="vtx-freq.15">B:8 (5866 MHz)</option>
 
-						<option value="16">E:1 (5705 MHz)</option>
-						<option value="17">E:2 (5685 MHz)</option>
-						<option value="18">E:3 (5665 MHz)</option>
-						<option value="19">E:4 (5645 MHz)</option>
-						<option value="20">E:5 (5885 MHz)</option>
-						<option value="21">E:6 (5905 MHz)</option>
-						<option value="22">E:7 (5925 MHz)</option>
-						<option value="23">E:8 (5945 MHz)</option>
+						<option value="16" data-i18n="vtx-freq.16">E:1 (5705 MHz)</option>
+						<option value="17" data-i18n="vtx-freq.17">E:2 (5685 MHz)</option>
+						<option value="18" data-i18n="vtx-freq.18">E:3 (5665 MHz)</option>
+						<option value="19" data-i18n="vtx-freq.19">E:4 (5645 MHz)</option>
+						<option value="20" data-i18n="vtx-freq.20">E:5 (5885 MHz)</option>
+						<option value="21" data-i18n="vtx-freq.21">E:6 (5905 MHz)</option>
+						<option value="22" data-i18n="vtx-freq.22">E:7 (5925 MHz)</option>
+						<option value="23" data-i18n="vtx-freq.23">E:8 (5945 MHz)</option>
 						
-						<option value="24">IRC/FS:1 (5740 MHz)</option>
-						<option value="25">IRC/FS:2 (5760 MHz)</option>
-						<option value="26">IRC/FS:3 (5780 MHz)</option>
-						<option value="27">IRC/FS:4 (5800 MHz)</option>
-						<option value="28">IRC/FS:5 (5820 MHz)</option>
-						<option value="29">IRC/FS:6 (5840 MHz)</option>
-						<option value="30">IRC/FS:7 (5860 MHz)</option>
-						<option value="31">IRC/FS:8 (5880 MHz)</option>	
+						<option value="24" data-i18n="vtx-freq.24">IRC/FS:1 (5740 MHz)</option>
+						<option value="25" data-i18n="vtx-freq.25">IRC/FS:2 (5760 MHz)</option>
+						<option value="26" data-i18n="vtx-freq.26">IRC/FS:3 (5780 MHz)</option>
+						<option value="27" data-i18n="vtx-freq.27">IRC/FS:4 (5800 MHz)</option>
+						<option value="28" data-i18n="vtx-freq.28">IRC/FS:5 (5820 MHz)</option>
+						<option value="29" data-i18n="vtx-freq.29">IRC/FS:6 (5840 MHz)</option>
+						<option value="30" data-i18n="vtx-freq.30">IRC/FS:7 (5860 MHz)</option>
+						<option value="31" data-i18n="vtx-freq.31">IRC/FS:8 (5880 MHz)</option>	
 						
-						<option value="32">RaceBand:1 (5658 MHz)</option>
-						<option value="33">RaceBand:2 (5695 MHz)</option>
-						<option value="34">RaceBand:3 (5732 MHz)</option>
-						<option value="35">RaceBand:4 (5769 MHz)</option>
-						<option value="36">RaceBand:5 (5806 MHz)</option>
-						<option value="37">RaceBand:6 (5843 MHz)</option>
-						<option value="38">RaceBand:7 (5880 MHz)</option>
-						<option value="39">RaceBand:8 (5917 MHz)</option>					
+						<option value="32" data-i18n="vtx-freq.32">RaceBand:1 (5658 MHz)</option>
+						<option value="33" data-i18n="vtx-freq.33">RaceBand:2 (5695 MHz)</option>
+						<option value="34" data-i18n="vtx-freq.34">RaceBand:3 (5732 MHz)</option>
+						<option value="35" data-i18n="vtx-freq.35">RaceBand:4 (5769 MHz)</option>
+						<option value="36" data-i18n="vtx-freq.36">RaceBand:5 (5806 MHz)</option>
+						<option value="37" data-i18n="vtx-freq.37">RaceBand:6 (5843 MHz)</option>
+						<option value="38" data-i18n="vtx-freq.38">RaceBand:7 (5880 MHz)</option>
+						<option value="39" data-i18n="vtx-freq.39">RaceBand:8 (5917 MHz)</option>					
 					</select>
 				</dd>
-				<dt  class="vtx_opts" style="width:180px;">Low Power: (mW)&nbsp;</dt>
+				<dt  class="vtx_opts" style="width:180px;" data-i18n="[html]column.vtx-low-power">Low Power: (mW)&nbsp;</dt>
 				<dd  class="vtx_opts">
 					<input type="text" name="vtxPowerLow" data-step="1"
 						data-min="0" data-max="800" data-precision="0" value="25" />
 				</dd>
-				<dt  class="vtx_opts" style="width:180px;">High Power: (mW)&nbsp;</dt>
+				<dt  class="vtx_opts" style="width:180px;" data-i18n="[html]column.vtx-high-power">High Power: (mW)&nbsp;</dt>
 				<dd  class="vtx_opts">
 					<input type="text" name="vtxPowerHigh" data-step="1"
 						data-min="0" data-max="800" data-precision="0" value="25" />
@@ -195,9 +189,9 @@
 		</div>
 
 		<div id="motorBuzzer" class="wrapper-full">
-			<div class="groupTitle">Buzzer emulation</div>
+			<div class="groupTitle" data-i18n="title.buzzer-emulation">Buzzer emulation</div>
 			<dl class="general-settings">
-				<dt style="width:180px"><input disabled type="checkbox" name="motorBuzzer" /> &nbsp;Emulate with motors</dt>
+				<dt style="width:280px"><input disabled type="checkbox" name="motorBuzzer" /> &nbsp;<span data-i18n="column.buzzer-emulation" style="width:200px">Emulate with motors</span></dt>
 			</dl>
 		</div>
 	</div>
@@ -205,16 +199,16 @@
 	<div class="wrapper-half">
 
 		<div id="lapTimer" class="wrapper-full">
-			<div class="groupTitle">Lap timer configuration</div>
+			<div class="groupTitle" data-i18n="title.lap-timer">Lap timer configuration</div>
 			<dl class="general-settings">
-				<dt class="lap-timer">Type and connection</dt>
+				<dt class="lap-timer"  data-i18n="column.lap-timer-type">Type and connection</dt>
 				<dd class="lap-timer-type-and-interface">
 					<select  class="unsafe" id="lapTimerTypeAndInterface"
 						name="lapTimerTypeAndInterface">
-						<option value="0">--</option>
-						<option value="17">EeasyRaceLapTimer on BUZZER pin</option>
-						<option value="18">EeasyRaceLapTimer on PWM5 pin</option>
-						<option value="19">EeasyRaceLapTimer on PWM6 pin</option>
+						<option value="0" data-i18n="lap-timer.0">--</option>
+						<option value="17" data-i18n="lap-timer.17">EeasyRaceLapTimer on BUZZER pin</option>
+						<option value="18" data-i18n="lap-timer.18">EeasyRaceLapTimer on PWM5 pin</option>
+						<option value="19" data-i18n="lap-timer.19">EeasyRaceLapTimer on PWM6 pin</option>
 					</select> <select class="lap-timer-transponder-id unsafe"
 						name="lapTimerTransponderId">
 					</select>
@@ -223,9 +217,9 @@
 		</div>
 
 		<div id="bat" class="wrapper-full">
-			<div class="groupTitle">Lipo alarm</div>
+			<div class="groupTitle" data-i18n="title.lipo-alarm">Lipo alarm</div>
 			<dl class="general-settings">
-				<dt title="low battery alarm" style="width:180px">Voltage is less than </dt>
+				<dt title="low battery alarm" style="width:180px" data-i18n="column.lipo-volts">Voltage is less than </dt>
 				<dd>
 					<input disabled="true" type="text" name="vbatAlarm" data-step="0.1"
 						data-min="0" data-max="26" data-precision="1" value="0.0" /><input
@@ -233,7 +227,7 @@
 				</dd>
 			</dl>
 			<dl class="general-settings">
-				<dt title="mah alarm" style="width:180px">Consumption is greater than </dt>
+				<dt title="mah alarm" style="width:180px" data-i18n="column.lipo-mah">Consumption is greater than </dt>
 				<dd>
 					<input disabled="true" type="text" name="mahAlarm" data-step="1"
 						data-min="0" data-max="24000" data-precision="0" value="0" /><input
@@ -243,23 +237,23 @@
 		</div>
 		
 		<div id="led" class="wrapper-full">
-				<div class="groupTitle">Led color</div>
+				<div class="groupTitle" data-i18n="title.led-color">Led color</div>
 				<dl class="general-settings">
 					<dt>
-						<span title="Led Color">Select Color</span>
+						<span title="Led Color" data-i18n="column.led-color">Select Color</span>
 					</dt>
 					<dd>
 						<select disabled="true" name="RGBSelector">
-							<option value="0,0,0">Black</option>
-							<option value="255,255,255">White</option>
-							<option value="255,255,0">Yellow</option>
-							<option value="255,123,0">Orange</option>
-							<option value="255,0,0">Red</option>
-							<option value="128,0,128">Purple</option>
-							<option value="0,0,255">Blue</option>
-							<option value="0,255,0">Green</option>
-							<option value="0,255,255">Cyan</option>
-							<option value="">Custom</option>
+							<option value="0,0,0" data-i18n="led.black">Black</option>
+							<option value="255,255,255"  data-i18n="led.white">White</option>
+							<option value="255,255,0"  data-i18n="led.yellow">Yellow</option>
+							<option value="255,123,0"  data-i18n="led.orange">Orange</option>
+							<option value="255,0,0"  data-i18n="led.red">Red</option>
+							<option value="128,0,128"  data-i18n="led.purple">Purple</option>
+							<option value="0,0,255"  data-i18n="led.blue">Blue</option>
+							<option value="0,255,0"  data-i18n="led.green">Green</option>
+							<option value="0,255,255"  data-i18n="led.cyan">Cyan</option>
+							<option value=""  data-i18n="led.custom">Custom</option>
 						</select><input type="hidden" id="colorPicker" /> <input type="hidden"
 							name="RGB" id="RGB" value="" />
 					</dd>
@@ -267,21 +261,22 @@
 			</div>
 
 		<div id="Notch" class="wrapper-full">
+		<div class="groupTitle" data-i18n="title.notch-filter">Notch Filter</div>
 		<table style="border: 0px;">
 			<tr>
 				<td width="176px">&nbsp;</td>
-				<td width="60px">Roll &nbsp; &nbsp;<input type="checkbox" name="NFE0"  disabled="true"/></td>
-				<td width="60px">Pitch &nbsp; &nbsp;<input type="checkbox" name="NFE1"  disabled="true"/></td>
+				<td width="60px"><span data-i18n="column.roll">Roll</span> &nbsp; &nbsp;<input type="checkbox" name="NFE0"  disabled="true"/></td>
+				<td width="60px"><span data-i18n="column.pitch">Pitch</span> &nbsp; &nbsp;<input type="checkbox" name="NFE1"  disabled="true"/></td>
 			</tr>
 			<tr>
-				<td>Center Frequency: (Hz)</td>
+				<td data-i18n="column.notch-center">Center Frequency: (Hz)</td>
 				<td><input disabled="true" type="text" name="NFCF0" data-step="1"
 						data-min="0" data-max="490" data-precision="0" value="200" size="3"/></td>
 				<td><input disabled="true" type="text" name="NFCF1" data-step="1"
 						data-min="0" data-max="490" data-precision="0" value="200" size="3"/></td>
 			</tr>
 			<tr>
-				<td>Cutoff Frequency: (Hz)</td>
+				<td data-i18n="column.notch-cutoff">Cutoff Frequency: (Hz)</td>
 				<td><input disabled="true" type="text" name="NFCO0" data-step="1"
 						data-min="0" data-max="490" data-precision="0" value="100" size="3"/></td>
 				<td><input disabled="true" type="text" name="NFCO1" data-step="1"
@@ -291,9 +286,9 @@
 		</div>
 		
 		<div id="yawCF" class="wrapper-full">
-			<div class="groupTitle">Yaw Filter</div>
+			<div class="groupTitle" data-i18n="title.yaw-filter">Yaw Filter</div>
 			<dl class="general-settings">
-				<dt style="width:180px;">Yaw Filter strength:&nbsp;</dt>
+				<dt style="width:180px;"><span data-i18n="column.yaw-filter-strength">Yaw Filter strength</span>&nbsp;</dt>
 				<input disabled="true" type="text" name="YCF" data-step="1"
 					data-min="0" data-max="97" data-precision="0" value="92" />
 			</dl>

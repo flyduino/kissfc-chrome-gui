@@ -1,14 +1,14 @@
 <div class="esc_flasher">
     <div class="wrapper-half">
-		<div class="groupTitle">KISS ESC Flasher</div>
+		<div class="groupTitle" data-i18n="title.esc-flasher">KISS ESC Flasher</div>
 		<p>
-			<a id="select_file" class="config_button" href="#">SELECT FIRMWARE</a>
+			<a id="select_file" class="config_button" href="#" data-i18n="button.select-firmware">SELECT FIRMWARE</a>
 		</p>
 
 		<p id="file_info"></p>
 
 		<p>
-			<a id="flash" class="config_button hidden" href="#">FLASH FIRMWARE</a>
+			<a id="flash" class="config_button hidden" href="#" data-i18n="button.flash-firmware">FLASH FIRMWARE</a>
 		</p>
 		
 		<p id="status"></p>
@@ -23,7 +23,7 @@
         	<img style="float:right;" src="./images/welcome1.png" />
 		</div>
     	<div id="escInfoDiv" class="wrapper-full">
-    		<div class="groupTitle">KISS ESC Info</div>
+    		<div class="groupTitle" data-i18n="title.esc-info">KISS ESC Info</div>
     		<ul id="escInfo">
     		</ul>
     	</div>
@@ -31,25 +31,15 @@
 </div>
 <div class="esc-flasher-disclaimer">
 	<div class="esc-flasher-disclaimer-inner">
-		<div class="warning1">WARNING!!!</div>
-		<div class="warning2">		
-		 Caution - potentially dangerous!<br/><br/>
-		 ESC Flasher works ONLY if you have KISS 24A ESC<br> with <b>bootloader</b> (version 1.02 or later)!<br/><br/>
-		 Please remove propellers before starting ESC Flashing!<br/><br/>
-		 Use this feature at your own risk.<br/><br/>
-		 You will have to power cycle your KISSFC after flashing!<br/><br/>
-		</div>
+		<div class="warning1" data-i18n="title.warning"></div>
+		<div class="warning2" data-i18n="[html]text.esc-flasher-warning"></div>
 		<br/><br/>
-		<a class="warning-button" href="#">I KNOW WHAT I AM DOING</a>
+		<a class="warning-button" href="#" data-i18n="button.esc-flasher-accept"></a>
 	</div>
 </div>
 <div class="esc-flasher-complete">
 	<div class="esc-flasher-complete-inner">
-		<div class="warning1">ESC FLASHING COMPLETE!!!</div>
-		<div class="warning2">		
-		 <br/><br/> <br/><br/>
-		 For safety reasons, communication with KISS FC has been terminated.<br/><br/>
-		 Please unplug your battery, and reconnect your KISS FC.<br/><br/>
-		</div>
+		<div class="warning1" data-i18n="title.esc-flasher-complete"></div>
+		<div class="warning2" data-i18n="[html]text.esc-flasher-complete"></div>
 	</div>
 </div>

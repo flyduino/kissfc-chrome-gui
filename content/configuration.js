@@ -10,7 +10,7 @@ CONTENT.configuration.initialize = function(callback) {
 
     GUI.switchContent('configuration', function() {
          kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-            $('#content').load("./content/configuration.html", function() {
+            GUI.load("./content/configuration.html", function() {
                   htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
             });
         });
@@ -221,45 +221,44 @@ CONTENT.configuration.initialize = function(callback) {
             MCUid += data['SN'][i].toString(16).toUpperCase();
         }
 
-        var sntext = MCUid + ' (' + (data['isActive'] ? 'Activated' : 'Not Activated') + ')';
+        var sntext = MCUid + ' (' + (data['isActive'] ? $.i18n('text.activated') : $.i18n('text.not-activated')) + ')';
         $('#SN').text(sntext);
-        $('#SN2').text("Serial number: " + MCUid);
+        $('#SN2').text($.i18n("text.serial-number")+": " + MCUid);
 
         $('#SN').on('click', function(e) {
-            console.log("Copy to clipboard: " + MCUid);
             copyTextToClipboard(MCUid);
-            $('#SN').text("Serial number has been copied to clipboard");
+            $('#SN').text($.i18n("text.serial-clipboard"));
             setTimeout(function() {
                 $('#SN').text(sntext);
             }, 1000);
         });
 
         var mixerList = [{
-            name: 'Tricopter',
+            name: $.i18n("mixer.0"),
             image: '0.png'
         }, {
-            name: 'Quad Plus',
+            name: $.i18n("mixer.1"),
             image: '1.png'
         }, {
-            name: 'Quad X',
+            name: $.i18n("mixer.2"),
             image: '2.png'
         }, {
-            name: 'Y4',
+            name: $.i18n("mixer.3"),
             image: '3.png'
         }, {
-            name: 'Y6',
+            name: $.i18n("mixer.4"),
             image: '4.png'
         }, {
-            name: 'Hexacopter Plus',
+            name: $.i18n("mixer.5"),
             image: '5.png'
         }, {
-            name: 'Hexacopter X',
+            name: $.i18n("mixer.6"),
             image: '6.png'
         }];
 
         var mixer_list_e = $('select.mixer');
         for (var i = 0; i < mixerList.length; i++) {
-            mixer_list_e.append('<option value="' + (i) + '">' + mixerList[i].name + '</option>');
+            mixer_list_e.append('<option data-i18n="mixer.'+(i)+'" value="' + (i) + '">' + mixerList[i].name + '</option>');
         }
 
         mixer_list_e.on('change', function() {
@@ -396,40 +395,40 @@ CONTENT.configuration.initialize = function(callback) {
             });
         }
 
-        $("#aux0").kissAux({ name: 'Arm',    
+        $("#aux0").kissAux({ name: $.i18n("column.arm"),    
                              change: function() { contentChange(); },
                              value: data['AUX'][0]
                            });    
-        $("#aux1").kissAux({ name: 'Level',  
+        $("#aux1").kissAux({ name: $.i18n("column.level"),  
                              change: function() { contentChange(); },
                              value: data['AUX'][1]
                            });    
-        $("#aux2").kissAux({ name: 'Buzzer', 
+        $("#aux2").kissAux({ name: $.i18n("column.buzzer"), 
                               change: function() { contentChange(); },
                               value: data['AUX'][2]
                             });    
-        $("#aux3").kissAux({ name: 'Led',    
+        $("#aux3").kissAux({ name: $.i18n("column.led"),    
                              change: function() { contentChange(); },
                              knob: true,
                              value: data['AUX'][3]
                            });    
-        $("#aux4").kissAux({ name: '3D',    
+        $("#aux4").kissAux({ name: $.i18n("column.3d"),    
                              change: function() { contentChange(); },
                              value: data['AUX'][4]
                            });
 
-        $("#aux5").kissAux({ name: 'VTX Power',    
+        $("#aux5").kissAux({ name: $.i18n("column.vtx-power"),    
             change: function() { contentChange(); },
             knob: true,
             value: data['AUX'][5]
         });
         
-        $("#aux6").kissAux({ name: 'VTX Band',    
+        $("#aux6").kissAux({ name: $.i18n("column.vtx-band"),    
             change: function() { contentChange(); },
             value: data['AUX'][6]
         });
         
-        $("#aux7").kissAux({ name: 'VTX Channel',    
+        $("#aux7").kissAux({ name: $.i18n("column.vtx-channel"),    
             change: function() { contentChange(); },
             value: data['AUX'][7]
         });
@@ -450,7 +449,7 @@ CONTENT.configuration.initialize = function(callback) {
         } else {
             $(".unsafe").prop('disabled', false).removeClass("unsafe_active");
         }
-        
+           
         if (data['ver']>MAX_CONFIG_VERSION) {
             $("#navigation").hide();
             $("#upgrade_gui").kissWarning({});  
@@ -463,8 +462,8 @@ CONTENT.configuration.initialize = function(callback) {
             $("#navigation").hide();
             
             $("#activation").kissWarning({
-                title:'WARNING!!!', 
-                button:'ACTIVATE NOW', 
+                title:$.i18n("title.warning"),
+                button:$.i18n("button.activate"), 
                 action: function() {
                     // Activation procedure
                     $(".button", "#activation").hide();
@@ -486,7 +485,7 @@ CONTENT.configuration.initialize = function(callback) {
                             $(".button", "#activation").show();
                             console.log('getting activation code failed');
                             data['actKey'] = 0;
-                            $(".button", "#activation").text("ACTIVATION FAILED, TRY AGAIN");
+                            $(".button", "#activation").text($.i18n("button.activation-failed"));
                         }
                     });
                 }
@@ -755,7 +754,7 @@ CONTENT.configuration.initialize = function(callback) {
             $('#save').removeClass("saveAct");
             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
                  kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-                        $('#content').load("./content/configuration.html", function() {
+                       GUI.load("./content/configuration.html", function() {
                             htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
                         });
                  });
@@ -768,7 +767,7 @@ CONTENT.configuration.initialize = function(callback) {
 
         $('#restore').on('click', function() {
             restoreConfig(function(config) {
-                $('#content').load("./content/configuration.html", function() {
+                GUI.load("./content/configuration.html", function() {
                     var v = +kissProtocol.data[kissProtocol.GET_SETTINGS]['ver'];
                     var tmp = $.extend({}, kissProtocol.data[kissProtocol.GET_SETTINGS], config);
                     kissProtocol.upgradeTo104(tmp);

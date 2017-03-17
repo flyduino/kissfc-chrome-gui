@@ -17,7 +17,7 @@ CONTENT.flasher.initialize = function(callback) {
     self.parsed_hex = false;
 
     GUI.switchContent('flasher', function() {
-        $('#content').load("./content/flasher.html", htmlLoaded);
+        GUI.load("./content/flasher.html", htmlLoaded);
     });
 
     function checkDFU() {
@@ -70,11 +70,11 @@ CONTENT.flasher.initialize = function(callback) {
 
                                     if (self.parsed_hex) {
                                         console.log("HEX OS OK " + self.parsed_hex.bytes_total + " bytes");
-                                        $("#file_info").html("Loaded " + self.parsed_hex.bytes_total + " bytes from " + path);
+                                        $("#file_info").html($.i18n("text.fc-flasher-loaded", self.parsed_hex.bytes_total, path));
                                         $("#flash").show();
                                     } else {
                                         console.log("Corrupted firmware file");
-                                        $("#file_info").html("Selected firmware file appears to be corrupted");
+                                        $("#file_info").html($.i18n("text.fc-flasher-invalid-firmware"));
                                         $("#flash").hide();
                                     }
                                 }
@@ -100,9 +100,9 @@ CONTENT.flasher.initialize = function(callback) {
                     event_handler : function(event) {
                     }
                 }, function() {
-                    $("#status").html("Protection removed");
+                    $("#status").html($.i18n("text.fc-flasher-unprotect"));
                     setTimeout(function() {
-                        $("#status").html("Flashing the firmware");
+                        $("#status").html($.i18n("text.fc-flasher-flashing")); //""Flashing the firmware");
                         self.success = false;
                         STM32DFU.connect(usbDevices.STM32DFU, self.parsed_hex, {
                             read_unprotect : false,
@@ -110,11 +110,11 @@ CONTENT.flasher.initialize = function(callback) {
                             event_handler : function(event) {
                                 console.log(event);
                                 if (event.type == "success") {
-                                    $("#status").html("SUCCESS!");
+                                    $("#status").html($.i18n("text.fc-flasher-complete"));
                                 } else if (event.type == "failure") {
-                                    $("#status").html("FAILURE: " + event.detail);
+                                    $("#status").html($.i18n("text.fc-flasher-failure", event.detail));
                                 } else if (event.type == "progress") {
-                                    $("#status").html("Progress: " + Math.floor(event.detail + 0.5) + "%");
+                                    $("#status").html($.i18n("text.fc-flasher-progress", Math.floor(event.detail + 0.5)));
                                 }
                             }
                         }, function() {

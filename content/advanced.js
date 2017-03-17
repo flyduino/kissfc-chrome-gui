@@ -10,7 +10,7 @@ CONTENT.advanced.initialize = function(callback) {
 
     GUI.switchContent('advanced', function() {
         kissProtocol.send(kissProtocol.GET_SETTINGS, [ 0x30 ], function() {
-            $('#content').load("./content/advanced.html", function() {
+            GUI.load("./content/advanced.html", function() {
                 htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
             });
         });
@@ -357,7 +357,7 @@ CONTENT.advanced.initialize = function(callback) {
             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
             if (!data['isActive']) {
                 kissProtocol.send(kissProtocol.GET_SETTINGS, [ 0x30 ], function() {
-                    $('#content').load("./content/advanced.html", function() {
+                    GUI.load("./content/advanced.html", function() {
                         htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
                     });
                 });

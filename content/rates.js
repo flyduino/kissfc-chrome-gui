@@ -16,7 +16,7 @@ CONTENT.rates.initialize = function(callback) {
     GUI.switchContent('rates', function() {
         kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
             self.settingsFilled = 1;
-            $('#content').load("./content/rates.html", function() {
+            GUI.load("./content/rates.html", function() {
                 htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
                 });
         });
@@ -68,7 +68,7 @@ CONTENT.rates.initialize = function(callback) {
 
     function htmlLoaded(data) {
         // generate receiver bars
-        var receiverNames = ['Roll', 'Pitch', 'Yaw']
+        var receiverNames = [$.i18n('column.roll'), $.i18n('column.pitch'), $.i18n('column.yaw')]
         var chartDivSelectors = ['#rates_chart_roll', '#rates_chart_pitch', '#rates_chart_yaw']
         var receiverChannels = [1, 2, 3];
         var receiverContainer = $('.rates .receiver .bars');
@@ -220,7 +220,7 @@ CONTENT.rates.initialize = function(callback) {
             });
         }
 
-        var messages = ['rolls', 'flips', 'turns']
+        var messages = [$.i18n('text.rates-rolls'), $.i18n('text.rates-flips'), $.i18n('text.rates-turns')];
         for (i = 0; i < 3; i++) {
             $(chartDivSelectors[i]).kissRatesChart({
                 name: receiverNames[i],

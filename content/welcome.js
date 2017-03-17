@@ -6,7 +6,7 @@ CONTENT.welcome.initialize = function(callback) {
     var self = this;
 
     GUI.switchContent('welcome', function() {
-        $('#content').load("./content/welcome.html", htmlLoaded);
+        GUI.load("./content/welcome.html", htmlLoaded);
     });
     
     function canDFU() {
@@ -28,9 +28,20 @@ CONTENT.welcome.initialize = function(callback) {
             }
         });
     }
-
+    
     function htmlLoaded() {
         if (canDFU()) checkDFU();
+        
+        $('a[data-lang="'+$.i18n.locale+'"]').addClass('selected-language');
+        
+        $(".language").on("click", function() {
+           var lang = $(this).data("lang");
+           $.i18n.locale = lang;
+           setLanguage(lang);
+           changeLanguage();
+           $('a[data-lang]').removeClass('selected-language');
+           $('a[data-lang="'+$.i18n.locale+'"]').addClass('selected-language');
+        });
     }
 };
 

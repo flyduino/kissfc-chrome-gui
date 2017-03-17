@@ -13,13 +13,13 @@ CONTENT.data_output.initialize = function (callback) {
 
     GUI.switchContent('data_output', function() {
         kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
-            $('#content').load("./content/data_output.html", htmlLoaded);
+            GUI.load("./content/data_output.html", htmlLoaded);
             });
     });
 
     function htmlLoaded() {
         // generate receiver bars
-        var receiverNames = ['Throttle', 'Roll', 'Pitch', 'Yaw', 'Aux 1', 'Aux 2', 'Aux 3', 'Aux 4'];
+        var receiverNames = [$.i18n('column.throttle'), $.i18n('column.roll'), $.i18n('column.pitch'), $.i18n('column.yaw'), 'Aux 1', 'Aux 2', 'Aux 3', 'Aux 4'];
         var receiverContainer = $('.data_output .receiver .bars');
         var receiverFillArray = [];
         var receiverLabelArray = [];
@@ -129,7 +129,7 @@ CONTENT.data_output.initialize = function (callback) {
             $(".motor-test-button").hide();
             $(".motor-test").show();
             $(".motor-test-enabled").show();
-            $("#motorTestTitle span").first().text('Enable Motors Test ');
+            $("#motorTestTitle span").first().text($.i18n('text.enable-motor-test'));
             $(".motor-test-disclaimer").hide();
         });
 
@@ -178,7 +178,7 @@ CONTENT.data_output.initialize = function (callback) {
              * data['ESC_Telemetrie0'][0] != 0) &&
              */ !self.ESCTelemetry){
             self.ESCTelemetry = 1;
-            $('select[name="graphTitle"]').html('<option value="0">Gyro &amp; ACC Data:</option><option value="1">ESC Temperatures:</option><option id="ESCTelemetrie" value="2">ESC Voltanges:</option><option value="3">ESC Currents:</option><option value="4">ESC used A/h</option><option value="5">ESC E-RpM / 1000</option><option value="6">ESC TLM Stats</option>');
+            $('select[name="graphTitle"]').html('<option value="0" data-i18n="telemetry.0">Gyro &amp; ACC Data:</option><option value="1" data-i18n="telemetry.1">ESC Temperatures:</option><option id="ESCTelemetrie" value="2" data-i18n="telemetry.2">ESC Voltanges:</option><option value="3" data-i18n="telemetry.3">ESC Currents:</option><option value="4" data-i18n="telemetry.4">ESC used A/h</option><option value="5" data-i18n="telemetry.5">ESC E-RpM / 1000</option><option value="6" data-i18n="telemetry.6">ESC TLM Stats</option>').children().i18n();
         }
         if(!data){
             if (GUI.activeContent == 'data_output') self.updateTimeout = window.setTimeout(function(){updateUI();},5); 
@@ -191,27 +191,27 @@ CONTENT.data_output.initialize = function (callback) {
             $(".motor-test").prop("disabled", true); 
         }
         
-        if(useGraphData == 0){
-            $('#graph1').html('Gyroscope X');
-            $('#graph2').html('Gyroscope Y');
-            $('#graph3').html('Gyroscope Z');
-            $('#graph4').html('Accelerometer X');
-            $('#graph5').html('Accelerometer Y');
-            $('#graph6').html('Accelerometer Z');
-        }else if(useGraphData == 6){
-            $('#graph1').html('ESC max. Temp.');
-            $('#graph2').html('ESC min. Voltage');
-            $('#graph3').html('ESCs max. Amp.');
-            $('#graph4').html('ESCs total A/h');
-            $('#graph5').html('ESC max. eRpM');
-            $('#graph6').html('ESCs max. Watt');
-        }else{
-            $('#graph1').html('ESC on PWM1');
-            $('#graph2').html('ESC on PWM2');
-            $('#graph3').html('ESC on PWM3');
-            $('#graph4').html('ESC on PWM4');
-            $('#graph5').html('ESC on PWM5');
-            $('#graph6').html('ESC on PWM6');            
+        if (useGraphData == 0){
+            $('#graph1').text($.i18n('legend.1'));
+            $('#graph2').text($.i18n('legend.2'));
+            $('#graph3').text($.i18n('legend.3'));
+            $('#graph4').text($.i18n('legend.4'));
+            $('#graph5').text($.i18n('legend.5'));
+            $('#graph6').text($.i18n('legend.6'));
+        } else if(useGraphData == 6){
+            $('#graph1').text($.i18n('legend.7'));
+            $('#graph2').text($.i18n('legend.8'));
+            $('#graph3').text($.i18n('legend.9'));
+            $('#graph4').text($.i18n('legend.10'));
+            $('#graph5').text($.i18n('legend.11'));
+            $('#graph6').text($.i18n('legend.12'));
+        } else{
+            $('#graph1').text($.i18n('legend.13'));
+            $('#graph2').text($.i18n('legend.14'));
+            $('#graph3').text($.i18n('legend.15'));
+            $('#graph4').text($.i18n('legend.16'));
+            $('#graph5').text($.i18n('legend.17'));
+            $('#graph6').text($.i18n('legend.18'));         
         }
         $('#idle').text(data['idleTime']+' %');
         $('#Vbat').text((data['LiPoVolt']*10).toFixed(2)+' v');
@@ -228,14 +228,14 @@ CONTENT.data_output.initialize = function (callback) {
                 motorLabelArray[i].text(data['PWMOutVals'][i]);
             }
 
-            // other
-        if(data['mode'] == 0) $("#omode").text('Acro');
-        else if(data['mode'] == 1) $("#omode").text('Level');
-        else if(data['mode'] == 2) $("#omode").text('3D');
+        // other
+        if (data['mode'] == 0) $("#omode").text($.i18n('text.acro'));
+        else if (data['mode'] == 1) $("#omode").text($.i18n('text.level'));
+        else if (data['mode'] == 2) $("#omode").text($.i18n('text.3D'));
         else $("#omode").text(data['mode']);
     
-        if (data['Armed'] == 0) $("#ostatus").text('Disarmed');
-        else if(data['Armed'] == 1) $("#ostatus").text('Armed!');
+        if (data['Armed'] == 0) $("#ostatus").text($.i18n('text.disarmed'));
+        else if(data['Armed'] == 1) $("#ostatus").text($.i18n('text.armed'));
         else $("#ostatus").text(data['Armed']);
     
         $("#oanglex").text((data['angle'][0]*10).toFixed(2));

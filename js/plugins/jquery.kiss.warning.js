@@ -18,6 +18,7 @@
     	            c+='<a class="button" href="#">'+data.button+'</a>';
     	        }
     	        c+='</div>';
+    	        
     	        self.addClass('kiss-warning');
     	        self.append(c);
     	        $(".button", self).on("click", data.action);

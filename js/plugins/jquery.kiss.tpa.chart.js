@@ -182,8 +182,8 @@
                 if (ty+11>height) ty=height-11;
                 context.fillText(text1, tx, ty);
                 
-                context.fillText("TPA Influence", padding + 4, padding + 2);
-                context.fillText("Throttle", width - padding - context.measureText("Throttle").width, height - padding - 4);
+                context.fillText($.i18n('title.tpa-influence'), padding + 4, padding + 2);
+                context.fillText($.i18n('column.throttle'), width - padding - context.measureText($.i18n('column.throttle')).width, height - padding - 4);
             }
         }
     };

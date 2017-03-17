@@ -12,7 +12,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
     self.pollEscInfo = false;
 
     GUI.switchContent('esc_flasher', function() {
-         $('#content').load("./content/esc_flasher.html", htmlLoaded);
+         GUI.load("./content/esc_flasher.html", htmlLoaded);
     });
 
     function Write(data) {
@@ -36,13 +36,13 @@ CONTENT.esc_flasher.initialize = function(callback) {
             var startApp = [83, 83, 83];
             Write(startApp);
             console.log('done.');
-            $("#status").html("SUCCESS!");
+            $("#status").html($.i18n("text.esc-flasher-success"));
             $(".esc-flasher-complete").show();
             serialDevice.disconnect();
             return;
         } else {
             var percentage = 100-100*(actPage/self.pages.length);
-              $("#status").html("Progress: " + Math.floor(percentage + 0.5)+"%");
+            $("#status").html($.i18n("text.esc-flasher-progress", Math.floor(percentage + 0.5)));
             console.log('Sending block ' + (actPage + 1));
             Write(self.pages[actPage]);
             var timeout = (actPage == (self.pages.length-1) ? 2000 : 500);
@@ -63,7 +63,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
                     $("#escInfoDiv").show();
                     for (var i=0; i<info.escInfoCount; i++) {
                         if (info.escInfo[i] !== undefined) { 
-                            var li = $("<li/>").html("#"+(i+1)+": Firmware Version: " + info.escInfo[i].type + " " + info.escInfo[i].version + " | S/N: " + info.escInfo[i].SN);
+                            var li = $("<li/>").html("#"+(i+1)+": "+$.i18n("text.firmware-version")+" " + info.escInfo[i].type + " " + info.escInfo[i].version + " "+$.i18n("text.sn")+" " + info.escInfo[i].SN);
                         } else {
                             var li = $("<li/>").html("#"+(i+1)+": --");
                         }
@@ -119,12 +119,12 @@ CONTENT.esc_flasher.initialize = function(callback) {
                                   self.pages = parseBootloaderHexFile(intel_hex);
                                      
                                   if (self.pages!==undefined) {
-                                      console.log("HEX OS OK " + self.pages.length + " blocks loaded");
-                                    $("#file_info").html("Loaded " +  self.pages.length + " blocks from " + path);
+                                    console.log("HEX OS OK " + self.pages.length + " blocks loaded");
+                                    $("#file_info").html($.i18n("text.esc-flasher-loaded", self.pages.length, path));
                                     $("#flash").show();
                                   } else {
                                       console.log("Corrupted esc firmware file");
-                                    $("#file_info").html("Selected esc firmware file is not suitable for flashing");
+                                    $("#file_info").html($.i18n("text.esc-flasher-invalid-firmware"));
                                     $("#flash").hide();
                                   }
                               }

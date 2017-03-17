@@ -11,3 +11,20 @@
     margin-left: 10px;
     border: 2px solid #ad0d0d;
 }
+
+.welcome a.language {
+    margin: 10px 0 0 0;
+    display: inline-block;
+    color: white;
+    padding: 0 10px 0 10px;
+    height: 20px;
+    line-height: 20px;
+    background-color: #430505;
+    color: #888;
+   
+}
+
+.welcome a.selected-language {
+  	background-color: #ad0d0d;
+  	color: white;
+}

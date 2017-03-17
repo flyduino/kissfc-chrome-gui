@@ -120,25 +120,25 @@
                 context.fillStyle = "rgb(131, 10, 10)";
                 context.fillRect(x - 2, y - 2, 4, 4);
 
-                var text1 = Math.abs(Math.round(rcInputRotation)) + " °/sec";
+                var text1 = Math.abs(Math.round(rcInputRotation)) + " °/"+ $.i18n('text.rates-sec');
                 context.font = "12px sans-serif ";
                 context.fillStyle = "rgb(71, 71, 71)";
                 context.fillText(text1, width - context.measureText(text1).width - 2, height - 14);
-                var text2 = Math.abs(Math.round(rcInputRotation * 100 / 360)) / 100 + " " + data.message + "/sec";
+                var text2 = Math.abs(Math.round(rcInputRotation * 100 / 360)) / 100 + " " + data.message +  $.i18n('text.rates-sec');
                 context.fillText(text2, width - context.measureText(text2).width - 2, height - 2);
                 context.fillText(data.name, 2, 12);
-                var maxRotationText = "Max " + Math.round(maxRotation) + " °/sec";
+                var maxRotationText = $.i18n('text.rates-max')+ " " + Math.round(maxRotation) + " °/"+ $.i18n('text.rates-sec');
                 context.fillText(maxRotationText, 2, height - 2);
 
                 if (Math.abs(maxRotation)>=2000) {
                 	context.fillStyle = "rgba(80,0,0,0.8)";
                     context.fillRect(0, 0, width, height);
-                	var text3 = "Max rotation > 2000 °/sec!";
+                	var text3 = $.i18n('text.rates-max-rotation'); //"Max rotation > 2000 °/sec!";
                     context.font = "14px sans-serif ";
                     context.fillStyle = "rgb(255, 255, 255)";
                     context.fillText(text3, (width - context.measureText(text3).width) >> 1, hh + 10);
                     
-                	var text4 = "W A R N I N G";
+                	var text4 = $.i18n('text.rates-warning');
                     context.font = "16px sans-serif ";
                     context.fillStyle = "rgb(255, 255, 255)";
                     context.fillText(text4, (width - context.measureText(text4).width) >> 1, hh - 10 );

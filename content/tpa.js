@@ -15,7 +15,7 @@ CONTENT.tpa.initialize = function(callback) {
     GUI.switchContent('tpa', function() {
         kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
             self.settingsFilled = 1;
-            $('#content').load("./content/tpa.html", function() {
+            GUI.load("./content/tpa.html", function() {
                   htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
             });
         });
@@ -73,7 +73,7 @@ CONTENT.tpa.initialize = function(callback) {
 
     function htmlLoaded(data) {
         // generate receiver bars
-        var receiverNames = ['Throttle']
+        var receiverNames = [$.i18n("column.throttle")]
         var receiverChannels = [0];
         var receiverContainer = $('.tpa .receiver .bars');
         var receiverFillArray = [];
