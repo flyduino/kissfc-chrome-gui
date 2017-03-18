@@ -229,6 +229,7 @@
 	"led.custom": "Custom",
 	"title.motors": "Motors",
 	"title.other": "Other",
+	"title.telemetry": "Telemetry",
 	"button.test": "TEST",
 	"button.calibrate-accelerometer": "Calibrate Accelerometer",
 	"text.motor-test-button": "I KNOW WHAT I AM DOING",
