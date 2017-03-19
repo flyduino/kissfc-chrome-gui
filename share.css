@@ -50,16 +50,43 @@
     border-radius: 4px;
 }
 
-.topic {
+.section-header {
+    position: relative;
     display: block;
-    font-size: 1rem;
+    font-size: 0.875rem;
     color: var(--white);
     font-weight: bold;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    background: rgba(0,0,0,0.24);
+    border-radius: 2px 2px 0 0;
     min-width: 100%;
     text-transform: uppercase;
+}
+
+.section-header input[type="checkbox"] + label {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    width: 1.5rem;
+    height: 0.875rem;
+}
+
+.section-header input[type="checkbox"] + label:before {
+    width: 0.625rem;
+    height: 0.625rem;
+
+}
+
+.section-header input[type="checkbox"]:checked + label:before {
+    margin-left: 0.625rem;
+}
+
+.section-content {
+    display: block;
+    padding: 1rem;
+    background: rgba(0,0,0,0.12);
+    border-radius: 0 0 2px 2px;
+    min-width: 100%;
 }
 
 .global-buttons {
@@ -112,7 +139,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.6);
 }
 
 .modal-container {
@@ -125,9 +152,10 @@
 
 .modal-content {
     width: 32rem;
-    background: var(--dark);
+    background: var(--still-dark);
     border-radius: 4px;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4);
+    margin-bottom: 12rem;
+    box-shadow: 0 2px 16px 0 rgba(0,0,0,0.4);
 }
 
 .graph {
@@ -164,11 +192,17 @@
 .w-90 {  width:  90%; }
 .w-100 { width: 100%; }
 
-.dn {    display: none; }
-.di {    display: inline; }
-.db {    display: block; }
-.dib {   display: inline-block; }
-.dit {   display: inline-table; }
+.dn {              display: none; }
+.di {              display: inline; }
+.db {              display: block; }
+.dib {             display: inline-block; }
+.dit {             display: inline-table; }
+.dt {              display: table; }
+.dtc {             display: table-cell; }
+.dt-row {          display: table-row; }
+.dt-row-group {    display: table-row-group; }
+.dt-col-sumn {       display: table-col-sumn; }
+.dt-col-sumn-group { display: table-col-sumn-group; }
 
 .f1 { font-size: .75rem; }
 .f2 { font-size: .875rem; }
@@ -194,6 +228,11 @@
 .fw7    { font-weight: 700; }
 .fw8    { font-weight: 800; }
 .fw9    { font-weight: 900; }
+
+.ttc { text-transform: capitalize; }
+.ttl { text-transform: lowercase; }
+.ttu { text-transform: uppercase; }
+.ttn { text-transform: none; }
 
 :root {
       --spacing-none: 0;

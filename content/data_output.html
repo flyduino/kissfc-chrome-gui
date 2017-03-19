@@ -1,82 +1,90 @@
-<div class="row mb6">
+<div class="row mb5">
     <div class="col-3 pr5">
-        <div class="topic">Receiver</div>
-        <table class="receiver-bars w-100">
-        </table>
+        <div class="section-header">Receiver</div>
+        <div class="section-content">
+            <table class="receiver-bars w-100">
+            </table>
+        </div>
     </div>
     <div class="col-3 pr5">
-        <div id="motorTestTitle" class="topic">
+        <div id="motorTestTitle" class="section-header">
             Motors
             <a class="motor-test-button" href="#" style="font-size:11px;">TEST</a>
             <input style="display:none" type="checkbox" class="motor-test-enabled"/>
         </div>
-        <table class="motor-bars w-100">
-        </table>
+        <div class="section-content">
+            <table class="motor-bars w-100">
+            </table>
+        </div>
     </div>
     <div class="col-2">
-        <div class="topic">Other</div>
-        <table class="otherValues w-100">
-        	<tr>
-                <td class="pb2">
-                    <label class="mr1">Mode:</label>
-                </td>
-                <td id="omode" class="pb2 f2 fw6 w-100">
-                </td>
-            </tr>
-            <tr>
-                <td class="pb2">
-                    <label class="mr1">Status:</label>
-                </td>
-                <td id="ostatus" class="pb2 f2 fw6 w-100">
-                </td>
-            </tr>
-        	<tr>
-                <td class="pb2">
-                    <label class="mr1">AngleX:</label>
-                </td>
-                <td id="oanglex" class="pb2 f2 fw6 w-100">
-                </td>
-            </tr>
-        	<tr>
-                <td class="pb2">
-                    <label class="mr1">AngleY:</label>
-                </td>
-                <td id="oangley" class="pb2 f2 fw6 w-100">
-                </td>
-            </tr>
-            <tr>
-                <td class="pb2">
-                    <label class="mr1">Idle:</label>
-                </td>
-                <td id="idle" class="pb2 f2 fw6 w-100">
-                </td>
-            </tr>
-            <tr>
-                <td class="pb2">
-                    <label class="mr1">Voltage:</label>
-                </td>
-                <td id="Vbat" class="pb2 f2 fw6 w-100"></td>
-            </tr>
-        	<tr>
-                <td colspan="4">
-                    <a class="calibrateAccelerometer button" href="#">Calibrate Accelerometer</a>
-                </td>
-            </tr>
-        </table>
+        <div class="section-header">Other</div>
+        <div class="section-content">
+            <table class="otherValues w-100">
+                <tr>
+                    <td class="pb2">
+                        <label class="mr1">Mode:</label>
+                    </td>
+                    <td id="omode" class="pb2 f2 fw6 w-100">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="pb2">
+                        <label class="mr1">Status:</label>
+                    </td>
+                    <td id="ostatus" class="pb2 f2 fw6 w-100">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="pb2">
+                        <label class="mr1">AngleX:</label>
+                    </td>
+                    <td id="oanglex" class="pb2 f2 fw6 w-100">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="pb2">
+                        <label class="mr1">AngleY:</label>
+                    </td>
+                    <td id="oangley" class="pb2 f2 fw6 w-100">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="pb2">
+                        <label class="mr1">Idle:</label>
+                    </td>
+                    <td id="idle" class="pb2 f2 fw6 w-100">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="pb2">
+                        <label class="mr1">Voltage:</label>
+                    </td>
+                    <td id="Vbat" class="pb2 f2 fw6 w-100"></td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <a class="calibrateAccelerometer button" href="#">Calibrate Accelerometer</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-8 mb2">
-        <div class="topic">Telemetry</div>
-        <select name="graphTitle" style="position: relative; top:-1px;">
-            <option value="0">Gyro &amp; ACC Data:</option>
-            <!--<option value="1">ESC Temperatures:</option>
-            <option value="2">ESC Voltanges:</option>
-            <option value="3">ESC Currents:</option>
-            <option value="4">ESC used W/h</option>
-            <option value="5">ESC E-RpM / 1000</option> -->
-        </select>
+        <div class="section-header">Telemetry</div>
+        <div class="section-content">
+            <select name="graphTitle" style="position: relative; top:-1px;">
+                <option value="0">Gyro &amp; ACC Data:</option>
+                <!--<option value="1">ESC Temperatures:</option>
+                <option value="2">ESC Voltanges:</option>
+                <option value="3">ESC Currents:</option>
+                <option value="4">ESC used W/h</option>
+                <option value="5">ESC E-RpM / 1000</option> -->
+            </select>
+        </div>
     </div>
     <div class="col-8">
         <table class="w-100 f2" cellpadding="0" cellspacing="0">
@@ -127,7 +135,6 @@
         </table>
     </div>
 </div>
-
 
 <div class="content-locker">
     <div class="modal-container">

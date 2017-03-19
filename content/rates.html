@@ -1,54 +1,60 @@
 <div class="row">
     <div class="col-5 pr5">
-        <div class="topic">Charts</div>
-        <div id="charts">
-            <dic class="chart-container">
-                <div id="rates_chart_roll" class="chart-content"></div>
-            </dic>
-            <dic class="chart-container">
-                <div id="rates_chart_pitch" class="chart-content"></div>
-            </dic>
-            <dic class="chart-container">
-                <div id="rates_chart_yaw" class="chart-content"></div>
-            </dic>
-            <div id="model" class="rc-chart"></div>
+        <div class="section-header">Charts</div>
+        <div class="section-content">
+            <div id="charts">
+                <dic class="chart-container">
+                    <div id="rates_chart_roll" class="chart-content"></div>
+                </dic>
+                <dic class="chart-container">
+                    <div id="rates_chart_pitch" class="chart-content"></div>
+                </dic>
+                <dic class="chart-container">
+                    <div id="rates_chart_yaw" class="chart-content"></div>
+                </dic>
+                <div id="model" class="rc-chart"></div>
+            </div>
         </div>
     </div>
     <div class="col-3">
         <div class="row">
-            <div class="col-8 mb6">
-                <div class="topic">Receiver</div>
-                <table class="receiver-bars"></table>
+            <div class="col-8 mb5">
+                <div class="section-header">Receiver</div>
+                <div class="section-content">
+                    <table class="receiver-bars"></table>
+                </div>
             </div>
         
             <div class="col-8">
-                <div class="topic">Rates</div>
-                <table class="rc_rates">
-                    <tr>
-                        <th class="name"></th>
-                        <th class="rate pb1 f2">RC Rate</th>
-                        <th class="expo pb1 f2">Rate</th>
-                        <th class="curve pb1 f2">RC Curve</th>
-                    </tr>
-                    <tr class="roll">
-                        <td class="name pr2 f2">Roll</td>
-                        <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                        <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                        <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                    </tr>
-                    <tr class="pitch">
-                        <td class="name pr2 f2">Pitch</td>
-                        <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                        <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                        <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                    </tr>
-                    <tr class="yaw">
-                        <td class="name pr2 f2">Yaw</td>
-                        <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                        <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                        <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                    </tr>
-                </table>
+                <div class="section-header">Rates</div>
+                <div class="section-content">
+                    <table class="rc_rates">
+                        <tr>
+                            <th class="name"></th>
+                            <th class="rate pb1 f2">RC Rate</th>
+                            <th class="expo pb1 f2">Rate</th>
+                            <th class="curve pb1 f2">RC Curve</th>
+                        </tr>
+                        <tr class="roll">
+                            <td class="name pr2 f2">Roll</td>
+                            <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                            <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                            <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                        </tr>
+                        <tr class="pitch">
+                            <td class="name pr2 f2">Pitch</td>
+                            <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                            <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                            <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                        </tr>
+                        <tr class="yaw">
+                            <td class="name pr2 f2">Yaw</td>
+                            <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                            <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                            <td><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

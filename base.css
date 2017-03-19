@@ -38,7 +38,6 @@ a:hover {
     min-width: 4.5rem;
     max-width: 4.5rem; 
     background: var(--much-dark);
-    border-right: 1px solid rgba(0,0,0,0.08);
 }
 
 .layout-main {
@@ -225,6 +224,7 @@ input[type="number"] {
 
 input[type="number"]:disabled {
     color: var(--much-gray);
+    background: var(--dark);
 }
 
 input[type="number"]:disabled::-webkit-inner-spin-button,
@@ -247,7 +247,7 @@ input[type="number"] {
     position: relative;
     width: 100%;
     min-width: 2rem;
-    max-width: 6rem;
+    max-width: 100%;
     text-align: right;
     padding: 0.5rem 1.5rem 0.5rem 0.5rem;
 }
@@ -269,42 +269,43 @@ input[type="number"]::-webkit-outer-spin-button {
 
 input[type="checkbox"] {
     position: absolute;
-    margin-left: -9999px;
+    display: block;
+    padding: 0;
+    margin: 0;
     visibility: hidden;
+    opacity: 0;
 }
 
 input[type="checkbox"] + label {
     position: relative;
-    display: inline-block;
+    display: block;
     cursor: pointer;
-    width: 3.5rem;
-    height: 1.75rem;
-    margin: 0.125rem 0;
+    width: 2.75rem;
+    height: 1.5rem;
     border-radius: 1rem;
     background: var(--less-dark);
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
 }
 
 input[type="checkbox"]:disabled {
-
+    opacity: 0.6;
 }
 
 input[type="checkbox"] + label:before {
     position: absolute;
     content: "";
-    display: inline-block;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.25rem;
+    height: 1.25rem;
     left: 0.125rem;
     top: 0.125rem;
+    bottom: 0.125rem;
     background-color: var(--dark);
     border-radius: 1rem;
     transition: margin 0.2s, background 0.2s;
 }
 
 input[type="checkbox"]:checked + label:before {
-    margin-left: 1.75rem;
-    background-color: green;
+    margin-left: 1.25rem;
 }
 
 input[type="checkbox"]:hover + label:before,

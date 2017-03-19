@@ -1,148 +1,156 @@
 <div class="tpa row">
     <div class="col-5 pr5">
         <div class="row">
-            <div class="col-8 mb6">
-                <div class="topic">TPA influence chart</div>
-                <div id="charts">
-                    <div id="tpa_chart" class="tpa_chart"></div>
+            <div class="col-8 mb5">
+                <div class="section-header">TPA influence chart</div>
+                <div class="section-content">
+                    <div id="charts">
+                        <div id="tpa_chart" class="tpa_chart"></div>
+                    </div>
                 </div>
             </div>
-            <div class="col-8 mb6">
-                <div class="topic">PIDS</div>
-                <table class="pids" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <th class="name"></th>
-                        <th class="p pb1 f2">P</th>
-                        <th class="i fs-normal pb1 f2">I</th>
-                        <th class="d pb1 f2">D</th>
-                        <th class="p pb1 f2">P</th>
-                        <th class="i fs-normal pb1 f2">I</th>
-                        <th class="d pb1 f2">D</th>
-                    </tr>
-                    <tr class="roll">
-                        <td class="w2 pr2 f2">Roll</td>
-                        <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2"></td>
-                        <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.001" data-precision="3"></td>
-                        <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2"></td>
-                        <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
-                        <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
-                        <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
-                    </tr>
-                    <tr class="pitch">
-                        <td class="w2 pr2 f2">Pitch</td>
-                        <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2"></td>
-                        <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.001" data-precision="3"></td>
-                        <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2"></td>
-                        <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
-                        <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
-                        <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
-                    </tr>
-                    <tr class="yaw">
-                        <td class="w2 pr2 f2">Yaw</td>
-                        <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2"></td>
-                        <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.001" data-precision="3"></td>
-                        <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2"></td>
-                        <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
-                        <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
-                        <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
-                    </tr>
-                    <tr class="TPA">
-                        <td class="w2 pr2 f2">TPA</td>
-                        <td class="pb1 pr1"><input type="number" data-min="0" data-max="0.9" data-step="0.01" data-precision="2"></td>
-                        <td class="pb1 pr1"><input type="number" data-min="0" data-max="0.9" data-step="0.01" data-precision="2"></td>
-                        <td class="pb1 pr1"><input type="number" data-min="0" data-max="0.9" data-step="0.01" data-precision="2"></td>
-                    </tr>
-                </table>
+            <div class="col-8 mb5">
+                <div class="section-header">PIDS</div>
+                <div class="section-content">
+                    <table class="pids" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th class="name"></th>
+                            <th class="p pb1 f2">P</th>
+                            <th class="i fs-normal pb1 f2">I</th>
+                            <th class="d pb1 f2">D</th>
+                            <th class="p pb1 f2">P</th>
+                            <th class="i fs-normal pb1 f2">I</th>
+                            <th class="d pb1 f2">D</th>
+                        </tr>
+                        <tr class="roll">
+                            <td class="w2 pr2 f2">Roll</td>
+                            <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2"></td>
+                            <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.001" data-precision="3"></td>
+                            <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2"></td>
+                            <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
+                            <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
+                            <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
+                        </tr>
+                        <tr class="pitch">
+                            <td class="w2 pr2 f2">Pitch</td>
+                            <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2"></td>
+                            <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.001" data-precision="3"></td>
+                            <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2"></td>
+                            <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
+                            <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
+                            <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
+                        </tr>
+                        <tr class="yaw">
+                            <td class="w2 pr2 f2">Yaw</td>
+                            <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2"></td>
+                            <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.001" data-precision="3"></td>
+                            <td class="pb1 pr1"><input type="number" data-min="0" data-max="65" data-step="0.01" data-precision="2"></td>
+                            <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
+                            <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
+                            <td class="pb1 pr1"><input class="cpid" type="number" value="0.0" disabled></td>
+                        </tr>
+                        <tr class="TPA">
+                            <td class="w2 pr2 f2">TPA</td>
+                            <td class="pb1 pr1"><input type="number" data-min="0" data-max="0.9" data-step="0.01" data-precision="2"></td>
+                            <td class="pb1 pr1"><input type="number" data-min="0" data-max="0.9" data-step="0.01" data-precision="2"></td>
+                            <td class="pb1 pr1"><input type="number" data-min="0" data-max="0.9" data-step="0.01" data-precision="2"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-8 mb5">
+                <div class="section-header">TPA influence <input type="checkbox" name="UCTI"></div>
+                <div class="section-content">
+                    <table class="tpa_influence" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td></td>
+                            <td class="pb1 f2">Zero Throttle</td>
+                            <td class="pb1 f2">Breakpoint 1</td>
+                            <td class="pb1 f2">Breakpoint 2</td>
+                            <td class="pb1 f2">Full Throttle</td>
+                        </tr>
+                        <tr>
+                            <td class="pb1 pr2 f2">Throttle [%]</td>
+                            <td class="pb1 pr1"><input disabled type="number" value="0"></td>
+                            <td class="pb1 pr1"><input disabled type="number" name="BP1" data-min="0" data-max="100" data-step="1" data-precision="0" value="30"></td>
+                            <td class="pb1 pr1"><input disabled type="number" name="BP2" data-min="0" data-max="100" data-step="1" data-precision="0" value="50"></td>
+                            <td class="pb1 pr1"><input disabled type="number" value="100"></td>
+                        </tr>
+                        <tr>
+                            <td class="pb1 pr2 f2">Influence [%]</td>
+                            <td class="pb1 pr1"><input disabled type="number" name="BPI1" data-min="0" data-max="100" data-step="1" data-precision="0" value="30"></td>
+                            <td class="pb1 pr1"><input disabled type="number" name="BPI2" data-min="0" data-max="100" data-step="1"
+                                data-precision="0" value="0"></td>
+                            <td class="pb1 pr1"><input disabled type="number" name="BPI3" data-min="0" data-max="100" data-step="1" data-precision="0" value="0"></td>
+                            <td class="pb1 pr1"><input disabled type="number" name="BPI4" data-min="0" data-max="100" data-step="1" data-precision="0" value="100"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="section-header">Battery influence <input type="checkbox" name="UVPID"></div>
+                <div class="section-content">
+                    <table class="voltage_influence mb2" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td></td>
+                            <td class="pb1 f2">Voltage 1</td>
+                            <td class="pb1 f2">Voltage 2</td>
+                            <td class="pb1 f2">Voltage 3</td>
+                        </tr>
+                        <tr>
+                            <td class="pb1 pr2 f2">Lipo Voltage [V]</td>
+                            <td class="pb1 pr1"><input disabled type="number" size="3" name="LV1" data-min="0" data-max="100" data-step="0.1" data-precision="1" value="12.8"></td>
+                            <td class="pb1 pr1"><input disabled type="number" size="3" name="LV2" data-min="0" data-max="100" data-step="0.1" data-precision="1" value="14.8"></td>
+                            <td class="pb1 pr1"><input disabled type="number" size="3" name="LV3" data-min="0" data-max="100" data-step="0.1" data-precision="1" value="16.8"></td>
+                        </tr>
+                        <tr>
+                            <td class="pb1 pr2 f2">PID strength [%]</td>
+                            <td class="pb1 pr1"><input disabled type="number" size="3" name="LVP1" data-min="0" data-max="250" data-step="1" data-precision="0" value="130"></td>
+                            <td class="pb1 pr1"><input disabled type="number" size="3" name="LVP2" data-min="0" data-max="250" data-step="1" data-precision="0" value="100"></td>
+                            <td class="pb1 pr1"><input disabled type="number" size="3" name="LVP3" data-min="0" data-max="250" data-step="1" data-precision="0" value="70"></td>
+                        </tr>
+                    </table>
+                    <div class="f2">
+                        With battery voltage
+                        <select id="simulatedVoltage">
+                            <option value="10">10v</option>
+                            <option value="10.5">10.5v</option>
+                            <option value="11">11v</option>
+                            <option value="11.5">11.5v</option>
+                            <option value="12">12v</option>
+                            <option value="12.5">12.5v</option>
+                            <option value="13">13v</option>
+                            <option value="13.5">13.5v</option>
+                            <option value="14">14v</option>
+                            <option value="14.5">14.5v</option>
+                            <option value="15" selected>15v</option>
+                            <option value="15.5">15.5v</option>
+                            <option value="16">16v</option>
+                            <option value="16.5">16.5v</option>
+                            <option value="17">17v</option>
+                            <option value="17.5">17.5v</option>
+                            <option value="18">18v</option>
+                            <option value="18.5">18.5v</option>
+                            <option value="19">19v</option>
+                            <option value="19.5">19.5v</option>
+                            <option value="20">20v</option>
+                            <option value="20.5">20.5v</option>
+                            <option value="21">21v</option>
+                            <option value="21.5">21.5v</option>
+                            <option value="22">22v</option>
+                            <option value="22.5">22.5v</option>
+                        </select>
+                        its influence on PIDS will be
+                        <span id="simulatedBatteryInfluence">0</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <div class="col-3">
-        <div class="topic">Receiver</div>
-        <table class="receiver-bars"></table>
-    </div>
-</div>
-<div class="row">
-    <div class="col-4 pr5">
-        <div class="topic">TPA influence <input type="checkbox" name="UCTI"></div>
-        <table class="tpa_influence" cellpadding="0" cellspacing="0">
-            <tr>
-                <td></td>
-                <td class="pb1 f2">Zero Throttle</td>
-                <td class="pb1 f2">Breakpoint 1</td>
-                <td class="pb1 f2">Breakpoint 2</td>
-                <td class="pb1 f2">Full Throttle</td>
-            </tr>
-            <tr>
-                <td class="pb1 pr2 f2">Throttle [%]</td>
-                <td class="pb1 pr1"><input disabled type="number" value="0"></td>
-                <td class="pb1 pr1"><input disabled type="number" name="BP1" data-min="0" data-max="100" data-step="1" data-precision="0" value="30"></td>
-                <td class="pb1 pr1"><input disabled type="number" name="BP2" data-min="0" data-max="100" data-step="1" data-precision="0" value="50"></td>
-                <td class="pb1 pr1"><input disabled type="number" value="100"></td>
-            </tr>
-            <tr>
-                <td class="pb1 pr2 f2">Influence [%]</td>
-                <td class="pb1 pr1"><input disabled type="number" name="BPI1" data-min="0" data-max="100" data-step="1" data-precision="0" value="30"></td>
-                <td class="pb1 pr1"><input disabled type="number" name="BPI2" data-min="0" data-max="100" data-step="1"
-                    data-precision="0" value="0"></td>
-                <td class="pb1 pr1"><input disabled type="number" name="BPI3" data-min="0" data-max="100" data-step="1" data-precision="0" value="0"></td>
-                <td class="pb1 pr1"><input disabled type="number" name="BPI4" data-min="0" data-max="100" data-step="1" data-precision="0" value="100"></td>
-            </tr>
-        </table>
-    </div>
-    <div class="col-4">
-        <div class="topic">Battery influence <input type="checkbox" name="UVPID"></div>
-        <table class="voltage_influence mb2" cellpadding="0" cellspacing="0">
-            <tr>
-                <td></td>
-                <td class="pb1 f2">Voltage 1</td>
-                <td class="pb1 f2">Voltage 2</td>
-                <td class="pb1 f2">Voltage 3</td>
-            </tr>
-            <tr>
-                <td class="pb1 pr2 f2">Lipo Voltage [V]</td>
-                <td class="pb1 pr1"><input disabled type="number" size="3" name="LV1" data-min="0" data-max="100" data-step="0.1" data-precision="1" value="12.8"></td>
-                <td class="pb1 pr1"><input disabled type="number" size="3" name="LV2" data-min="0" data-max="100" data-step="0.1" data-precision="1" value="14.8"></td>
-                <td class="pb1 pr1"><input disabled type="number" size="3" name="LV3" data-min="0" data-max="100" data-step="0.1" data-precision="1" value="16.8"></td>
-            </tr>
-            <tr>
-                <td class="pb1 pr2 f2">PID strength [%]</td>
-                <td class="pb1 pr1"><input disabled type="number" size="3" name="LVP1" data-min="0" data-max="250" data-step="1" data-precision="0" value="130"></td>
-                <td class="pb1 pr1"><input disabled type="number" size="3" name="LVP2" data-min="0" data-max="250" data-step="1" data-precision="0" value="100"></td>
-                <td class="pb1 pr1"><input disabled type="number" size="3" name="LVP3" data-min="0" data-max="250" data-step="1" data-precision="0" value="70"></td>
-            </tr>
-        </table>
-        <div class="f2">
-            With battery voltage
-            <select id="simulatedVoltage">
-                <option value="10">10v</option>
-                <option value="10.5">10.5v</option>
-                <option value="11">11v</option>
-                <option value="11.5">11.5v</option>
-                <option value="12">12v</option>
-                <option value="12.5">12.5v</option>
-                <option value="13">13v</option>
-                <option value="13.5">13.5v</option>
-                <option value="14">14v</option>
-                <option value="14.5">14.5v</option>
-                <option value="15" selected>15v</option>
-                <option value="15.5">15.5v</option>
-                <option value="16">16v</option>
-                <option value="16.5">16.5v</option>
-                <option value="17">17v</option>
-                <option value="17.5">17.5v</option>
-                <option value="18">18v</option>
-                <option value="18.5">18.5v</option>
-                <option value="19">19v</option>
-                <option value="19.5">19.5v</option>
-                <option value="20">20v</option>
-                <option value="20.5">20.5v</option>
-                <option value="21">21v</option>
-                <option value="21.5">21.5v</option>
-                <option value="22">22v</option>
-                <option value="22.5">22.5v</option>
-            </select>
-            its influence on PIDS will be
-            <span id="simulatedBatteryInfluence">0</span>
+        <div class="section-header">Receiver</div>
+        <div class="section-content">
+            <table class="receiver-bars"></table>
         </div>
     </div>
 </div>
