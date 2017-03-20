@@ -297,7 +297,7 @@
 	"voltage.1": "Spänning 1",
 	"voltage.2": "Spänning 2",
 	"voltage.3": "Spänning 3",
-	"text.voltage-prefix": "Med batterispänniong",
+	"text.voltage-prefix": "Med batterispänning",
 	"text.voltage-suffix": "dess påverkan på PID blir",
 	"volts.10": "10v",
 	"volts.10.5": "10.5v",
