@@ -27,7 +27,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
     function Read(info) {
         if (info.data.byteLength>0) {
             var view = new Uint8Array(info.data);
-            self.flasherAvailable = (view[0]==64);
+            self.flasherAvailable = (view[0]==65);
         }
     }
 
@@ -146,7 +146,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
               console.log('Setting KISS FC to ESC write mode');
               var flasherAvailable = false;
               serialDevice.onReceive.addListener(Read);
-              Write([64]);
+              Write([65]);
               console.log('Waiting for FC');
               setTimeout(function() {
                     serialDevice.onReceive.removeListener(Read);
