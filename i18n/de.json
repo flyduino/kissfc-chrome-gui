@@ -1,9 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Alex Wolf"
+			"Alexander Wolf"
 		],
-		"last-updated": "2017-03-14",
+		"last-updated": "2017-03-21",
 		"locale": "de",
 		"message-documentation": "qqq"
 	},
@@ -46,7 +46,7 @@
 	"column.p": "P",
 	"column.i": "I",
 	"column.d": "D",
-	"column.throttle": "Drossel",
+	"column.throttle": "Gas",
 	"column.roll": "Roll",
 	"column.pitch": "Nick",
 	"column.yaw": "Gier",
@@ -57,8 +57,8 @@
 	"column.rc-expo": "Rate",
 	"column.rc-curve": "RC Kurve",
 	"column.lpf-frequency": "LPF FRQ",
-	"column.min-throttle": "Min. Drossel",
-	"column.max-throttle": "Max. Drossel",
+	"column.min-throttle": "Min. Gas",
+	"column.max-throttle": "Max. Gas",
 	"column.min-command": "Min. Kommando",
 	"column.mid-command": "Mid. Kommando",
 	"column.esc-mode": "ESC Modus",
@@ -287,13 +287,13 @@
 	"column.custom-tpa-influence": "Angepasste TPA Einflusswerte benutzen",
 	"column.pid-voltage-correction": "PID Spannungsabhängige Korrektur benutzen",
 	"column.influence-percentage": "Einfluss [%]",
-	"column.throttle-percentage": "Drossel [%]",
+	"column.throttle-percentage": "Gas [%]",
 	"column.battery-voltage": "Lipo Spannung [V]",
 	"column.pid-strength-percentage": "PID Stärke [%]",
-	"breakpoint.1": "Drossel bei Null",
+	"breakpoint.1": "Gas bei Null",
 	"breakpoint.2": "Einstellpunkt 1",
 	"breakpoint.3": "Einstellpunkt 2",
-	"breakpoint.4": "Drossel bei Vollgas",
+	"breakpoint.4": "Vollgas",
 	"voltage.1": "Spannung 1",
 	"voltage.2": "Spannung 2",
 	"voltage.3": "Spannung 3",
