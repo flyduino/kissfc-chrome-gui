@@ -328,16 +328,16 @@
     
     
     "title.pids" : "PIDs",
-    "title.tpa-influence-chart": "TPA influence chart",
-    "title.tpa-influence": "TPA influence",
-    "title.battery-influence": "Battery influence",
+    "title.tpa-influence-chart": "Wykres wpływu TPA",
+    "title.tpa-influence": "Wpływ TPA",
+    "title.battery-influence": "Wpływ Batterii",
     
-    "column.custom-tpa-influence": "Use custom TPA influence values",
-    "column.pid-voltage-correction": "Use PID Voltage Correction",
-    "column.influence-percentage": "Influence [%]",
+    "column.custom-tpa-influence": "Użyj własnych wartości wpływów TPA",
+    "column.pid-voltage-correction": "Użyj korekcji napięcia PID",
+    "column.influence-percentage": "Wpływ [%]",
     "column.throttle-percentage": "Throttle [%]",
-    "column.battery-voltage": "Lipo Voltage [V]",
-    "column.pid-strength-percentage": "PID strength [%]",
+    "column.battery-voltage": "Napięcie Lipo [V]",
+    "column.pid-strength-percentage": "Siła PID [%]",
     
     
  	"breakpoint.1": "Zero Throttle",
@@ -349,8 +349,8 @@
 	"voltage.2": "Voltage 2",
 	"voltage.3": "Voltage 3",
 	
-	"text.voltage-prefix": "With battery voltage",
-	"text.voltage-suffix": "its influence on PIDS will be",
+	"text.voltage-prefix": "Z napięciem baterii",
+	"text.voltage-suffix": "wpływ na PIDy będzie",
 	
     "volts.10":   "10v",
     "volts.10.5": "10.5v",
