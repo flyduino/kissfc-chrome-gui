@@ -49,9 +49,10 @@
     </head>
     <body>
         <div class="layout-container">
+            <div class="layout-block"></div>
             <sidebar class="layout-sidebar">
                 <div class="left-title">
-                    <h1 id="kiss" class="f6 i ma0 pv4 pl5 pr2 fw8">KISS</h1>
+                    <h1 id="kiss" class="f6 i ma0 pv4 pl5 pr2 fw8 dib">KISS</h1>
                     <span class="gui-version fs-normal pile">2.0b</span>
                 </div>
                 <nav id="navigation">
@@ -124,13 +125,15 @@
                     </ul>
                 </nav>
             </sidebar>
-
             <div class="layout-main">
                 <div class="layout-header">
                     <div class="row">
-                        <div class="col-8 end">
+                        <div class="col-2">
+                            <a class="mobile-menu button dib dn-l" href="#">Menu</a>
+                        </div>
+                        <div class="col-6 end">
                             <div id="portArea">
-                                <select id="port" title="Port" class="select mr2">
+                                <select id="port" title="Port" class="select mr2 w6">
                                     <!-- ports -->
                                 </select>
                                 <a class="button highlight connect" href="#">Connect</a>

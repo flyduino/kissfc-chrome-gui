@@ -19,6 +19,7 @@ body {
 a {
     text-decoration: none;
     color: var(--red);
+    transition: all 0.2s;
 }
 
 a:hover {
@@ -26,6 +27,7 @@ a:hover {
 }
 
 .layout-container {
+    position: relative;
     display: flex;
     flex-direction: row;
     width: 100vw;
@@ -33,17 +35,59 @@ a:hover {
 }
 
 .layout-sidebar {
-    position: relative;
-    flex: 1;
-    min-width: 4.5rem;
-    max-width: 4.5rem; 
+    position: absolute;
+    width: 16rem;
+    height: 100%;
+    min-width: 16rem;
+    max-width: 16rem;
+    z-index: 9998;
     background: var(--much-dark);
+    transform: translate3d(-16rem,0,0);
+    transition: transform .2s;
+}
+
+.layout-sidebar.visible {
+    transform: translate3d(0,0,0);
+}
+
+.layout-block {
+    display: none;
+    position: fixed;
+    z-index: 9997;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.64);
+    transition: all .2s;
+}
+
+.layout-block.visible {
+    display: block;
 }
 
 .layout-main {
     display: flex;
     flex-direction: column;
     width: 100%;
+    z-index: 1;
+}
+
+@media only screen and (min-width: 1024px) {
+    .layout-sidebar {
+        position: relative;
+        flex: 1;
+        transform: translate3d(0,0,0);
+        transition: 0s;
+    }
+
+    .layout-main {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
 }
 
 .layout-header {
@@ -56,8 +100,13 @@ a:hover {
 
 .layout-content {
     flex: 1;
-    overflow: auto;
-    padding: 2rem;
+    padding: 1rem;
+}
+
+@media only screen and (min-width: 1024px) {
+    .layout-content {
+        padding: 2rem;
+    }
 }
 
 .left-title {
@@ -66,16 +115,6 @@ a:hover {
     height: 4rem;
     background: var(--much-dark);
     border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-.left-title h1 {
-    display: none;
-}
-
-.left-title .gui-version {
-    width: 2.5rem;
-    margin-left: 1rem;
-    text-align: center;
 }
 
 .left-nav {
@@ -89,10 +128,10 @@ a:hover {
     position: relative;
     display: block;
     margin-bottom: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem 0.5rem 3rem;
     min-height: 2rem;
     min-width: 2.5rem;
-    width: 2.5rem;
+    width: 14rem;
     line-height: 1rem;
     font-weight: 600;
     font-size: 0.75rem;
@@ -100,10 +139,6 @@ a:hover {
     border-radius: 2px;
     text-transform: uppercase;
     white-space: nowrap;
-}
-
-.left-nav li span {
-    display: none;
 }
 
 .left-nav li.unlocked:hover:not(.active) {
@@ -123,7 +158,7 @@ a:hover {
 .left-nav li.active:hover,
 .left-nav li.unlocked:hover {
     width: auto;
-    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    padding: 0.5rem 1rem 0.5rem 3rem;
 }
 
 .left-nav li.active:hover span,
@@ -134,7 +169,7 @@ a:hover {
 .left-nav li svg.icon {
     position: absolute;
     top: 0.25rem;
-    left: 0.5rem;
+    left: 1rem;
 }
 
 .left-nav li svg.icon path,
@@ -150,40 +185,6 @@ a:hover {
 .left-nav li.active svg.icon path,
 .left-nav li.active svg.icon polygon {
     fill: var(--near-white);
-}
-
-@media only screen and (min-width: 80rem) {
-    .layout-sidebar {
-        min-width: 16rem;
-        max-width: 16rem;
-    }
-
-    .left-title h1 {
-        display: inline-block;
-    }
-
-    .left-title .gui-version {
-        margin: 0;
-        width: auto;
-    }
-
-    .left-nav li {
-        width: 14rem;
-    }
-
-    .left-nav li,
-    .left-nav li.active:hover,
-    .left-nav li.unlocked:hover {
-        padding: 0.5rem 1rem 0.5rem 3rem;
-    }
-
-    .left-nav li span {
-        display: inline;
-    }
-
-    .left-nav li svg.icon {
-        left: 1rem;
-    }
 }
 
 select {
@@ -245,9 +246,8 @@ input:placeholder {
 
 input[type="number"] {
     position: relative;
-    width: 100%;
-    min-width: 2rem;
-    max-width: 100%;
+    min-width: 5rem;
+    max-width: 10rem;
     text-align: right;
     padding: 0.5rem 1.5rem 0.5rem 0.5rem;
 }
