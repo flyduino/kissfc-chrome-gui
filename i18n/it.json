@@ -249,6 +249,7 @@
 
     "title.motors": "Motori",
     "title.other": "Altro",
+	"title.telemetry": "Telemetria",
 
     "button.test": "TEST",
     "button.calibrate-accelerometer": "Calibrata Accelerometro",
