@@ -267,7 +267,7 @@
     "text.armed": "Armato",
     "text.disarmed": "Disarmato",
     "text.enable-motor-test": "Abilita test motori ",
-    "text.motor-test-warning": "Attenzione - potenzialmente pericoloso!<br/><br/>Rimuovere le eliche prima di abilitare il test motori!<br/><br/>Usa questa funzione a tuo rischio e pericolo<br/><br/>Funziona soltanto a FC disarmata.<br/><br/>",
+    "text.motor-test-warning": "Attenzione - potenzialmente pericoloso!<br/><br/>Rimuovere le eliche prima di abilitare il test motori!<br/><br/>Usa questa funzione a tuo rischio e pericolo.<br/><br/>Funziona soltanto a FC disarmata.<br/><br/>",
 
     "legend.1": "Gyroscope X",
     "legend.2": "Gyroscope Y",
@@ -276,9 +276,9 @@
     "legend.5": "Accelerometer Y",
     "legend.6": "Accelerometer Z",
 
-    "legend.7": "ESC Temperatura max",
-    "legend.8": "ESC Voltaggio min",
-    "legend.9": "ESC Amperaggio max",
+    "legend.7": "ESC Temp. max",
+    "legend.8": "ESC Volt. min",
+    "legend.9": "ESC Amp. max",
     "legend.10": "ESCs A/h totali",
     "legend.11": "ESC eRpM max",
     "legend.12": "ESCs Watt max",
