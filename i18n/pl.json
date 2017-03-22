@@ -108,7 +108,7 @@
 	"output.old.2": "PWM",
 	
 	"text.fs-mode-sec": "FS. levelmode Sec.",
-    "text.firmware-version": "Firmware version:",
+    "text.firmware-version": "Wersja firmware:",
     "text.sn": "S/N",
     "text.activated": "Zaaktywowane",
     "text.not-activated": "Niezaaktywowane",
@@ -145,8 +145,8 @@
 	"title.lap-timer": "Lap timer konfiguracja",
 	"title.lipo-alarm": "Lipo alarm",
 	"title.led-color": "Led kolor",
-	"title.notch-filter": "Notch Filter",
-	"title.yaw-filter": "Yaw Filter",
+	"title.notch-filter": "Filtr Notch",
+	"title.yaw-filter": "Filtr Yaw",
 	
 	"column.use-custom-orientation": "Własna orientacja FC",
 	"column.fc-orientation": "Kierunek FC &deg;",
@@ -157,14 +157,14 @@
 	"column.vtx-frequency": "Częstotliwość",
 	"column.vtx-low-power": "Low Power: (mW)&nbsp;",
 	"column.vtx-high-power": "High Power: (mW)&nbsp;",
-	"column.buzzer-emulation": "Emulate with motors",
-	"column.lap-timer-type": "Type and connection",
+	"column.buzzer-emulation": "Emuluj silnikami",
+	"column.lap-timer-type": "Typ i połączenie",
 	"column.lipo-volts": "Voltarz jest mniejszy od ",
 	"column.lipo-mah": "Zużycie jest większe od ",
 	"column.led-color": "Wybierz kolor",
-	"column.notch-center": "Center frequency: (Hz)",
-	"column.notch-cutoff": "Cutoff Frequency: (Hz)",
-	"column.yaw-filter-strength" : "Yaw Filter strength",
+	"column.notch-center": "Częstotliwość środkowa: (Hz)",
+	"column.notch-cutoff": "Częstotliwość odcięcia: (Hz)",
+	"column.yaw-filter-strength" : "Siła filtru Yaw",
 	
 	"serial.0": "OSD",
 	"serial.1": "Logger / 10%",
@@ -258,6 +258,7 @@
 	
 	
 	"title.motors": "Silniki",
+	"title.telemetry": "Telemetria",
 	"title.other": "Inne",
 	
 	
@@ -390,7 +391,7 @@
 	"button.flash-firmware": "FLASH FIRMWARE",
 	"button.esc-flasher-accept": "WIEM CO ROBIE",
 
-	"text.esc-flasher-warning": "UWAGA - potencjalnie niebezpieczne!<br/><br/>ESC Flasher działa TYLKO jeżeli masz KISS 24A ESC<br> with <b>bootloader</b> (ver 1.02 lub póżniejsza)!<br/><br/>Proszę zdjąć śmigła przed rozpoczęciem flashowania ESC!<br/><br/>Używasz na własną odpowiedzialność.<br/><br/>Po skończeniu flashowania będziesz musiał wyłączyć i włączyc KISSFC!<br/><br/>",
+	"text.esc-flasher-warning": "UWAGA - potencjalnie niebezpieczne!<br/><br/>ESC Flasher działa TYLKO jeżeli masz KISS 24A ESC<br> z <b>bootloaderem</b> (ver 1.02 lub póżniejsza)!<br/><br/>Proszę zdjąć śmigła przed rozpoczęciem flashowania ESC!<br/><br/>Używasz na własną odpowiedzialność.<br/><br/>Po skończeniu flashowania będziesz musiał wyłączyć i włączyc KISSFC!<br/><br/>",
     "text.esc-flasher-complete": "<br/><br/> <br/><br/>Dla bezpieczeństwa komunikacja z KISS FC została zerwana.<br/><br/>Odłącz baterie i podłącz ponownie KISSFC.<br/><br/>",
     "text.esc-flasher-success": "SUKCES!",
 	"text.esc-flasher-progress": "Postęp $1%",
