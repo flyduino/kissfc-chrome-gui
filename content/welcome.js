@@ -32,15 +32,13 @@ CONTENT.welcome.initialize = function(callback) {
     function htmlLoaded() {
         if (canDFU()) checkDFU();
         
-        $('a[data-lang="'+$.i18n.locale+'"]').addClass('selected-language');
+        $("#language").val($.i18n.locale);
         
-        $(".language").on("click", function() {
-           var lang = $(this).data("lang");
+        $("#language").on("change", function() {
+           var lang = $(this).val();
            $.i18n.locale = lang;
            setLanguage(lang);
            changeLanguage();
-           $('a[data-lang]').removeClass('selected-language');
-           $('a[data-lang="'+$.i18n.locale+'"]').addClass('selected-language');
         });
     }
 };
