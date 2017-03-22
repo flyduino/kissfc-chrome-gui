@@ -139,16 +139,20 @@
 	"column.debug-fields": "Champs de debug",
 	"column.vtx-type": "Type",
 	"column.vtx-frequency": "Fréquence",
-	"column.vtx-low-power": "Puissance basse: (mW)&nbsp;",
+
+  "column.vtx-low-power": "Puissance basse: (mW)&nbsp;",
 	"column.vtx-high-power": "Puissance haute: (mW)&nbsp;",
+
 	"column.buzzer-emulation": "Émuler avec les moteurs",
 	"column.lap-timer-type": "Type et connexion",
 	"column.lipo-volts": "Tension inférieur à ",
 	"column.lipo-mah": "Consommation supérieure à ",
-	"column.led-color": "Couleur:",
+
+  "column.led-color": "Couleur:",
 	"column.notch-center": "Center Frequency: (Hz)",
 	"column.notch-cutoff": "Cutoff Frequency: (Hz)",
 	"column.yaw-filter-strength": "Puissance du filtre Yaw",
+
 	"serial.0": "OSD",
 	"serial.1": "Logger / 10%",
 	"serial.2": "Logger / 20%",
@@ -229,14 +233,18 @@
 	"led.custom": "Personnalisé",
 	"title.motors": "Moteur",
 	"title.other": "Autre",
+
 	"title.telemetry": "Télémétrie",	
-	"button.test": "TEST",
+
+  "button.test": "TEST",
 	"button.calibrate-accelerometer": "Calibrer l'accéléromètre",
 	"text.motor-test-button": "JE SAIS CE QUE JE FAIS",
 	"column.mode": "Mode:",
 	"column.status": "Statut:",
 	"column.angle-x": "AngleX:",
-	"column.idle": "Inactif:",
+
+  "column.idle": "Inactif:",
+
 	"column.angle-y": "AngleY:",
 	"column.voltage": "Tension:",
 	"text.acro": "Acro",
