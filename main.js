@@ -25,8 +25,13 @@ $(document).ready(function() {
         }
     });
 
-    $(".navigation-menu-button").on("click", function() {
-        $("#navigation").toggleClass("active-menu");
+    $(".mobile-menu").on("click", function() {
+        $(".layout-sidebar").toggleClass("visible");
+        $(".layout-block").toggleClass("visible");
+    });
+
+    $(".layout-block").on("click", function() {
+        $(".mobile-menu").click();
     });
 });
 
