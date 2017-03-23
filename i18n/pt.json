@@ -245,7 +245,7 @@
 	"text.armed": "Armado",
 	"text.disarmed": "Desarmado",
 	"text.enable-motor-test": "Activar teste de motores",
-	"text.motor-test-warning": "Atenção - potencialmente perigoso!<br/><br/>Por favor retire as hélices antes de iniciar o teste dos motores!<br/><br/>Use esta função por sua conta e risco.<br/><br/>Só funcionará se a controladora estiver desarmada.<br/><br/>",
+	"text.motor-test-warning": "Atenção - Potencialmente perigoso!<br/><br/>Por favor retire as hélices antes de iniciar o teste dos motores!<br/><br/>Use esta função por sua conta e risco.<br/><br/>Só funcionará se a controladora estiver desarmada.<br/><br/>",
 	"legend.1": "Giroscópio X",
 	"legend.2": "Giroscópio Y",
 	"legend.3": "Giroscópio Z",
