@@ -76,63 +76,67 @@
     <div class="col-8 mb2">
         <div class="section-header">Telemetry</div>
         <div class="section-content">
-            <select name="graphTitle" style="position: relative; top:-1px;">
-                <option value="0">Gyro &amp; ACC Data:</option>
-                <!--<option value="1">ESC Temperatures:</option>
-                <option value="2">ESC Voltanges:</option>
-                <option value="3">ESC Currents:</option>
-                <option value="4">ESC used W/h</option>
-                <option value="5">ESC E-RpM / 1000</option> -->
-            </select>
-        </div>
-    </div>
-    <div class="col-8">
-        <table class="w-100 f2" cellpadding="0" cellspacing="0">
-            <tr>
-                <td>
-                    <table class="legend" cellpadding="0" cellspacing="0">
+            <div class="row">
+                <div class="col-8 mb4">
+                    <select name="graphTitle">
+                        <option value="0">Gyro &amp; ACC Data:</option>
+                        <!--<option value="1">ESC Temperatures:</option>
+                        <option value="2">ESC Voltanges:</option>
+                        <option value="3">ESC Currents:</option>
+                        <option value="4">ESC used W/h</option>
+                        <option value="5">ESC E-RpM / 1000</option> -->
+                    </select>
+                </div>
+                <div class="col-8">
+                    <table class="w-100 f2" cellpadding="0" cellspacing="0">
                         <tr>
-                            <td id="#graph1" class="pb4">Gyroscope X:</td>
-                            <td class="fw6 pb4"><span class="output w3 dib"></span></td>
+                            <td>
+                                <table class="legend" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td id="#graph1" class="pb4">Gyroscope X:</td>
+                                        <td class="fw6 pb4"><span class="output w3 dib"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td id="#graph2" class="pb4">Gyroscope Y:</td>
+                                        <td class="fw6 pb4"><span class="output w3 dib"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td id="#graph3" class="pb4">Gyroscope Z:</td>
+                                        <td class="fw6 pb4"><span class="output w3 dib"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td id="#graph4" class="nowrap pb4 pr4">Accelerometer X:</td>
+                                        <td class="fw6 pb4"><span class="output w3 dib"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td id="#graph5" class="nowrap pb4">Accelerometer Y:</td>
+                                        <td class="fw6 pb4"><span class="output w3 dib"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td id="#graph6" class="nowrap pb4">Accelerometer Z:</td>
+                                        <td class="fw6 pb4"><span class="output w3 dib"></span></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td id="graphContainer" class="w-100 pb3">
+                                <canvas id="graph" class="graph" width="480px" height="200px"></canvas>                    
+                            </td>
                         </tr>
                         <tr>
-                            <td id="#graph2" class="pb4">Gyroscope Y:</td>
-                            <td class="fw6 pb4"><span class="output w3 dib"></span></td>
-                        </tr>
-                        <tr>
-                            <td id="#graph3" class="pb4">Gyroscope Z:</td>
-                            <td class="fw6 pb4"><span class="output w3 dib"></span></td>
-                        </tr>
-                        <tr>
-                            <td id="#graph4" class="nowrap pb4 pr4">Accelerometer X:</td>
-                            <td class="fw6 pb4"><span class="output w3 dib"></span></td>
-                        </tr>
-                        <tr>
-                            <td id="#graph5" class="nowrap pb4">Accelerometer Y:</td>
-                            <td class="fw6 pb4"><span class="output w3 dib"></span></td>
-                        </tr>
-                        <tr>
-                            <td id="#graph6" class="nowrap pb4">Accelerometer Z:</td>
-                            <td class="fw6 pb4"><span class="output w3 dib"></span></td>
+                            <td></td>
+                            <td>
+                                <span class="mr1">GXmax:</span><span id="gxmax" class="fw6 mr2 w-">0</span>
+                                <span class="mr1">GXmin:</span><span id="gxmin" class="fw6 mr2">0</span>
+                                <span class="mr1">GYmax:</span><span id="gymax" class="fw6 mr2">0</span>
+                                <span class="mr1">GYmin:</span><span id="gymin" class="fw6 mr2">0</span>
+                                <span class="mr1">GZmax:</span><span id="gzmax" class="fw6 mr2">0</span>
+                                <span class="mr1">GZmin:</span><span id="gzmin" class="fw6">0</span> 
+                            </td>
                         </tr>
                     </table>
-                </td>
-                <td class="w-100 pb3">
-                    <canvas id="graph" class="graph" width="480px" height="200px"></canvas>                    
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <span class="mr1">GXmax:</span><span id="gxmax" class="fw6 mr2 w-">0</span>
-                    <span class="mr1">GXmin:</span><span id="gxmin" class="fw6 mr2">0</span>
-                    <span class="mr1">GYmax:</span><span id="gymax" class="fw6 mr2">0</span>
-                    <span class="mr1">GYmin:</span><span id="gymin" class="fw6 mr2">0</span>
-                    <span class="mr1">GZmax:</span><span id="gzmax" class="fw6 mr2">0</span>
-                    <span class="mr1">GZmin:</span><span id="gzmin" class="fw6">0</span> 
-                </td>
-            </tr>
-        </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -530,9 +530,7 @@ CONTENT.data_output.drawGraph = function (graph, scale) {
 };
 
 CONTENT.data_output.resizeCanvas = function () {
-    var contentWidth = $("#content").width();
-    var legendWidth = $(".legend").width();
-    var newGraphWidth = contentWidth - legendWidth;
+    var newGraphWidth = $("#graphContainer").width();
 
     $('#graph').prop('width', newGraphWidth);
 
