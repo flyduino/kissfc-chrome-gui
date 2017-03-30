@@ -10,7 +10,7 @@
 
     "menu.configuration": "Configurazione",
     "menu.connect" : "Connetti",
-    "menu.connecting" : "Connessione in corso",
+    "menu.connecting" : "Connessione...",
     "menu.advanced" : "Impostazioni Avanzate",
     "menu.data-output": "Data Output",
     "menu.rates": "Rates",
@@ -109,7 +109,7 @@
     "text.fs-mode-sec": "FS. levelmode Sec.",
     "text.firmware-version": "Versione firmware:",
     "text.sn": "S/N",
-    "text.activated": "Acttivato",
+    "text.activated": "Attivato",
     "text.not-activated": "Non attivato",
     "text.serial-number": "Numero si serie",
     "text.serial-clipboard": "Numero di serie copiato nella clipboard",
