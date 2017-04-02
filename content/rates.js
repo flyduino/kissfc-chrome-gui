@@ -174,9 +174,6 @@ CONTENT.rates.initialize = function(callback) {
             }, 50);
         }
 
-        // setup graph
-        $(window).on('resize', self.resizeCanvas).resize();
-
         function fastDataPoll() {
             kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function() {
                 if (GUI.activeContent == 'rates') {
@@ -239,6 +236,8 @@ CONTENT.rates.initialize = function(callback) {
      
         fastDataPoll();
 
+        $(window).on('resize', self.resizeCanvas).resize();
+
         $('#save').click(function() {
             grabData();
             $('#save').removeClass("saveAct");
@@ -249,6 +248,18 @@ CONTENT.rates.initialize = function(callback) {
 
 
 CONTENT.rates.resizeCanvas = function() {
+    var rowNames = ['roll', 'pitch', 'yaw']
+    var newWidth = $(".chart-container").width();
+    var newHeight = $(".chart-container").height();
+
+    for (var i = 0; i < 3; i++) {
+        var self = $("#rates_chart_" + rowNames[i]);
+        self.kissRatesChart("refresh", self);
+        $("#rates_chart_" + rowNames[i]).kissRatesChart("resize", {
+            width: newWidth,
+            height: newHeight 
+        });
+    }
 }
 
 CONTENT.rates.cleanup = function(callback) {

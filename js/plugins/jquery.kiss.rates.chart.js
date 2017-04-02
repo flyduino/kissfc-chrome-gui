@@ -43,6 +43,13 @@
 
             });
         },
+        resize: function(newValue) {
+            var self = $(this);
+            var id = self.attr("id");
+            var canvas = $("#" + id + "_canvas");
+            canvas.attr("width", newValue.width).attr("height", newValue.height);
+            publicMethods.refresh(self);
+        },
         destroy: function() {
             return this.each(function() {
                 $(this).removeData(PLUGIN_NAME);
