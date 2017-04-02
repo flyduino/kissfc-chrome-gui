@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-4 pr5">
+    <div class="col-8 col-l-4 pr0 pr5-l">
         <div class="row">
             <div class="col mb5">
                 <div class="section-header">
@@ -18,13 +18,13 @@
                         <tr>
                             <td class="pr2 f2">FC orientation &deg;</td>
                             <td class="pb1 pr1">
-                                <input disabled class="unsafe" type="number" size="3" name="CBO0" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0">
+                                <input disabled class="unsafe w-100 mw4" type="number" name="CBO0" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0">
                             </td>
                             <td class="pb1 pr1">
-                                <input disabled class="unsafe" type="number" size="3" name="CBO1" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0">
+                                <input disabled class="unsafe w-100 mw4" type="number" name="CBO1" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0">
                             </td>
                             <td class="pb1 pr1">
-                                <input disabled class="unsafe" type="number" size="3" name="CBO2" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0">
+                                <input disabled class="unsafe w-100 mw4" type="number" name="CBO2" data-min="-180" data-max="180" data-step="1" data-precision="0" value="0">
                             </td>
                         </tr>
                     </table>
@@ -32,10 +32,10 @@
             </div>
         </div>
         <div class="row">
-            <div class="col mb5">
+            <div class="col mb3 mb5-l">
                 <div class="section-header">RX deadbands</div>
                 <div class="section-content">
-                    <table style="border: 0px;">
+                    <table cellpadding="0" cellspacing="0">
                         <tr>
                             <td></td>
                             <td class="pb1 f2">Roll</td>
@@ -45,13 +45,13 @@
                         <tr>
                             <td class="pr2 f2">RX deadband</td>
                             <td class="pb1 pr1">
-                                <input class="unsafe" disabled="true" type="text" size="3" name="DB0" data-min="0" data-max="250" data-step="1" data-precision="0" value="0" />
+                                <input class="unsafe w-100 mw4" disabled="true" type="number" name="DB0" data-min="0" data-max="250" data-step="1" data-precision="0" value="0" />
                             </td>
                             <td class="pb1 pr1">
-                                <input class="unsafe" disabled="true" type="text" size="3" name="DB1" data-min="0" data-max="250" data-step="1" data-precision="0" value="0" />
+                                <input class="unsafe w-100 mw4" disabled="true" type="number" name="DB1" data-min="0" data-max="250" data-step="1" data-precision="0" value="0" />
                             </td>
                             <td class="pb1 pr1">
-                                <input class="unsafe" disabled="true" type="text" size="3" name="DB2" data-min="0" data-max="250" data-step="1" data-precision="0" value="0" />
+                                <input class="unsafe w-100 mw4" disabled="true" type="number" name="DB2" data-min="0" data-max="250" data-step="1" data-precision="0" value="0" />
                             </td>
                         </tr>
                     </table>
@@ -59,7 +59,7 @@
             </div>
         </div>
         <div class="row dn">
-            <div id="vtx" class="col mb5">
+            <div id="vtx" class="col mb3 mb5-l">
                 <div class="section-header">VTX config</div>
                 <div class="section-content">
                     <dl class="general-settings">
@@ -140,11 +140,11 @@
             </div>
         </div>
         <div class="full">
-            <div class="col mb5">
+            <div class="col mb3 mb5-l">
                 <div class="section-header">Buzzer emulation</div>
                 <div class="section-content">
                     <div class="dt">
-                        <label class="dtc">Emulate with motors</label>
+                        <label class="dtc pr1">Emulate with motors</label>
                         <input class="dtc" type="checkbox" name="motorBuzzer" id="motorBuzzer" disabled>
                         <label class="dtc" for="motorBuzzer"></label>
                     </div>
@@ -152,7 +152,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col mb5">
+            <div class="col mb3 mb5-l">
                 <div class="section-header">Serial config</div>
                 <div class="section-content">
                     <label title="Serial config">OSD / Logger</label>
@@ -192,12 +192,12 @@
             </div>
         </div>
     </div>
-    <div class="col-4">
+    <div class="col-8 col-l-4">
         <div class="row">
-            <div id="lapTimer" class="col mb5">
+            <div id="lapTimer" class="col mb3 mb5-l">
                 <div class="section-header">Lap timer configuration</div>
                 <div class="section-content">
-                    <label>Type and connection</label>
+                    <label class="pr1">Type and connection</label>
                     <select id="lapTimerTypeAndInterface" class="unsafe" name="lapTimerTypeAndInterface">
                         <option value="0">--</option>
                         <option value="17">EeasyRaceLapTimer on BUZZER pin</option>
@@ -211,24 +211,24 @@
         </div>
 
         <div class="row">
-            <div id="bat" class="col mb5">
+            <div id="bat" class="col mb3 mb5-l">
                 <div class="section-header">Lipo alarm</div>
                 <div class="section-content">
                     <label title="low battery alarm" style="width:180px">Voltage is less than </label>
-                    <input disabled="true" type="text" name="vbatAlarm" data-step="0.1" data-min="0" data-max="26" type="hidden" name="vbatAlarm" id="vbatAlarm" value="">
+                    <input disabled class="w3" type="number" name="vbatAlarm" data-step="0.1" data-min="0" data-max="26" type="hidden" name="vbatAlarm" id="vbatAlarm" value="">
 
                     <label title="mah alarm" style="width:180px">Consumption is greater than </label>
-                    <input disabled="true" type="text" name="mahAlarm" data-step="1" data-min="0" data-max="24000" data-precision="0" value="0">
+                    <input disabled class="w3" type="number" name="mahAlarm" data-step="1" data-min="0" data-max="24000" data-precision="0" value="0">
                     <input type="hidden" name="mahAlarm" id="mahAlarm" value="">
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col mb5">
+            <div class="col mb3 mb5-l">
                 <div class="section-header">Led color</div>
-                <div class="section-content">
-                    <label title="Led Color">Select Color</label>
+                <div class="section-content cf">
+                    <label class="pr1" title="Led Color">Select Color</label>
                     <select disabled="true" name="RGBSelector">
                         <option value="0,0,0">Black</option>
                         <option value="255,255,255">White</option>
@@ -246,7 +246,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col mb5">
+            <div class="col mb3 mb5-l">
                 <div class="section-header">
                     <div>Notch Filter</div>
                     <input type="checkbox" name="NFE" id="nfe" disabled>
@@ -256,18 +256,18 @@
                     <table>
                         <tr>
                             <td class="pb2">
-                                <label class="mr1">Center Frequency: (Hz)</label>
+                                <label class="mr1 pr1">Center Frequency: (Hz)</label>
                             </td>
                             <td class="pb2">
-                                <input disabled type="number" name="NFCF" data-step="1" data-min="0" data-max="1000" data-precision="0" value="200">
+                                <input disabled class="w4" type="number" name="NFCF" data-step="1" data-min="0" data-max="1000" data-precision="0" value="200">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label>Cutoff Frequency: (Hz)</label>
+                                <label class="pr1">Cutoff Frequency: (Hz)</label>
                             </td>
                             <td>
-                                <input disabled type="number" name="NFCO" data-step="1" data-min="0" data-max="1000" data-precision="0" value="100">
+                                <input disabled class="w4" type="number" name="NFCO" data-step="1" data-min="0" data-max="1000" data-precision="0" value="100">
                             </td>
                         </tr>
                     </table>
@@ -275,11 +275,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col mb5">
+            <div class="col mb3 mb5-l">
                 <div class="section-header">Yaw Filter</div>
                 <div class="section-content">
-                    <label>Yaw Filter strength</label>
-                    <input disabled type="number" name="YCF" data-step="1" data-min="0" data-max="97" data-precision="0" value="92">
+                    <label class="pr1">Yaw Filter strength</label>
+                    <input disabled class="w3" type="number" name="YCF" data-step="1" data-min="0" data-max="97" data-precision="0" value="92">
                 </div>
             </div>
         </div>
