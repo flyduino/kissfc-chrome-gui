@@ -25,13 +25,13 @@ $(document).ready(function() {
         }
     });
 
-    $(".mobile-menu").on("click", function() {
+    $("#mobile-menu").on("click", function() {
         $(".layout-sidebar").toggleClass("visible");
         $(".layout-block").toggleClass("visible");
     });
 
     $(".layout-block").on("click", function() {
-        $(".mobile-menu").click();
+        $("#mobile-menu").click();
     });
 });
 

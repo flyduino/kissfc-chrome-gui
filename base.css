@@ -75,12 +75,16 @@ a:hover {
     z-index: 1;
 }
 
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 1136px) {
     .layout-sidebar {
         position: relative;
         flex: 1;
         transform: translate3d(0,0,0);
         transition: 0s;
+    }
+
+    .layout-block.visible {
+        display: none;
     }
 
     .layout-main {
@@ -101,11 +105,19 @@ a:hover {
 .layout-content {
     flex: 1;
     padding: 1rem;
+    overflow: auto;
 }
 
-@media only screen and (min-width: 1024px) {
+#mobile-menu {
+    display: inline-block;
+}
+
+@media only screen and (min-width: 1136px) {
     .layout-content {
         padding: 2rem;
+    }
+    #mobile-menu {
+        display: none;
     }
 }
 
@@ -246,8 +258,6 @@ input:placeholder {
 
 input[type="number"] {
     position: relative;
-    min-width: 5rem;
-    max-width: 10rem;
     text-align: right;
     padding: 0.5rem 1.5rem 0.5rem 0.5rem;
 }
