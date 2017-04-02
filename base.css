@@ -328,7 +328,7 @@ input[type="checkbox"]:checked + label:before {
 }
 
 .chart-container {
-    width: 50%;
+    width: 100%;
     display: inline-block;
     position: relative;
 }
