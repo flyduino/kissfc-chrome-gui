@@ -9,7 +9,7 @@ CONTENT.configuration.initialize = function(callback) {
     var self = this;
 
     GUI.switchContent('configuration', function() {
-         kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
+        kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
             $('#content').load("./content/configuration.html", function() {
                   htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
             });
