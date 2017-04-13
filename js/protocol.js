@@ -310,8 +310,9 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.NFE = [];
                 obj.NFCF = [];
                 obj.NFCO = [];
+                obj.ver = 0;
             }
-
+            
             obj.G_P[0] = data.getUint16(0, 0) / 1000;
             obj.G_P[1] = data.getUint16(2, 0) / 1000;
             obj.G_P[2] = data.getUint16(4, 0) / 1000;
@@ -340,6 +341,10 @@ kissProtocol.processPacket = function (code, obj) {
             obj.RPY_Curve[1] = data.getInt16(42, 0) / 1000;
             obj.RPY_Curve[2] = data.getInt16(44, 0) / 1000;
             obj.ver = data.getUint8(92);
+            
+            
+            try {
+            
             obj.RXType = data.getInt16(46, 0);
             obj.PPMchanOrder = data.getInt16(48, 0);
             obj.CopterType = data.getInt16(50, 0);
@@ -467,6 +472,9 @@ kissProtocol.processPacket = function (code, obj) {
             }
             
             kissProtocol.upgradeTo104(obj);
+            } catch (Exception) {
+                console.log("Exception while reading packet");
+            }
             break;
             
         case this.SET_SETTINGS:
