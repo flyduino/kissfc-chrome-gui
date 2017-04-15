@@ -348,5 +348,5 @@
 	"text.fc-flasher-failure": "FEHLSCHLAG: $1",
 	"text.fc-flasher-complete": "Erfolgreich geflasht!!!",
 	"title.kiss": "KISS FC Benutzeroberfläche",
-	"text.connect": "Bitte verbinden Sie Ihre KISS FC mit Ihrem PC und wählen sie einen COM Port aus."
+	"text.connect": "Bitte verbinden Sie Ihre KISS FC mit Ihrem PC und wählen sie einen Port aus."
 }

@@ -348,5 +348,5 @@
 	"text.fc-flasher-failure": "FAILURE: $1",
 	"text.fc-flasher-complete": "Flashing complete!!!",
 	"title.kiss": "KISS Flight Control GUI",
-	"text.connect": "Please connect the KISS FC to your Computer and select the COM port above."
+	"text.connect": "Please connect the KISS FC to your Computer and select the port above."
 }

@@ -135,3 +135,14 @@
 #userSel {
 	display: none;
 }
+
+.external_link_button {
+  	margin: 40px 0 0 0;
+    color: white;
+    padding: 10px 10px 10px 10px;
+    height: 24px;
+    line-height: 24px;
+    background-color: #830a0a;
+    font-size: 16px;
+    font-weight: bold;
+}

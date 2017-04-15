@@ -348,5 +348,5 @@
 	"text.fc-flasher-failure": "ESUARE: $1",
 	"text.fc-flasher-complete": "Scriere completa!!!",
 	"title.kiss": "KISS Interfata la Control de Zbor",
-	"text.connect": "Te rog conecteaza KISS FC la calculator si selecteaza port-ul COM de mai sus."
+	"text.connect": "Te rog conecteaza KISS FC la calculator si selecteaza port-ul de mai sus."
 }
