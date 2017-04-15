@@ -61,13 +61,13 @@ CONTENT.advanced.initialize = function(callback) {
                 } else {
                     $("#loggerDebug").hide();
                 }
-                if ($("select[name='vtxType']").val()=="2") {
+                if ($("select[name='vtxType']").val()=="2" || $("select[name='vtxType']").val()=="3") {
                     $("select[name='vtxType']").val("0").trigger("change");
                 }
             } else {
                 $("#loggerDebug").hide();
                 if (data['ver'] > 106) {
-                   $("select[name='vtxType']").val("2");
+                   //$("select[name='vtxType']").val("2");
                 } 
             }
             contentChange();
@@ -262,7 +262,7 @@ CONTENT.advanced.initialize = function(callback) {
                    $("#loggerConfig").val("0").trigger("change");
                }
             } else {
-                if (this.value=="2") {
+                if (this.value=="2" || this.value=="3") {
                     $("#loggerConfig").val("11").trigger("change");
                 } else {
                     $("#loggerConfig").val("0").trigger("change");
