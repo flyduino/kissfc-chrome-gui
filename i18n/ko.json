@@ -347,5 +347,5 @@
 	"text.fc-flasher-failure": "실패: $1",
 	"text.fc-flasher-complete": "플래시 완료!!!",
 	"title.kiss": "KISS 플라이트 컨트롤러 GUI",
-	"text.connect": "KISS FC를 컴퓨터에 연결하신 후 위에서 COM포트를 선택하세요."
+	"text.connect": "KISS FC를 컴퓨터에 연결하신 후 위에서 포트를 선택하세요."
 }
