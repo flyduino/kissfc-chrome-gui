@@ -1,30 +1,33 @@
-<div class="welcome">
-  	<h4><span data-i18n="title.kiss"></span> v1.15.8</h4>
-	<br />
-	<p data-i18n="text.connect"></p>
-	<p>
-	<br/>
-	<span data-i18n="menu.lang"></span>: <select id="language">
-		<option value="en">English</option>
-		<option value="de">Deutsch</option>
-		<option value="ru">Русский</option>
-		<option value="fr">Français</option>
-		<option value="es">Español</option>
-		<option value="it">Italiano</option>
-		<option value="sv">Svenska</option>
-		<option value="pt">Portuguese</option>
-		<option value="ro">Română</option>
-		<option value="pl">Polski</option>
-		<option value="ko">한국어</option>	
-	</select>
-	
-	<br/>
-    <br/>
-    
-    <div class="wrapper-wide">
-        <img style="float:right;" src="./images/welcome1.png" />
+<div class="row">
+    <div class="col-4 pr5">
+        <div class="section-header">Flight Controller</div>
+        <div class="section-content">
+            <table>
+                <tr>
+                    <td class="pr2 f2 pb2">Firmware:</td>
+                    <td class="f2 pb2" id="version">unknown</td>
+                </tr>
+                <tr>
+                    <td class="pr2 f2">Serial Number:</td>
+                    <td class="f2" id="sn"></td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <div class="wrapper-narrow" style="overflow:hidden">
-        <img style="float:right;" src="./images/welcome2.png" />
+    <div class="col-4">
+        <div class="section-header">Instructions</div>
+        <div class="section-content">
+            <p>Please connect the KISS FC to your Computer and select the COM port at the bottom.</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <div class="row">
+                <div class="col-4">
+                    <img class="w-100" src="./images/welcome1.png" />
+                </div>
+                <div class="col-4">
+                    <img class="w-100" src="./images/welcome2.png" />
+                </div>
+            </div>
+        </div>
     </div>
 </div>
