@@ -61,13 +61,13 @@ CONTENT.advanced.initialize = function(callback) {
                 } else {
                     $("#loggerDebug").hide();
                 }
-                if ($("select[name='vtxType']").val()=="2") {
+                if ($("select[name='vtxType']").val()=="2" || $("select[name='vtxType']").val()=="3") {
                     $("select[name='vtxType']").val("0").trigger("change");
                 }
             } else {
                 $("#loggerDebug").hide();
                 if (data['ver'] > 106) {
-                   $("select[name='vtxType']").val("2");
+                   //$("select[name='vtxType']").val("2");
                 } 
             }
             contentChange();
@@ -132,6 +132,38 @@ CONTENT.advanced.initialize = function(callback) {
 
             if (data['YawCfilter']) $('input[name="YCF"]').val(data['YawCfilter']);
         }
+	if(data['ver'] > 108){
+		
+		kissProtocol.send(kissProtocol.GET_INFO, [0x21], function() {
+			var info = kissProtocol.data[kissProtocol.GET_INFO];
+			var FCinfo = info.firmvareVersion.split(/-/g);
+			if((info.firmvareVersion.indexOf("KISSFC") != -1 && FCinfo[0].length < 7) || (info.firmvareVersion.indexOf("KISSCC") != -1 && FCinfo[0].length < 7)){
+				$("select[name='loopTimeDivider'] option[value='8']").remove();
+			}
+		});
+		
+		$('select[name="loopTimeDivider"]').val(data['loopTimeDivider']);
+		$('select[name="loopTimeDivider"]').on("change", function() {
+		    contentChange();
+		});	
+		$('select[name="loopTimeDivider"]').removeAttr("disabled");
+		$('select[name="yawlpf"]').removeAttr("disabled");
+		$('select[name="yawlpf"]').val(data['yawLpF']);
+		$('select[name="yawlpf"]').on("change", function() {
+		    contentChange();
+		});	
+		$('select[name="mainlpf"]').removeAttr("disabled");
+		$('select[name="mainlpf"]').val(data['LPF']);
+		$('select[name="mainlpf"]').on("change", function() {
+		    contentChange();
+		});
+		$('select[name="Dlpf"]').removeAttr("disabled");
+		$('select[name="Dlpf"]').val(data['DLpF']);
+		$('select[name="Dlpf"]').on("change", function() {
+		    contentChange();
+		});
+
+	}
 
         $('input[name^="lapTimer"]').on("change", function() {
             contentChange();
@@ -262,7 +294,7 @@ CONTENT.advanced.initialize = function(callback) {
                    $("#loggerConfig").val("0").trigger("change");
                }
             } else {
-                if (this.value=="2") {
+                if (this.value=="2" || this.value=="3") {
                     $("#loggerConfig").val("11").trigger("change");
                 } else {
                     $("#loggerConfig").val("0").trigger("change");
@@ -319,6 +351,11 @@ CONTENT.advanced.initialize = function(callback) {
             data['DB'][0] = parseInt($('input[name="DB0"]').val());
             data['DB'][1] = parseInt($('input[name="DB1"]').val());
             data['DB'][2] = parseInt($('input[name="DB2"]').val());
+	    
+	    data['loopTimeDivider'] = parseInt($('select[name="loopTimeDivider"]').val());
+	    data['yawLpF'] = parseInt($('select[name="yawlpf"]').val());
+	    data['DLpF'] = parseInt($('select[name="Dlpf"]').val());
+	    data['LPF'] = parseInt($('select[name="mainlpf"]').val());
             
             if ($('input[name="motorBuzzer"]').prop('checked') ? 1 : 0 == 1) {
                 data['motorBuzzer'] = 1;

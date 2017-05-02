@@ -173,6 +173,7 @@
 	"vtx.0": "--",
 	"vtx.1": "Dummy VTX",
 	"vtx.2": "IRC Tramp HV",
+	"vtx.3": "TBS Unify",
 	"vtx-freq.0": "A:1 (5865 MHz)",
 	"vtx-freq.1": "A:2 (5845 MHz)",
 	"vtx-freq.2": "A:3 (5825 MHz)",

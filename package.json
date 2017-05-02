@@ -1,7 +1,7 @@
 {
   "name": "KISS GUI",
   "main": "main.html",
-  "version": "1.15.6",
+  "version": "1.15.7",
   "single-instance": true,
   "window": {
     "title": "KISS GUI",

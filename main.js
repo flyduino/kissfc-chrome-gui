@@ -1,7 +1,7 @@
 'use strict';
 
 var MIN_CONFIG_VERSION = 108; // this gui can manage versions in this range
-var MAX_CONFIG_VERSION = 108;
+var MAX_CONFIG_VERSION = 109;
 
 function getLanguage(callback) {
     if (typeof chromeSerial !== 'undefined') {
