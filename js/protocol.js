@@ -470,6 +470,11 @@ kissProtocol.processPacket = function (code, obj) {
                 
                 obj.motorBuzzer = data.getUint8(163, 0);
             }
+            if (obj.ver > 108){
+		obj.loopTimeDivider = data.getUint8(164, 0);
+		obj.yawLpF = data.getUint8(165, 0);
+		obj.DLpF = data.getUint8(166, 0);
+            }
             
             kissProtocol.upgradeTo104(obj);
             } catch (Exception) {
@@ -523,6 +528,8 @@ kissProtocol.processPacket = function (code, obj) {
                            info.type='KISS 16A';
                        } else if (type == 3) {
                            info.type='KISS 24A';
+                       } else if (type == 4) {
+                           info.type='KISS 24 Ultralite';
                        }
                        if (!found) info = undefined;
                        obj.escInfo[i] = info;
@@ -704,6 +711,12 @@ kissProtocol.preparePacket = function (code, obj) {
                 
                 blen=161;
             }
+	     if (obj.ver > 108) {
+			data.setUint8(153, obj.loopTimeDivider);
+			data.setUint8(154, obj.yawLpF);
+		        data.setUint8(155, obj.DLpF);
+			blen=164;
+	     }
             break;
             
           case this.MOTOR_TEST:

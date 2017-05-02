@@ -204,6 +204,22 @@ CONTENT.configuration.initialize = function(callback) {
             $('#aux6').hide();
             $('#aux7').hide();
         }
+	if(data['ver'] < 109){
+		$("select[name='outputMode'] option[value='6']").remove();
+		$("select[name='outputMode'] option[value='7']").remove();
+		$("select[name='lpf'] option[value='7']").remove();
+	}else{
+		kissProtocol.send(kissProtocol.GET_INFO, [0x21], function(){
+			var info = kissProtocol.data[kissProtocol.GET_INFO];
+			var FCinfo = info.firmvareVersion.split(/-/g);
+			if(FCinfo[0].length < 7 || info.firmvareVersion.indexOf("KISSFC") == -1){
+				$("select[name='outputMode'] option[value='6']").remove();
+			}
+			if(FCinfo[0].length < 9 || info.firmvareVersion.indexOf("KISSFC") == -1){
+				$("select[name='outputMode'] option[value='7']").remove();
+			}
+		});
+	}
         
         var MCUid = '';
         for (var i = 0; i < 4; i++) {
@@ -432,8 +448,15 @@ CONTENT.configuration.initialize = function(callback) {
             change: function() { contentChange(); },
             value: data['AUX'][7]
         });
-        
-        $('select[name="lpf"]').val(data['LPF']);
+        if(data['ver'] < 109){
+		$('select[name="lpf"]').val(data['LPF']);
+	}else{
+		if(data['LPF'] == data['DLpF'] && data['LPF'] == data['yawLpF']){
+			$('select[name="lpf"]').val(data['LPF']);
+		}else{
+			$('select[name="lpf"]').val(7);
+		}
+	}
         $('select[name="lpf"]').on('change', function() {
             contentChange();
         });
@@ -558,8 +581,16 @@ CONTENT.configuration.initialize = function(callback) {
             data['A_I'] = parseFloat($('tr.level input').eq(1).val());
             data['A_D'] = parseFloat($('tr.level input').eq(2).val());
             data['maxAng'] = parseFloat($('tr.level input').eq(3).val());
-
-            data['LPF'] = parseInt($('select[name="lpf"]').val());
+	    
+	    if(data['ver'] < 109){
+		data['LPF'] = parseInt($('select[name="lpf"]').val());
+	    }else{
+		if(parseInt($('select[name="lpf"]').val()) != 7){
+			data['LPF'] = parseInt($('select[name="lpf"]').val());
+			data['yawLpF'] = parseInt($('select[name="lpf"]').val());
+			data['DLpF'] = parseInt($('select[name="lpf"]').val());
+		}
+            }
             
             data['AUX'][0]=$("#aux0").kissAux('value');
             data['AUX'][1]=$("#aux1").kissAux('value');

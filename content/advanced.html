@@ -195,47 +195,6 @@
 				<dt style="width:280px"><input disabled type="checkbox" name="motorBuzzer" /> &nbsp;<span data-i18n="column.buzzer-emulation" style="width:200px">Emulate with motors</span></dt>
 			</dl>
 		</div>
-	</div>
-
-	<div class="wrapper-half">
-
-		<div id="lapTimer" class="wrapper-full">
-			<div class="groupTitle" data-i18n="title.lap-timer">Lap timer configuration</div>
-			<dl class="general-settings">
-				<dt class="lap-timer"  data-i18n="column.lap-timer-type">Type and connection</dt>
-				<dd class="lap-timer-type-and-interface">
-					<select  class="unsafe" id="lapTimerTypeAndInterface"
-						name="lapTimerTypeAndInterface">
-						<option value="0" data-i18n="lap-timer.0">--</option>
-						<option value="17" data-i18n="lap-timer.17">EeasyRaceLapTimer on BUZZER pin</option>
-						<option value="18" data-i18n="lap-timer.18">EeasyRaceLapTimer on PWM5 pin</option>
-						<option value="19" data-i18n="lap-timer.19">EeasyRaceLapTimer on PWM6 pin</option>
-					</select> <select class="lap-timer-transponder-id unsafe"
-						name="lapTimerTransponderId">
-					</select>
-				</dd>
-			</dl>
-		</div>
-
-		<div id="bat" class="wrapper-full">
-			<div class="groupTitle" data-i18n="title.lipo-alarm">Lipo alarm</div>
-			<dl class="general-settings">
-				<dt title="low battery alarm" style="width:180px" data-i18n="column.lipo-volts">Voltage is less than </dt>
-				<dd>
-					<input disabled="true" type="text" name="vbatAlarm" data-step="0.1"
-						data-min="0" data-max="26" data-precision="1" value="0.0" /><input
-						type="hidden" name="vbatAlarm" id="vbatAlarm" value="" />
-				</dd>
-			</dl>
-			<dl class="general-settings">
-				<dt title="mah alarm" style="width:180px" data-i18n="column.lipo-mah">Consumption is greater than </dt>
-				<dd>
-					<input disabled="true" type="text" name="mahAlarm" data-step="1"
-						data-min="0" data-max="24000" data-precision="0" value="0" /><input
-						type="hidden" name="mahAlarm" id="mahAlarm" value="" />
-				</dd>
-			</dl>
-		</div>
 		
 		<div id="led" class="wrapper-full">
 				<div class="groupTitle" data-i18n="title.led-color">Led color</div>
@@ -260,6 +219,47 @@
 					</dd>
 				</dl>
 			</div>
+		<div id="lapTimer" class="wrapper-full" style="margin-top:-30px;">
+			<div class="groupTitle" data-i18n="title.lap-timer">Lap timer configuration</div>
+			<dl class="general-settings">
+				<dt class="lap-timer"  data-i18n="column.lap-timer-type">Type and connection</dt>
+				<dd class="lap-timer-type-and-interface">
+					<select  class="unsafe" id="lapTimerTypeAndInterface"
+						name="lapTimerTypeAndInterface">
+						<option value="0" data-i18n="lap-timer.0">--</option>
+						<option value="17" data-i18n="lap-timer.17">EeasyRaceLapTimer on BUZZER pin</option>
+						<option value="18" data-i18n="lap-timer.18">EeasyRaceLapTimer on PWM5 pin</option>
+						<option value="19" data-i18n="lap-timer.19">EeasyRaceLapTimer on PWM6 pin</option>
+					</select> <select class="lap-timer-transponder-id unsafe"
+						name="lapTimerTransponderId">
+					</select>
+				</dd>
+			</dl>
+		</div>
+	</div>
+
+	<div class="wrapper-half">
+
+		<div id="bat" class="wrapper-full">
+			<div class="groupTitle" data-i18n="title.lipo-alarm">Lipo alarm</div>
+			<dl class="general-settings">
+				<dt title="low battery alarm" style="width:180px" data-i18n="column.lipo-volts">Voltage is less than </dt>
+				<dd>
+					<input disabled="true" type="text" name="vbatAlarm" data-step="0.1"
+						data-min="0" data-max="26" data-precision="1" value="0.0" /><input
+						type="hidden" name="vbatAlarm" id="vbatAlarm" value="" />
+				</dd>
+			</dl>
+			<dl class="general-settings">
+				<dt title="mah alarm" style="width:180px" data-i18n="column.lipo-mah">Consumption is greater than </dt>
+				<dd>
+					<input disabled="true" type="text" name="mahAlarm" data-step="1"
+						data-min="0" data-max="24000" data-precision="0" value="0" /><input
+						type="hidden" name="mahAlarm" id="mahAlarm" value="" />
+				</dd>
+			</dl>
+		</div>
+		
 
 		<div id="Notch" class="wrapper-full">
 		<div class="groupTitle" data-i18n="title.notch-filter">Notch Filter</div>
@@ -285,6 +285,51 @@
 			</tr>
 		</table>
 		</div>
+		<div id="LPFs" class="wrapper-full">
+			<div class="groupTitle">Advanced LPF settings</div>
+			<div class="wrapper-full">
+				<dl class="general-settings">
+					<dt style="width:180px;"><span>Roll/Pitch LPF FRQ</span>&nbsp;</dt>
+					<select name="mainlpf"  disabled="true">
+						<option value="0" data-i18n="filter.0">Off</option>
+						<option value="1" data-i18n="filter.1">High</option>
+						<option value="2" data-i18n="filter.2">Medium High</option>
+						<option value="3" data-i18n="filter.3">Medium</option>
+						<option value="4" data-i18n="filter.4">Medium Low</option>
+						<option value="5" data-i18n="filter.5">Low</option>
+						<option value="6" data-i18n="filter.6">Very Low</option>
+					</select>
+				</dl>
+			</div>
+			<div class="wrapper-full" style="margin-top:-50px;">
+				<dl class="general-settings"  disabled="true">
+					<dt style="width:180px;"><span>Yaw LPF FRQ</span>&nbsp;</dt>
+					<select name="yawlpf"  disabled="true">
+						<option value="0" data-i18n="filter.0">Off</option>
+						<option value="1" data-i18n="filter.1">High</option>
+						<option value="2" data-i18n="filter.2">Medium High</option>
+						<option value="3" data-i18n="filter.3">Medium</option>
+						<option value="4" data-i18n="filter.4">Medium Low</option>
+						<option value="5" data-i18n="filter.5">Low</option>
+						<option value="6" data-i18n="filter.6">Very Low</option>
+					</select>
+				</dl>
+			</div>
+			<div class="wrapper-full" style="margin-top:-50px;">
+				<dl class="general-settings"  disabled="true">
+					<dt style="width:180px;"><span>Dterm LPF FRQ</span>&nbsp;</dt>
+					<select name="Dlpf"  disabled="true">
+						<option value="0" data-i18n="filter.0">Off</option>
+						<option value="1" data-i18n="filter.1">High</option>
+						<option value="2" data-i18n="filter.2">Medium High</option>
+						<option value="3" data-i18n="filter.3">Medium</option>
+						<option value="4" data-i18n="filter.4">Medium Low</option>
+						<option value="5" data-i18n="filter.5">Low</option>
+						<option value="6" data-i18n="filter.6">Very Low</option>
+					</select>
+				</dl>
+			</div>
+		</div>
 		
 		<div id="yawCF" class="wrapper-full">
 			<div class="groupTitle" data-i18n="title.yaw-filter">Yaw Filter</div>
@@ -292,6 +337,19 @@
 				<dt style="width:180px;"><span data-i18n="column.yaw-filter-strength">Yaw Filter strength</span>&nbsp;</dt>
 				<input disabled="true" type="text" name="YCF" data-step="1"
 					data-min="0" data-max="97" data-precision="0" value="92" />
+			</dl>
+		</div>
+		
+		<div id="loopD" class="wrapper-full">
+			<div class="groupTitle">Loop Time</div>
+			<dl class="general-settings">
+				<dt style="width:180px;"><span>Loop Time (K)</span>&nbsp;</dt>
+					<select disabled="true" name="loopTimeDivider">
+							<option value="1" >1</option>
+							<option value="2" >2</option>
+							<option value="4" >4</option>
+							<option value="8" >8</option>
+						</select>
 			</dl>
 		</div>
 
