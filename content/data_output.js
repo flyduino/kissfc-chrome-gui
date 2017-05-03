@@ -10,6 +10,7 @@ CONTENT.data_output.initialize = function (callback) {
     self.startedUIupdate = 0;
     self.updateTimeout;
     self.motorTestEnabled = false;
+    self.requestTelemetry = true;
 
     GUI.switchContent('data_output', function() {
         kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
@@ -26,6 +27,7 @@ CONTENT.data_output.initialize = function (callback) {
         self.ESCTelemetry = 0;
         self.startedUIupdate = 0;
         window.clearTimeout(self.updateTimeout);
+        self.requestTelemetry = true;
 
         for (var i = 0; i < receiverNames.length; i++) {
             var name = receiverNames[i];
@@ -155,19 +157,24 @@ CONTENT.data_output.initialize = function (callback) {
         $('a.calibrateAccelerometer').click(function () {
             var config = kissProtocol.data[kissProtocol.GET_SETTINGS];
             var data = kissProtocol.data[kissProtocol.GET_TELEMETRY];
+            
+            self.requestTelemetry = false;
 
             // not a correct way to do it
             config['ACCZero'][0] = (data['ACCRaw'][0]) * 1000;
             config['ACCZero'][1] = (data['ACCRaw'][1]) * 1000;
             config['ACCZero'][2] = (data['ACCRaw'][2] - 1.0) * 1000;
 
-            kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
-
+            kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]), function() {
+                self.requestTelemetry = true;
+                fastDataPoll();
+            });
         });
 
         var legendItems = $('dl.legend dd');
         var otherItems = $('dl.otherValues dd')
         var meterScale = {'min': 800, 'max': 2200};
+        
         function updateUI() {
             var data = kissProtocol.data[kissProtocol.GET_TELEMETRY];
             
@@ -372,9 +379,10 @@ CONTENT.data_output.initialize = function (callback) {
         break;
         }
     
-        self.addSample(self.graphData, sampleBlock);
+            self.addSample(self.graphData, sampleBlock);
             self.renderGraph();
-        if (GUI.activeContent == 'data_output') self.updateTimeout = window.setTimeout(function(){fastDataPoll();},10); 
+            // Update data
+            if (GUI.activeContent == 'data_output') self.updateTimeout = window.setTimeout(function(){fastDataPoll();},10); 
         }
 
         // setup graph
@@ -387,17 +395,15 @@ CONTENT.data_output.initialize = function (callback) {
         $(window).on('resize', self.resizeCanvas).resize();
 
         function fastDataPoll() {
+            if (self.requestTelemetry) {
                 kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
                     if (GUI.activeContent == 'data_output') {
-                        if(self.startedUIupdate == 0){
-                // window.clearTimeout(self.updateTimeout);
-                updateUI();
-                // self.startedUIupdate = 1;
-            }
-            // self.updateTimeout =
-            // window.setTimeout(function(){fastDataPoll();},10);
+                        if (self.startedUIupdate == 0){
+                               updateUI();
+                        }
                     }
                 });
+            }    
         }
 
         // start
