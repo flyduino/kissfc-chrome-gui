@@ -171,7 +171,7 @@ kissProtocol.proceedRequest = function() {
         }
         this.ReceiveTimeout =  window.setTimeout(function(){
             kissProtocol.receiving = false; 
-        }, 100); 
+        }, 500); 
     }
     if (this.RequestInterval == 0) {
         this.RequestInterval = window.setInterval(function(){ kissProtocol.proceedRequest(); }, 10);
