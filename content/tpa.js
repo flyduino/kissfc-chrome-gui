@@ -83,6 +83,10 @@ CONTENT.tpa.initialize = function(callback) {
         window.clearTimeout(self.updateTimeout);
 
         validateBounds('.tpa input[type="text"]');
+        
+        if (data['ver']>108) {
+            $('.voltage_influence').hide();
+        }
 
         for (var i = 0; i < receiverNames.length; i++) {
             var name = receiverNames[i];
@@ -273,6 +277,9 @@ CONTENT.tpa.initialize = function(callback) {
         $('input[name="BPI2"]').val(data['TPABPI2']);
         $('input[name="BPI3"]').val(data['TPABPI3']);
         $('input[name="BPI4"]').val(data['TPABPI4']);
+        
+        
+        if (data['ver']<109) {
 
         $('input[name="UVPID"]').on('change', function() {
             contentChange(true);
@@ -309,7 +316,7 @@ CONTENT.tpa.initialize = function(callback) {
         $('#simulatedVoltage').on('change', function() {
             contentChange(false);
         });
-        
+        }
         $('#tpa_chart').kissTPAChart();
         
         $(window).on('resize', self.resizeChart).resize();

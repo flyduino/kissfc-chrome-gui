@@ -158,48 +158,23 @@ CONTENT.configuration.initialize = function(callback) {
         console.log("RECEIVED:");
         console.log(data);
 
-          if (data['ver'] < 100) {
-            $('#version').text('0.' + data['ver']);
-        } else if (data['ver'] == 100) {
-            $('#version').text((data['ver'] / 100) + '.00');
-        } else {
-            $('#version').text((data['ver'] / 100));
-            $('input[name="3dMode"]').removeAttr("disabled");
-        }
+
+        $('input[name="3dMode"]').removeAttr("disabled");
         
-        if (data['ver'] > 102) {
             kissProtocol.send(kissProtocol.GET_INFO, [0x21], function() {
                 var info = kissProtocol.data[kissProtocol.GET_INFO];
                 $('#version').text(info.firmvareVersion);
             });
-        }
 
-        if (data['ver'] > 101) {
+
             document.getElementById('ppmadd1').style.display = "inline";
             document.getElementById('ppmadd2').style.display = "inline";
             document.getElementById('mpxSRXL').style.display = "inline";
-        }
         
-        if (data['ver'] > 107) {
+
             document.getElementById('jrxbusb').style.display = "inline";
-        }
         
-        if (data['ver'] > 102) {
-            //$('input[name="secret"]').removeAttr("disabled");
-        } else {
-            $("select[name^='aux'] option[value='12']").remove();
-            $("select[name^='aux'] option[value='13']").remove();
-        }
-        
-        if (data['ver'] > 103) {
-            //
-        } else {
-            /* Some fixes for backward compatibility */
-            $("select[name^='aux'] option[value='14']").remove();
-            $(".rxType option[value='15']").remove();
-        }
-        
-        if (data['ver'] < 107 || data['vtxType']==0) {
+        if (data['vtxType']==0) {
             $('#aux5').hide();
             $('#aux6').hide();
             $('#aux7').hide();
@@ -320,22 +295,12 @@ CONTENT.configuration.initialize = function(callback) {
         });
         
         var outputMode = data['ESConeshot125'];
-        if (data['ver'] > 104) {
+
             $("#outputMode").val(outputMode);       
             $("#outputMode").on('change', function() {
                 contentChange();
             });  
-        } else {
-            document.getElementById('outputMode').style.display="none";
-            document.getElementById('outputModeOld').style.display="inline";
-            outputMode = 2; // PWM
-            if (data['ESConeshot125']==1) outputMode = 1;
-            else if (data['ESConeshot42']==1) outputMode = 0;
-            $("#outputModeOld").val(outputMode);       
-            $("#outputModeOld").on('change', function() {
-                contentChange();
-            });     
-        }
+        
 
         $('input[name="failsaveseconds"]').val(data['failsaveseconds']);
         $('input[name="failsaveseconds"]').on('input', function() {
@@ -532,15 +497,10 @@ CONTENT.configuration.initialize = function(callback) {
             data['TYinv8'] = parseInt($('input[name="TYinv"]').prop('checked') ? 1 : 0);
             
              var outputMode = 0;
-            if (data['ver'] > 104) {
+
                 outputMode = parseInt($('select[name="outputMode"]').val());
                 data['ESConeshot125'] = outputMode;
                 data['ESConeshot42'] = 0;
-            } else {
-                outputMode = parseInt($('select[name="outputModeOld"]').val());
-                data['ESConeshot125'] = outputMode == 1 ? 1 : 0;
-                data['ESConeshot42'] = outputMode == 0 ? 1 : 0;
-               }
            
             data['Active3DMode'] = parseInt($('input[name="3dMode"]').prop('checked') ? 1 : 0);
             data['failsaveseconds'] = parseInt($('input[name="failsaveseconds"]').val());

@@ -52,13 +52,13 @@
 			</tr>
 			<tr>
 				<td data-i18n="column.rx-deadband">RX deadband</td>
-				<td><input class="unsafe" disabled="true" type="text" size="3" name="DB0"
+				<td><input class="unsafe" type="text" size="3" name="DB0"
 					data-min="0" data-max="250" data-step="1" data-precision="0"
 					value="0" /></td>
-				<td><input class="unsafe" disabled="true" type="text" size="3" name="DB1"
+				<td><input class="unsafe" type="text" size="3" name="DB1"
 					data-min="0" data-max="250" data-step="1" data-precision="0"
 					value="0" /></td>
-				<td><input class="unsafe" disabled="true" type="text" size="3" name="DB2"
+				<td><input class="unsafe" type="text" size="3" name="DB2"
 					data-min="0" data-max="250" data-step="1" data-precision="0"
 					value="0" /></td>
 			</tr>
@@ -72,7 +72,7 @@
 					<span data-i18n="column.device">Device</span>
 				</dt>
 				<dd>
-					<select class="unsafe" disabled="true" name="loggerConfig" id="loggerConfig">
+					<select class="unsafe" name="loggerConfig" id="loggerConfig">
 						<option value="0" data-i18n="serial.0">OSD</option>
 						<option value="11" data-i18n="serial.11">VTX</option>
 						<option value="1" data-i18n="serial.1">Logger / 10%</option>
@@ -110,7 +110,7 @@
 			</div>
 		</div>
 		
-		<div id="vtx" class="wrapper-full" style="display:none">
+		<div id="vtx" class="wrapper-full">
 			<div class="groupTitle" data-i18n="title.vtx-config">VTX config</div>
 			<dl class="general-settings">
 				<dt>
@@ -192,7 +192,7 @@
 		<div id="motorBuzzer" class="wrapper-full">
 			<div class="groupTitle" data-i18n="title.buzzer-emulation">Buzzer emulation</div>
 			<dl class="general-settings">
-				<dt style="width:280px"><input disabled type="checkbox" name="motorBuzzer" /> &nbsp;<span data-i18n="column.buzzer-emulation" style="width:200px">Emulate with motors</span></dt>
+				<dt style="width:280px"><input type="checkbox" name="motorBuzzer" /> &nbsp;<span data-i18n="column.buzzer-emulation" style="width:200px">Emulate with motors</span></dt>
 			</dl>
 		</div>
 		
@@ -245,7 +245,7 @@
 			<dl class="general-settings">
 				<dt title="low battery alarm" style="width:180px" data-i18n="column.lipo-volts">Voltage is less than </dt>
 				<dd>
-					<input disabled="true" type="text" name="vbatAlarm" data-step="0.1"
+					<input type="text" name="vbatAlarm" data-step="0.1"
 						data-min="0" data-max="26" data-precision="1" value="0.0" /><input
 						type="hidden" name="vbatAlarm" id="vbatAlarm" value="" />
 				</dd>
@@ -253,7 +253,7 @@
 			<dl class="general-settings">
 				<dt title="mah alarm" style="width:180px" data-i18n="column.lipo-mah">Consumption is greater than </dt>
 				<dd>
-					<input disabled="true" type="text" name="mahAlarm" data-step="1"
+					<input type="text" name="mahAlarm" data-step="1"
 						data-min="0" data-max="24000" data-precision="0" value="0" /><input
 						type="hidden" name="mahAlarm" id="mahAlarm" value="" />
 				</dd>
