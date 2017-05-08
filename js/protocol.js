@@ -311,6 +311,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.NFCF = [];
                 obj.NFCO = [];
                 obj.ver = 0;
+                obj.reverseMotors = 0;
             }
             
             obj.G_P[0] = data.getUint16(0, 0) / 1000;
@@ -471,9 +472,10 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.motorBuzzer = data.getUint8(163, 0);
             }
             if (obj.ver > 108){
-		obj.loopTimeDivider = data.getUint8(164, 0);
-		obj.yawLpF = data.getUint8(165, 0);
-		obj.DLpF = data.getUint8(166, 0);
+                obj.loopTimeDivider = data.getUint8(164, 0);
+                obj.yawLpF = data.getUint8(165, 0);
+                obj.DLpF = data.getUint8(166, 0);
+                obj.reverseMotors = data.getUint8(167, 0);
             }
             
             kissProtocol.upgradeTo104(obj);
@@ -714,8 +716,9 @@ kissProtocol.preparePacket = function (code, obj) {
 	     if (obj.ver > 108) {
 			data.setUint8(153, obj.loopTimeDivider);
 			data.setUint8(154, obj.yawLpF);
-		        data.setUint8(155, obj.DLpF);
-			blen=164;
+		    data.setUint8(155, obj.DLpF);
+		    data.setUint8(156, obj.reverseMotors);
+			blen=165;
 	     }
             break;
             

@@ -348,5 +348,8 @@
 	"text.fc-flasher-failure": "FALLO: $1",
 	"text.fc-flasher-complete": "¡¡¡Flasheo completo!!!",
 	"title.kiss": "KISS Flight Control GUI",
-	"text.connect": "Por favor, conecta la FC KISS a tu ordenador y selecciona el puerto."
+	"text.connect": "Por favor, conecta la FC KISS a tu ordenador y selecciona el puerto.",
+	
+	"title.reverse-motors" : "Motors direction",
+	"column.reverse-motors" : "Reverse direction of all motors"
 }

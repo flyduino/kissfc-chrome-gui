@@ -413,5 +413,8 @@
 	
 	
 	"title.kiss": "KISS Kontroler Lotu GUI",
-	"text.connect": "Proszę podłączyć KISS FC do komputera i wybrać port z listy powyżej."
+	"text.connect": "Proszę podłączyć KISS FC do komputera i wybrać port z listy powyżej.",
+	
+	"title.reverse-motors" : "Motors direction",
+	"column.reverse-motors" : "Reverse direction of all motors"
 }

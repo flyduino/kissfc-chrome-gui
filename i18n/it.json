@@ -392,8 +392,11 @@
     "text.fc-flasher-flashing": "Flasha il firmware",
     "text.fc-flasher-unprotect": "Protezione rimossa",
     "text.fc-flasher-failure": "ERRORE: $1",
-	  "text.fc-flasher-complete": "Flashing completato!!!",
+	"text.fc-flasher-complete": "Flashing completato!!!",
 
-	  "title.kiss": "Pannello di controllo KISS Flight Controller",
-	  "text.connect": "Collega la KISS FC al tuo Computer e seleziona la porta qui' sotto."
+	"title.kiss": "Pannello di controllo KISS Flight Controller",
+	"text.connect": "Collega la KISS FC al tuo Computer e seleziona la porta qui' sotto.",
+	  
+	"title.reverse-motors" : "Motors direction",
+	"column.reverse-motors" : "Reverse direction of all motors"
 }

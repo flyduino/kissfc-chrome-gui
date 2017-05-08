@@ -34,8 +34,12 @@ CONTENT.advanced.initialize = function(callback) {
             if (data['loggerConfig']>10) {
                 data['loggerConfig']=0; // osd!
             }
+            if (data['reverseMotors']=="1") {
+                $('input[name="reverseMotors"]').prop('checked', 1);
+            }
         } else {
             $("select[name='vtxType'] option[value='3']").remove(); // no unify on 108
+            $("#reverseMotors").hide();
         }
    
         if (data['loggerConfig'] > 0 && data['loggerConfig'] < 11)
@@ -351,6 +355,12 @@ CONTENT.advanced.initialize = function(callback) {
                 data['motorBuzzer'] = 1;
             } else {
                 data['motorBuzzer'] = 0;
+            }
+            
+            if ($('input[name="reverseMotors"]').prop('checked') ? 1 : 0 == 1) {
+                data['reverseMotors'] = 1;
+            } else {
+                data['reverseMotors'] = 0;
             }
        
         }
