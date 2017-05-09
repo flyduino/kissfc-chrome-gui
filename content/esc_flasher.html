@@ -16,17 +16,68 @@
 		<p id="esc_info">
 			
 		</p>
-		
 	</div>
 	<div class="wrapper-half">
-		<div class="wrapper-full">    	
+		<!-- <div class="wrapper-full">    	
         	<img style="float:right;" src="./images/welcome1.png" />
-		</div>
-    	<div id="escInfoDiv" class="wrapper-full">
+		</div> -->
+		
+    	<div id="escInfoDiv" class="wrapper-full" style="display:none">
     		<div class="groupTitle" data-i18n="title.esc-info">KISS ESC Info</div>
     		<ul id="escInfo">
     		</ul>
     	</div>
+    	
+    	<div id="escSettingsDiv" class="wrapper-full"  style="display:none">
+    	
+    	<div class="config_buttons">
+			<a id="save" class="config_button" href="#"
+				title="Save Settings to ESC" data-i18n="button.save">Save Settings</a>
+		</div>
+		<div class="clear-both"></div>
+		
+		<div class="groupTitle" data-i18n="title.esc-settings">KISS ESC Settings</div>
+			<table class="escSettings">
+				<thead>
+					<th data-i18n="column.esc-number"></th>
+					<th data-i18n="column.esc-reverse"></th>
+					<th data-i18n="column.esc-3dmode"></th>
+				</thead>
+				<tbody>
+					<tr style="display:none">
+						<td>1</td>
+						<td><input class="unsafe direction" type="checkbox" /></td>
+						<td><input class="unsafe 3d" type="checkbox" /></td>
+					</tr>
+					<tr style="display:none">
+						<td>2</td>
+						<td><input class="unsafe direction" type="checkbox" /></td>
+						<td><input class="unsafe 3d" type="checkbox"/></td>
+					</tr>
+					<tr style="display:none">
+						<td>3</td>
+						<td><input class="unsafe direction" type="checkbox"/></td>
+						<td><input class="unsafe 3d" type="checkbox" /></td>
+					</tr>
+					<tr style="display:none">
+						<td>4</td>
+						<td><input class="unsafe direction" type="checkbox"  /></td>
+						<td><input class="unsafe 3d" type="checkbox" /></td>
+					</tr>
+					<tr style="display:none">
+						<td>5</td>
+						<td><input class="unsafe direction" type="checkbox"  /></td>
+						<td><input class="unsafe 3d" type="checkbox" /></td>
+					</tr>
+					<tr style="display:none">
+						<td>6</td>
+						<td><input class="unsafe direction" type="checkbox" /></td>
+						<td><input class="unsafe 3d" type="checkbox" /></td>
+					</tr>
+				</tbody>
+			</table>
+		
+		</div>
     </div>
 </div>
 <div class="esc-flasher-disclaimer">

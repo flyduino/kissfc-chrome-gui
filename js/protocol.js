@@ -17,6 +17,7 @@ var kissProtocol = {
     GET_SETTINGS:   0x30,
     SET_SETTINGS:   0x10,
     MOTOR_TEST:     0x11,
+    SET_ESC_SETTINGS:   0x12,
 
     block:                  false,
     ready:                  false,
@@ -732,6 +733,16 @@ kissProtocol.preparePacket = function (code, obj) {
                    data.setUint8(6, obj.motorTest[5], 0);
                    blen=7;
           break; 
+          
+          case this.SET_ESC_SETTINGS:
+              data.setUint8(0, obj.escSettings[0], 0);
+              data.setUint8(1, obj.escSettings[1], 0);
+              data.setUint8(2, obj.escSettings[2], 0);
+              data.setUint8(3, obj.escSettings[3], 0);
+              data.setUint8(4, obj.escSettings[4], 0);
+              data.setUint8(5, obj.escSettings[5], 0);
+              blen=6;
+     break; 
           
           case this.ESC_INFO:
               

@@ -49,6 +49,10 @@ CONTENT.esc_flasher.initialize = function(callback) {
             setTimeout(function() { WritePage(actPage-1); }, timeout);
         }
     }
+    
+    function contentChange() {
+        $('#save').addClass("saveAct");
+    }
 
     function pollEscInfo() {
         if (self.pollEscInfo) {
@@ -63,28 +67,36 @@ CONTENT.esc_flasher.initialize = function(callback) {
                     $("#escInfoDiv").show();
                     for (var i=0; i<info.escInfoCount; i++) {
                         if (info.escInfo[i] !== undefined) { 
-                            var li = $("<li/>").html("#"+(i+1)+": "+$.i18n("text.firmware-version")+" " + info.escInfo[i].type + " " + info.escInfo[i].version + " "+$.i18n("text.sn")+" " + info.escInfo[i].SN);
+                            var li = $("<li/>").html((i+1)+": "+$.i18n("text.firmware-version")+" " + info.escInfo[i].type + " " + info.escInfo[i].version + " "+$.i18n("text.sn")+" " + info.escInfo[i].SN);
                         } else {
-                            var li = $("<li/>").html("#"+(i+1)+": --");
+                            var li = $("<li/>").html((i+1)+": --");
                         }
                         $("#escInfo").append(li);
+                        if (kissProtocol.data[kissProtocol.GET_SETTINGS].ver>108) {
+                            $(".escSettings tbody tr:nth-child("+(i+1)+")").show();
+                        }
                     }
                 }
             });
         } 
-        if (GUI.activeContent == 'esc_flasher') {
-            // TODO: May be give up after 2 * escCount seconds.
-            setTimeout(function() { pollEscInfo(); }, 2000);
-        }
+       
     }
 
     function htmlLoaded() {
-        $("#escInfoDiv").hide();
+
+        var data = kissProtocol.data[kissProtocol.GET_SETTINGS];
+        if (data.lipoConnected==1) {
+            if (data.ver>108) {
+                $("#escSettingsDiv").show();
+            }
+            $("#escInfoDiv").show();
+        }
         
         $(".warning-button").on("click", function() {
             kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
                 $(".esc-flasher-disclaimer").hide();
-                if (kissProtocol.data[kissProtocol.GET_SETTINGS]['ver'] > 103) {
+                var data = kissProtocol.data[kissProtocol.GET_SETTINGS];
+                if (data.lipoConnected==1) {
                     kissProtocol.send(kissProtocol.ESC_INFO, [0x22], function() { self.pollEscInfo = true; pollEscInfo(); });
                 }
             });
@@ -92,7 +104,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
     
         $(".esc-flasher-disclaimer").show();
         
-         $("#select_file").on("click", function() {
+        $("#select_file").on("click", function() {
               if (!$(this).hasClass("disabled")) {
                   $("#status").html("");
                     chrome.fileSystem.chooseEntry({type: 'openFile', accepts: [{extensions: ['hex']}]}, function (fileEntry) {
@@ -161,6 +173,31 @@ CONTENT.esc_flasher.initialize = function(callback) {
               }, 3000);
             }
         });
+        
+        $("input[type=checkbox]").on("change", function() {
+            contentChange();
+        })
+        
+        if (GUI.activeContent == 'esc_flasher') {
+            // TODO: May be give up after 2 * escCount seconds.
+            if (data.lipoConnected==1) { setTimeout(function() { pollEscInfo(); }, 2000) }
+        }
+        
+        $("#save").on("click", function() {
+            var escSettings = [0x10, 0x20, 0x30, 0x40, 0x50, 0x60]; // Make CS complex
+            $(".direction").each(function(motor, elm) {
+                escSettings[motor] += $(elm).is(':checked') ? 1 : 0;
+            });
+            $(".3d").each(function(motor, elm) {
+                escSettings[motor] += $(elm).is(':checked') ? 2 : 0;
+            });
+            var tmp = {
+               'buffer' : new ArrayBuffer(6),
+               'escSettings' : escSettings
+            };
+            kissProtocol.send(kissProtocol.SET_ESC_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_ESC_SETTINGS, tmp)); 
+        });
+
     };
 }
 

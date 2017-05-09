@@ -351,5 +351,9 @@
 	"text.connect": "Please connect the KISS FC to your Computer and select the port above.",
 	
 	"title.reverse-motors" : "Motors direction",
-	"column.reverse-motors" : "Reverse direction of all motors"
+	"column.reverse-motors" : "Reverse direction of all motors",
+	"title.esc-settings" : "KiSS ESC settings",
+	"column.esc-number" : "ESC",
+	"column.esc-reverse" : "Reverse direction",
+	"column.esc-3dmode": "3D mode" 
 }

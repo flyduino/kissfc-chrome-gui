@@ -111,3 +111,9 @@
 }
 
 
+.escSettings {
+	width: 100%;
+}
+.escSettings td {
+	text-align: center;
+}
