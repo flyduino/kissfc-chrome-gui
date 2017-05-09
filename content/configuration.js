@@ -225,26 +225,19 @@ CONTENT.configuration.initialize = function(callback) {
         });
 
         var mixerList = [{
-            name: $.i18n("mixer.0"),
-            image: '0.png'
+            name: $.i18n("mixer.0")
         }, {
-            name: $.i18n("mixer.1"),
-            image: '1.png'
+            name: $.i18n("mixer.1")
         }, {
-            name: $.i18n("mixer.2"),
-            image: '2.png'
+            name: $.i18n("mixer.2")
         }, {
-            name: $.i18n("mixer.3"),
-            image: '3.png'
+            name: $.i18n("mixer.3")
         }, {
-            name: $.i18n("mixer.4"),
-            image: '4.png'
+            name: $.i18n("mixer.4")
         }, {
-            name: $.i18n("mixer.5"),
-            image: '5.png'
+            name: $.i18n("mixer.5")
         }, {
-            name: $.i18n("mixer.6"),
-            image: '6.png'
+            name: $.i18n("mixer.6")
         }];
 
         var mixer_list_e = $('select.mixer');
@@ -256,7 +249,7 @@ CONTENT.configuration.initialize = function(callback) {
             var val = parseInt($(this).val());
             contentChange();
             if (val==0) $(".tricopter").show(); else $(".tricopter").hide();
-            $('.mixerPreview img').attr('src', './images/mixer/' + mixerList[val].image);
+            $('.mixerPreview img').attr('src', './images/mixer/' + val +(data['reverseMotors']==0?'':'inv')+".png");
         });
 
         // apply configuration values to GUI elements
