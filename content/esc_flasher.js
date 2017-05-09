@@ -195,6 +195,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
                'buffer' : new ArrayBuffer(6),
                'escSettings' : escSettings
             };
+            $('#save').removeClass("saveAct");
             kissProtocol.send(kissProtocol.SET_ESC_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_ESC_SETTINGS, tmp)); 
         });
 
