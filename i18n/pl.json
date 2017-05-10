@@ -3,7 +3,7 @@
         "authors": [
             "Michał Blumkowski"
         ],
-        "last-updated": "2017-03-17",
+        "last-updated": "2017-05-10",
         "locale": "pl",
         "message-documentation": "qqq"
     },
@@ -415,6 +415,6 @@
 	"title.kiss": "KISS Kontroler Lotu GUI",
 	"text.connect": "Proszę podłączyć KISS FC do komputera i wybrać port z listy powyżej.",
 	
-	"title.reverse-motors" : "Motors direction",
-	"column.reverse-motors" : "Reverse direction of all motors"
+	"title.reverse-motors" : "Kierunek silników",
+	"column.reverse-motors" : "Odwróć kierunek wszystkich silników"
 }
