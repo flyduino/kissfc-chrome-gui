@@ -531,7 +531,7 @@ kissProtocol.processPacket = function (code, obj) {
                            info.type='KISS 16A';
                        } else if (type == 3) {
                            info.type='KISS 24A';
-                       } else if (type == 4) {
+                       } else if (type == 5) {
                            info.type='KISS 24 Ultralite';
                        }
 		       if(data.byteLength/6 > 15){ // check if we got the new protocol
