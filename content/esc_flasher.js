@@ -74,6 +74,10 @@ CONTENT.esc_flasher.initialize = function(callback) {
                         $("#escInfo").append(li);
                         if (kissProtocol.data[kissProtocol.GET_SETTINGS].ver>108) {
                             $(".escSettings tbody tr:nth-child("+(i+1)+")").show();
+			    if (info.escInfo[i] !== undefined) {
+				if(info.escInfo[i].Settings[0] == 1) $(".direction").eq(i).prop("checked", true);
+				if(info.escInfo[i].Settings[1] == 1) $(".3d").eq(i).prop("checked", true);
+			    }
                         }
                     }
                 }

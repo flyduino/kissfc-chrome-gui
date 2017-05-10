@@ -504,7 +504,7 @@ kissProtocol.processPacket = function (code, obj) {
                 // if we have data left
                    obj.escInfoCount =  data.getUint8(p++);
                    for (var i = 0; i < obj.escInfoCount; i++) {
-                       var info = { SN: '', version: 0, type: 'UNKNOWN ESC' };
+                       var info = { SN: '', version: 0, type: 'UNKNOWN ESC', Settings: [0,0,0,0]};
                        var SN = [];
                        var CPUID = '';
                        for (var j = 0; j < 12; j++) SN[j] = data.getUint8(p++);
@@ -534,6 +534,9 @@ kissProtocol.processPacket = function (code, obj) {
                        } else if (type == 4) {
                            info.type='KISS 24 Ultralite';
                        }
+		       if(data.byteLength/6 > 15){ // check if we got the new protocol
+				for(var r=0; r < 4; r++) info.Settings[r] = data.getUint8(p++);
+		       }
                        if (!found) info = undefined;
                        obj.escInfo[i] = info;
                    }
