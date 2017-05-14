@@ -238,6 +238,8 @@ CONTENT.configuration.initialize = function(callback) {
             name: $.i18n("mixer.5")
         }, {
             name: $.i18n("mixer.6")
+	}, {
+            name: $.i18n("mixer.7")
         }];
 
         var mixer_list_e = $('select.mixer');
