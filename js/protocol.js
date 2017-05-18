@@ -28,6 +28,7 @@ var kissProtocol = {
     packetBufferU8:         null,
     packetBytesReceived:    0,
     packetCrc:              0,
+    packetCrc2:             0,
     packetCrcCounter:       0,
     processingRequest:      null,
     data:                   [],
@@ -66,6 +67,7 @@ kissProtocol.read = function (readInfo) {
                     this.packetBytesReceived = 0;
                     this.packetCrc = 0;
                     this.packetCrcCounter = 0;
+                    this.packetCrc2 = 0;
                     this.state++;
                     break;
                 case 2:
@@ -73,15 +75,25 @@ kissProtocol.read = function (readInfo) {
                     this.packetBufferU8[this.packetBytesReceived] = data[i];
                     this.packetBytesReceived++;
                     this.packetCrc += data[i];
+                    
+                    this.packetCrc2 ^= data[i];
+                    for (var j = 0; j < 8; j++) {
+                        if (( this.packetCrc2 & 0x80) != 0) {
+                            this.packetCrc2 = ((this.packetCrc2 << 1) ^ 0xD5) & 0xFF;
+                        } else {
+                            this.packetCrc2 <<= 1;
+                        }
+                    }
+                    
                     this.packetCrcCounter++;
 
                     if (this.packetBytesReceived >= this.packetLength) this.state++;
                     break;
                 case 3:
                     // calculate crc, if crc matches -> process data, otherwise log an crc error
-                    //console.log("Calculated crc: " + (Math.floor(this.packetCrc / this.packetCrcCounter)) + " real: " + data[i]);
+                    console.log("Calculated crc: " + (Math.floor(this.packetCrc / this.packetCrcCounter)) + " real: " + data[i] + " crc2: " + this.packetCrc2);
                     
-                    if (Math.floor(this.packetCrc / this.packetCrcCounter) == data[i]) {
+                    if ((Math.floor(this.packetCrc / this.packetCrcCounter) == data[i]) || (this.packetCrc2 == data[i])) {
                         if (this.data[this.processingRequest.code]) {
                             this.data[this.processingRequest.code]['buffer'] = this.packetBuffer;
                             this.data[this.processingRequest.code]['callback'] = this.processingRequest.callback;
@@ -760,12 +772,36 @@ kissProtocol.preparePacket = function (code, obj) {
     outputU8[1] = 5;
     outputU8[2] = blen;
     
+    var ver = +kissProtocol.data[kissProtocol.GET_SETTINGS].ver;
+    console.log("using version: " + ver);
+    
     for (var i = 0; i < blen; i++) {
         outputU8[i + 3] = bufferU8[i];
-        crc += bufferU8[i];
-        crcCounter++;
+        
+        if (ver<109) {
+            // old crc
+            crc += bufferU8[i];
+            crcCounter++;
+        } else {
+            // new crc
+            crc ^= bufferU8[i];
+            for (var j = 0; j < 8; j++) {
+                if ((crc & 0x80) != 0) {
+                    crc = ((crc << 1) ^ 0xD5) & 0xFF;
+                } else {
+                    crc <<= 1;
+                }
+            }
+        }
     }
-    outputU8[outputU8.length - 1] = Math.floor(crc / crcCounter);
+    
+    if (ver<109) { 
+        outputU8[outputU8.length - 1] = Math.floor(crc / crcCounter);
+    } else {
+        outputU8[outputU8.length - 1] = crc & 0xFF; 
+    }
+    
+    console.log("Calculated crc: " + outputU8[outputU8.length - 1]);
 
     return outputU8;
 };
