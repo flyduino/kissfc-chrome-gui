@@ -91,7 +91,7 @@ kissProtocol.read = function (readInfo) {
                     break;
                 case 3:
                     // calculate crc, if crc matches -> process data, otherwise log an crc error
-                    console.log("Calculated crc: " + (Math.floor(this.packetCrc / this.packetCrcCounter)) + " real: " + data[i] + " crc2: " + this.packetCrc2);
+                    //console.log("Calculated crc: " + (Math.floor(this.packetCrc / this.packetCrcCounter)) + " real: " + data[i] + " crc2: " + this.packetCrc2);
                     
                     if ((Math.floor(this.packetCrc / this.packetCrcCounter) == data[i]) || (this.packetCrc2 == data[i])) {
                         if (this.data[this.processingRequest.code]) {
@@ -804,7 +804,7 @@ kissProtocol.preparePacket = function (code, obj) {
         outputU8[outputU8.length - 1] = crc & 0xFF; 
     }
     
-    console.log("Calculated crc: " + outputU8[outputU8.length - 1]);
+    //console.log("Calculated crc: " + outputU8[outputU8.length - 1]);
 
     return outputU8;
 };

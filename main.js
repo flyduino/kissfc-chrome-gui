@@ -56,10 +56,9 @@ $(document).ready(function() {
     PortHandler.initialize();
     CONTENT.welcome.initialize();
 
-    $('#navigation li').click(function() {
+    $('#navigation li:not(.external)').click(function() {
         var self = this;
         var content = $(self).attr('data-name');
-        
 
             $("#navigation").removeClass("active-menu");
 

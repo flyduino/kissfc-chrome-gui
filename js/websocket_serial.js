@@ -4,6 +4,7 @@ var KISS_WIFI_ADDRESS="192.168.4.1";
 
 $.get("http://kiss.local/", function(data) {
     KISS_WIFI_ADDRESS="kiss.local";
+    $("#wifi").attr("href", "http://kiss.local/");
 })
 
 var websocketSerial = {
@@ -59,8 +60,9 @@ var websocketSerial = {
             binary : false
         };
         self.request = request;
-
-        var ws1 = new WebSocket("ws://"+KISS_WIFI_ADDRESS+":81/");
+        var url = "ws://"+KISS_WIFI_ADDRESS+":81/";
+        console.log("Connecting to " + url);
+        var ws1 = new WebSocket(url);
             ws1.onopen = function() {
             self.onConnect(self, ws1);
         };

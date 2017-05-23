@@ -11,6 +11,12 @@ $(document).ready(function() {
                 } else {
                     $("li[data-name='esc_flasher']").show();
                 }
+                
+                if (selectedPort == KISSFC_WIFI) {
+                    $("li[data-name='wifi']").show();
+                } else {
+                    $("li[data-name='wifi']").hide();
+                }
 
                 if (GUI.state == "CONNECT") {
                     GUI.switchToConnecting();
