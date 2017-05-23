@@ -150,9 +150,12 @@ kissProtocol.init = function() {
     this.ready = false;
 }
 
+kissProtocol.removePendingRequests = function() {
+    this.requests = [];
+}
+
 kissProtocol.clearPendingRequests = function(callback) {
      if (this.requests.length>0) {
-         console.log('.');
          setTimeout(function() {
             kissProtocol.clearPendingRequests(callback);             
          }, 100);
