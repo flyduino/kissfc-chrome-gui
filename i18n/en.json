@@ -351,7 +351,7 @@
 	"title.kiss": "KISS Flight Control GUI",
 	"text.connect": "Please connect the KISS FC to your Computer and select the port above.",
 	
-	"title.reverse-motors" : "Motors direction",
+	"title.reverse-motors" : "Yaw control direction",
 	"column.reverse-motors" : "Reverse yaw control direction",
 	"title.esc-settings" : "KiSS ESC settings",
 	"column.esc-number" : "ESC",
