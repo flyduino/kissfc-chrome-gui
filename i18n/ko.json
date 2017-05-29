@@ -88,6 +88,7 @@
 	"filter.4": "중간-낮음",
 	"filter.5": "낮음",
 	"filter.6": "아주낮음",
+	"filter.7": "Advanced Settings",
 	"output.5": "디샷600",
 	"output.4": "디샷300",
 	"output.3": "디샷150",
@@ -350,6 +351,10 @@
 	"title.kiss": "KISS 플라이트 컨트롤러 GUI",
 	"text.connect": "KISS FC를 컴퓨터에 연결하신 후 위에서 포트를 선택하세요.",
 	
-	"title.reverse-motors" : "Motors direction",
-	"column.reverse-motors" : "Reverse direction of all motors"
+	"title.reverse-motors" : "Yaw control direction",
+	"column.reverse-motors" : "Reverse yaw control direction",
+	"title.esc-settings" : "KiSS ESC settings",
+	"column.esc-number" : "ESC",
+	"column.esc-reverse" : "Reverse direction",
+	"column.esc-3dmode": "3D mode" 
 }

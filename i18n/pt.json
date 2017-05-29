@@ -88,6 +88,7 @@
 	"filter.4": "Medio Baixo",
 	"filter.5": "Baixo",
 	"filter.6": "Muito Baixo",
+	"filter.7": "Advanced Settings",
 	"output.5": "Dshot 600",
 	"output.4": "Dshot 300",
 	"output.3": "Dshot 150",
@@ -350,6 +351,10 @@
 	"title.kiss": "KISS Flight Control GUI",
 	"text.connect": "Por favor conecte a sua controladora KISS e seleccione a porta correspondente.",
 	
-	"title.reverse-motors" : "Motors direction",
-	"column.reverse-motors" : "Reverse direction of all motors"
+	"title.reverse-motors" : "Yaw control direction",
+	"column.reverse-motors" : "Reverse yaw control direction",
+	"title.esc-settings" : "KiSS ESC settings",
+	"column.esc-number" : "ESC",
+	"column.esc-reverse" : "Reverse direction",
+	"column.esc-3dmode": "3D mode" 
 }

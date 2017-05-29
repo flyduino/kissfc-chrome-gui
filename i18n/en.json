@@ -88,6 +88,7 @@
 	"filter.4": "Medium Low",
 	"filter.5": "Low",
 	"filter.6": "Very Low",
+	"filter.7": "Advanced Settings",
 	"output.5": "Dshot 600",
 	"output.4": "Dshot 300",
 	"output.3": "Dshot 150",
@@ -351,7 +352,7 @@
 	"text.connect": "Please connect the KISS FC to your Computer and select the port above.",
 	
 	"title.reverse-motors" : "Motors direction",
-	"column.reverse-motors" : "Reverse direction of all motors",
+	"column.reverse-motors" : "Reverse yaw control direction",
 	"title.esc-settings" : "KiSS ESC settings",
 	"column.esc-number" : "ESC",
 	"column.esc-reverse" : "Reverse direction",

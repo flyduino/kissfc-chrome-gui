@@ -96,6 +96,7 @@
     "filter.4": "Medium Low",
     "filter.5": "Low",
     "filter.6": "Very Low",
+    "filter.7": "Advanced Settings",
     
   	"output.5": "Dshot 600",
 	"output.4": "Dshot 300",
@@ -415,6 +416,10 @@
 	"title.kiss": "KISS Kontroler Lotu GUI",
 	"text.connect": "Proszę podłączyć KISS FC do komputera i wybrać port z listy powyżej.",
 	
-	"title.reverse-motors" : "Kierunek silników",
-	"column.reverse-motors" : "Odwróć kierunek wszystkich silników"
+	"title.reverse-motors" : "Yaw control direction",
+	"column.reverse-motors" : "Reverse yaw control direction",
+	"title.esc-settings" : "KiSS ESC settings",
+	"column.esc-number" : "ESC",
+	"column.esc-reverse" : "Reverse direction",
+	"column.esc-3dmode": "3D mode" 
 }
