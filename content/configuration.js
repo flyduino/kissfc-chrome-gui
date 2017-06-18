@@ -179,11 +179,11 @@ CONTENT.configuration.initialize = function(callback) {
             $('#aux6').hide();
             $('#aux7').hide();
         }
-	if(data['ver'] < 109){
-		$("select[name='outputMode'] option[value='6']").remove();
-		$("select[name='outputMode'] option[value='7']").remove();
-		$("select[name='lpf'] option[value='7']").remove();
-	}else{
+        if (data['ver'] < 109){
+            $("select[name='outputMode'] option[value='6']").remove();
+            $("select[name='outputMode'] option[value='7']").remove();
+            $("select[name='lpf'] option[value='7']").remove();
+        } else {
 		kissProtocol.send(kissProtocol.GET_INFO, [0x21], function(){
 			var info = kissProtocol.data[kissProtocol.GET_INFO];
 			var FCinfo = info.firmvareVersion.split(/-/g);
@@ -363,6 +363,7 @@ CONTENT.configuration.initialize = function(callback) {
         $('tr.level input').eq(1).val(data['A_I']);
         $('tr.level input').eq(2).val(data['A_D']);
         $('tr.level input').eq(3).val(Math.round(data['maxAng']));
+        
         for (var i = 0; i < 4; i++) {
             $('tr.level input').eq(i).on('input', function() {
                 contentChange();
@@ -406,14 +407,24 @@ CONTENT.configuration.initialize = function(callback) {
             change: function() { contentChange(); },
             value: data['AUX'][7]
         });
-        if(data['ver'] < 109){
-		$('select[name="lpf"]').val(data['LPF']);
-	}else{
-		if(data['LPF'] == data['DLpF'] && data['LPF'] == data['yawLpF']){
-			$('select[name="lpf"]').val(data['LPF']);
-		}else{
-			$('select[name="lpf"]').val(7);
-		}
+        
+        if (data['ver'] > 108) {
+            $("#aux8").kissAux({ name: $.i18n("column.turtle-mode"),    
+                change: function() { contentChange(); },
+                value: data['AUX'][8]
+            });
+        } else {
+            $("#aux8").hide();
+        }
+        
+        if (data['ver'] < 109) {
+            $('select[name="lpf"]').val(data['LPF']);
+        } else {
+            if (data['LPF'] == data['DLpF'] && data['LPF'] == data['yawLpF']){
+                $('select[name="lpf"]').val(data['LPF']);
+            } else {
+                $('select[name="lpf"]').val(7);
+            }
 	}
         $('select[name="lpf"]').on('change', function() {
             contentChange();
@@ -535,14 +546,14 @@ CONTENT.configuration.initialize = function(callback) {
             data['A_D'] = parseFloat($('tr.level input').eq(2).val());
             data['maxAng'] = parseFloat($('tr.level input').eq(3).val());
 	    
-	    if(data['ver'] < 109){
-		data['LPF'] = parseInt($('select[name="lpf"]').val());
-	    }else{
-		if(parseInt($('select[name="lpf"]').val()) != 7){
-			data['LPF'] = parseInt($('select[name="lpf"]').val());
-			data['yawLpF'] = parseInt($('select[name="lpf"]').val());
-			data['DLpF'] = parseInt($('select[name="lpf"]').val());
-		}
+            if (data['ver'] < 109){
+               data['LPF'] = parseInt($('select[name="lpf"]').val());
+            } else {
+                if (parseInt($('select[name="lpf"]').val()) != 7) {
+                    data['LPF'] = parseInt($('select[name="lpf"]').val());
+                    data['yawLpF'] = parseInt($('select[name="lpf"]').val());
+                    data['DLpF'] = parseInt($('select[name="lpf"]').val());
+                }
             }
             
             data['AUX'][0]=$("#aux0").kissAux('value');
@@ -553,6 +564,7 @@ CONTENT.configuration.initialize = function(callback) {
             data['AUX'][5]=$("#aux5").kissAux('value');
             data['AUX'][6]=$("#aux6").kissAux('value');
             data['AUX'][7]=$("#aux7").kissAux('value');
+            data['AUX'][8]=$("#aux8").kissAux('value');
             
             console.log("SENT:");
             console.log(data);
