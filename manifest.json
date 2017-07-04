@@ -24,6 +24,10 @@
         "storage",
         "notifications",
 		"http://ultraesc.de/",
+		"https://*.github.com/",
+        "https://*.githubusercontent.com/",
+        "http://*.baseflight.net/",
+        "https://*.amazonaws.com/",
 		{ "fileSystem": ["write"] },
 		{"usbDevices": [
             {"vendorId": 1155, "productId": 57105}
