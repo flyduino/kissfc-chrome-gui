@@ -356,5 +356,6 @@
 	"title.esc-settings" : "KiSS ESC inställningar",
 	"column.esc-number" : "ESC",
 	"column.esc-reverse" : "Omvänd riktning",
-	"column.esc-3dmode": "3D-läge"
+	"column.esc-3dmode": "3D-läge",
+	"column.turtle-mode": "Turtle mode"
 }
