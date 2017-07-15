@@ -9,7 +9,11 @@ var usbDevices = {
 
 var firmwares = [];
 var firmwareMap = {};
-var firmwareInfo = {};
+
+var boardNames = {
+        'KISSCC' : "Kiss AIO Flight ciontroller",
+        'KISSFC' : "Kiss Flight controller"
+};
 
 CONTENT.flasher = {
 
@@ -42,8 +46,7 @@ CONTENT.flasher.initialize = function(callback) {
     function htmlLoaded() {
         $("#portArea").children().addClass('flashing-in-progress');
         checkDFU();
-        
-        
+              
         $("#fw_version").on("change", function() {
             var asset = firmwareMap[$("#fc_type").val()][$(this).val()];
             $("#fw_notes").text(asset.info);
@@ -66,13 +69,17 @@ CONTENT.flasher.initialize = function(callback) {
         });
         
         $("#download_url").on("click", function() {
-            
+            $("#loader2").show();
             var asset = firmwareMap[$("#fc_type").val()][$("#fw_version").val()];
             var url = asset.url;
             console.log("Loading "+ url);
+            $("#file_info").html("");
+            $("#flash").hide();
+            $("#status").hide();
             
             $.get(url, function(intel_hex) {
-                self.parsed_hex = read_hex_file(intel_hex);;
+                self.parsed_hex = read_hex_file(intel_hex);
+                $("#loader2").hide();
 
                 if (self.parsed_hex) {
                     console.log("HEX OS OK " + self.parsed_hex.bytes_total + " bytes");
@@ -91,7 +98,9 @@ CONTENT.flasher.initialize = function(callback) {
            $("#flash").hide();
            firmwares = [];
            $("#remote_fw").hide();
+           $("#loader1").show();
            loadGithubReleases("https://api.github.com/repos/flyduino/kissfc-firmware/releases", function(data) {
+               $("#loader1").hide();
                console.log("DONE");
                console.log(data);
                $("#remote_fw").show();
@@ -121,7 +130,7 @@ CONTENT.flasher.initialize = function(callback) {
                    $("#fw_version").empty();
                    
                    $.each(firmwareMap, function( board, assets ) {
-                      $("#fc_type").append("<option value='"+board+"'>"+board+"</option>");
+                      $("#fc_type").append("<option value='"+board+"'>"+board+" - " +boardNames[board] + "</option>");
                    });
                    $("#fc_type").trigger("change");
                });
