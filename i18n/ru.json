@@ -353,9 +353,14 @@
 	
 	"title.reverse-motors" : "Yaw control direction",
 	"column.reverse-motors" : "Reverse yaw control direction",
-	"title.esc-settings" : "KISS ESC settings",
+	"title.esc-settings" : "KISS ESC установки",
 	"column.esc-number" : "ESC",
-	"column.esc-reverse" : "Reverse direction",
-	"column.esc-3dmode": "3D mode",
-	"column.turtle-mode": "Режим черепахи" 
+	"column.esc-reverse" : "Изменить направление",
+	"column.esc-3dmode": "3D режим",
+	"column.turtle-mode": "Режим черепахи",
+	"button.select-remote-firmware": "СКАЧАТЬ ИЗ СЕТИ",
+	"button.download-firmware": "СКАЧАТЬ ПРОШИВКУ",
+	"text.flight-controller": "Тип контроллера",
+	"text.firmware-versions": "Версии прошивок",
+	"text.release-notes" : "Описание версии" 
 }

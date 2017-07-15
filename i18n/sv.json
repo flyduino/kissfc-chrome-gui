@@ -357,5 +357,10 @@
 	"column.esc-number" : "ESC",
 	"column.esc-reverse" : "Omvänd riktning",
 	"column.esc-3dmode": "3D-läge",
-	"column.turtle-mode": "Turtle mode"
+	"column.turtle-mode": "Turtle mode",
+	"button.select-remote-firmware": "SELECT REMOTE FIRMWARE",
+	"button.download-firmware": "DOWNLOAD FIRMWARE",
+	"text.flight-controller": "Flight controller",
+	"text.firmware-versions": "Firmware versions",
+	"text.release-notes" : "Release notes"
 }

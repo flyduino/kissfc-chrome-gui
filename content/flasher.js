@@ -9,7 +9,8 @@ var usbDevices = {
 
 var firmwares = [];
 var firmwareMap = {};
-        
+var firmwareInfo = {};
+
 CONTENT.flasher = {
 
 };
@@ -38,43 +39,36 @@ CONTENT.flasher.initialize = function(callback) {
         });
     }
 
-    function loadReleases(url, callback) {
-        //alert(request.getResponseHeader('some_header'));
-        //Link: <https://api.github.com/resource?page=2>; rel="next",
-        //<https://api.github.com/resource?page=5>; rel="last"
-        $.ajax({
-            dataType: "json",
-            url: url,
-            success: function(data, textStatus, request) {
-               var link = request.getResponseHeader('Link');
-               Array.prototype.push.apply(firmwares, data);
-               if (link==null) {
-                   callback(firmwares);
-               } else {
-                   console.log("Paging!");
-                   callback(firmwares);
-               }
-               
-               $("#remote_fw").show();
-            } 
-        });
-    }
-    
     function htmlLoaded() {
         $("#portArea").children().addClass('flashing-in-progress');
         checkDFU();
         
+        
+        $("#fw_version").on("change", function() {
+            var asset = firmwareMap[$("#fc_type").val()][$(this).val()];
+            $("#fw_notes").text(asset.info);
+            $("#file_info").html("");
+            $("#flash").hide();
+            $("#status").hide();
+        });
+        
         $("#fc_type").on("change", function() {
             var value = firmwareMap[$(this).val()];
+            console.log(value);
             $("#fw_version").empty();
             $.each(value, function( index, asset ) {
-                console.log(asset);
-                $("#fw_version").append("<option value='"+asset.url+"'>"+asset.release+" ("+ asset.size + " bytes)</option>");
-             });
+                $("#fw_version").append("<option value='"+index+"'>"+asset.release+" ("+ asset.size + " bytes)</option>");
+            });
+            $("#fw_version").trigger("change");
+            $("#file_info").html("");
+            $("#flash").hide();
+            $("#status").hide();
         });
         
         $("#download_url").on("click", function() {
-            var url = $("#fw_version").val();
+            
+            var asset = firmwareMap[$("#fc_type").val()][$("#fw_version").val()];
+            var url = asset.url;
             console.log("Loading "+ url);
             
             $.get(url, function(intel_hex) {
@@ -96,9 +90,11 @@ CONTENT.flasher.initialize = function(callback) {
            $("#file_info").html("");
            $("#flash").hide();
            firmwares = [];
-           loadReleases("https://api.github.com/repos/flyduino/kissfc-firmware/releases", function(data) {
+           $("#remote_fw").hide();
+           loadGithubReleases("https://api.github.com/repos/flyduino/kissfc-firmware/releases", function(data) {
                console.log("DONE");
                console.log(data);
+               $("#remote_fw").show();
                firmwareMap = {};
                $.each(firmwares, function(index, release) {
                    console.log("Processing firmware: " + release.name);
@@ -115,7 +111,8 @@ CONTENT.flasher.initialize = function(callback) {
                                    release: release.name,
                                    date: release.created_at,
                                    url: asset.browser_download_url,
-                                   size: asset.size
+                                   size: asset.size,
+                                   info: release.body
                            }
                            firmwareMap[board].push(file);
                        }

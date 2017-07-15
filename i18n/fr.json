@@ -365,5 +365,10 @@
 	"column.esc-number" : "ESC",
 	"column.esc-reverse" : "Inverser le sens",
 	"column.esc-3dmode": "Mode 3D",
-	"column.turtle-mode": "Mode Tortue" 
+	"column.turtle-mode": "Mode Tortue",
+	"button.select-remote-firmware": "SELECT REMOTE FIRMWARE",
+	"button.download-firmware": "DOWNLOAD FIRMWARE",
+	"text.flight-controller": "Flight controller",
+	"text.firmware-versions": "Firmware versions",
+	"text.release-notes" : "Release notes" 
 }
