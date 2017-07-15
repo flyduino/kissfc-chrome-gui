@@ -24,6 +24,7 @@
 		<select name="graphTitle" style="position: relative; top:-1px;">
 		    <option value="0" data-i18n="telemetry.0">Gyro &amp; ACC Data</option>
 		</select>
+				
 	</div>
         <dl class="legend">
             <dt id="graph1" data-i18n="legend.1">Gyroscope X</dt><dd>&nbsp;</dd>
@@ -34,6 +35,10 @@
             <dt id="graph6" data-i18n="legend.6">Accelerometer Z</dt><dd>&nbsp;</dd>
         </dl>
         <canvas id="graph" width="100" height="190"></canvas>
+        <div id="model" class="model_chart"></div>
+    </div>
+    <div>
+    	<a class="reset_model" href="#" style="font-size:11px;" data-i18n="button.reset-model">Reset model</a>
     </div>
 </div>
 <div class="motor-test-disclaimer">

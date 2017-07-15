@@ -112,8 +112,9 @@
     margin: 10px 0 0 0;
 }
 .data_output #graph {
-    float: right;
+   /* float: right; */
     background-color: white;
+    margin-left: 10px;
 }
 
 .data_output {
@@ -192,5 +193,30 @@
 	text-align: right;
 }
 
+.data_output .model_chart {
+    width: 190px;
+    height: 190px;
+	display: inline-block;    
+	float: right;
+}
 		
+.data_output .plot dd {
+	width: 35px;
+	overflow: hidden;
+	text-overflow: hidden;
+}
 
+a.reset_model {
+    margin: 10px 0 0 0;
+    display: block;
+    color: white;
+    padding: 0 10px 0 10px;
+    height: 20px;
+    line-height: 20px;
+    background-color: #830a0a;
+    text-align: center;
+    float: right;
+}
+a.reset_model:hover {
+    background-color: #d01414;
+}

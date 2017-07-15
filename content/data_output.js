@@ -11,12 +11,52 @@ CONTENT.data_output.initialize = function (callback) {
     self.updateTimeout;
     self.motorTestEnabled = false;
     self.requestTelemetry = true;
-
+    self.imuInitialized = false;
+    self.telemetry = {};
+    
     GUI.switchContent('data_output', function() {
         kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
             GUI.load("./content/data_output.html", htmlLoaded);
             });
     });
+    
+    function animateModel(timestamp) {
+        if (GUI.activeContent == 'data_output') {
+            requestAnimationFrame(animateModel);
+            
+            if (!self.lastTimestamp) {
+                self.lastTimestamp = timestamp;
+            }
+            var frameTime = timestamp - self.lastTimestamp; 
+            self.lastTimestamp = timestamp;
+           
+            if (frameTime>0) {  
+                if (!self.imuInitialized) {
+                    self.imuInitialized = true;
+                    imuInit(1/60, 0.1);
+                }
+                
+                imuUpdate(self.telemetry['GyroRaw'][0] * 2000 * Math.PI / 180, 
+                          -self.telemetry['GyroRaw'][1] * 2000 * Math.PI / 180,  
+                          self.telemetry['GyroRaw'][2] * 2000 * Math.PI / 180,  
+                          self.telemetry['ACCRaw'][0], 
+                          self.telemetry['ACCRaw'][1], 
+                          self.telemetry['ACCRaw'][2]);
+                
+                var freq = 1000/frameTime;
+                
+                $("#model").kissModel('reset');
+               
+                var q = new THREE.Quaternion(Quaternion[0], Quaternion[1], Quaternion[2], Quaternion[3]);
+                var rotation = new THREE.Euler().setFromQuaternion(q, "XYZ" );
+                var axisRate = { 'roll' : rotation.z, 'pitch': rotation.y, 'yaw': -rotation.x};
+                $("#model").kissModel('updateRate', axisRate);
+
+                $("#model").kissModel('refresh');
+            }
+        }
+    }
+
 
     function htmlLoaded() {
         // generate receiver bars
@@ -154,6 +194,10 @@ CONTENT.data_output.initialize = function (callback) {
                                                             // aligned on
                                                             // creation
 
+        $('a.reset_model').click(function() {
+            Quaternion = [ 1.0, 0.0, 0.0, 0.0 ];
+        });
+        
         $('a.calibrateAccelerometer').click(function () {
             var config = kissProtocol.data[kissProtocol.GET_SETTINGS];
             var data = kissProtocol.data[kissProtocol.GET_TELEMETRY];
@@ -399,12 +443,23 @@ CONTENT.data_output.initialize = function (callback) {
                 kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
                     if (GUI.activeContent == 'data_output') {
                         if (self.startedUIupdate == 0){
+                               self.telemetry =  kissProtocol.data[kissProtocol.GET_TELEMETRY];
                                updateUI();
                         }
                     }
                 });
             }    
         }
+        
+        $("#model").kissModel({
+            'mixer': kissProtocol.data[kissProtocol.GET_SETTINGS].CopterType,
+            'width': 190,
+            'height': 190
+        })
+        
+        
+        
+        animateModel();
 
         // start
         fastDataPoll();
@@ -536,7 +591,7 @@ CONTENT.data_output.drawGraph = function (graph, scale) {
 
 CONTENT.data_output.resizeCanvas = function () {
     var wrapper = $('#content');
-    $('#graph').prop('width', wrapper.width() - 160); // -160px for legend
+    $('#graph').prop('width', wrapper.width() - 160 - 190); // -160px for legend
 
     CONTENT.data_output.renderGraph();
 }

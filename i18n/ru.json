@@ -363,5 +363,6 @@
 	"text.flight-controller": "Тип контроллера",
 	"text.firmware-versions": "Версии прошивок",
 	"text.release-notes" : "Описание версии",
-	"text.esc-type": "Тип ESC"
+	"text.esc-type": "Тип ESC",
+	"button.reset-model": "Центрировать модель"
 }
