@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "minimum_chrome_version": "38",
-    "version": "1.16.5",
+    "version": "1.16.7",
 
     "author": "Flyduino & Alexander Fedorov",
     "name": "KissFC",
