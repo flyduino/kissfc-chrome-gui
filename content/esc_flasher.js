@@ -4,6 +4,15 @@ CONTENT.esc_flasher = {
 
 };
 
+var escFirmwares = [];
+var escFirmwareMap = {};
+
+var escBoardNames = {
+        'KISS24A' : "Kiss Racing 24A ESC",
+        'KISS16A' : "Kiss AIOv2 ESC",
+        'KISS8A' : "Kiss AIOv1 ESC"
+};
+
 CONTENT.esc_flasher.initialize = function(callback) {
     var self = this;
     
@@ -108,6 +117,99 @@ CONTENT.esc_flasher.initialize = function(callback) {
     
         $(".esc-flasher-disclaimer").show();
         
+        $("#fw_version").on("change", function() {
+            var asset = escFirmwareMap[$("#fc_type").val()][$(this).val()];
+            $("#fw_notes").text(asset.info);
+            $("#file_info").html("");
+            $("#flash").hide();
+            $("#status").hide();
+        });
+        
+        $("#fc_type").on("change", function() {
+            var value = escFirmwareMap[$(this).val()];
+            console.log(value);
+            $("#fw_version").empty();
+            $.each(value, function( index, asset ) {
+                $("#fw_version").append("<option value='"+index+"'>"+asset.release+" ("+ asset.size + " bytes)</option>");
+            });
+            $("#fw_version").trigger("change");
+            $("#file_info").html("");
+            $("#flash").hide();
+            $("#status").hide();
+        });
+        
+        $("#download_url").on("click", function() {
+            $("#loader2").show();
+            var asset = escFirmwareMap[$("#fc_type").val()][$("#fw_version").val()];
+            var url = asset.url;
+            console.log("Loading "+ url);
+            $("#file_info").html("");
+            $("#flash").hide();
+            $("#status").hide();
+            
+            $.get(url, function(intel_hex) {
+                console.log("Loaded ESC hex file");
+                self.pages = parseBootloaderHexFile(intel_hex);
+
+                $("#loader2").hide();
+                
+                if (self.pages!==undefined) {
+                    console.log("HEX OS OK " + self.pages.length + " blocks loaded");
+                    $("#file_info").html($.i18n("text.esc-flasher-loaded", self.pages.length, url));
+                    $("#flash").show();
+                } else {
+                    console.log("Corrupted esc firmware file");
+                    $("#file_info").html($.i18n("text.esc-flasher-invalid-firmware"));
+                    $("#flash").hide();
+                }
+            });
+        });
+        
+        $("#download_file").on("click", function() {
+           $("#file_info").html("");
+           $("#flash").hide();
+           escFirmwares = [];
+           $("#remote_fw").hide();
+           $("#loader1").show();
+           loadGithubReleases("https://api.github.com/repos/flyduino/kissesc-firmware/releases", function(data) {
+               $("#loader1").hide();
+               console.log("DONE");
+               console.log(data);
+               $("#remote_fw").show();
+               escFirmwareMap = {};
+               $.each(data, function(index, release) {
+                   console.log("Processing firmware: " + release.name);
+                   $.each(release.assets, function(index2, asset) {
+                       if (asset.name.endsWith(".hex")) {
+                           console.log("Processing asset: " + asset.name);
+                           var p = asset.name.indexOf("_");
+                           var board = asset.name.substr(0, p).toUpperCase().trim();
+                           console.log("Board: " + board);
+                           if (escFirmwareMap[board]==undefined) {
+                               escFirmwareMap[board] = [];
+                           }
+                           var file = {
+                                   release: release.name,
+                                   date: release.created_at,
+                                   url: asset.browser_download_url,
+                                   size: asset.size,
+                                   info: release.body
+                           }
+                           escFirmwareMap[board].push(file);
+                       }
+                   });
+                   $("#fc_type").empty();
+                   $("#fw_version").empty();
+                   
+                   $.each(escFirmwareMap, function( board, assets ) {
+                      $("#fc_type").append("<option value='"+board+"'>"+board+" - " +escBoardNames[board] + "</option>");
+                   });
+                   $("#fc_type").trigger("change");
+               });
+           })
+           
+        });
+        
         $("#select_file").on("click", function() {
               if (!$(this).hasClass("disabled")) {
                   $("#status").html("");
@@ -155,9 +257,11 @@ CONTENT.esc_flasher.initialize = function(callback) {
         $("#flash").on("click", function() {
             if (!$(this).hasClass('disabled')) {
               self.pollEscInfo = false;
-              $("#status").html("");
+              $("#status").show().html("");
               $("#flash").addClass('disabled');
               $("#select_file").addClass('disabled');
+              $("#download_file").addClass('disabled');
+              $("#download_url").addClass('disabled');
               self.flasherAvailable = false;
               console.log('Setting KISS FC to ESC write mode');
               var flasherAvailable = false;

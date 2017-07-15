@@ -105,7 +105,7 @@ CONTENT.flasher.initialize = function(callback) {
                console.log(data);
                $("#remote_fw").show();
                firmwareMap = {};
-               $.each(firmwares, function(index, release) {
+               $.each(data, function(index, release) {
                    console.log("Processing firmware: " + release.name);
                    $.each(release.assets, function(index2, asset) {
                        if (asset.name.endsWith(".hex")) {
@@ -186,8 +186,7 @@ CONTENT.flasher.initialize = function(callback) {
                         });
                     });
                 });
-            }
-            ;
+            };
         });
 
         $("#flash").on("click", function() {
