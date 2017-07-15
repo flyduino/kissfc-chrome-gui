@@ -193,7 +193,7 @@ CONTENT.flasher.initialize = function(callback) {
         $("#flash").on("click", function() {
             if (!$(this).hasClass('disabled')) {
                 $("#portArea").children().addClass('flashing-in-progress');
-                $("#status").html("");
+                $("#status").show().html("");
                 $("#flash").addClass('disabled');
                 $("#select_file").addClass('disabled');
                 $("#download_file").addClass('disabled');
