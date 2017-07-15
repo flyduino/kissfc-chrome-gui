@@ -427,5 +427,6 @@
 	"button.download-firmware": "DOWNLOAD FIRMWARE",
 	"text.flight-controller": "Flight controller",
 	"text.firmware-versions": "Firmware versions",
-	"text.release-notes" : "Release notes"
+	"text.release-notes" : "Release notes",
+	"text.esc-type": "ESC type"
 }

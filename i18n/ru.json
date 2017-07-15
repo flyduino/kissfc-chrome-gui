@@ -362,5 +362,6 @@
 	"button.download-firmware": "СКАЧАТЬ ПРОШИВКУ",
 	"text.flight-controller": "Тип контроллера",
 	"text.firmware-versions": "Версии прошивок",
-	"text.release-notes" : "Описание версии" 
+	"text.release-notes" : "Описание версии",
+	"text.esc-type": "Тип ESC"
 }
