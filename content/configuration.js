@@ -564,7 +564,10 @@ CONTENT.configuration.initialize = function(callback) {
             data['AUX'][5]=$("#aux5").kissAux('value');
             data['AUX'][6]=$("#aux6").kissAux('value');
             data['AUX'][7]=$("#aux7").kissAux('value');
-            data['AUX'][8]=$("#aux8").kissAux('value');
+            
+            if (data['ver'] >108) {
+                data['AUX'][8]=$("#aux8").kissAux('value');
+            }
             
             console.log("SENT:");
             console.log(data);
