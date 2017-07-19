@@ -265,13 +265,17 @@ input[type="number"]::-webkit-inner-spin-button {
 	}	
 	#navigation {
 		display: none;
+		position: fixed;
+    	top: -1000px;
+    	z-index: 100;
+    	right: 0px;
 	}
 	#navigation.active-menu {
     	display: inline;
     	z-index: 100;
 		position: fixed;
-		left: calc(100% - 150px);
     	top: 30px;
+    	right: 0px;
 	}
 	#navigation li {
 		margin: 0px;
