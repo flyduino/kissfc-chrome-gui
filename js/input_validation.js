@@ -17,28 +17,6 @@ function validateBounds(selector) {
         input.wrap(wrapper);
     });
 
-    var interval;
-
-    function stepUp(trigger) {
-        var element = $(trigger), disabled = element.is(':disabled'), val = parseFloat(element.val()), max = parseFloat(element.attr('max')), step = parseFloat(element.attr('step')), precision = parseInt(element.attr('data-precision'));
-
-        if (isNaN(val) || disabled)
-            return;
-        if (isNaN(precision))
-            precision = 0;
-
-        var newVal = val + ((!isNaN(step)) ? step : 1);
-
-        if (!isNaN(max)) {
-            if (max >= newVal) {
-            } else {
-                newVal = max;
-            }
-        }
-
-        element.val(newVal.toFixed(precision)).trigger('input');
-    }
-
 
     // regular events
     inputs.on('keydown', function(e) {

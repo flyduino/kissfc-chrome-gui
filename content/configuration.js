@@ -437,10 +437,12 @@ CONTENT.configuration.initialize = function(callback) {
         }
         
         if (data.lipoConnected==1) {
-            $(".unsafe").prop('disabled', true).addClass("unsafe_active");
+            $(".unsafe").addClass("unsafe_active");
         } else {
-            $(".unsafe").prop('disabled', false).removeClass("unsafe_active");
+            $(".unsafe").removeClass("unsafe_active");
         }
+        $(".unsafe_active").prop('disabled', true);
+        
            
         if (data['ver']>MAX_CONFIG_VERSION) {
             $("#navigation").hide();

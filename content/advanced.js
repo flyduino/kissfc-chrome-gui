@@ -75,30 +75,38 @@ CONTENT.advanced.initialize = function(callback) {
         $('input[name="CBO0"]').val(+data['CBO'][0]);
         $('input[name="CBO1"]').val(+data['CBO'][1]);
         $('input[name="CBO2"]').val(+data['CBO'][2]);
-        $('input[name="CBO"]').on('change', function() {
-            contentChange();
-            if (parseInt($('input[name="CBO"]').prop('checked') ? 1 : 0) == 1) {
-                $('input[name="CBO0"]').removeAttr("disabled");
-                $('input[name="CBO1"]').removeAttr("disabled");
-                $('input[name="CBO2"]').removeAttr("disabled");
-            } else {
-                $('input[name="CBO0"]').attr('disabled', 'true');
-                $('input[name="CBO1"]').attr('disabled', 'true');
-                $('input[name="CBO2"]').attr('disabled', 'true');
-            }
-        });
+       
         var cbo = false;
         $('input[name="CBO"]').removeAttr("disabled");
         if (+data['CBO'][0] != 0 || +data['CBO'][1] != 0 || +data['CBO'][2] != 0) {
             cbo = true;
         }
+        
+        console.log("CBO="+cbo);
         $('input[name="CBO"]').prop('checked', cbo);
         if (cbo) {
             $('input[name="CBO0"]').removeAttr("disabled");
             $('input[name="CBO1"]').removeAttr("disabled");
             $('input[name="CBO2"]').removeAttr("disabled");
+        } else {
+            $('input[name="CBO0"]').prop('disabled', 'true');
+            $('input[name="CBO1"]').prop('disabled', 'true');
+            $('input[name="CBO2"]').prop('disabled', 'true');
         }
 
+        $('input[name="CBO"]').on('change', function() {
+            contentChange();
+            if ($('input[name="CBO"]').prop('checked')) {
+                $('input[name="CBO0"]').removeAttr("disabled");
+                $('input[name="CBO1"]').removeAttr("disabled");
+                $('input[name="CBO2"]').removeAttr("disabled");
+            } else {
+                $('input[name="CBO0"]').prop('disabled', 'true');
+                $('input[name="CBO1"]').prop('disabled', 'true');
+                $('input[name="CBO2"]').prop('disabled', 'true');
+            }
+        });
+        
         for (var i = 0; i < 64; i++) {
             $("select[name='lapTimerTransponderId']").append("<option value='" + i + "'>" + ((i == 0) ? '--' : i) + "</option>");
         }
@@ -294,12 +302,14 @@ CONTENT.advanced.initialize = function(callback) {
                 $(".vtx_opts").show();
             }
         });
-        
+      
         if (data.lipoConnected==1) {
-            $(".unsafe").prop('disabled', true).addClass("unsafe_active");
+            $(".unsafe").addClass("unsafe_active");
         } else {
-            $(".unsafe").prop('disabled', false).removeClass("unsafe_active");
+            $(".unsafe").removeClass("unsafe_active");
         }
+        $(".unsafe_active").prop('disabled', true);
+        
         settingsFilled = 1;
     
 

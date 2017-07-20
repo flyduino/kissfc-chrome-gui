@@ -26,6 +26,10 @@ a {
 	color: #bbb;
 }
 
+input[type="number"]:disabled {
+	color: #ccc;
+}
+
 input[type="number"]::-webkit-inner-spin-button {
 	opacity: 1;
 	margin-left: 5px;

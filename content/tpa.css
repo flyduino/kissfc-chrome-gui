@@ -94,10 +94,11 @@
 .cpid {
 	width: 56px;
     height: 20px;
-    line-height: 23px;
+    line-height: 20px;
+    font-family: system-ui;
     text-align: right;
     border: 1px solid silver;
-    background-color: #f1f1f1;
+    background-color: #e1e1e1;
     color: black;
     padding-right: 4px;
     font-size: 11px;
