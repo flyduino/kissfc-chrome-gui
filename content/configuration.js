@@ -152,7 +152,7 @@ CONTENT.configuration.initialize = function(callback) {
     };
 
     function htmlLoaded(data) {
-        validateBounds('#content input[type="text"]');
+        validateBounds('#content input[type="number"]');
         var settingsFilled = 0;
         
         console.log("RECEIVED:");

@@ -6,12 +6,6 @@ $(document).ready(function() {
 
             if (selectedPort != '0') {
                 
-                if ((selectedPort == KISSFC_WIFI) || (selectedPort == ANDROID_OTG_SERIAL)) {
-                    $("li[data-name='esc_flasher']").hide();
-                } else {
-                    $("li[data-name='esc_flasher']").show();
-                }
-                
                 if (selectedPort == KISSFC_WIFI) {
                     $("li[data-name='wifi']").show();
                 } else {

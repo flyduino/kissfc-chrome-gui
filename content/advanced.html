@@ -25,14 +25,14 @@
 			</tr>
 			<tr>
 				<td data-i18n="[html]column.fc-orientation">FC orientation &deg;</td>
-				<td><input class="unsafe" disabled="true" type="text" size="3" name="CBO0"
-					data-min="-180" data-max="180" data-step="1" data-precision="0"
+				<td><input class="unsafe" disabled="true" type="number" lang="en-150" step="1" size="3" name="CBO0"
+					min="-180" max="180" data-step="1" data-precision="0"
 					value="0" /></td>
-				<td><input class="unsafe" disabled="true" type="text" size="3" name="CBO1"
-					data-min="-180" data-max="180" data-step="1" data-precision="0"
+				<td><input class="unsafe" disabled="true" type="number" lang="en-150" step="1" size="3" name="CBO1"
+					min="-180" max="180" data-step="1" data-precision="0"
 					value="0" /></td>
-				<td><input class="unsafe" disabled="true" type="text" size="3" name="CBO2"
-					data-min="-180" data-max="180" data-step="1" data-precision="0"
+				<td><input class="unsafe" disabled="true" type="number" lang="en-150" step="1" size="3" name="CBO2"
+					min="-180" max="180" data-step="1" data-precision="0"
 					value="0" /></td>
 			</tr>
 		</table>
@@ -59,14 +59,14 @@
 			</tr>
 			<tr>
 				<td data-i18n="column.rx-deadband">RX deadband</td>
-				<td><input class="unsafe" type="text" size="3" name="DB0"
-					data-min="0" data-max="250" data-step="1" data-precision="0"
+				<td><input class="unsafe" type="number" lang="en-150" step="1" size="3" name="DB0"
+					min="0" max="250" data-step="1" data-precision="0"
 					value="0" /></td>
-				<td><input class="unsafe" type="text" size="3" name="DB1"
-					data-min="0" data-max="250" data-step="1" data-precision="0"
+				<td><input class="unsafe" type="number" lang="en-150" step="1" size="3" name="DB1"
+					min="0" max="250" data-step="1" data-precision="0"
 					value="0" /></td>
-				<td><input class="unsafe" type="text" size="3" name="DB2"
-					data-min="0" data-max="250" data-step="1" data-precision="0"
+				<td><input class="unsafe" type="number" lang="en-150" step="1" size="3" name="DB2"
+					min="0" max="250" data-step="1" data-precision="0"
 					value="0" /></td>
 			</tr>
 		</table>
@@ -185,13 +185,13 @@
 				</dd>
 				<dt  class="vtx_opts" style="width:180px;" data-i18n="[html]column.vtx-low-power">Low Power: (mW)&nbsp;</dt>
 				<dd  class="vtx_opts">
-					<input type="text" name="vtxPowerLow" data-step="1"
-						data-min="0" data-max="800" data-precision="0" value="25" />
+					<input type="number" lang="en-150" step="1" name="vtxPowerLow" data-step="1"
+						min="0" max="800" data-precision="0" value="25" />
 				</dd>
 				<dt  class="vtx_opts" style="width:180px;" data-i18n="[html]column.vtx-high-power">High Power: (mW)&nbsp;</dt>
 				<dd  class="vtx_opts">
-					<input type="text" name="vtxPowerHigh" data-step="1"
-						data-min="0" data-max="800" data-precision="0" value="25" />
+					<input type="number" lang="en-150" step="1" name="vtxPowerHigh" data-step="1"
+						min="0" max="800" data-precision="0" value="25" />
 				</dd>
 			</dl>	
 		</div>
@@ -252,16 +252,16 @@
 			<dl class="general-settings">
 				<dt title="low battery alarm" style="width:180px" data-i18n="column.lipo-volts">Voltage is less than </dt>
 				<dd>
-					<input type="text" name="vbatAlarm" data-step="0.1"
-						data-min="0" data-max="26" data-precision="1" value="0.0" /><input
+					<input type="number" lang="en-150" step="0.1" name="vbatAlarm" data-step="0.1"
+						min="0" max="26" data-precision="1" value="0.0" /><input
 						type="hidden" name="vbatAlarm" id="vbatAlarm" value="" />
 				</dd>
 			</dl>
 			<dl class="general-settings">
 				<dt title="mah alarm" style="width:180px" data-i18n="column.lipo-mah">Consumption is greater than </dt>
 				<dd>
-					<input type="text" name="mahAlarm" data-step="1"
-						data-min="0" data-max="24000" data-precision="0" value="0" /><input
+					<input type="number" lang="en-150" step="1" name="mahAlarm" data-step="1"
+						min="0" max="24000" data-precision="0" value="0" /><input
 						type="hidden" name="mahAlarm" id="mahAlarm" value="" />
 				</dd>
 			</dl>
@@ -278,17 +278,17 @@
 			</tr>
 			<tr>
 				<td data-i18n="column.notch-center">Center Frequency: (Hz)</td>
-				<td><input disabled="true" type="text" name="NFCF0" data-step="1"
-						data-min="0" data-max="490" data-precision="0" value="200" size="3"/></td>
-				<td><input disabled="true" type="text" name="NFCF1" data-step="1"
-						data-min="0" data-max="490" data-precision="0" value="200" size="3"/></td>
+				<td><input disabled="true" type="number" lang="en-150" step="1" name="NFCF0" data-step="1"
+						min="0" max="490" data-precision="0" value="200" size="3"/></td>
+				<td><input disabled="true" type="number" lang="en-150" step="1" name="NFCF1" data-step="1"
+						min="0" max="490" data-precision="0" value="200" size="3"/></td>
 			</tr>
 			<tr>
 				<td data-i18n="column.notch-cutoff">Cutoff Frequency: (Hz)</td>
-				<td><input disabled="true" type="text" name="NFCO0" data-step="1"
-						data-min="0" data-max="490" data-precision="0" value="100" size="3"/></td>
-				<td><input disabled="true" type="text" name="NFCO1" data-step="1"
-						data-min="0" data-max="490" data-precision="0" value="100" size="3"/></td>
+				<td><input disabled="true" type="number" lang="en-150" step="1" name="NFCO0" data-step="1"
+						min="0" max="490" data-precision="0" value="100" size="3"/></td>
+				<td><input disabled="true" type="number" lang="en-150" step="1" name="NFCO1" data-step="1"
+						min="0" max="490" data-precision="0" value="100" size="3"/></td>
 			</tr>
 		</table>
 		</div>
@@ -342,8 +342,8 @@
 			<div class="groupTitle" data-i18n="title.yaw-filter">Yaw Filter</div>
 			<dl class="general-settings">
 				<dt style="width:180px;"><span data-i18n="column.yaw-filter-strength">Yaw Filter strength</span>&nbsp;</dt>
-				<input disabled="true" type="text" name="YCF" data-step="1"
-					data-min="0" data-max="97" data-precision="0" value="92" />
+				<input disabled="true" type="number" lang="en-150" step="1" name="YCF" data-step="1"
+					min="0" max="97" data-precision="0" value="92" />
 			</dl>
 		</div>
 		

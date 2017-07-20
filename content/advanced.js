@@ -18,7 +18,7 @@ CONTENT.advanced.initialize = function(callback) {
     });
 
     function htmlLoaded(data) {
-        validateBounds('#content input[type="text"]');
+        validateBounds('#content input[type="number"]');
      
         $('input[name="mahAlarm"]').val(data['mahAlarm']);
 

@@ -70,7 +70,7 @@
 				$.i18n.log( 'Loading messages from: ' + source );
 				deferred = jsonMessageLoader( source )
 					.done( function ( localization ) {
-					    $.i18n.log( 'Loaded: ' + JSON.stringify(localization) );
+					    //$.i18n.log( 'Loaded: ' + JSON.stringify(localization) );
 						messageStore.set( locale, localization );
 					} );
 

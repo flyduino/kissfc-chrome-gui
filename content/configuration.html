@@ -30,7 +30,7 @@
         </select>
         <dl class="general_settings">
 	   <br />
-            <dt style="min-width:130px;" data-i18n="text.fs-mode-sec">FS. levelmode Sec.: </dt><dd><input type="text" name="failsaveseconds" style="width:40px;" data-step="1" data-min="0" data-max="20" /></dd>
+            <dt style="min-width:130px;" data-i18n="text.fs-mode-sec">FS. levelmode Sec.: </dt><dd><input type="number" lang="en-150" step="1" name="failsaveseconds" style="width:40px;" data-step="1" min="0" max="20" /></dd>
 	</dl>
 
 	
@@ -38,11 +38,11 @@
     <div class="wrapper-narrow">
         <div class="groupTitle" data-i18n="title.general-settings">General Settings</div>
         <dl class="general_settings">
-            <dt title="the minimum throttle for the motors" data-i18n="column.min-throttle">Min. Throttle</dt><dd><input class="unsafe" type="text" name="minThrottle" data-step="1" data-min="0" data-max="2200" /></dd>
-            <dt title="the maximum throttle for the motors" data-i18n="column.max-throttle">Max. Throttle</dt><dd><input class="unsafe" type="text" name="maxThrottle" data-step="1" data-min="0" data-max="2200" /></dd>
-            <dt title="the throttle value where the PID controller starts acting" data-i18n="column.min-command">Min. Command</dt><dd><input class="unsafe" type="text" name="minCommand" data-step="1" data-min="0" data-max="2200" /></dd>
-            <dt title="the ESC's middle command for 3D mode use" data-i18n="column.mid-command">Mid. Command</dt><dd><input class="unsafe" type="text" name="midCommand" data-step="1" data-min="0" data-max="2200" /></dd>
-	  		<dt class="tricopter" data-i18n="column.tri-yaw-mid">Tri Yaw Mid.</dt><dd class="tricopter"><input class="unsafe" type="text" name="TYmid" data-step="1" data-min="0" data-max="2200" /></dd>
+            <dt title="the minimum throttle for the motors" data-i18n="column.min-throttle">Min. Throttle</dt><dd><input class="unsafe" type="number" lang="en-150" step="1" name="minThrottle" data-step="1" min="0" max="2200" /></dd>
+            <dt title="the maximum throttle for the motors" data-i18n="column.max-throttle">Max. Throttle</dt><dd><input class="unsafe" type="number" lang="en-150" step="1" name="maxThrottle" data-step="1" min="0" max="2200" /></dd>
+            <dt title="the throttle value where the PID controller starts acting" data-i18n="column.min-command">Min. Command</dt><dd><input class="unsafe" type="number" lang="en-150" step="1" name="minCommand" data-step="1" min="0" max="2200" /></dd>
+            <dt title="the ESC's middle command for 3D mode use" data-i18n="column.mid-command">Mid. Command</dt><dd><input class="unsafe" type="number" lang="en-150" step="1" name="midCommand" data-step="1" min="0" max="2200" /></dd>
+	  		<dt class="tricopter" data-i18n="column.tri-yaw-mid">Tri Yaw Mid.</dt><dd class="tricopter"><input class="unsafe" type="number" lang="en-150" step="1" name="TYmid" data-step="1" min="0" max="2200" /></dd>
 	  		<dt class="tricopter" data-i18n="column.tri-yaw-invert">Tri Yaw Invert</dt><dd  class="tricopter"><input class="unsafe" type="checkbox" name="TYinv" /></dd>
       		<dt><span title="ESC Mode" data-i18n="column.esc-mode">ESC Mode</span></dt>
 			<dd>
@@ -94,27 +94,27 @@
             </tr>
             <tr class="roll">
                 <td data-i18n="column.roll">Roll</td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.001" data-precision="3" /></td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.001" min="0" max="65" data-step="0.001" data-precision="3" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
             </tr>
             <tr class="pitch">
                 <td data-i18n="column.pitch">Pitch</td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.001" data-precision="3" /></td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.001" min="0" max="65" data-step="0.001" data-precision="3" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
             </tr>
             <tr class="yaw">
                 <td data-i18n="column.yaw">Yaw</td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.001" data-precision="3" /></td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.001" min="0" max="65" data-step="0.001" data-precision="3" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
             </tr>
             <tr class="TPA">
                 <td data-i18n="column.tpa">TPA</td>
-                <td><input type="text" data-min="0" data-max="0.9" data-step="0.01" data-precision="2" /></td>
-                <td><input type="text" data-min="0" data-max="0.9" data-step="0.01" data-precision="2" /></td>
-                <td><input type="text" data-min="0" data-max="0.9" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="0.9" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="0.9" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="0.9" data-step="0.01" data-precision="2" /></td>
             </tr>
         </table>   
         </div>
@@ -130,21 +130,21 @@
             </tr>
          	<tr class="roll">
                 <td data-i18n="column.roll">Roll</td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
             </tr>
             <tr class="pitch">
                 <td data-i18n="column.pitch">Pitch</td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
             </tr>
             <tr class="yaw">
                 <td data-i18n="column.yaw">Yaw</td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
+                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
             </tr>
         </table>    
         </div>
@@ -159,13 +159,13 @@
             	</tr>
             	<tr class="level">
                 	<td data-i18n="column.level">Level</td>
-                	<td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
-                	<td><input type="text" data-min="0" data-max="65" data-step="0.001" data-precision="3" /></td>
-                	<td><input type="text" data-min="0" data-max="65" data-step="0.01" data-precision="2" /></td>
+                	<td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
+                	<td><input type="number" lang="en-150" step="0.001" min="0" max="65" data-step="0.001" data-precision="3" /></td>
+                	<td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
             	</tr>
             	<tr class="level">
                 	<td data-i18n="[column.level-max]">Max&deg;</td>
-	       			<td><input type="text" data-min="0" data-max="60" data-step="1" data-precision="0" /></td>
+	       			<td><input type="number" lang="en-150" step="1" min="0" max="60" data-step="1" data-precision="0" /></td>
             	</tr>
             </table>
          </div> 

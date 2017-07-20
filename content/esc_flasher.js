@@ -105,6 +105,12 @@ CONTENT.esc_flasher.initialize = function(callback) {
             $("#escInfoDiv").show();
         }
         
+        var selectedPort = String($('#port').val());
+       
+        if ((selectedPort == KISSFC_WIFI) || (selectedPort == ANDROID_OTG_SERIAL)) {
+            $("#select_file").hide();
+        }
+        
         $(".warning-button").on("click", function() {
             kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
                 $(".esc-flasher-disclaimer").hide();
