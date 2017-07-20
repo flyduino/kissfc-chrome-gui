@@ -263,6 +263,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
         $("#flash").on("click", function() {
             if (!$(this).hasClass('disabled')) {
               self.pollEscInfo = false;
+              $(".navigation-menu-button").hide(); // hide menu during flashing
               $("#status").show().html("");
               $("#flash").addClass('disabled');
               $("#select_file").addClass('disabled');
