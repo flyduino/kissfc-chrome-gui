@@ -34,7 +34,7 @@ CONTENT.data_output.initialize = function (callback) {
                 if (!self.imuInitialized) {
                     self.imuInitialized = true;
                     imuInit(1/60, 0.1);
-                }
+                } 
                 
                 imuUpdate(self.telemetry['GyroRaw'][0] * 2000 * Math.PI / 180, 
                           -self.telemetry['GyroRaw'][1] * 2000 * Math.PI / 180,  
@@ -43,16 +43,17 @@ CONTENT.data_output.initialize = function (callback) {
                           self.telemetry['ACCRaw'][1], 
                           self.telemetry['ACCRaw'][2]);
                 
-                var freq = 1000/frameTime;
-                
                 $("#model").kissModel('reset');
                
-                var q = new THREE.Quaternion(Quaternion[0], Quaternion[1], Quaternion[2], Quaternion[3]);
-                var rotation = new THREE.Euler().setFromQuaternion(q, "XYZ" );
-                var axisRate = { 'roll' : rotation.z, 'pitch': rotation.y, 'yaw': -rotation.x};
-                $("#model").kissModel('updateRate', axisRate);
+                if (!isNaN(Quaternion[0])) {
+                    var q = new THREE.Quaternion(Quaternion[0], Quaternion[1], Quaternion[2], Quaternion[3]);
+                    var rotation = new THREE.Euler().setFromQuaternion(q, "XYZ" );
+                    var axisRate = { 'roll' : rotation.z, 'pitch': rotation.y, 'yaw': -rotation.x};
+                    $("#model").kissModel('updateRate', axisRate);
+                }
 
                 $("#model").kissModel('refresh');
+                
             }
         }
     }
@@ -195,7 +196,7 @@ CONTENT.data_output.initialize = function (callback) {
                                                             // creation
 
         $('a.reset_model').click(function() {
-            Quaternion = [ 1.0, 0.0, 0.0, 0.0 ];
+            self.imuInitialized = false;
         });
         
         $('a.calibrateAccelerometer').click(function () {

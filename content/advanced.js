@@ -69,7 +69,6 @@ CONTENT.advanced.initialize = function(callback) {
             } else {
                 $("#loggerDebug").hide();
             }
-            contentChange();
         });
         
         $('input[name="CBO0"]').val(+data['CBO'][0]);
@@ -95,7 +94,6 @@ CONTENT.advanced.initialize = function(callback) {
         }
 
         $('input[name="CBO"]').on('change', function() {
-            contentChange();
             if ($('input[name="CBO"]').prop('checked')) {
                 $('input[name="CBO0"]').removeAttr("disabled");
                 $('input[name="CBO1"]').removeAttr("disabled");
@@ -122,12 +120,47 @@ CONTENT.advanced.initialize = function(callback) {
         $('input[name="NFCO1"]').removeAttr("disabled");
         $('input[name="YCF"]').removeAttr("disabled");
 
-        if (data['NFE'][0]==1)  $('input[name="NFE0"]').prop('checked', 1);
+        if (data['NFE'][0]==1)  {
+            $('input[name="NFE0"]').prop('checked', 1);
+            $('input[name="NFCF0"]').removeAttr("disabled");
+            $('input[name="NFCO0"]').removeAttr("disabled");
+        } else {
+            $('input[name="NFCF0"]').prop("disabled", true);
+            $('input[name="NFCO0"]').prop("disabled", true);
+        }
+        if (data['NFE'][1]==1) {
+            $('input[name="NFE1"]').prop('checked', 1);
+            $('input[name="NFCF1"]').removeAttr("disabled");
+            $('input[name="NFCO1"]').removeAttr("disabled");
+        } else {
+            $('input[name="NFCF1"]').prop("disabled", true);
+            $('input[name="NFCO1"]').prop("disabled", true);
+        }
+        
         $('input[name="NFCF0"]').val(data['NFCF'][0]);
         $('input[name="NFCO0"]').val(data['NFCO'][0]);
-        if (data['NFE'][1]==1) $('input[name="NFE1"]').prop('checked', 1);
         $('input[name="NFCF1"]').val(data['NFCF'][1]);
         $('input[name="NFCO1"]').val(data['NFCO'][1]);
+        
+        $('input[name="NFE0"]').on("change", function() {
+            if ($('input[name="NFE0"]').prop('checked')) {
+                $('input[name="NFCF0"]').removeAttr("disabled");
+                $('input[name="NFCO0"]').removeAttr("disabled");
+            } else {
+                $('input[name="NFCF0"]').prop("disabled", true);
+                $('input[name="NFCO0"]').prop("disabled", true);
+            }
+        });
+        
+        $('input[name="NFE1"]').on("change", function() {
+            if ($('input[name="NFE1"]').prop('checked')) {
+                $('input[name="NFCF1"]').removeAttr("disabled");
+                $('input[name="NFCO1"]').removeAttr("disabled");
+            } else {
+                $('input[name="NFCF1"]').prop("disabled", true);
+                $('input[name="NFCO1"]').prop("disabled", true);
+            }
+        });
 
         if (data['YawCfilter']) $('input[name="YCF"]').val(data['YawCfilter']);
         
@@ -141,31 +174,15 @@ CONTENT.advanced.initialize = function(callback) {
             });
             
             $('select[name="loopTimeDivider"]').val(data['loopTimeDivider']);
-            $('select[name="loopTimeDivider"]').on("change", function() {
-                contentChange();
-            }); 
             $('select[name="loopTimeDivider"]').removeAttr("disabled");
             $('select[name="yawlpf"]').removeAttr("disabled");
             $('select[name="yawlpf"]').val(data['yawLpF']);
-            $('select[name="yawlpf"]').on("change", function() {
-                contentChange();
-            }); 
             $('select[name="mainlpf"]').removeAttr("disabled");
             $('select[name="mainlpf"]').val(data['LPF']);
-            $('select[name="mainlpf"]').on("change", function() {
-                contentChange();
-            });
             $('select[name="Dlpf"]').removeAttr("disabled");
             $('select[name="Dlpf"]').val(data['DLpF']);
-            $('select[name="Dlpf"]').on("change", function() {
-                contentChange();
-            });
         }
     
-        $('input[name^="lapTimer"]').on("change", function() {
-            contentChange();
-        });
-
         $('select[name="lapTimerTypeAndInterface"]').on("change", function() {
             if ($(this).val() == 0)
                 $("select[name='lapTimerTransponderId']").hide();
@@ -180,7 +197,7 @@ CONTENT.advanced.initialize = function(callback) {
             $("select[name='lapTimerTypeAndInterface'] option[value='18']").remove();
             $("select[name='lapTimerTypeAndInterface'] option[value='19']").remove();
         }
-
+        
         var MCUid = '';
         for (var i = 0; i < 4; i++) {
             if (data['SN'][i] < 16)
@@ -216,11 +233,6 @@ CONTENT.advanced.initialize = function(callback) {
 
         $('select[name="loggerDebugVariables"]').val(data['loggerDebugVariables']);
 
-        $('select[name="loggerDebugVariables"]').on("change", function() {
-            contentChange();
-        });
-        
-   
 
             $('input[name="vbatAlarm"]').val(data['vbatAlarm']);
 
@@ -238,7 +250,6 @@ CONTENT.advanced.initialize = function(callback) {
                     if (!found)
                         $('select[name="RGBSelector"]').val('');
                     $('input[name="RGB"]').val(rgb);
-                    contentChange();
                 },
                 hide : function() {
                    
@@ -280,7 +291,6 @@ CONTENT.advanced.initialize = function(callback) {
                 color : 'rgb(' + rgb + ')',
                 opacity : 1
             });
-            contentChange();
         });
         
         $('select[name="vtxType"]').on('change', function() {
@@ -309,6 +319,10 @@ CONTENT.advanced.initialize = function(callback) {
             $(".unsafe").removeClass("unsafe_active");
         }
         $(".unsafe_active").prop('disabled', true);
+        
+        $("input,select").on("change", function() {
+            contentChange(); 
+        });
         
         settingsFilled = 1;
     

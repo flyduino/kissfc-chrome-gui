@@ -443,6 +443,11 @@ CONTENT.configuration.initialize = function(callback) {
         }
         $(".unsafe_active").prop('disabled', true);
         
+//        $("input,select").on("change", function() {
+//            contentChange(); 
+//        });
+        
+        
            
         if (data['ver']>MAX_CONFIG_VERSION) {
             $("#navigation").hide();
