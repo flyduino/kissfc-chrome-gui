@@ -9,13 +9,14 @@ function loadGithubReleases(url, callback) {
         dataType : "json",
         url : url,
         success : function(data, textStatus, request) {
+            var temp = [];
             var link = request.getResponseHeader('Link');
-            Array.prototype.push.apply(firmwares, data);
+            Array.prototype.push.apply(temp, data);
             if (link == null) {
-                callback(firmwares);
+                callback(temp);
             } else {
                 console.log("TODO: Paging!");
-                callback(firmwares);
+                callback(temp);
             }
         }
     });
