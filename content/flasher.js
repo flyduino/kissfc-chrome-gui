@@ -45,6 +45,7 @@ CONTENT.flasher.initialize = function(callback) {
 
     function htmlLoaded() {
         $("#portArea").children().addClass('flashing-in-progress');
+        $("a.navigation-menu-button").hide();
         checkDFU();
               
         $("#fw_version").on("change", function() {

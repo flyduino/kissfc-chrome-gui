@@ -143,6 +143,10 @@ GUI.contentSwitchCleanup = function(callback) {
 GUI.switchContent = function(newContent, callback) {
     if (GUI.activeContent != newContent) {
         console.log('Switching content to ' + newContent);
+        
+        $('#navigation li').removeClass('selected');
+        $("#navigation li[data-name='"+newContent+"']").addClass('selected')
+        
         GUI.activeContent = newContent;
         kissProtocol.clearPendingRequests(function() {
             callback();
@@ -153,6 +157,9 @@ GUI.switchContent = function(newContent, callback) {
 }
 
 GUI.load = function(url, callback) {
+    $('#content').animate({
+        scrollTop: 0
+    }, 700);
     $('#content').load(url, function() {
  
         callback();

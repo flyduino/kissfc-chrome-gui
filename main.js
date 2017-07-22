@@ -59,7 +59,7 @@ $(document).ready(function() {
     $('#navigation li:not(.external)').click(function() {
         var self = this;
         var content = $(self).attr('data-name');
-
+        
             $("#navigation").removeClass("active-menu");
 
             function content_ready() {

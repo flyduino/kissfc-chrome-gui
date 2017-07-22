@@ -4,17 +4,7 @@ function validateBounds(selector) {
     var inputs = $(selector).not('.validation').not('.no_validation');
     inputs.each(function() {
         var input = $(this);
-
-        input.addClass('validation').css({
-            'width' : input.width(),
-            'padding-right' : parseInt(input.css('padding-right'))
-        });
-
-        var wrapper = $('<div class="validationWrapper"></div>').css({
-            'position' : 'relative',
-            'float' : 'left'
-        });
-        input.wrap(wrapper);
+        input.addClass('validation');
     });
 
 

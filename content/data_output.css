@@ -217,6 +217,19 @@ a.reset_model {
     text-align: center;
     float: right;
 }
-a.reset_model:hover {
+a.reset-model:hover {
     background-color: #d01414;
+}
+
+@media ( max-width : 500px) {
+	.data_output .model_chart {
+		display: block;
+		float: none;
+		margin-left: 10px;
+	}	
+	
+	a.reset_model {
+		float: left;
+		margin-left: 10px;
+	}
 }

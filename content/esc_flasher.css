@@ -35,10 +35,10 @@
 .esc-flasher-disclaimer {
 	display: none;
 	position: absolute;
-	top: 0px;
+	top: 30px;
 	left: 0px;
 	width: 100%;
-	height: 100%;
+	height: calc(100% - 30px);
 	background-image: url("../images/warning_stripe.png");
 }
 
@@ -51,14 +51,14 @@
 }
 
 .esc-flasher-disclaimer-inner .warning1 {
-    font-size: 30px;
+    font-size: 24px;
     color: #d01414;
     padding-top: 30px;
     text-align: center;
 }
 
 .esc-flasher-disclaimer-inner .warning2 {
-    font-size: 20px;
+    font-size: 18px;
     color: #ffffff;
     padding-top: 30px;
     text-align: center;

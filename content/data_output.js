@@ -591,8 +591,10 @@ CONTENT.data_output.drawGraph = function (graph, scale) {
 };
 
 CONTENT.data_output.resizeCanvas = function () {
-    var wrapper = $('#content');
-    $('#graph').prop('width', wrapper.width() - 160 - 190); // -160px for legend
+    var wrapper = $('.plot');
+    var r = 0;
+    if ($("#model").css("float")=="right") r=190;
+    $('#graph').prop('width', wrapper.width() - 160 - r); // -160px for legend
 
     CONTENT.data_output.renderGraph();
 }
