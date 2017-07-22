@@ -280,6 +280,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
                     if (self.flasherAvailable) {
                         console.log("Flasher available, lets flash");
                         $("#portArea").children().addClass('flashing-in-progress');
+                        $("#menu").hide();
                       WritePage(self.pages.length-1);       
                     } else {
                         console.log('got no answer. check your com port selection and see if you have the lastest KISSFC version.');
