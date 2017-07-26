@@ -263,7 +263,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
         $("#flash").on("click", function() {
             if (!$(this).hasClass('disabled')) {
               self.pollEscInfo = false;
-              $(".navigation-menu-button").hide(); // hide menu during flashing
+            
               $("#status").show().html("");
               $("#flash").addClass('disabled');
               $("#select_file").addClass('disabled');
@@ -281,6 +281,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
                         console.log("Flasher available, lets flash");
                         $("#portArea").children().addClass('flashing-in-progress');
                         $("#menu").hide();
+                        $(".navigation-menu-button").hide(); // hide menu during flashing
                       WritePage(self.pages.length-1);       
                     } else {
                         console.log('got no answer. check your com port selection and see if you have the lastest KISSFC version.');
