@@ -19,6 +19,46 @@ CONTENT.advanced.initialize = function(callback) {
 
     function htmlLoaded(data) {
         validateBounds('#content input[type="number"]');
+        
+        if (data.ver>109) {
+            kissProtocol.send(kissProtocol.GET_NOTCH, [ 0x4F ], function() {
+                var notch=kissProtocol.data[kissProtocol.GET_NOTCH];
+             
+                $("#superNotch").show();
+                
+                for (var i=0; i<3; i++) {
+                    for (var j=0; j<10; j++) {
+                        var name = "superNotch["+i+"]["+j+"]";
+                        $("input[name='"+name+"[0]']").val(notch.superNotch[i][j][0]);
+                        $("input[name='"+name+"[1]']").val(notch.superNotch[i][j][1]);
+                    }
+                }
+                
+                $("#saveNotch").on("click", function() {
+                    console.log("Saving notch");
+                    for (var i=0; i<3; i++) {
+                        for (var j=0; j<10; j++) {
+                            var name = "superNotch["+i+"]["+j+"]";
+                           notch.superNotch[i][j][0] = +$("input[name='"+name+"[0]']").val();
+                           notch.superNotch[i][j][1] = +$("input[name='"+name+"[1]']").val();
+                        }
+                    }
+                    console.log(notch.superNotch);
+                    kissProtocol.send(kissProtocol.SET_NOTCH, kissProtocol.preparePacket(kissProtocol.SET_NOTCH, kissProtocol.data[kissProtocol.GET_NOTCH]));
+                });
+                
+                $("#resetNotch").on("click", function() {
+                    console.log("Resetting notch");
+                    for (var i=0; i<3; i++) {
+                        for (var j=0; j<10; j++) {
+                            var name = "superNotch["+i+"]["+j+"]";
+                            $("input[name='"+name+"[0]']").val(0);
+                            $("input[name='"+name+"[1]']").val(0);
+                        }
+                    }
+                });
+            });
+        }
      
         $('input[name="mahAlarm"]').val(data['mahAlarm']);
 

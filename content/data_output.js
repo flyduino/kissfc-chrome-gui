@@ -29,31 +29,34 @@ CONTENT.data_output.initialize = function (callback) {
             }
             var frameTime = timestamp - self.lastTimestamp; 
             self.lastTimestamp = timestamp;
-           
+            if (!self.imuInitialized) {
+                imuInit(1/60, 0.1);
+                self.imuInitialized = true;
+            } 
+            
             if (frameTime>0) {  
-                if (!self.imuInitialized) {
-                    self.imuInitialized = true;
-                    imuInit(1/60, 0.1);
-                } 
                 
-                imuUpdate(self.telemetry['GyroRaw'][0] * 2000 * Math.PI / 180, 
+                imuUpdate(+self.telemetry['GyroRaw'][0] * 2000 * Math.PI / 180, 
                           -self.telemetry['GyroRaw'][1] * 2000 * Math.PI / 180,  
-                          self.telemetry['GyroRaw'][2] * 2000 * Math.PI / 180,  
-                          self.telemetry['ACCRaw'][0], 
-                          self.telemetry['ACCRaw'][1], 
-                          self.telemetry['ACCRaw'][2]);
+                          +self.telemetry['GyroRaw'][2] * 2000 * Math.PI / 180,  
+                          +self.telemetry['ACCRaw'][0], 
+                          +self.telemetry['ACCRaw'][1], 
+                          +self.telemetry['ACCRaw'][2]);
                 
                 $("#model").kissModel('reset');
-               
-                if (!isNaN(Quaternion[0])) {
+                var axisRate = { 'roll' : 0, 'pitch': 0, 'yaw': 0};
+                if (!isNaN(Quaternion[0]) && 
+                    !isNaN(Quaternion[1]) &&
+                    !isNaN(Quaternion[2]) &&
+                    !isNaN(Quaternion[3])) {
                     var q = new THREE.Quaternion(Quaternion[0], Quaternion[1], Quaternion[2], Quaternion[3]);
                     var rotation = new THREE.Euler().setFromQuaternion(q, "XYZ" );
-                    var axisRate = { 'roll' : rotation.z, 'pitch': rotation.y, 'yaw': -rotation.x};
-                    $("#model").kissModel('updateRate', axisRate);
+                    axisRate = { 'roll' : rotation.z, 'pitch': rotation.y, 'yaw': -rotation.x};
+                } else {
+                    imuInit(1/60, 0.1);
                 }
-
+                $("#model").kissModel('updateRate', axisRate);
                 $("#model").kissModel('refresh');
-                
             }
         }
     }

@@ -6,7 +6,6 @@ var Beta;
 var Quaternion = [ 1.0, 0.0, 0.0, 0.0 ];
 
 function imuInit(samplePeriod, beta)  {
-    console.log("Initialize IMU");
     SamplePeriod = samplePeriod;
     Beta = beta;
     Quaternion = [ 1.0, 0.0, 0.0, 0.0 ];

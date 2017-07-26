@@ -98,7 +98,7 @@ input[type="number"]::-webkit-inner-spin-button {
     position: fixed; /* Set the navbar to fixed position */
     top: 0; /* Position the navbar at the top of the page */
     width: 100%; /* Full width */
-    background-color: black;
+    background-color: #1e1e1e;
 }
 
 #portArea #port {

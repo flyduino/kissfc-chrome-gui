@@ -17,7 +17,9 @@ var kissProtocol = {
     GET_SETTINGS:   0x30,
     SET_SETTINGS:   0x10,
     MOTOR_TEST:     0x11,
-    SET_ESC_SETTINGS:   0x12,
+    SET_ESC_SETTINGS: 0x12,
+    GET_NOTCH:      0x4F,
+    SET_NOTCH:      0x50,
 
     block:                  false,
     ready:                  false,
@@ -497,9 +499,32 @@ kissProtocol.processPacket = function (code, obj) {
             }
             break;
             
+        case this.GET_NOTCH:
+            if (!obj.superNotch) {
+                obj.superNotch = [
+                    [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]], 
+                    [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]], 
+                    [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
+                ];
+            }
+            
+            var x = 0;
+            for (var i=0; i<3; i++) {
+                for (var j=0; j<10; j++) {
+                    obj.superNotch[i][j][0] = data.getUint16(x, 0);
+                    obj.superNotch[i][j][1] = data.getUint16(x+2, 0);
+                    x+=4;
+                }
+            }
+        break;
+            
         case this.SET_SETTINGS:
             console.log('Settings saved');
             break;
+            
+        case this.SET_NOTCH:
+            console.log('Notch saved');
+            break;    
             
         case this.MOTOR_TEST:
             console.log('Motor test');
@@ -714,6 +739,18 @@ kissProtocol.preparePacket = function (code, obj) {
                     blen=166;
                 }
             break;
+            
+            case this.SET_NOTCH:
+                var x=0;
+                for (var i=0; i<3; i++) {
+                    for (var j=0; j<10; j++) {
+                        data.setUint16(x, obj.superNotch[i][j][0], 0);
+                        data.setUint16(x+2, obj.superNotch[i][j][1], 0);
+                        x+=4;
+                    }
+                }
+                blen=2*2*10*3;
+            break;  
             
           case this.MOTOR_TEST:
                    data.setUint8(0, obj.motorTestEnabled, 0);

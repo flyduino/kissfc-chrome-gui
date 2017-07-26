@@ -92,7 +92,7 @@
 	width: calc(100% - 50px);
 	height: calc(100% - 50px);
 	margin: 25px;
-	background-color: black;
+	background-color: #1e1e1e;
     text-align: center;
 }
 

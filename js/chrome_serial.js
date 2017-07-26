@@ -165,7 +165,9 @@ var chromeSerial = {
         chrome.serial.getDevices(function (devicesArray) {
             var devices = [];
             devicesArray.forEach(function (device) {
-                devices.push(device.path);
+                if ((device.path.indexOf('.lpss') === -1) && (device.path.indexOf('Bluetooth-Incoming-Port') === -1)) {
+                    devices.push(device.path);
+                }
             });
 
             callback(devices);
