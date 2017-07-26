@@ -32,6 +32,7 @@ CONTENT.flasher.initialize = function(callback) {
        chrome.usb.getDevices(usbDevices.STM32DFU, function(result) {
             if (result.length == 0) {
                 $("#portArea").children().removeClass('flashing-in-progress');
+                $("#navigation").show();
                 GUI.contentSwitchInProgress = true;
                 GUI.contentSwitchCleanup(function() {
                     CONTENT['welcome'].initialize();
@@ -46,6 +47,7 @@ CONTENT.flasher.initialize = function(callback) {
     function htmlLoaded() {
         $("#portArea").children().addClass('flashing-in-progress');
         $("a.navigation-menu-button").hide();
+        $("#navigation").hide();
         checkDFU();
               
         $("#fw_version").on("change", function() {
