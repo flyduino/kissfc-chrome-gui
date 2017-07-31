@@ -6,6 +6,7 @@ CONTENT.esc_flasher = {
 
 var escFirmwares = [];
 var escFirmwareMap = {};
+var escDetected = "";
 
 var escBoardNames = {
         'KISS24A' : "Kiss Racing 24A ESC",
@@ -66,6 +67,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
     function pollEscInfo() {
         if (self.pollEscInfo) {
             $("#escInfoDiv").show();
+          
         
             kissProtocol.send(kissProtocol.GET_INFO, [0x21], function() {
                 var info = kissProtocol.data[kissProtocol.GET_INFO];
@@ -76,6 +78,10 @@ CONTENT.esc_flasher.initialize = function(callback) {
                     $("#escInfoDiv").show();
                     for (var i=0; i<info.escInfoCount; i++) {
                         if (info.escInfo[i] !== undefined) { 
+                            if (escDetected == "") {
+                                escDetected = info.escInfo[i].type.replace(/\s/g, '').toUpperCase().trim();
+                                console.log("Esc: " + escDetected);
+                            }
                             var li = $("<li/>").html((i+1)+": "+$.i18n("text.firmware-version")+" " + info.escInfo[i].type + " " + info.escInfo[i].version + " "+$.i18n("text.sn")+" " + info.escInfo[i].SN);
                         } else {
                             var li = $("<li/>").html((i+1)+": --");
@@ -83,10 +89,10 @@ CONTENT.esc_flasher.initialize = function(callback) {
                         $("#escInfo").append(li);
                         if (kissProtocol.data[kissProtocol.GET_SETTINGS].ver>108) {
                             $(".escSettings tbody tr:nth-child("+(i+1)+")").show();
-			    if (info.escInfo[i] !== undefined) {
-				if(info.escInfo[i].Settings[0] == 1) $(".direction").eq(i).prop("checked", true);
-				if(info.escInfo[i].Settings[1] == 1) $(".3d").eq(i).prop("checked", true);
-			    }
+                            if (info.escInfo[i] !== undefined) {
+                                if (info.escInfo[i].Settings[0] == 1) $(".direction").eq(i).prop("checked", true);
+                                if (info.escInfo[i].Settings[1] == 1) $(".3d").eq(i).prop("checked", true);
+                            }
                         }
                     }
                 }
@@ -208,7 +214,9 @@ CONTENT.esc_flasher.initialize = function(callback) {
                    $("#fw_version").empty();
                    
                    $.each(escFirmwareMap, function( board, assets ) {
-                      $("#fc_type").append("<option value='"+board+"'>"+board+" - " +escBoardNames[board] + "</option>");
+                      var add = true;
+                      if (escDetected != "" && board != escDetected) add = false; 
+                      if (add) $("#fc_type").append("<option value='"+board+"'>"+board+" - " +escBoardNames[board] + "</option>");
                    });
                    $("#fc_type").trigger("change");
                });
@@ -297,6 +305,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
         
         if (GUI.activeContent == 'esc_flasher') {
             // TODO: May be give up after 2 * escCount seconds.
+            escDetected = "";
             if (data.lipoConnected==1) { setTimeout(function() { pollEscInfo(); }, 2000) }
         }
         
