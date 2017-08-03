@@ -171,6 +171,7 @@
 	"debug.6": "ESC 돈도",
 	"debug.7": "ESC RPM",
 	"debug.8": "ESC 소비전력",
+	"debug.9": "Filter Frequency",
 	"vtx.0": "--",
 	"vtx.1": "일반 VTX",
 	"vtx.2": "IRC Tramp HV",

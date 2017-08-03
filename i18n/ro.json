@@ -171,6 +171,7 @@
 	"debug.6": "Temperatura ESC",
 	"debug.7": "RPM ESC",
 	"debug.8": "Consum ESC",
+	"debug.9": "Filter Frequency",
 	"vtx.0": "--",
 	"vtx.1": "VTX fals",
 	"vtx.2": "IRC Tramp HV",

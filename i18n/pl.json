@@ -189,6 +189,7 @@
 	"debug.6": "ESC Temperature",
 	"debug.7": "ESC RPMs",
 	"debug.8": "ESC Consumption",
+	"debug.9": "Filter Frequency",
 	
 	"vtx.0": "--",
 	"vtx.1": "Dummy VTX",

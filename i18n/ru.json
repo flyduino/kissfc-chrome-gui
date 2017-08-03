@@ -171,6 +171,7 @@
 	"debug.6": "ESC Температура",
 	"debug.7": "ESC Обороты",
 	"debug.8": "ESC Потребление",
+	"debug.9": "Filter Frequency",
 	"vtx.0": "--",
 	"vtx.1": "Отладочный",
 	"vtx.2": "IRC Tramp HV",
