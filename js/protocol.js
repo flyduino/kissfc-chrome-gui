@@ -218,6 +218,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.ESC_Telemetrie4 = [];
                 obj.ESC_Telemetrie5 = [];
                 obj.ESC_TelemetrieStats = [];
+                obj.adaptiveFilter = 0;
             }
 
             obj.RXcommands[0] = 1000 + ((data.getInt16(0, 0) / 1000) * 1000);
@@ -492,31 +493,13 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.DLpF = data.getUint8(166, 0);
                 obj.reverseMotors = data.getUint8(167, 0);
                 obj.AUX[8] = data.getUint8(168, 0);
+                obj.adaptiveFilter = data.getUint8(169, 0);
             }
 
             } catch (Exception) {
                 console.log("Exception while reading packet");
             }
             break;
-            
-        case this.GET_NOTCH:
-            if (!obj.superNotch) {
-                obj.superNotch = [
-                    [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]], 
-                    [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]], 
-                    [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
-                ];
-            }
-            
-            var x = 0;
-            for (var i=0; i<3; i++) {
-                for (var j=0; j<10; j++) {
-                    obj.superNotch[i][j][0] = data.getUint16(x, 0);
-                    obj.superNotch[i][j][1] = data.getUint16(x+2, 0);
-                    x+=4;
-                }
-            }
-        break;
             
         case this.SET_SETTINGS:
             console.log('Settings saved');
@@ -736,7 +719,8 @@ kissProtocol.preparePacket = function (code, obj) {
                     data.setUint8(155, obj.DLpF);
                     data.setUint8(156, obj.reverseMotors);
                     data.setUint8(157, obj.AUX[8]); // turtle mode
-                    blen=166;
+                    data.setUint8(158, obj.adaptiveFilter); // adaptive filter
+                    blen=167;
                 }
             break;
             

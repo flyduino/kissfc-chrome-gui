@@ -37,9 +37,13 @@ CONTENT.advanced.initialize = function(callback) {
             if (data['reverseMotors']=="1") {
                 $('input[name="reverseMotors"]').prop('checked', 1);
             }
+            if (data['adaptiveFilter']=="1") {
+                $('input[name="adaptiveFilter"]').prop('checked', 1);
+            }
         } else {
             $("select[name='vtxType'] option[value='3']").remove(); // no unify on 108
             $("#reverseMotors").hide();
+            $("#AdaptiveFilter").hide();
         }
    
         if (data['loggerConfig'] > 0 && data['loggerConfig'] < 11)
@@ -108,7 +112,6 @@ CONTENT.advanced.initialize = function(callback) {
         for (var i = 0; i < 64; i++) {
             $("select[name='lapTimerTransponderId']").append("<option value='" + i + "'>" + ((i == 0) ? '--' : i) + "</option>");
         }
-
  
         $("select[name='vtxChannel']").val(data['vtxChannel']);
         
@@ -386,7 +389,12 @@ CONTENT.advanced.initialize = function(callback) {
             } else {
                 data['reverseMotors'] = 0;
             }
-       
+            
+            if ($('input[name="adaptiveFilter"]').prop('checked') ? 1 : 0 == 1) {
+                data['adaptiveFilter'] = 1;
+            } else {
+                data['adaptiveFilter'] = 0;
+            }
         }
 
         function contentChange() {

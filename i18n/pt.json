@@ -365,5 +365,7 @@
 	"text.firmware-versions": "Firmware versions",
 	"text.release-notes" : "Release notes",
 	"text.esc-type": "ESC type",
-	"button.reset-model": "Reset model" 
+	"button.reset-model": "Reset model",
+	"column.adaptive-filter": "Enable adaptive filter",
+	"title.adaptive-filter": "Adaptive filter"
 }

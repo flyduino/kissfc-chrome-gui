@@ -365,5 +365,7 @@
 	"text.firmware-versions": "Версии прошивок",
 	"text.release-notes" : "Описание версии",
 	"text.esc-type": "Тип ESC",
-	"button.reset-model": "Центрировать модель"
+	"button.reset-model": "Центрировать модель",
+	"column.adaptive-filter": "Включить адаптивный фильтр",
+	"title.adaptive-filter": "Адаптивный фильтр"
 }
