@@ -495,6 +495,10 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.AUX[8] = data.getUint8(168, 0);
                 obj.adaptiveFilter = data.getUint8(169, 0);
             }
+            
+            if (obj.ver > 109){
+                obj.AUX[9] = data.getUint8(170, 0);
+            }
 
             } catch (Exception) {
                 console.log("Exception while reading packet");
@@ -721,6 +725,11 @@ kissProtocol.preparePacket = function (code, obj) {
                     data.setUint8(157, obj.AUX[8]); // turtle mode
                     data.setUint8(158, obj.adaptiveFilter); // adaptive filter
                     blen=167;
+                }
+                
+                if (obj.ver > 109) {
+                    data.setUint8(159, obj.AUX[9]); // runcam
+                    blen=168;
                 }
             break;
             

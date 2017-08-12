@@ -414,5 +414,6 @@
 	"text.esc-type": "ESC type",
 	"button.reset-model": "Reset model",
 	"column.adaptive-filter": "Enable adaptive filter",
-	"title.adaptive-filter": "Adaptive filter"
+	"title.adaptive-filter": "Adaptive filter",
+	"column.runcam": "Runcam split"
 }

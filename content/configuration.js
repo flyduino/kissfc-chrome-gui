@@ -417,6 +417,15 @@ CONTENT.configuration.initialize = function(callback) {
             $("#aux8").hide();
         }
         
+        if (data['ver'] > 109) {
+            $("#aux9").kissAux({ name: $.i18n("column.runcam"),    
+                change: function() { contentChange(); },
+                value: data['AUX'][9]
+            });
+        } else {
+            $("#aux9").hide();
+        }
+        
         if (data['ver'] < 109) {
             $('select[name="lpf"]').val(data['LPF']);
         } else {
@@ -575,6 +584,11 @@ CONTENT.configuration.initialize = function(callback) {
             if (data['ver'] >108) {
                 data['AUX'][8]=$("#aux8").kissAux('value');
             }
+            
+            if (data['ver'] >109) {
+                data['AUX'][9]=$("#aux9").kissAux('value');
+            }
+            
             
             console.log("SENT:");
             console.log(data);
