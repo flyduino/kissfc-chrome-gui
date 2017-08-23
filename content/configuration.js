@@ -422,8 +422,14 @@ CONTENT.configuration.initialize = function(callback) {
                 change: function() { contentChange(); },
                 value: data['AUX'][9]
             });
+            $("#aux10").kissAux({ name: $.i18n("column.led-brightness"),    
+                change: function() { contentChange(); },
+                value: data['AUX'][10],
+                knob: true
+            });
         } else {
             $("#aux9").hide();
+            $("#aux10").hide();
         }
         
         if (data['ver'] < 109) {
@@ -587,11 +593,8 @@ CONTENT.configuration.initialize = function(callback) {
             
             if (data['ver'] >109) {
                 data['AUX'][9]=$("#aux9").kissAux('value');
+                data['AUX'][10]=$("#aux10").kissAux('value');
             }
-            
-            
-            console.log("SENT:");
-            console.log(data);
         }
         settingsFilled = 1;
 

@@ -368,5 +368,6 @@
 	"button.reset-model": "Reset model",
 	"column.adaptive-filter": "Enable adaptive filter",
 	"title.adaptive-filter": "Adaptive filter",
-	"column.runcam": "Runcam split"
+	"column.runcam": "Runcam split",
+	"column.led-brightness": "Brightness"
 }
