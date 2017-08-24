@@ -368,5 +368,6 @@
 	"button.reset-model": "Центрировать модель",
 	"column.adaptive-filter": "Включить адаптивный фильтр",
 	"title.adaptive-filter": "Адаптивный фильтр",
-	"column.runcam": "Runcam split"
+	"column.runcam": "Runcam split",
+	"column.led-brightness": "Яркость"
 }
