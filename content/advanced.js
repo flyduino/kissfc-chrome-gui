@@ -40,10 +40,12 @@ CONTENT.advanced.initialize = function(callback) {
             if (data['adaptiveFilter']=="1") {
                 $('input[name="adaptiveFilter"]').prop('checked', 1);
             }
+            $('input[name="ledBrightness"]').val(+data['ledBrightness']);
         } else {
             $("select[name='vtxType'] option[value='3']").remove(); // no unify on 108
             $("#reverseMotors").hide();
             $("#AdaptiveFilter").hide();
+            $("#ledBrightness").hide();
         }
    
         if (data['loggerConfig'] > 0 && data['loggerConfig'] < 11)
@@ -395,6 +397,7 @@ CONTENT.advanced.initialize = function(callback) {
             } else {
                 data['adaptiveFilter'] = 0;
             }
+            data['ledBrightness'] = +$('input[name="ledBrightness"]').val();
         }
 
         function contentChange() {

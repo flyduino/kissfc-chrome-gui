@@ -367,5 +367,7 @@
 	"text.esc-type": "ESC 타입",
 	"button.reset-model": "모델 리셋",
 	"column.adaptive-filter": "어댑티브 필터 활성화",
-	"title.adaptive-filter": "어댑티브 필터"
+	"title.adaptive-filter": "어댑티브 필터",
+	"column.runcam": "Runcam split",
+	"column.led-brightness": "Brightness"
 }

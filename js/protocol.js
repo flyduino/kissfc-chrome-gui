@@ -495,6 +495,13 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.AUX[8] = data.getUint8(168, 0);
                 obj.adaptiveFilter = data.getUint8(169, 0);
             }
+            
+            if (obj.ver > 109){
+                obj.AUX[9] = data.getUint8(170, 0);
+                obj.AUX[10] = data.getUint8(171, 0);
+                obj.ledBrightness = data.getUint8(172, 0);
+                var tmp =  data.getUint8(173, 0);
+            }
 
             } catch (Exception) {
                 console.log("Exception while reading packet");
@@ -721,6 +728,15 @@ kissProtocol.preparePacket = function (code, obj) {
                     data.setUint8(157, obj.AUX[8]); // turtle mode
                     data.setUint8(158, obj.adaptiveFilter); // adaptive filter
                     blen=167;
+                }
+                
+                if (obj.ver > 109) {
+                    data.setUint8(159, obj.AUX[9]); // runcam
+                    data.setUint8(160, obj.AUX[10]); // led brightness
+                    data.setUint8(161, obj.ledBrightness);  // max brightness
+                    var tmp = 0;
+                    data.setUint8(162, tmp); 
+                    blen=171;
                 }
             break;
             

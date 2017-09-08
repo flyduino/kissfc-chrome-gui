@@ -367,5 +367,7 @@
 	"text.esc-type": "Тип ESC",
 	"button.reset-model": "Центрировать модель",
 	"column.adaptive-filter": "Включить адаптивный фильтр",
-	"title.adaptive-filter": "Адаптивный фильтр"
+	"title.adaptive-filter": "Адаптивный фильтр",
+	"column.runcam": "Runcam split",
+	"column.led-brightness": "Яркость"
 }
