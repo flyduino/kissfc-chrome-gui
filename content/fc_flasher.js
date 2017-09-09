@@ -49,9 +49,7 @@ var fcFlasherReadHandler =  function(info) {
 }
 
 var escBoardNames = {
-        'KISS24A' : "Kiss Racing 24A ESC",
-        'KISS16A' : "Kiss AIOv2 ESC",
-        'KISS8A' : "Kiss AIOv1 ESC"
+        'KISSFCV2F7' : "Kiss FC v2 F7"
 };
 
 CONTENT.fc_flasher.initialize = function(callback) {
@@ -128,7 +126,6 @@ CONTENT.fc_flasher.initialize = function(callback) {
                 $(".navigation-menu-button").css('display','');
                 $("li[data-name='configuration']").click();
             }, 3000);
-            //go to gui
             return;
         } else {
             self.receiveBuffer = [];
@@ -178,7 +175,6 @@ CONTENT.fc_flasher.initialize = function(callback) {
         
         $("#fc_type").on("change", function() {
             var value = fcFirmwareMap2[$(this).val()];
-            console.log(value);
             $("#fw_version").empty();
             $.each(value, function( index, asset ) {
                 $("#fw_version").append("<option value='"+index+"'>"+asset.release+" ("+ asset.size + " bytes)</option>");
@@ -199,18 +195,17 @@ CONTENT.fc_flasher.initialize = function(callback) {
             $("#status").hide();
             
             $.get(url, function(intel_hex) {
-                console.log("Loaded ESC hex file");
-                self.pages = parseBootloaderHexFile(intel_hex);
+                console.log("Loaded FC2 hex file");
+                self.parsed_hex = read_hex_file(intel_hex);
 
                 $("#loader2").hide();
-                
-                if (self.pages!==undefined) {
-                    console.log("HEX OS OK " + self.pages.length + " blocks loaded");
-                    $("#file_info").html($.i18n("text.esc-flasher-loaded", self.pages.length, url));
+                if (self.parsed_hex) {
+                    console.log("HEX OK " + self.parsed_hex.bytes_total + " bytes");
+                    $("#file_info").html($.i18n("text.fc-flasher-loaded", self.parsed_hex.bytes_total, url));
                     $("#flash").show();
                 } else {
-                    console.log("Corrupted esc firmware file");
-                    $("#file_info").html($.i18n("text.esc-flasher-invalid-firmware"));
+                    console.log("Corrupted firmware file");
+                    $("#file_info").html($.i18n("text.fc-flasher-invalid-firmware"));
                     $("#flash").hide();
                 }
             });
@@ -222,7 +217,7 @@ CONTENT.fc_flasher.initialize = function(callback) {
            fcFirmwares2 = [];
            $("#remote_fw").hide();
            $("#loader1").show();
-           loadGithubReleases("https://api.github.com/repos/flyduino/kissesc-firmware/releases", function(data) {
+           loadGithubReleases("https://api.github.com/repos/flyduino/kissfc-firmware/releases", function(data) {
                $("#loader1").hide();
                console.log("DONE");
                console.log(data);
@@ -233,20 +228,22 @@ CONTENT.fc_flasher.initialize = function(callback) {
                    $.each(release.assets, function(index2, asset) {
                        if (asset.name.endsWith(".hex")) {
                            console.log("Processing asset: " + asset.name);
-                           var p = asset.name.indexOf("_");
+                           var p = asset.name.indexOf("-");
                            var board = asset.name.substr(0, p).toUpperCase().trim();
                            console.log("Board: " + board);
-                           if (fcFirmwareMap2[board]==undefined) {
-                               fcFirmwareMap2[board] = [];
-                           }
-                           var file = {
+                           if (board.indexOf("V2F7")!=-1) {
+                               if (fcFirmwareMap2[board]==undefined) {
+                                   fcFirmwareMap2[board] = [];
+                               }
+                               var file = {
                                    release: release.name,
                                    date: release.created_at,
                                    url: asset.browser_download_url,
                                    size: asset.size,
                                    info: release.body
+                               }
+                               fcFirmwareMap2[board].push(file);
                            }
-                           fcFirmwareMap2[board].push(file);
                        }
                    });
                    $("#fc_type").empty();
@@ -353,6 +350,5 @@ CONTENT.fc_flasher.initialize = function(callback) {
 CONTENT.fc_flasher.cleanup = function(callback) {
     console.log("cleanup flasher");
     serialDevice.onReceive.removeListener(fcFlasherReadHandler);
-    //serialDevice.onReceive.addListener(kissProtocolHandler);
     if (callback) callback();
 };
