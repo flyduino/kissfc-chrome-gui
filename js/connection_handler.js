@@ -1,8 +1,16 @@
 'use strict';
 
+var bootTimeout;
+
+var kissProtocolHandler = function(info) {
+    kissProtocol.read(info);
+}
+
 $(document).ready(function() {
     $('#portArea a.connect').click(function() {
             var selectedPort = String($('#port').val());
+          
+            var bootloaderDetected = false;
 
             if (selectedPort != '0') {
                 
@@ -70,18 +78,46 @@ $(document).ready(function() {
             }
 
             GUI.switchToDisconnect();
-
+            
+            var bootloaderListener = function(info) {
+                serialDevice.onReceive.removeListener(bootloaderListener);
+                if (info.data.byteLength>0) {
+                    var view = new Uint8Array(info.data);
+                    if (view.length==5) {
+                        if (view[0]==81 && view[1]==255 && view[2]==255 && view[3]==125) {
+                            // todo: Check for proper loader
+                            if (view[4] != 0) {
+                                clearTimeout(bootTimeout);
+                                $("#portArea").children().addClass('flashing-in-progress');
+                                $("#menu").hide();
+                                $(".navigation-menu-button").hide(); // hide menu during flashing
+                                CONTENT.fc_flasher.initialize();
+                            }    
+                        }
+                    }
+                }
+            } 
+            
+            serialDevice.onReceive.addListener(bootloaderListener);
+            serialDevice.onReceive.addListener(kissProtocolHandler);
             kissProtocol.init();
-
-            // start reading
-            serialDevice.onReceive.addListener(function(info) {
-                kissProtocol.read(info);
+            
+            var bootloaderCheck = [81,255,255,125,0];
+            var bufferOut = new ArrayBuffer(bootloaderCheck.length);
+            var bufferView = new Uint8Array(bufferOut);
+            bufferView.set(bootloaderCheck, 0);    
+            serialDevice.send(bufferOut, function(a) {
+                console.log("Bootloader check has een sent");
             });
-
-            CONTENT.configuration.initialize();
+            
+            var bootTimeout = function() {
+                serialDevice.onReceive.removeListener(bootloaderListener);
+                CONTENT.configuration.initialize();
+            }
+            
+            bootTimeout = setTimeout(bootTimeout, 250); // bootloader response in 250ms
         } else {
             console.log('Failed to open serial port');
-
             GUI.switchToConnect();
         }
     }

@@ -369,5 +369,6 @@
 	"column.adaptive-filter": "어댑티브 필터 활성화",
 	"title.adaptive-filter": "어댑티브 필터",
 	"column.runcam": "Runcam split",
-	"column.led-brightness": "Brightness"
+	"column.led-brightness": "Brightness",
+	"menu.fc-flasher":"FC Flasher"
 }

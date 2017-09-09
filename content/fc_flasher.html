@@ -1,0 +1,39 @@
+<div class="esc_flasher">
+    <div class="wrapper-half">
+		<div class="groupTitle" data-i18n="title.fc-flasher">KISS FC Flasher</div>
+		<p>
+			<a id="select_file" class="config_button" href="#" data-i18n="button.select-firmware">SELECT FIRMWARE</a>
+			<a id="download_file" class="config_button" href="#" data-i18n="button.select-remote-firmware"></a><img id="loader1" class="loader" src="images/ajax-loader.gif"/>
+		</p>
+
+		<div id="remote_fw" style="display:none">
+			<p>
+				<label for="fc_type" data-i18n="text.fc-type">FC type</label><select id="fc_type"></select>
+			</p>
+		
+			<p>
+				<label for="fw_version" data-i18n="text.firmware-versions">Firmware versions</label><select id="fw_version"></select>
+			</p>
+			
+			<p>
+				<label for="fw_notes" data-i18n="text.release-notes">Release notes</label>
+				<textarea readonly="readonly" id="fw_notes"></textarea>
+			</p>
+			
+			<p>
+				<a id="download_url" class="config_button" href="#" data-i18n="button.download-firmware"></a><img id="loader2" class="loader" src="images/ajax-loader.gif"/>
+			</p>
+	
+			<p></p>
+		</div>
+
+		<p id="file_info"></p>
+
+		<p>
+			<a id="flash" class="config_button hidden" href="#" data-i18n="button.flash-firmware">FLASH FIRMWARE</a>
+		</p>
+		
+		<p id="status"></p>
+		
+	</div>
+</div>

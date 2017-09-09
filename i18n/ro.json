@@ -369,5 +369,6 @@
 	"column.adaptive-filter": "Enable adaptive filter",
 	"title.adaptive-filter": "Adaptive filter",
 	"column.runcam": "Runcam split",
-	"column.led-brightness": "Brightness"
+	"column.led-brightness": "Brightness",
+	"menu.fc-flasher":"FC Flasher"
 }

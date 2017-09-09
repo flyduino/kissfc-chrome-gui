@@ -187,11 +187,17 @@ CONTENT.configuration.initialize = function(callback) {
 		kissProtocol.send(kissProtocol.GET_INFO, [0x21], function(){
 			var info = kissProtocol.data[kissProtocol.GET_INFO];
 			var FCinfo = info.firmvareVersion.split(/-/g);
+
 			if(FCinfo[0].length < 7 || info.firmvareVersion.indexOf("KISSFC") == -1){
 				$("select[name='outputMode'] option[value='6']").remove();
 			}
 			if(FCinfo[0].length < 9 || info.firmvareVersion.indexOf("KISSFC") == -1){
 				$("select[name='outputMode'] option[value='7']").remove();
+			}
+			if (FCinfo[0]=='KISSFCV2F7') {
+			    $("li[data-name='fc_flasher']").show();
+			} else {
+			    $("li[data-name='fc_flasher']").remove();
 			}
 		});
 	}
