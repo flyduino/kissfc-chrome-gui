@@ -358,7 +358,7 @@
 	"column.esc-number" : "ESC",
 	"column.esc-reverse" : "Drehrichtung umkehren",
 	"column.esc-3dmode": "3D mode",
-	"column.turtle-mode": "Schildkröten-Modus",
+	"column.turtle-mode": "Turtle Mode",
 	"button.select-remote-firmware": "SELECT REMOTE FIRMWARE",
 	"button.download-firmware": "DOWNLOAD FIRMWARE",
 	"text.flight-controller": "Flight controller",
