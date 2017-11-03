@@ -195,7 +195,7 @@ CONTENT.fc_flasher.initialize = function(callback) {
             $("#status").hide();
             
             $.get(url, function(intel_hex) {
-                console.log("Loaded FC2 hex file");
+                console.log("Loaded FC v2 hex file");
                 self.parsed_hex = read_hex_file(intel_hex);
 
                 $("#loader2").hide();
@@ -269,7 +269,7 @@ CONTENT.fc_flasher.initialize = function(callback) {
                   }
 
                   chrome.fileSystem.getDisplayPath(fileEntry, function (path) {
-                      console.log('Loading esc firmware from: ' + path);
+                      console.log('Loading fc v2 firmware from: ' + path);
                       fileEntry.file(function (file) {
                           var reader = new FileReader();
                           reader.onprogress = function (e) {
