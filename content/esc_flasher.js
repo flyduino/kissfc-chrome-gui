@@ -9,9 +9,10 @@ var escFirmwareMap = {};
 var escDetected = "";
 
 var escBoardNames = {
+        'KISS32A' : "Kiss Racing 32A ESC",
         'KISS24A' : "Kiss Racing 24A ESC",
         'KISS16A' : "Kiss AIOv2 ESC",
-        'KISS8A' : "Kiss AIOv1 ESC"
+        'KISS8A'  : "Kiss AIOv1 ESC"
 };
 
 CONTENT.esc_flasher.initialize = function(callback) {
@@ -82,7 +83,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
                                 escDetected = info.escInfo[i].type.replace(/\s/g, '').toUpperCase().trim();
                                 console.log("Esc: " + escDetected);
                             }
-                            var li = $("<li/>").html((i+1)+": "+$.i18n("text.firmware-version")+" " + info.escInfo[i].type + " " + info.escInfo[i].version + " "+$.i18n("text.sn")+" " + info.escInfo[i].SN);
+                            var li = $("<li/>").html((i+1)+": " + info.escInfo[i].type + " " + info.escInfo[i].version + " "+$.i18n("text.sn")+" " + info.escInfo[i].SN);
                         } else {
                             var li = $("<li/>").html((i+1)+": --");
                         }
