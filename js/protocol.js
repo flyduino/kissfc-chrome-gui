@@ -560,6 +560,8 @@ kissProtocol.processPacket = function (code, obj) {
                            info.type='KISS 24A';
                        } else if (type == 5) {
                            info.type='KISS 24 Ultralite';
+                       } else if (type == 7) {
+                           info.type='KISS 32A';
                        }
 		       if(data.byteLength/6 > 15){ // check if we got the new protocol
 				for(var r=0; r < 4; r++) info.Settings[r] = data.getUint8(p++);
