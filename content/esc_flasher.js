@@ -56,7 +56,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
             $("#status").html($.i18n("text.esc-flasher-progress", Math.floor(percentage + 0.5)));
             console.log('Sending block ' + (actPage + 1));
             Write(self.pages[actPage]);
-            var timeout = (actPage == (self.pages.length-1) ? 2000 : 500);
+            var timeout = (actPage == (self.pages.length-1) ? 2000 : 100);
             setTimeout(function() { WritePage(actPage-1); }, timeout);
         }
     }
