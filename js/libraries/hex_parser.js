@@ -115,6 +115,9 @@ function parseBootloaderHexFile(hexFile) {
             } else if (parseInt(lineArr[3]) == 8) {
                 BlockName = 'block';
                 BlockStartSign = 69;
+            } else if ((parseInt(lineArr[3]) == 0) && (parseInt(lineArr[2]) == 1)) {
+                BlockName = 'block';
+                BlockStartSign = 69;
             } else {
                 console.log('this hexfile cant be loaded as it is not bootloder conform');
                 pages = [];
