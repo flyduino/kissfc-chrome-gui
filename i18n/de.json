@@ -334,7 +334,7 @@
 	"button.select-firmware": "FIRMWARE AUSWÄHLEN",
 	"button.flash-firmware": "FIRMWARE FLASHEN",
 	"button.esc-flasher-accept": "ICH WEISS WAS ICH TUE",
-	"text.esc-flasher-warning": "Vorsicht - Gefahr!<br/><br/>ESC Flasher funktioniert nur mit KISS 24A ESC<br> mit installiertem <b>bootloader</b> (version 1.02 oder neuer)!<br/><br/>Bitte entfernen Sie die Propeller !<br/><br/>Benutzung auf eigene Gefahr.<br/><br/>Sie müssen ihren KISSFC nach dem flashen aus und einschalten (USB Kabel ziehen und wieder anstecken)!<br/><br/>",
+	"text.esc-flasher-warning": "Vorsicht - Gefahr!<br/><br/>ESC Flasher funktioniert nur mit KISS ESC<br> mit installiertem <b>bootloader</b> (version 1.02 oder neuer)!<br/><br/>Bitte entfernen Sie die Propeller !<br/><br/>Benutzung auf eigene Gefahr.<br/><br/>Sie müssen ihren KISSFC nach dem flashen aus und einschalten (USB Kabel ziehen und wieder anstecken)!<br/><br/>",
 	"text.esc-flasher-complete": "<br/><br/> <br/><br/>Aus Sicherheitsgründen wurde die Kommunikation zur KISS FC unterbrochen.<br/><br/>Bitte lösen Sie die Batterieverbindung und das USB Kabel am KISS FC.<br/><br/>",
 	"text.esc-flasher-success": "ERFOLGREICH!",
 	"text.esc-flasher-progress": "Fortschritt $1%",

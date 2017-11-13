@@ -8,13 +8,6 @@ var escFirmwares = [];
 var escFirmwareMap = {};
 var escDetected = "";
 
-var escBoardNames = {
-        'KISS32A' : "Kiss Racing 32A ESC",
-        'KISS24A' : "Kiss Racing 24A ESC",
-        'KISS16A' : "Kiss AIOv2 ESC",
-        'KISS8A'  : "Kiss AIOv1 ESC"
-};
-
 CONTENT.esc_flasher.initialize = function(callback) {
     var self = this;
     
@@ -217,6 +210,12 @@ CONTENT.esc_flasher.initialize = function(callback) {
                    $.each(escFirmwareMap, function( board, assets ) {
                       var add = true;
                       if (escDetected != "" && board != escDetected) add = false; 
+                      var escBoardNames = {
+                              'KISS32A' : "Kiss Racing 32A ESC",
+                              'KISS24A' : "Kiss Racing 24A ESC",
+                              'KISS16A' : "Kiss AIOv2 ESC",
+                              'KISS8A'  : "Kiss AIOv1 ESC"
+                      };
                       if (add) $("#fc_type").append("<option value='"+board+"'>"+board+" - " +escBoardNames[board] + "</option>");
                    });
                    $("#fc_type").trigger("change");

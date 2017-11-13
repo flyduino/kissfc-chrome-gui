@@ -334,7 +334,7 @@
 	"button.select-firmware": "SELECTEAZA FIRMWARE",
 	"button.flash-firmware": "SCRIE FIRMWARE",
 	"button.esc-flasher-accept": "STIU CE FAC",
-	"text.esc-flasher-warning": "Atentie - periculos!<br/><br/>Inscrierea de ESC functioneaza DOAR daca ai KISS 24A ESC<br> cu <b>incarcator de boot</b> (versiunea 1.02 sau mai recenta)!<br/><br/>Ia jos elicele inainte de a inscrie ESC!<br/><br/>Foloseste aceasta capabilitate pe risc propriu.<br/><br/>Va trebui sa reconectati KISSFC la putere dupa inscriere!<br/><br/>",
+	"text.esc-flasher-warning": "Atentie - periculos!<br/><br/>Inscrierea de ESC functioneaza DOAR daca ai KISS ESC<br> cu <b>incarcator de boot</b> (versiunea 1.02 sau mai recenta)!<br/><br/>Ia jos elicele inainte de a inscrie ESC!<br/><br/>Foloseste aceasta capabilitate pe risc propriu.<br/><br/>Va trebui sa reconectati KISSFC la putere dupa inscriere!<br/><br/>",
 	"text.esc-flasher-complete": "<br/><br/> <br/><br/>Pentru motive de siguranta, comunicarea cu KISS FC a fost terminata.<br/><br/>Deconecteaza bateria, si reconecteaza KISS FC.<br/><br/>",
 	"text.esc-flasher-success": "SUCCES!",
 	"text.esc-flasher-progress": "Progres $1%",

@@ -334,7 +334,7 @@
 	"button.select-firmware": "VÄLJ FIRMWARE",
 	"button.flash-firmware": "FLASHA FIRMWARE",
 	"button.esc-flasher-accept": "JAG VET VAD JAG GÖR",
-	"text.esc-flasher-warning": "Varning - förknippat med fara!<br/><br/>ESC Flasharen fungerar BARA om du har KISS 24A ESC<br>med <b>bootloaderversion</b>1.02 eller senare!<br/><br/>Var vänlig ta bort propellrarna innan du påbörjar flashningen!<br/><br/>Använd den här funktionen på egen risk.<br/><br/>Du kommer att behöva stänga av och slå på din KISSFC efter flashningen!<br/><br/>",
+	"text.esc-flasher-warning": "Varning - förknippat med fara!<br/><br/>ESC Flasharen fungerar BARA om du har KISS ESC<br>med <b>bootloaderversion</b>1.02 eller senare!<br/><br/>Var vänlig ta bort propellrarna innan du påbörjar flashningen!<br/><br/>Använd den här funktionen på egen risk.<br/><br/>Du kommer att behöva stänga av och slå på din KISSFC efter flashningen!<br/><br/>",
 	"text.esc-flasher-complete": "<br/><br/> <br/><br/>Av säkerhetsskäl har kommunikation med KISS FC avslutats.<br/><br/>Vänligen koppla bort batteriet, och återanslut din KISS FC.<br/><br/>",
 	"text.esc-flasher-success": "KLART!",
 	"text.esc-flasher-progress": "Förlopp $1%",

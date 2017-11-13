@@ -334,7 +334,7 @@
 	"button.select-firmware": "SELECT LOCAL FIRMWARE",
 	"button.flash-firmware": "FLASH FIRMWARE",
 	"button.esc-flasher-accept": "I KNOW WHAT I AM DOING",
-	"text.esc-flasher-warning": "Caution - potentially dangerous!<br/><br/>ESC Flasher works ONLY if you have KISS 24A ESC<br> with <b>bootloader</b> (version 1.02 or later)!<br/><br/>Please remove propellers before starting ESC Flashing!<br/><br/>Use this feature at your own risk.<br/><br/>You will have to power cycle your KISSFC after flashing!<br/><br/>",
+	"text.esc-flasher-warning": "Caution - potentially dangerous!<br/><br/>ESC Flasher works ONLY if you have KISS ESC<br> with <b>bootloader</b> (version 1.02 or later)!<br/><br/>Please remove propellers before starting ESC Flashing!<br/><br/>Use this feature at your own risk.<br/><br/>You will have to power cycle your KISSFC after flashing!<br/><br/>",
 	"text.esc-flasher-complete": "<br/><br/> <br/><br/>For safety reasons, communication with KISS FC has been terminated.<br/><br/>Please unplug your battery, and reconnect your KISS FC.<br/><br/>",
 	"text.esc-flasher-success": "SUCCESS!",
 	"text.esc-flasher-progress": "Progress $1%",

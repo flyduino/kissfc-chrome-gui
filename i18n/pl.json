@@ -393,7 +393,7 @@
 	"button.flash-firmware": "FLASH FIRMWARE",
 	"button.esc-flasher-accept": "WIEM CO ROBIE",
 
-	"text.esc-flasher-warning": "UWAGA - potencjalnie niebezpieczne!<br/><br/>ESC Flasher działa TYLKO jeżeli masz KISS 24A ESC<br> z <b>bootloaderem</b> (ver 1.02 lub póżniejsza)!<br/><br/>Proszę zdjąć śmigła przed rozpoczęciem flashowania ESC!<br/><br/>Używasz na własną odpowiedzialność.<br/><br/>Po skończeniu flashowania będziesz musiał wyłączyć i włączyc KISSFC!<br/><br/>",
+	"text.esc-flasher-warning": "UWAGA - potencjalnie niebezpieczne!<br/><br/>ESC Flasher działa TYLKO jeżeli masz KISS ESC<br> z <b>bootloaderem</b> (ver 1.02 lub póżniejsza)!<br/><br/>Proszę zdjąć śmigła przed rozpoczęciem flashowania ESC!<br/><br/>Używasz na własną odpowiedzialność.<br/><br/>Po skończeniu flashowania będziesz musiał wyłączyć i włączyc KISSFC!<br/><br/>",
     "text.esc-flasher-complete": "<br/><br/> <br/><br/>Dla bezpieczeństwa komunikacja z KISS FC została zerwana.<br/><br/>Odłącz baterie i podłącz ponownie KISSFC.<br/><br/>",
     "text.esc-flasher-success": "SUKCES!",
 	"text.esc-flasher-progress": "Postęp $1%",
