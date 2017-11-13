@@ -48,10 +48,6 @@ var fcFlasherReadHandler =  function(info) {
     }
 }
 
-var escBoardNames = {
-        'KISSFCV2F7' : "Kiss FC v2 F7"
-};
-
 CONTENT.fc_flasher.initialize = function(callback) {
     var self = this;
     self.receiveBuffer = [];
@@ -217,7 +213,7 @@ CONTENT.fc_flasher.initialize = function(callback) {
            fcFirmwares2 = [];
            $("#remote_fw").hide();
            $("#loader1").show();
-           loadGithubReleases("https://api.github.com/repos/flyduino/kissfc-firmware/releases", function(data) {
+           loadGithubReleases("https://api.github.com/repos/flyduino/kissfcv2-firmware/releases", function(data) {
                $("#loader1").hide();
                console.log("DONE");
                console.log(data);
@@ -231,7 +227,7 @@ CONTENT.fc_flasher.initialize = function(callback) {
                            var p = asset.name.indexOf("-");
                            var board = asset.name.substr(0, p).toUpperCase().trim();
                            console.log("Board: " + board);
-                           if (board.indexOf("V2F7")!=-1) {
+
                                if (fcFirmwareMap2[board]==undefined) {
                                    fcFirmwareMap2[board] = [];
                                }
@@ -243,15 +239,16 @@ CONTENT.fc_flasher.initialize = function(callback) {
                                    info: release.body
                                }
                                fcFirmwareMap2[board].push(file);
-                           }
                        }
                    });
                    $("#fc_type").empty();
                    $("#fw_version").empty();
-                   
+                   var fc2BoardNames = {
+                           'KISSFCV2F7' : "Kiss FC v2 F7"
+                   };
                    $.each(fcFirmwareMap2, function( board, assets ) {
                       var add = true;
-                      if (add) $("#fc_type").append("<option value='"+board+"'>"+board+" - " +escBoardNames[board] + "</option>");
+                      if (add) $("#fc_type").append("<option value='"+board+"'>"+board+" - " +fc2BoardNames[board] + "</option>");
                    });
                    $("#fc_type").trigger("change");
                });
