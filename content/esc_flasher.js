@@ -132,16 +132,19 @@ CONTENT.esc_flasher.initialize = function(callback) {
         });
         
         $("#fc_type").on("change", function() {
-            var value = escFirmwareMap[$(this).val()];
-            console.log(value);
-            $("#fw_version").empty();
-            $.each(value, function( index, asset ) {
-                $("#fw_version").append("<option value='"+index+"'>"+asset.release+" ("+ asset.size + " bytes)</option>");
-            });
-            $("#fw_version").trigger("change");
-            $("#file_info").html("");
-            $("#flash").hide();
-            $("#status").hide();
+            if ($(this).val() != null) {
+                console.log("Change for " + $(this).val());
+                var value = escFirmwareMap[$(this).val()];
+                console.log(value);
+                $("#fw_version").empty();
+                $.each(value, function( index, asset ) {
+                    $("#fw_version").append("<option value='"+index+"'>"+asset.release+" ("+ asset.size + " bytes)</option>");
+                });
+                $("#fw_version").trigger("change");
+                $("#file_info").html("");
+                $("#flash").hide();
+                $("#status").hide();
+            };
         });
         
         $("#download_url").on("click", function() {
