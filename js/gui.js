@@ -8,7 +8,8 @@ var GUI = {
     activeContent : null,
     contentSwitchInProgress : false,
     intervalArray : [],
-    timeoutArray : []
+    timeoutArray : [],
+    state : "CONNECT"
 };
 
 GUI.intervalAdd = function(name, code, interval, first) {
@@ -142,6 +143,10 @@ GUI.contentSwitchCleanup = function(callback) {
 GUI.switchContent = function(newContent, callback) {
     if (GUI.activeContent != newContent) {
         console.log('Switching content to ' + newContent);
+        
+        $('#navigation li').removeClass('selected');
+        $("#navigation li[data-name='"+newContent+"']").addClass('selected')
+        
         GUI.activeContent = newContent;
         kissProtocol.clearPendingRequests(function() {
             callback();
@@ -152,9 +157,37 @@ GUI.switchContent = function(newContent, callback) {
 }
 
 GUI.load = function(url, callback) {
+    $('#content').animate({
+        scrollTop: 0
+    }, 700);
     $('#content').load(url, function() {
  
         callback();
         $("*", "#content").i18n();
     });
+}
+
+GUI.switchToConnect = function() {
+    // set button to connect
+    // unlock port select
+    $('#port').prop('disabled', false);
+    $('a.connect').text($.i18n('menu.connect'));
+    $('a.connect').removeClass('active');
+    $('#navigation li:not([data-name="welcome"])').removeClass('unlocked');
+    $('#navigation').show();
+    GUI.state = "CONNECT";
+}
+
+GUI.switchToConnecting = function() {
+    // set button to connecting
+    $('#port').prop('disabled', true);
+    $('a.connect').text($.i18n("menu.connecting"));
+    GUI.state = "CONNECTING";
+}
+
+GUI.switchToDisconnect = function() {
+    // set button to disconnect
+    $('a.connect').text($.i18n("menu.disconnect")).addClass('active');
+    $('#navigation li').addClass('unlocked');
+    GUI.state = "DISCONNECT";
 }

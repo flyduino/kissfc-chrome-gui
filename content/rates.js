@@ -78,7 +78,7 @@ CONTENT.rates.initialize = function(callback) {
         self.startedUIupdate = 0;
         window.clearTimeout(self.updateTimeout);
 
-        validateBounds('.rc_rates input[type="text"]');
+        validateBounds('.rc_rates input[type="number"]');
 
         for (var i = 0; i < receiverNames.length; i++) {
             var name = receiverNames[i];

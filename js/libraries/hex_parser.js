@@ -84,7 +84,7 @@ function read_hex_file(data) {
                 extended_linear_address = (parseInt(content.substr(0, 2), 16) << 24) | parseInt(content.substr(2, 2), 16) << 16;
                 break;
             case 0x05: // start linear address record
-                result.start_linear_address = parseInt(content, 16)
+                 result.start_linear_address = parseInt(content, 16);
                 break;
         }
     }
@@ -113,6 +113,9 @@ function parseBootloaderHexFile(hexFile) {
                 BlockName = 'page';
                 BlockStartSign = 70;
             } else if (parseInt(lineArr[3]) == 8) {
+                BlockName = 'block';
+                BlockStartSign = 69;
+            } else if ((parseInt(lineArr[3]) == 0) && (parseInt(lineArr[2]) == 1)) {
                 BlockName = 'block';
                 BlockStartSign = 69;
             } else {

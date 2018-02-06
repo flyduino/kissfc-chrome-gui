@@ -8,7 +8,6 @@
         <meta name="author" content="Graphics: Max Levine" />
 
   		<link type="text/css" rel="stylesheet" href="./js/libraries/jquery.minicolors.css" media="all" />
-      
 
         <link type="text/css" rel="stylesheet" href="./content/welcome.css" media="all" />
         <link type="text/css" rel="stylesheet" href="./content/configuration.css" media="all" />
@@ -16,6 +15,7 @@
         <link type="text/css" rel="stylesheet" href="./content/rates.css" media="all" />
         <link type="text/css" rel="stylesheet" href="./content/tpa.css" media="all" />
         <link type="text/css" rel="stylesheet" href="./content/flasher.css" media="all" />
+        <link type="text/css" rel="stylesheet" href="./content/fc_flasher.css" media="all" />
         <link type="text/css" rel="stylesheet" href="./content/upgrade.css" media="all" />
         <link type="text/css" rel="stylesheet" href="./content/esc_flasher.css" media="all" />
         <link type="text/css" rel="stylesheet" href="./js/plugins/jquery.kiss.aux.css" media="all" />
@@ -48,8 +48,10 @@
 		<script type="text/javascript" src="./content/tpa.js"></script>
 		<script type="text/javascript" src="./content/flasher.js"></script>
 		<script type="text/javascript" src="./content/esc_flasher.js"></script>
+		<script type="text/javascript" src="./content/fc_flasher.js"></script>
 		<script type="text/javascript" src="./js/libraries/jquery.minicolors.min.js"></script>
-
+		<script type="text/javascript" src="./js/libraries/github.js"></script>
+		<script type="text/javascript" src="./js/libraries/imu.js"></script>
 		<script type="text/javascript" src="./js/libraries/i18n/jquery.i18n.js"></script>
 		<script type="text/javascript" src="./js/libraries/i18n/jquery.i18n.messagestore.js"></script>
 		<script type="text/javascript" src="./js/libraries/i18n/jquery.i18n.fallbacks.js"></script>
@@ -58,8 +60,6 @@
 		<script type="text/javascript" src="./js/libraries/i18n/jquery.i18n.emitter.js"></script>
 		<script type="text/javascript" src="./js/libraries/i18n/jquery.i18n.emitter.bidi.js"></script>
 		
-		<script type="text/javascript" src="./js/libraries/i18n/languages/ru.js"></script>
-		<script type="text/javascript" src="./js/libraries/i18n/languages/it.js"></script>
 
 <link type="text/css" rel="stylesheet" href="./main.css" media="all" />
     </head>
@@ -78,7 +78,9 @@
                         <li data-name="data_output" data-i18n="menu.data-output">Data Output</li>
                         <li data-name="rates" data-i18n="menu.rates">Rates</li>
                         <li data-name="tpa" data-i18n="menu.tpa">TPA</li>
+                        <li data-name="fc_flasher" data-i18n="menu.fc-flasher" style="display:none">FC Flasher</li>
                         <li data-name="esc_flasher" data-i18n="menu.esc-flasher">ESC Flasher</li>
+                        <li data-name="wifi" data-i18n_="menu.wifi" class="external"><a id="wifi" href="http://192.168.4.1/" target=_blank>WIFI</a></li>
                     </ul>
                 </div>
             </div>

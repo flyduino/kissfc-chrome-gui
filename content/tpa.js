@@ -66,7 +66,9 @@ CONTENT.tpa.initialize = function(callback) {
             for (var a = 0; a<3; a++) {
                 var pid = parseFloat($('tr.' + rowNames[x] + ' input').eq(a).val());
                 pid = pid*(1-tpa[a]*influence)*vPIDc;
-                $('tr.' + rowNames[x] + ' td').eq(4+a).children().first().text(pid.toFixed(precision[a]));
+                var s = ""+pid.toFixed(precision[a]);
+                s=s.replace("." , ",");
+                $('tr.' + rowNames[x] + ' td').eq(4+a).children().first().text(s);
             }
         }
     }
@@ -82,7 +84,7 @@ CONTENT.tpa.initialize = function(callback) {
         self.startedUIupdate = 0;
         window.clearTimeout(self.updateTimeout);
 
-        validateBounds('.tpa input[type="text"]');
+        validateBounds('.tpa input[type="number"]');
         
         if (data['ver']>108) {
             $('.voltage_influence').hide();

@@ -96,6 +96,7 @@
     "filter.4": "Medium Low",
     "filter.5": "Low",
     "filter.6": "Very Low",
+    "filter.7": "Advanced Settings",
     
   	"output.5": "Dshot 600",
 	"output.4": "Dshot 300",
@@ -188,6 +189,7 @@
 	"debug.6": "ESC Temperature",
 	"debug.7": "ESC RPMs",
 	"debug.8": "ESC Consumption",
+	"debug.9": "Filter Frequency",
 	
 	"vtx.0": "--",
 	"vtx.1": "Dummy VTX",
@@ -391,7 +393,7 @@
 	"button.flash-firmware": "FLASH FIRMWARE",
 	"button.esc-flasher-accept": "WIEM CO ROBIE",
 
-	"text.esc-flasher-warning": "UWAGA - potencjalnie niebezpieczne!<br/><br/>ESC Flasher działa TYLKO jeżeli masz KISS 24A ESC<br> z <b>bootloaderem</b> (ver 1.02 lub póżniejsza)!<br/><br/>Proszę zdjąć śmigła przed rozpoczęciem flashowania ESC!<br/><br/>Używasz na własną odpowiedzialność.<br/><br/>Po skończeniu flashowania będziesz musiał wyłączyć i włączyc KISSFC!<br/><br/>",
+	"text.esc-flasher-warning": "UWAGA - potencjalnie niebezpieczne!<br/><br/>ESC Flasher działa TYLKO jeżeli masz KISS ESC<br> z <b>bootloaderem</b> (ver 1.02 lub póżniejsza)!<br/><br/>Proszę zdjąć śmigła przed rozpoczęciem flashowania ESC!<br/><br/>Używasz na własną odpowiedzialność.<br/><br/>Po skończeniu flashowania będziesz musiał wyłączyć i włączyc KISSFC!<br/><br/>",
     "text.esc-flasher-complete": "<br/><br/> <br/><br/>Dla bezpieczeństwa komunikacja z KISS FC została zerwana.<br/><br/>Odłącz baterie i podłącz ponownie KISSFC.<br/><br/>",
     "text.esc-flasher-success": "SUKCES!",
 	"text.esc-flasher-progress": "Postęp $1%",
@@ -415,6 +417,24 @@
 	"title.kiss": "KISS Kontroler Lotu GUI",
 	"text.connect": "Proszę podłączyć KISS FC do komputera i wybrać port z listy powyżej.",
 	
-	"title.reverse-motors" : "Kierunek silników",
-	"column.reverse-motors" : "Odwróć kierunek wszystkich silników"
+	"title.reverse-motors" : "Yaw control direction",
+	"column.reverse-motors" : "Reverse yaw control direction",
+	"title.esc-settings" : "KiSS ESC settings",
+	"column.esc-number" : "ESC",
+	"column.esc-reverse" : "Reverse direction",
+	"column.esc-3dmode": "3D mode",
+	"column.turtle-mode": "Tryb żółwia",
+	"button.select-remote-firmware": "SELECT REMOTE FIRMWARE",
+	"button.download-firmware": "DOWNLOAD FIRMWARE",
+	"text.flight-controller": "Flight controller",
+	"text.firmware-versions": "Firmware versions",
+	"text.release-notes" : "Release notes",
+	"text.esc-type": "ESC type",
+	"button.reset-model": "Reset model",
+	"column.adaptive-filter": "Enable adaptive filter",
+	"title.adaptive-filter": "Adaptive filter",
+	"column.runcam": "Runcam split",
+	"column.led-brightness": "Brightness",
+	"menu.fc-flasher":"FC Flasher",
+	"text.fc-type" : "FC type"
 }

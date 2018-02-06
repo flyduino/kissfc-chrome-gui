@@ -165,7 +165,9 @@ var chromeSerial = {
         chrome.serial.getDevices(function (devicesArray) {
             var devices = [];
             devicesArray.forEach(function (device) {
-                devices.push(device.path);
+                if ((device.path.indexOf('.lpss') === -1) && (device.path.indexOf('Bluetooth-Incoming-Port') === -1)) {
+                    devices.push(device.path);
+                }
             });
 
             callback(devices);
@@ -244,9 +246,7 @@ var chromeSerial = {
             for (var i = (this.listeners.length - 1); i >= 0; i--) {
                 if (this.listeners[i] == functionReference) {
                     chrome.serial.onReceive.removeListener(functionReference);
-
                     this.listeners.splice(i, 1);
-                    break;
                 }
             }
         }
@@ -262,7 +262,6 @@ var chromeSerial = {
             for (var i = (this.listeners.length - 1); i >= 0; i--) {
                 if (this.listeners[i] == functionReference) {
                     chrome.serial.onReceiveError.removeListener(functionReference);
-
                     this.listeners.splice(i, 1);
                     break;
                 }
@@ -281,7 +280,7 @@ var chromeSerial = {
         return this.byteToHex(byte>>8 & 0xff)+this.byteToHex(byte & 0xff);
     },
     dump: function(direction, data) {
-       /* var view = new Uint8Array(data);
+        /* var view = new Uint8Array(data);
         var line = '';
         for (var i = 0; i < view.length; i++) {
             if (i%16==0) {
@@ -290,6 +289,6 @@ var chromeSerial = {
             }
             line +=  this.byteToHex(view[i]) + ' ';
          }
-        console.log(line);*/
+        console.log(line); */
     }
 };

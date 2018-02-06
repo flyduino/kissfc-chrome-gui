@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "minimum_chrome_version": "38",
-    "version": "1.16.3",
+    "version": "2.0.1",
 
     "author": "Flyduino & Alexander Fedorov",
     "name": "KissFC",
@@ -24,6 +24,10 @@
         "storage",
         "notifications",
 		"http://ultraesc.de/",
+		"https://*.github.com/",
+        "https://*.githubusercontent.com/",
+        "http://*.baseflight.net/",
+        "https://*.amazonaws.com/",
 		{ "fileSystem": ["write"] },
 		{"usbDevices": [
             {"vendorId": 1155, "productId": 57105}

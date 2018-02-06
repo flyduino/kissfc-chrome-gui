@@ -1,7 +1,7 @@
 'use strict';
 
 var MIN_CONFIG_VERSION = 108; // this gui can manage versions in this range
-var MAX_CONFIG_VERSION = 109;
+var MAX_CONFIG_VERSION = 110;
 
 function getLanguage(callback) {
     if (typeof chromeSerial !== 'undefined') {
@@ -55,12 +55,11 @@ $(document).ready(function() {
     
     PortHandler.initialize();
     CONTENT.welcome.initialize();
-
-    $('#navigation li').click(function() {
+    $('#navigation li.external').hide();
+    $('#navigation li:not(.external)').click(function() {
         var self = this;
         var content = $(self).attr('data-name');
         
-
             $("#navigation").removeClass("active-menu");
 
             function content_ready() {

@@ -4,6 +4,10 @@ CONTENT.esc_flasher = {
 
 };
 
+var escFirmwares = [];
+var escFirmwareMap = {};
+var escDetected = "";
+
 CONTENT.esc_flasher.initialize = function(callback) {
     var self = this;
     
@@ -45,7 +49,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
             $("#status").html($.i18n("text.esc-flasher-progress", Math.floor(percentage + 0.5)));
             console.log('Sending block ' + (actPage + 1));
             Write(self.pages[actPage]);
-            var timeout = (actPage == (self.pages.length-1) ? 2000 : 500);
+            var timeout = (actPage == (self.pages.length-1) ? 2000 : 100);
             setTimeout(function() { WritePage(actPage-1); }, timeout);
         }
     }
@@ -57,6 +61,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
     function pollEscInfo() {
         if (self.pollEscInfo) {
             $("#escInfoDiv").show();
+          
         
             kissProtocol.send(kissProtocol.GET_INFO, [0x21], function() {
                 var info = kissProtocol.data[kissProtocol.GET_INFO];
@@ -67,17 +72,21 @@ CONTENT.esc_flasher.initialize = function(callback) {
                     $("#escInfoDiv").show();
                     for (var i=0; i<info.escInfoCount; i++) {
                         if (info.escInfo[i] !== undefined) { 
-                            var li = $("<li/>").html((i+1)+": "+$.i18n("text.firmware-version")+" " + info.escInfo[i].type + " " + info.escInfo[i].version + " "+$.i18n("text.sn")+" " + info.escInfo[i].SN);
+                            if (escDetected == "") {
+                                escDetected = info.escInfo[i].type.replace(/\s/g, '').toUpperCase().trim();
+                                console.log("Esc: " + escDetected);
+                            }
+                            var li = $("<li/>").html((i+1)+": " + info.escInfo[i].type + " " + info.escInfo[i].version + " "+$.i18n("text.sn")+" " + info.escInfo[i].SN);
                         } else {
                             var li = $("<li/>").html((i+1)+": --");
                         }
                         $("#escInfo").append(li);
                         if (kissProtocol.data[kissProtocol.GET_SETTINGS].ver>108) {
                             $(".escSettings tbody tr:nth-child("+(i+1)+")").show();
-			    if (info.escInfo[i] !== undefined) {
-				if(info.escInfo[i].Settings[0] == 1) $(".direction").eq(i).prop("checked", true);
-				if(info.escInfo[i].Settings[1] == 1) $(".3d").eq(i).prop("checked", true);
-			    }
+                            if (info.escInfo[i] !== undefined) {
+                                if (info.escInfo[i].Settings[0] == 1) $(".direction").eq(i).prop("checked", true);
+                                if (info.escInfo[i].Settings[1] == 1) $(".3d").eq(i).prop("checked", true);
+                            }
                         }
                     }
                 }
@@ -96,6 +105,12 @@ CONTENT.esc_flasher.initialize = function(callback) {
             $("#escInfoDiv").show();
         }
         
+        var selectedPort = String($('#port').val());
+       
+        if ((selectedPort == KISSFC_WIFI) || (selectedPort == ANDROID_OTG_SERIAL)) {
+            $("#select_file").hide();
+        }
+        
         $(".warning-button").on("click", function() {
             kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
                 $(".esc-flasher-disclaimer").hide();
@@ -107,6 +122,110 @@ CONTENT.esc_flasher.initialize = function(callback) {
         });
     
         $(".esc-flasher-disclaimer").show();
+        
+        $("#fw_version").on("change", function() {
+            var asset = escFirmwareMap[$("#fc_type").val()][$(this).val()];
+            $("#fw_notes").text(asset.info);
+            $("#file_info").html("");
+            $("#flash").hide();
+            $("#status").hide();
+        });
+        
+        $("#fc_type").on("change", function() {
+            if ($(this).val() != null) {
+                console.log("Change for " + $(this).val());
+                var value = escFirmwareMap[$(this).val()];
+                console.log(value);
+                $("#fw_version").empty();
+                $.each(value, function( index, asset ) {
+                    $("#fw_version").append("<option value='"+index+"'>"+asset.release+" ("+ asset.size + " bytes)</option>");
+                });
+                $("#fw_version").trigger("change");
+                $("#file_info").html("");
+                $("#flash").hide();
+                $("#status").hide();
+            };
+        });
+        
+        $("#download_url").on("click", function() {
+            $("#loader2").show();
+            var asset = escFirmwareMap[$("#fc_type").val()][$("#fw_version").val()];
+            var url = asset.url;
+            console.log("Loading "+ url);
+            $("#file_info").html("");
+            $("#flash").hide();
+            $("#status").hide();
+            
+            $.get(url, function(intel_hex) {
+                console.log("Loaded ESC hex file");
+                self.pages = parseBootloaderHexFile(intel_hex);
+
+                $("#loader2").hide();
+                
+                if (self.pages!==undefined) {
+                    console.log("HEX OS OK " + self.pages.length + " blocks loaded");
+                    $("#file_info").html($.i18n("text.esc-flasher-loaded", self.pages.length, url));
+                    $("#flash").show();
+                } else {
+                    console.log("Corrupted esc firmware file");
+                    $("#file_info").html($.i18n("text.esc-flasher-invalid-firmware"));
+                    $("#flash").hide();
+                }
+            });
+        });
+        
+        $("#download_file").on("click", function() {
+           $("#file_info").html("");
+           $("#flash").hide();
+           escFirmwares = [];
+           $("#remote_fw").hide();
+           $("#loader1").show();
+           loadGithubReleases("https://api.github.com/repos/flyduino/kissesc-firmware/releases", function(data) {
+               $("#loader1").hide();
+               console.log("DONE");
+               console.log(data);
+               $("#remote_fw").show();
+               escFirmwareMap = {};
+               $.each(data, function(index, release) {
+                   console.log("Processing firmware: " + release.name);
+                   $.each(release.assets, function(index2, asset) {
+                       if (asset.name.endsWith(".hex")) {
+                           console.log("Processing asset: " + asset.name);
+                           var p = asset.name.indexOf("_");
+                           var board = asset.name.substr(0, p).toUpperCase().trim();
+                           console.log("Board: " + board);
+                           if (escFirmwareMap[board]==undefined) {
+                               escFirmwareMap[board] = [];
+                           }
+                           var file = {
+                                   release: release.name,
+                                   date: release.created_at,
+                                   url: asset.browser_download_url,
+                                   size: asset.size,
+                                   info: release.body
+                           }
+                           escFirmwareMap[board].push(file);
+                       }
+                   });
+                   $("#fc_type").empty();
+                   $("#fw_version").empty();
+                   
+                   $.each(escFirmwareMap, function( board, assets ) {
+                      var add = true;
+                      if (escDetected != "" && board != escDetected) add = false; 
+                      var escBoardNames = {
+                              'KISS32A' : "Kiss Racing 32A ESC",
+                              'KISS24A' : "Kiss Racing 24A ESC",
+                              'KISS16A' : "Kiss AIOv2 ESC",
+                              'KISS8A'  : "Kiss AIOv1 ESC"
+                      };
+                      if (add) $("#fc_type").append("<option value='"+board+"'>"+board+" - " +escBoardNames[board] + "</option>");
+                   });
+                   $("#fc_type").trigger("change");
+               });
+           })
+           
+        });
         
         $("#select_file").on("click", function() {
               if (!$(this).hasClass("disabled")) {
@@ -155,9 +274,12 @@ CONTENT.esc_flasher.initialize = function(callback) {
         $("#flash").on("click", function() {
             if (!$(this).hasClass('disabled')) {
               self.pollEscInfo = false;
-              $("#status").html("");
+            
+              $("#status").show().html("");
               $("#flash").addClass('disabled');
               $("#select_file").addClass('disabled');
+              $("#download_file").addClass('disabled');
+              $("#download_url").addClass('disabled');
               self.flasherAvailable = false;
               console.log('Setting KISS FC to ESC write mode');
               var flasherAvailable = false;
@@ -169,6 +291,8 @@ CONTENT.esc_flasher.initialize = function(callback) {
                     if (self.flasherAvailable) {
                         console.log("Flasher available, lets flash");
                         $("#portArea").children().addClass('flashing-in-progress');
+                        $("#menu").hide();
+                        $(".navigation-menu-button").hide(); // hide menu during flashing
                       WritePage(self.pages.length-1);       
                     } else {
                         console.log('got no answer. check your com port selection and see if you have the lastest KISSFC version.');
@@ -184,6 +308,7 @@ CONTENT.esc_flasher.initialize = function(callback) {
         
         if (GUI.activeContent == 'esc_flasher') {
             // TODO: May be give up after 2 * escCount seconds.
+            escDetected = "";
             if (data.lipoConnected==1) { setTimeout(function() { pollEscInfo(); }, 2000) }
         }
         

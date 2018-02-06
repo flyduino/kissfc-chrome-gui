@@ -33,6 +33,9 @@ CONTENT.welcome.initialize = function(callback) {
         if (canDFU()) checkDFU();
         
         $("#language").val($.i18n.locale);
+        $("#portArea").show();
+        $('#menu').show();
+        $(".navigation-menu-button").css("display","");
         
         $("#language").on("change", function() {
            var lang = $(this).val();

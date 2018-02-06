@@ -152,7 +152,7 @@ CONTENT.configuration.initialize = function(callback) {
     };
 
     function htmlLoaded(data) {
-        validateBounds('#content input[type="text"]');
+        validateBounds('#content input[type="number"]');
         var settingsFilled = 0;
         
         console.log("RECEIVED:");
@@ -179,19 +179,25 @@ CONTENT.configuration.initialize = function(callback) {
             $('#aux6').hide();
             $('#aux7').hide();
         }
-	if(data['ver'] < 109){
-		$("select[name='outputMode'] option[value='6']").remove();
-		$("select[name='outputMode'] option[value='7']").remove();
-		$("select[name='lpf'] option[value='7']").remove();
-	}else{
+        if (data['ver'] < 109){
+            $("select[name='outputMode'] option[value='6']").remove();
+            $("select[name='outputMode'] option[value='7']").remove();
+            $("select[name='lpf'] option[value='7']").remove();
+        } else {
 		kissProtocol.send(kissProtocol.GET_INFO, [0x21], function(){
 			var info = kissProtocol.data[kissProtocol.GET_INFO];
 			var FCinfo = info.firmvareVersion.split(/-/g);
+
 			if(FCinfo[0].length < 7 || info.firmvareVersion.indexOf("KISSFC") == -1){
 				$("select[name='outputMode'] option[value='6']").remove();
 			}
 			if(FCinfo[0].length < 9 || info.firmvareVersion.indexOf("KISSFC") == -1){
 				$("select[name='outputMode'] option[value='7']").remove();
+			}
+			if (FCinfo[0]=='KISSFCV2F7') {
+			    $("li[data-name='fc_flasher']").show();
+			} else {
+			    $("li[data-name='fc_flasher']").remove();
 			}
 		});
 	}
@@ -365,6 +371,7 @@ CONTENT.configuration.initialize = function(callback) {
         $('tr.level input').eq(1).val(data['A_I']);
         $('tr.level input').eq(2).val(data['A_D']);
         $('tr.level input').eq(3).val(Math.round(data['maxAng']));
+        
         for (var i = 0; i < 4; i++) {
             $('tr.level input').eq(i).on('input', function() {
                 contentChange();
@@ -408,14 +415,39 @@ CONTENT.configuration.initialize = function(callback) {
             change: function() { contentChange(); },
             value: data['AUX'][7]
         });
-        if(data['ver'] < 109){
-		$('select[name="lpf"]').val(data['LPF']);
-	}else{
-		if(data['LPF'] == data['DLpF'] && data['LPF'] == data['yawLpF']){
-			$('select[name="lpf"]').val(data['LPF']);
-		}else{
-			$('select[name="lpf"]').val(7);
-		}
+        
+        if (data['ver'] > 108) {
+            $("#aux8").kissAux({ name: $.i18n("column.turtle-mode"),    
+                change: function() { contentChange(); },
+                value: data['AUX'][8]
+            });
+        } else {
+            $("#aux8").hide();
+        }
+        
+        if (data['ver'] > 109) {
+            $("#aux9").kissAux({ name: $.i18n("column.runcam"),    
+                change: function() { contentChange(); },
+                value: data['AUX'][9]
+            });
+            $("#aux10").kissAux({ name: $.i18n("column.led-brightness"),    
+                change: function() { contentChange(); },
+                value: data['AUX'][10],
+                knob: true
+            });
+        } else {
+            $("#aux9").hide();
+            $("#aux10").hide();
+        }
+        
+        if (data['ver'] < 109) {
+            $('select[name="lpf"]').val(data['LPF']);
+        } else {
+            if (data['LPF'] == data['DLpF'] && data['LPF'] == data['yawLpF']){
+                $('select[name="lpf"]').val(data['LPF']);
+            } else {
+                $('select[name="lpf"]').val(7);
+            }
 	}
         $('select[name="lpf"]').on('change', function() {
             contentChange();
@@ -428,10 +460,17 @@ CONTENT.configuration.initialize = function(callback) {
         }
         
         if (data.lipoConnected==1) {
-            $(".unsafe").prop('disabled', true).addClass("unsafe_active");
+            $(".unsafe").addClass("unsafe_active");
         } else {
-            $(".unsafe").prop('disabled', false).removeClass("unsafe_active");
+            $(".unsafe").removeClass("unsafe_active");
         }
+        $(".unsafe_active").prop('disabled', true);
+        
+//        $("input,select").on("change", function() {
+//            contentChange(); 
+//        });
+        
+        
            
         if (data['ver']>MAX_CONFIG_VERSION) {
             $("#navigation").hide();
@@ -537,14 +576,14 @@ CONTENT.configuration.initialize = function(callback) {
             data['A_D'] = parseFloat($('tr.level input').eq(2).val());
             data['maxAng'] = parseFloat($('tr.level input').eq(3).val());
 	    
-	    if(data['ver'] < 109){
-		data['LPF'] = parseInt($('select[name="lpf"]').val());
-	    }else{
-		if(parseInt($('select[name="lpf"]').val()) != 7){
-			data['LPF'] = parseInt($('select[name="lpf"]').val());
-			data['yawLpF'] = parseInt($('select[name="lpf"]').val());
-			data['DLpF'] = parseInt($('select[name="lpf"]').val());
-		}
+            if (data['ver'] < 109){
+               data['LPF'] = parseInt($('select[name="lpf"]').val());
+            } else {
+                if (parseInt($('select[name="lpf"]').val()) != 7) {
+                    data['LPF'] = parseInt($('select[name="lpf"]').val());
+                    data['yawLpF'] = parseInt($('select[name="lpf"]').val());
+                    data['DLpF'] = parseInt($('select[name="lpf"]').val());
+                }
             }
             
             data['AUX'][0]=$("#aux0").kissAux('value');
@@ -556,8 +595,14 @@ CONTENT.configuration.initialize = function(callback) {
             data['AUX'][6]=$("#aux6").kissAux('value');
             data['AUX'][7]=$("#aux7").kissAux('value');
             
-            console.log("SENT:");
-            console.log(data);
+            if (data['ver'] >108) {
+                data['AUX'][8]=$("#aux8").kissAux('value');
+            }
+            
+            if (data['ver'] >109) {
+                data['AUX'][9]=$("#aux9").kissAux('value');
+                data['AUX'][10]=$("#aux10").kissAux('value');
+            }
         }
         settingsFilled = 1;
 

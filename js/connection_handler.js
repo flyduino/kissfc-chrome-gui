@@ -1,56 +1,44 @@
 'use strict';
 
+var bootTimeout;
+
+var kissProtocolHandler = function(info) {
+    kissProtocol.read(info);
+}
+
 $(document).ready(function() {
     $('#portArea a.connect').click(function() {
-        if (GUI.connectLock != true) {
-            var clicks = $(this).data('clicks');
             var selectedPort = String($('#port').val());
+          
+            var bootloaderDetected = false;
 
             if (selectedPort != '0') {
-
-                if ((selectedPort == KISSFC_WIFI) || (selectedPort == ANDROID_OTG_SERIAL)) {
-                    $("li[data-name='esc_flasher']").hide();
+                
+                if (selectedPort == KISSFC_WIFI) {
+                    $("li[data-name='wifi']").show();
                 } else {
-                    $("li[data-name='esc_flasher']").show();
+                    $("li[data-name='wifi']").hide();
                 }
 
-                if (!clicks) {
+                if (GUI.state == "CONNECT") {
+                    GUI.switchToConnecting();
                     console.log('Connecting to: ' + selectedPort);
-
                     GUI.connectingTo = selectedPort;
-
-                    // lock port select while we are connecting / connected
-                    $('#port').prop('disabled', true);
-                    $('a.connect').text($.i18n("menu.connecting"));
-
                     serialDevice = getSerialDriverForPort(selectedPort);
-
                     serialDevice.connect(selectedPort, {
                         bitrate : 115200
                     }, connected);
-
                 } else {
+                    GUI.switchToConnect();
                     GUI.timeoutKillAll();
                     GUI.intervalKillAll();
                     GUI.contentSwitchCleanup();
                     GUI.contentSwitchInProgress = false;
-
+                    kissProtocol.removePendingRequests();
                     serialDevice.disconnect(function() {
                         kissProtocol.disconnectCleanup();
                         disconnected();
                         GUI.connectedTo = false;
-
-                        // unlock port select
-                        $('#port').prop('disabled', false);
-
-                        // reset connect / disconnect button
-                        $('a.connect').text($.i18n('menu.connect'));
-                        $('a.connect').removeClass('active');
-
-                        $('#navigation li:not([data-name="welcome"])').removeClass('unlocked');
-                        $('#navigation').show();
-                        $("li[data-name='esc_flasher']").show();
-
                         if (GUI.activeContent != 'firmware') {
                             $('#content').empty();
                             // load welcome content
@@ -58,15 +46,11 @@ $(document).ready(function() {
                         }
                     });
                 }
-
-                $(this).data("clicks", !clicks);
             }
-        }
     });
 
     function connected(openInfo) {
         if (openInfo) {
-
             // update connectedTo
             GUI.connectedTo = GUI.connectingTo;
 
@@ -93,38 +77,48 @@ $(document).ready(function() {
                 });
             }
 
-            $('a.connect').text($.i18n("menu.disconnect")).addClass('active');
-
+            GUI.switchToDisconnect();
+            
+            var bootloaderListener = function(info) {
+                serialDevice.onReceive.removeListener(bootloaderListener);
+                if (info.data.byteLength>0) {
+                    var view = new Uint8Array(info.data);
+                    if (view.length==5) {
+                        if (view[0]==81 && view[1]==255 && view[2]==255 && view[3]==125) {
+                            // todo: Check for proper loader
+                            if (view[4] != 0) {
+                                clearTimeout(bootTimeout);
+                                $("#portArea").children().addClass('flashing-in-progress');
+                                $("#menu").hide();
+                                $(".navigation-menu-button").hide(); // hide menu during flashing
+                                CONTENT.fc_flasher.initialize();
+                            }    
+                        }
+                    }
+                }
+            } 
+            
+            serialDevice.onReceive.addListener(bootloaderListener);
+            serialDevice.onReceive.addListener(kissProtocolHandler);
             kissProtocol.init();
-
-            // start reading
-            serialDevice.onReceive.addListener(function(info) {
-                kissProtocol.read(info);
+            
+            var bootloaderCheck = [81,255,255,125,0];
+            var bufferOut = new ArrayBuffer(bootloaderCheck.length);
+            var bufferView = new Uint8Array(bufferOut);
+            bufferView.set(bootloaderCheck, 0);    
+            serialDevice.send(bufferOut, function(a) {
+                console.log("Bootloader check has een sent");
             });
-
-            CONTENT.configuration.initialize();
-
-            // TODO disconnect after 10 seconds with error if we don't get valid
-            // data
-
-            // GUI.timeoutAdd('connecting', function () {
-            // console.log('Error: Config not received, closing connection...');
-            // $('a.connect').trigger('click');
-            // }, 10000);
-
-            // unlock navigation
-            $('#navigation li').addClass('unlocked');
+            
+            var bootTimeout = function() {
+                serialDevice.onReceive.removeListener(bootloaderListener);
+                CONTENT.configuration.initialize();
+            }
+            
+            bootTimeout = setTimeout(bootTimeout, 250); // bootloader response in 250ms
         } else {
             console.log('Failed to open serial port');
-
-            $('a.connect').text($.i18n("menu.connect"));
-            $('a.connect').removeClass('active');
-
-            // unlock port select
-            $('#port').prop('disabled', false);
-
-            // reset data
-            $('a.connect').data("clicks", false);
+            GUI.switchToConnect();
         }
     }
 

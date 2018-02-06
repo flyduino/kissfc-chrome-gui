@@ -1,5 +1,12 @@
 'use strict';
 
+var KISS_WIFI_ADDRESS="192.168.4.1";
+
+$.get("http://kiss.local/", function(data) {
+    KISS_WIFI_ADDRESS="kiss.local";
+    $("#wifi").attr("href", "http://kiss.local/");
+})
+
 var websocketSerial = {
     request:         null,
     bytesReceived:   0,
@@ -53,18 +60,16 @@ var websocketSerial = {
             binary : false
         };
         self.request = request;
-        
-        var ws1 = new WebSocket("ws://kiss.fc:81/");
-        ws1.onopen = function() {
+        var url = "ws://"+KISS_WIFI_ADDRESS+":81/";
+        console.log("Connecting to " + url);
+        var ws1 = new WebSocket(url);
+            ws1.onopen = function() {
             self.onConnect(self, ws1);
         };
-        
-        if (typeof androidOTGSerial === 'undefined') {
-            var ws2 = new WebSocket("ws://kiss.local:81/");
-            ws2.onopen = function() {
-                self.onConnect(self, ws2);
-            };
-         }
+        ws1.onerror = function(e) {
+            console.log("Connection ERROR occured");
+            GUI.switchToConnect();
+        };    
     },
     disconnect: function (callback) {
         var self = this;

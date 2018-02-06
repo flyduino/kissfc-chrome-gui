@@ -277,6 +277,12 @@
             var data = pluginData(self);
             data.rate = newValue;
         },
+        reset: function() {
+            var data = pluginData($(this));
+            data.model.rotation.x = -Math.PI/2;
+            data.model.rotation.y = 0;
+            data.model.rotation.z = -Math.PI/2;
+        },
         refresh: function() {
             var data = pluginData($(this));
             data.model.rotateOnAxis(AXIS.roll, data.rate.roll);

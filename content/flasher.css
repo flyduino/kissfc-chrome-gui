@@ -31,3 +31,32 @@
 .flasher .hidden {
 	display: none;
 }
+
+#fc_type, #fw_version {
+	width: 250px;
+}
+
+#fw_notes {
+	width: 100%;
+	height: 200px;
+	overflow: scroll;
+	background-color: #eee;
+	color: black;
+}
+
+#remote_fw label {
+	display: block;
+    margin-bottom: 5px;
+    color: #e09338;
+}
+
+.flasher .loader {
+	width: 16px;
+	height: 16px;
+    margin-left: 4px;
+    position: relative;
+    top: 4px;
+    display: visible;
+    margin-top: -4px;
+    display: none;
+} 

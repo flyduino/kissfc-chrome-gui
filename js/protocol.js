@@ -17,7 +17,9 @@ var kissProtocol = {
     GET_SETTINGS:   0x30,
     SET_SETTINGS:   0x10,
     MOTOR_TEST:     0x11,
-    SET_ESC_SETTINGS:   0x12,
+    SET_ESC_SETTINGS: 0x12,
+    GET_NOTCH:      0x4F,
+    SET_NOTCH:      0x50,
 
     block:                  false,
     ready:                  false,
@@ -91,7 +93,7 @@ kissProtocol.read = function (readInfo) {
                     break;
                 case 3:
                     // calculate crc, if crc matches -> process data, otherwise log an crc error
-                    console.log("Calculated crc: " + (Math.floor(this.packetCrc / this.packetCrcCounter)) + " real: " + data[i] + " crc2: " + this.packetCrc2);
+                    //console.log("Calculated crc: " + (Math.floor(this.packetCrc / this.packetCrcCounter)) + " real: " + data[i] + " crc2: " + this.packetCrc2);
                     
                     if ((Math.floor(this.packetCrc / this.packetCrcCounter) == data[i]) || (this.packetCrc2 == data[i])) {
                         if (this.data[this.processingRequest.code]) {
@@ -150,9 +152,12 @@ kissProtocol.init = function() {
     this.ready = false;
 }
 
+kissProtocol.removePendingRequests = function() {
+    this.requests = [];
+}
+
 kissProtocol.clearPendingRequests = function(callback) {
      if (this.requests.length>0) {
-         console.log('.');
          setTimeout(function() {
             kissProtocol.clearPendingRequests(callback);             
          }, 100);
@@ -213,6 +218,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.ESC_Telemetrie4 = [];
                 obj.ESC_Telemetrie5 = [];
                 obj.ESC_TelemetrieStats = [];
+                obj.adaptiveFilter = 0;
             }
 
             obj.RXcommands[0] = 1000 + ((data.getInt16(0, 0) / 1000) * 1000);
@@ -411,7 +417,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.isActive = data.getUint8(102);
                 obj.actKey = 0;
             }
-            if(obj.ver > 101){
+   
                 obj.CustomTPAInfluence = data.getUint8(103);
                 obj.TPABP1 = data.getUint8(104);
                 obj.TPABP2 = data.getUint8(105);
@@ -427,7 +433,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.voltgePercent1 = data.getUint8(117);
                 obj.voltgePercent2 = data.getUint8(118);
                 obj.voltgePercent3 = data.getUint8(119);
-            }
+            
             obj.loggerConfig = 0;
             obj.vtxChannel = 32;
             obj.vbatAlarm = 0;
@@ -435,11 +441,9 @@ kissProtocol.processPacket = function (code, obj) {
             obj.mahAlarm = 0;
             obj.lipoConnected = 0;
             
-            if (obj.ver > 102){
+
                 obj.vtxChannel = data.getUint8(120);
                 obj.loggerConfig = data.getUint8(121);
-            } 
-            if (obj.ver > 103){
                 obj.RGB[0] = data.getUint8(122);
                 obj.RGB[1] = data.getUint8(123);
                 obj.RGB[2] = data.getUint8(124);
@@ -455,8 +459,8 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.lapTimerTransponderId = data.getUint16(135, 0);
 
                 obj.loggerDebugVariables =  data.getUint8(137);
-            } 
-            if (obj.ver > 104){
+     
+   
                 obj.NFE[0] = data.getUint8(138);
                 obj.NFCF[0] = data.getUint16(139, 0);
                 obj.NFCO[0] = data.getUint16(141, 0);
@@ -466,8 +470,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.NFCO[1] = data.getUint16(146, 0);
                 
                 obj.YawCfilter = data.getUint8(148);
-            }
-            if (obj.ver > 106){
+
                 obj.vtxType = data.getUint8(149);
                 obj.vtxPowerLow = data.getUint16(150, 0);
                 obj.vtxPowerHigh = data.getUint16(152, 0);
@@ -483,15 +486,23 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.DB[2] = data.getUint8(162, 0);
                 
                 obj.motorBuzzer = data.getUint8(163, 0);
-            }
+    
             if (obj.ver > 108){
                 obj.loopTimeDivider = data.getUint8(164, 0);
                 obj.yawLpF = data.getUint8(165, 0);
                 obj.DLpF = data.getUint8(166, 0);
                 obj.reverseMotors = data.getUint8(167, 0);
+                obj.AUX[8] = data.getUint8(168, 0);
+                obj.adaptiveFilter = data.getUint8(169, 0);
             }
             
-            kissProtocol.upgradeTo104(obj);
+            if (obj.ver > 109){
+                obj.AUX[9] = data.getUint8(170, 0);
+                obj.AUX[10] = data.getUint8(171, 0);
+                obj.ledBrightness = data.getUint8(172, 0);
+                var tmp =  data.getUint8(173, 0);
+            }
+
             } catch (Exception) {
                 console.log("Exception while reading packet");
             }
@@ -500,6 +511,10 @@ kissProtocol.processPacket = function (code, obj) {
         case this.SET_SETTINGS:
             console.log('Settings saved');
             break;
+            
+        case this.SET_NOTCH:
+            console.log('Notch saved');
+            break;    
             
         case this.MOTOR_TEST:
             console.log('Motor test');
@@ -545,6 +560,8 @@ kissProtocol.processPacket = function (code, obj) {
                            info.type='KISS 24A';
                        } else if (type == 5) {
                            info.type='KISS 24 Ultralite';
+                       } else if (type == 7) {
+                           info.type='KISS 32A';
                        }
 		       if(data.byteLength/6 > 15){ // check if we got the new protocol
 				for(var r=0; r < 4; r++) info.Settings[r] = data.getUint8(p++);
@@ -578,9 +595,6 @@ kissProtocol.preparePacket = function (code, obj) {
     switch (code) {
         case this.SET_SETTINGS:
         
-            kissProtocol.downgradeFrom104(obj);
-            
-            //console.log(obj);
         
             data.setUint16(0, obj.G_P[0] * 1000, 0);
             data.setUint16(2, obj.G_P[1] * 1000, 0);
@@ -644,9 +658,9 @@ kissProtocol.preparePacket = function (code, obj) {
             data.setUint16(84, obj.TPA[2] * 1000, 0);
             data.setUint8(86, obj.ESConeshot42,0);
             data.setUint8(87, obj.failsaveseconds,0);
-            blen=88;
+          
 
-            if (obj.ver > 100){
+     
                 if (!obj.isActive) {
                     console.log('The controller is not activated, let activate it with ' + obj.actKey);
                     data.setUint16(88, obj.actKey>>16,0);
@@ -657,10 +671,6 @@ kissProtocol.preparePacket = function (code, obj) {
                     data.setUint16(90, 0, 0);
                 }
                 data.setUint8(92, obj.BoardRotation, 0);
-                blen=93;
-            }
-
-            if (obj.ver > 101){
                 data.setUint8(93, obj.CustomTPAInfluence);
                 data.setUint8(94, obj.TPABP1);
                 data.setUint8(95, obj.TPABP2);
@@ -675,15 +685,8 @@ kissProtocol.preparePacket = function (code, obj) {
                 data.setUint8(107, obj.voltgePercent1);
                 data.setUint8(108, obj.voltgePercent2);
                 data.setUint8(109, obj.voltgePercent3);
-                blen=110;
-            }
-            if (obj.ver > 102) {
                 data.setUint8(110, obj.vtxChannel);
                 data.setUint8(111, obj.loggerConfig);
-                blen=112;
-            }
-
-            if (obj.ver > 103) {
                 data.setUint8(112, obj.RGB[0]);
                 data.setUint8(113, obj.RGB[1]);
                 data.setUint8(114, obj.RGB[2]);
@@ -695,23 +698,13 @@ kissProtocol.preparePacket = function (code, obj) {
                 data.setUint8(124, obj.lapTimerTypeAndInterface);
                 data.setUint16(125, obj.lapTimerTransponderId, 0);
                 data.setUint8(127, obj.loggerDebugVariables);
-                
-                blen=136;
-            }
-            if (obj.ver > 104) {
                 data.setUint8(128, obj.NFE[0]);
                 data.setUint16(129, obj.NFCF[0],0);
                 data.setUint16(131, obj.NFCO[0],0);
-                
                 data.setUint8(133, obj.NFE[1]);
                 data.setUint16(134, obj.NFCF[1],0);
                 data.setUint16(136, obj.NFCO[1],0);
-                
                 data.setUint8(138, obj.YawCfilter);
-            
-                blen=147;
-            }
-            if (obj.ver > 106) {
                 data.setUint8(139, obj.vtxType);
                 data.setUint16(140, obj.vtxPowerLow,0);
                 data.setUint16(142, obj.vtxPowerHigh,0);
@@ -728,15 +721,38 @@ kissProtocol.preparePacket = function (code, obj) {
                 data.setUint8(152, obj.motorBuzzer);
                 
                 blen=161;
-            }
-	     if (obj.ver > 108) {
-			data.setUint8(153, obj.loopTimeDivider);
-			data.setUint8(154, obj.yawLpF);
-		    data.setUint8(155, obj.DLpF);
-		    data.setUint8(156, obj.reverseMotors);
-			blen=165;
-	     }
+            
+                if (obj.ver > 108) {
+                    data.setUint8(153, obj.loopTimeDivider);
+                    data.setUint8(154, obj.yawLpF);
+                    data.setUint8(155, obj.DLpF);
+                    data.setUint8(156, obj.reverseMotors);
+                    data.setUint8(157, obj.AUX[8]); // turtle mode
+                    data.setUint8(158, obj.adaptiveFilter); // adaptive filter
+                    blen=167;
+                }
+                
+                if (obj.ver > 109) {
+                    data.setUint8(159, obj.AUX[9]); // runcam
+                    data.setUint8(160, obj.AUX[10]); // led brightness
+                    data.setUint8(161, obj.ledBrightness);  // max brightness
+                    var tmp = 0;
+                    data.setUint8(162, tmp); 
+                    blen=171;
+                }
             break;
+            
+            case this.SET_NOTCH:
+                var x=0;
+                for (var i=0; i<3; i++) {
+                    for (var j=0; j<10; j++) {
+                        data.setUint16(x, obj.superNotch[i][j][0], 0);
+                        data.setUint16(x+2, obj.superNotch[i][j][1], 0);
+                        x+=4;
+                    }
+                }
+                blen=2*2*10*3;
+            break;  
             
           case this.MOTOR_TEST:
                    data.setUint8(0, obj.motorTestEnabled, 0);
@@ -801,7 +817,7 @@ kissProtocol.preparePacket = function (code, obj) {
         outputU8[outputU8.length - 1] = crc & 0xFF; 
     }
     
-    console.log("Calculated crc: " + outputU8[outputU8.length - 1]);
+    //console.log("Calculated crc: " + outputU8[outputU8.length - 1]);
 
     return outputU8;
 };
@@ -860,7 +876,7 @@ kissProtocol.upgradeTo104 = function(tmp) {
         var bo = +tmp['BoardRotation'];
         console.log('Board Rotation: ' + bo);
         tmp['CBO'] = [0, 0, 0];
-        tmp['AUX'] = [0, 0, 0, 0, 0];
+        tmp['AUX'] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
         if (bo==4) tmp['CBO'][2]=45;
         else if (bo==2) tmp['CBO'][2]=90;
         else if (bo==5) tmp['CBO'][2]=135;
