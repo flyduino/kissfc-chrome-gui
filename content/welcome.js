@@ -14,6 +14,7 @@ CONTENT.welcome.initialize = function(callback) {
     }
 
     function checkDFU() {
+	if (dfuDetector) {
         chrome.usb.getDevices(usbDevices.STM32DFU, function(result) {
             if (result.length) {
                 GUI.contentSwitchInProgress = true;
@@ -27,9 +28,13 @@ CONTENT.welcome.initialize = function(callback) {
                 }
             }
         });
+	} else {
+	    setTimeout(checkDFU, 2000);
+	}
     }
     
     function htmlLoaded() {
+	dfuDetector = true;
         if (canDFU()) checkDFU();
         
         $("#language").val($.i18n.locale);

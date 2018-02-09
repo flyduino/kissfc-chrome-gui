@@ -7,6 +7,8 @@ var usbDevices = {
     }
 };
 
+
+var dfuDetector = true;
 var firmwares = [];
 var firmwareMap = {};
 
@@ -29,6 +31,7 @@ CONTENT.flasher.initialize = function(callback) {
     });
 
     function checkDFU() {
+	if (dfuDetector) {
        chrome.usb.getDevices(usbDevices.STM32DFU, function(result) {
             if (result.length == 0) {
                 $("#portArea").children().removeClass('flashing-in-progress');
@@ -42,9 +45,13 @@ CONTENT.flasher.initialize = function(callback) {
                     setTimeout(checkDFU, 2000);
             }
         });
+	} else {
+	    setTimeout(checkDFU, 2000);
+	}
     }
 
     function htmlLoaded() {
+	dfuDetector=true;
         $("#portArea").children().addClass('flashing-in-progress');
         $("a.navigation-menu-button").hide();
         $("#navigation").hide();
@@ -202,7 +209,8 @@ CONTENT.flasher.initialize = function(callback) {
                 $("#download_url").addClass('disabled');
                 
                 $("#status").html("Removing device protection");
-                self.success = false;
+                dfuDetector = false; 
+		self.success = false;
                 STM32DFU.connect(usbDevices.STM32DFU, self.parsed_hex, {
                     read_unprotect : true,
                     event_handler : function(event) {
@@ -226,6 +234,7 @@ CONTENT.flasher.initialize = function(callback) {
                                 }
                             }
                         }, function() {
+			    dfuDetector = true;
                             $("#flash").removeClass('disabled');
                             $("#select_file").removeClass('disabled');
                             $("#download_file").removeClass('disabled');
