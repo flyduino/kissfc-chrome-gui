@@ -65,7 +65,7 @@ CONTENT.configuration.initialize = function(callback) {
                             } else {
                                 return v;
                             }
-                        });
+                        }, 2);
                         var blob = new Blob([json], {
                             type: 'text/plain'
                         });
