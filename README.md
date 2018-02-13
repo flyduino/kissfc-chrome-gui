@@ -1,3 +1,4 @@
-# kissfc-chrome-gui
-Kiss FC GUI
+# kiss-gui
+
+Kiss GUI
 
