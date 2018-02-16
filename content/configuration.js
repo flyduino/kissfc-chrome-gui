@@ -259,6 +259,18 @@ CONTENT.configuration.initialize = function(callback) {
             var val = parseInt($(this).val());
             contentChange();
             if (val==0) $(".tricopter").show(); else $(".tricopter").hide();
+	    if (val == 7 || val == 8){
+		if(val != 8){
+		    $("#aux11 > dt").text($.i18n("column.PentaForward"));
+		}else{
+		    $("#aux11 > dt").text($.i18n("column.PentaHover"));
+		}
+		$("#aux11").show(); 
+		$('input[name="3dMode"]').prop('disabled', true);
+	    }else{
+		$("#aux11").hide();
+		$('input[name="3dMode"]').prop('disabled', false);
+	    }
             $('.mixerPreview img').attr('src', './images/mixer/' + val +(data['reverseMotors']==0?'':'inv')+".png");
         });
 
@@ -441,24 +453,23 @@ CONTENT.configuration.initialize = function(callback) {
             $("#aux9").hide();
             $("#aux10").hide();
         }
-        if (data['ver'] > 110 && (data['CopterType'] == 7 || data['CopterType'] == 8)) {
-	    if(data['CopterType'] == 7){
+        if (data['ver'] > 110) {
+	    if(data['CopterType'] != 8){
 		    $("#aux11").kissAux({ name: $.i18n("column.PentaForward"),    
 			change: function() { contentChange(); },
 			value: data['AUX'][11],
 			knobOnly: true
 		    });
-	    }
-	    if(data['CopterType'] == 8){
+	    }else{
 		    $("#aux11").kissAux({ name: $.i18n("column.PentaHover"),    
 			change: function() { contentChange(); },
 			value: data['AUX'][11],
 			knobOnly: true
 		    });
 	    }
-        } else {
-            $("#aux11").hide();
-        }
+	}
+	if(data['CopterType'] == 7 || data['CopterType'] == 8) $("#aux11").show();
+        else $("#aux11").hide();
 	
 	
 	
@@ -561,6 +572,7 @@ CONTENT.configuration.initialize = function(callback) {
                 data['ESConeshot42'] = 0;
            
             data['Active3DMode'] = parseInt($('input[name="3dMode"]').prop('checked') ? 1 : 0);
+	    if( data['CopterType'] == 7 ||  data['CopterType'] == 8) data['Active3DMode'] = 0;
             data['failsaveseconds'] = parseInt($('input[name="failsaveseconds"]').val());
             data['BoardRotation'] = 0;
 
