@@ -246,6 +246,8 @@ CONTENT.configuration.initialize = function(callback) {
             name: $.i18n("mixer.6")
 	}, {
             name: $.i18n("mixer.7")
+        }, {
+            name: $.i18n("mixer.8")
         }];
 
         var mixer_list_e = $('select.mixer');
@@ -439,6 +441,28 @@ CONTENT.configuration.initialize = function(callback) {
             $("#aux9").hide();
             $("#aux10").hide();
         }
+        if (data['ver'] > 110 && (data['CopterType'] == 7 || data['CopterType'] == 8)) {
+	    if(data['CopterType'] == 7){
+		    $("#aux11").kissAux({ name: $.i18n("column.PentaForward"),    
+			change: function() { contentChange(); },
+			value: data['AUX'][11],
+			knobOnly: true
+		    });
+	    }
+	    if(data['CopterType'] == 8){
+		    $("#aux11").kissAux({ name: $.i18n("column.PentaHover"),    
+			change: function() { contentChange(); },
+			value: data['AUX'][11],
+			knobOnly: true
+		    });
+	    }
+        } else {
+            $("#aux11").hide();
+        }
+	
+	
+	
+	
         
         if (data['ver'] < 109) {
             $('select[name="lpf"]').val(data['LPF']);
@@ -603,6 +627,10 @@ CONTENT.configuration.initialize = function(callback) {
                 data['AUX'][9]=$("#aux9").kissAux('value');
                 data['AUX'][10]=$("#aux10").kissAux('value');
             }
+	    
+	    if (data['ver'] > 110 && (data['CopterType'] == 7 || data['CopterType'] == 8)) {
+		data['AUX'][11]=$("#aux11").kissAux('value');
+	    }
         }
         settingsFilled = 1;
 

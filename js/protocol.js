@@ -502,6 +502,9 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.ledBrightness = data.getUint8(172, 0);
                 var tmp =  data.getUint8(173, 0);
             }
+            if (obj.ver > 110){
+                obj.AUX[11] = data.getUint8(174, 0);
+            }
 
             } catch (Exception) {
                 console.log("Exception while reading packet");
@@ -740,6 +743,10 @@ kissProtocol.preparePacket = function (code, obj) {
                     data.setUint8(162, tmp); 
                     blen=171;
                 }
+		if (obj.ver > 110){
+		    data.setUint8(163, obj.AUX[11]); //pentathrottle
+	            blen=172;
+	        }
             break;
             
             case this.SET_NOTCH:
