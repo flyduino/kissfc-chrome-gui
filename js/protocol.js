@@ -504,6 +504,7 @@ kissProtocol.processPacket = function (code, obj) {
             }
             if (obj.ver > 110){
                 obj.AUX[11] = data.getUint8(174, 0);
+		obj.setpointIntoD = data.getUint8(175, 0);
             }
 
             } catch (Exception) {
@@ -745,7 +746,8 @@ kissProtocol.preparePacket = function (code, obj) {
                 }
 		if (obj.ver > 110){
 		    data.setUint8(163, obj.AUX[11]); //pentathrottle
-	            blen=172;
+		    data.setUint8(164, obj.setpointIntoD); 
+	            blen=173;
 	        }
             break;
             
