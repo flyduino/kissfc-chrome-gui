@@ -164,6 +164,12 @@ CONTENT.configuration.initialize = function(callback) {
             kissProtocol.send(kissProtocol.GET_INFO, [0x21], function() {
                 var info = kissProtocol.data[kissProtocol.GET_INFO];
                 $('#version').text(info.firmvareVersion);
+		if((data['CopterType'] == 7 || data['CopterType'] == 8) && (info.firmvareVersion.indexOf("KISSFC") != -1 && info.firmvareVersion.indexOf("F7") == -1)){
+		    $('#pentaNoteFC').show();
+		}
+		if((data['CopterType'] == 7 || data['CopterType'] == 8) && (info.firmvareVersion.indexOf("KISSCC") != -1)){
+		    $('#pentaNoteCC').show();
+		}
             });
 
 
