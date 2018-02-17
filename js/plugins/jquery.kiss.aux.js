@@ -15,6 +15,9 @@
                 c+='<option value="2">AUX2</option>';
                 c+='<option value="3">AUX3</option>';
                 c+='<option value="4">AUX4</option>';
+                c+='<option value="5">AUX5</option>';
+                c+='<option value="6">AUX6</option>';
+                c+='<option value="7">AUX7</option>';
                 c+='</select><select class="kiss-aux-mode unsafe">';
 		c+='<option value="0" data-i18n="aux.0">--</option>';
 		if (data.knobOnly) c+='<option value="6" data-i18n="aux.6">Knob</option>';

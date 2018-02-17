@@ -309,6 +309,11 @@ kissProtocol.processPacket = function (code, obj) {
             obj.ESC_TelemetrieStats[3] = data.getInt16(148, 0);
             obj.ESC_TelemetrieStats[4] = data.getInt16(150, 0);
             obj.ESC_TelemetrieStats[5] = data.getInt16(152, 0);
+	    
+	    obj.RXcommands[8] = 1500 + ((data.getInt16(154, 0) / 1000) * 500);
+	    obj.RXcommands[9] = 1500 + ((data.getInt16(156, 0) / 1000) * 500);
+	    obj.RXcommands[10] = 1500 + ((data.getInt16(158, 0) / 1000) * 500);
+	    
             break;
         case this.GET_SETTINGS:
             if (!obj.G_P) {
