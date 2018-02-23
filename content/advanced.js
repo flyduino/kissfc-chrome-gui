@@ -47,6 +47,16 @@ CONTENT.advanced.initialize = function(callback) {
             $("#AdaptiveFilter").hide();
             $("#ledBrightness").hide();
         }
+	if (data['ver'] > 110 && (data['CopterType'] == 7 || data['CopterType'] == 8)) {
+		$("#reverseMotorsTitle").removeAttr("data-i18n"); // needs to be done clean
+		$("#reverseMotorsTitle").text("Foward Motors 3D use");
+		$("#reverseMotorsText").removeAttr("data-i18n"); 
+		$("#reverseMotorsText").text("Use Forward Motors for bidirectional thrust");
+	}
+	if (data['ver'] > 110){
+		$('input[name="SID"]').removeAttr("disabled");
+		$('input[name="SID"]').val(data['setpointIntoD']);
+	}
    
         if (data['loggerConfig'] > 0 && data['loggerConfig'] < 11)
             $("#loggerDebug").show();
@@ -379,6 +389,7 @@ CONTENT.advanced.initialize = function(callback) {
             data['yawLpF'] = parseInt($('select[name="yawlpf"]').val());
             data['DLpF'] = parseInt($('select[name="Dlpf"]').val());
             data['LPF'] = parseInt($('select[name="mainlpf"]').val());
+	    data['setpointIntoD'] = parseInt($('input[name="SID"]').val());
             
             if ($('input[name="motorBuzzer"]').prop('checked') ? 1 : 0 == 1) {
                 data['motorBuzzer'] = 1;

@@ -15,14 +15,20 @@
                 c+='<option value="2">AUX2</option>';
                 c+='<option value="3">AUX3</option>';
                 c+='<option value="4">AUX4</option>';
+                c+='<option value="5">AUX5</option>';
+                c+='<option value="6">AUX6</option>';
+                c+='<option value="7">AUX7</option>';
                 c+='</select><select class="kiss-aux-mode unsafe">';
-                c+='<option value="0" data-i18n="aux.0">--</option>';
-                c+='<option value="1" data-i18n="aux.1">Low</option>';
-                c+='<option value="2" data-i18n="aux.2">Low + Medium</option>';
-                c+='<option value="3" data-i18n="aux.3">Medium</option>';
-                c+='<option value="4" data-i18n="aux.4">Medium + High</option>';
-                c+='<option value="5" data-i18n="aux.5">High</option>';
-                if (data.knob) c+='<option value="6" data-i18n="aux.6">Knob</option>';
+		c+='<option value="0" data-i18n="aux.0">--</option>';
+		if (data.knobOnly) c+='<option value="6" data-i18n="aux.6">Knob</option>';
+		else{
+			c+='<option value="1" data-i18n="aux.1">Low</option>';
+			c+='<option value="2" data-i18n="aux.2">Low + Medium</option>';
+			c+='<option value="3" data-i18n="aux.3">Medium</option>';
+			c+='<option value="4" data-i18n="aux.4">Medium + High</option>';
+			c+='<option value="5" data-i18n="aux.5">High</option>';
+			if (data.knob) c+='<option value="6" data-i18n="aux.6">Knob</option>';
+		}
                 c+='</select></dd>'; 
     			self.append(c);
     			  

@@ -40,9 +40,9 @@
 		</div>
 		
 		<div id="reverseMotors" class="wrapper-full">
-			<div class="groupTitle" data-i18n="title.reverse-motors">Yaw control direction</div>
+			<div class="groupTitle" id="reverseMotorsTitle" data-i18n="title.reverse-motors">Yaw control direction</div>
 			<dl class="general-settings">
-				<dt style="width:280px"><input class="unsafe" type="checkbox" name="reverseMotors" /> &nbsp;<span data-i18n="column.reverse-motors" style="width:200px">Reverse yaw control direction</span></dt>
+				<dt style="width:280px"><input class="unsafe" type="checkbox" name="reverseMotors" /> &nbsp;<span data-i18n="column.reverse-motors" style="width:200px" id="reverseMotorsText">Reverse yaw control direction</span></dt>
 			</dl>
 		</div>
 		
@@ -256,23 +256,12 @@
 
 	<div class="wrapper-half">
 
-		<div id="bat" class="wrapper-full">
-			<div class="groupTitle" data-i18n="title.lipo-alarm">Lipo alarm</div>
+		<div id="setpointintod" class="wrapper-full">
+			<div class="groupTitle">Setpoint weight in Dterm</div>
 			<dl class="general-settings">
-				<dt title="low battery alarm" style="width:180px" data-i18n="column.lipo-volts">Voltage is less than </dt>
-				<dd>
-					<input type="number" lang="en-150" step="0.1" name="vbatAlarm" data-step="0.1"
-						min="0" max="26" data-precision="1" value="0.0" /><input
-						type="hidden" name="vbatAlarm" id="vbatAlarm" value="" />
-				</dd>
-			</dl>
-			<dl class="general-settings">
-				<dt title="mah alarm" style="width:180px" data-i18n="column.lipo-mah">Consumption is greater than </dt>
-				<dd>
-					<input type="number" lang="en-150" step="1" name="mahAlarm" data-step="1"
-						min="0" max="24000" data-precision="0" value="0" /><input
-						type="hidden" name="mahAlarm" id="mahAlarm" value="" />
-				</dd>
+				<dt style="width:180px;"><span>Setpoint weight (%)</span>&nbsp;</dt>
+					<input disabled="true" type="number" lang="en-150" step="1" name="SID" data-step="1"
+					min="0" max="100" data-precision="0" value="100" />
 			</dl>
 		</div>
 		
@@ -374,7 +363,25 @@
 						</select>
 			</dl>
 		</div>
-
+		<div id="bat" class="wrapper-full">
+			<div class="groupTitle" data-i18n="title.lipo-alarm">Lipo alarm</div>
+			<dl class="general-settings">
+				<dt title="low battery alarm" style="width:180px" data-i18n="column.lipo-volts">Voltage is less than </dt>
+				<dd>
+					<input type="number" lang="en-150" step="0.1" name="vbatAlarm" data-step="0.1"
+						min="0" max="26" data-precision="1" value="0.0" /><input
+						type="hidden" name="vbatAlarm" id="vbatAlarm" value="" />
+				</dd>
+			</dl>
+			<dl class="general-settings">
+				<dt title="mah alarm" style="width:180px" data-i18n="column.lipo-mah">Consumption is greater than </dt>
+				<dd>
+					<input type="number" lang="en-150" step="1" name="mahAlarm" data-step="1"
+						min="0" max="24000" data-precision="0" value="0" /><input
+						type="hidden" name="mahAlarm" id="mahAlarm" value="" />
+				</dd>
+			</dl>
+		</div>
 	</div>
 	
 </div>

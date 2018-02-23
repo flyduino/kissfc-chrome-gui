@@ -64,7 +64,7 @@ CONTENT.data_output.initialize = function (callback) {
 
     function htmlLoaded() {
         // generate receiver bars
-        var receiverNames = [$.i18n('column.throttle'), $.i18n('column.roll'), $.i18n('column.pitch'), $.i18n('column.yaw'), 'Aux 1', 'Aux 2', 'Aux 3', 'Aux 4'];
+        var receiverNames = [$.i18n('column.throttle'), $.i18n('column.roll'), $.i18n('column.pitch'), $.i18n('column.yaw'), 'Aux 1', 'Aux 2', 'Aux 3', 'Aux 4', 'Aux 5', 'Aux 6', 'Aux 7'];
         var receiverContainer = $('.data_output .receiver .bars');
         var receiverFillArray = [];
         var receiverLabelArray = [];

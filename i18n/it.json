@@ -122,6 +122,8 @@
     "mixer.4": "Y6",
     "mixer.5": "Hexacopter Plus",
     "mixer.6": "Hexacopter X",
+    "mixer.7": "P3+2 Hover",
+    "mixer.8": "P3+2 Forward",
 
     "aux.0": "--",
     "aux.1": "Low",

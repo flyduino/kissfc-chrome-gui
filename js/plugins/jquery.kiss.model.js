@@ -55,6 +55,16 @@
             arms: 6,
             rotation: -Math.PI / 6,
             colors: [0, 0, 1, 1, 1, 1]
+	}, {
+            name: 'Penta 3+2 hover',
+            arms: 3,
+            rotation: -Math.PI / 3,
+            colors: [0, 0, 1]
+        }, {
+            name: 'Penta 3+2 forward',
+            arms: 3,
+            rotation: -Math.PI / 3,
+            colors: [0, 0, 1]
         }];
 
     var privateMethods = {

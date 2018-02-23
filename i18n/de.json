@@ -112,6 +112,8 @@
 	"mixer.4": "Y6",
 	"mixer.5": "Hexakopter Plus",
 	"mixer.6": "Hexakopter X",
+	"mixer.7": "P3+2 Hover",
+	"mixer.8": "P3+2 Forward",
 	"aux.0": "--", 
 	"aux.1": "Niedrig",
 	"aux.2": "Niedrig + Mitte",
@@ -371,5 +373,7 @@
 	"column.runcam": "Runcam split",
 	"column.led-brightness": "Brightness",
 	"menu.fc-flasher":"FC Flasher",
+	"column.PentaHover":"Hover",
+	"column.PentaForward":"Forward",
 	"text.fc-type" : "FC type"
 }

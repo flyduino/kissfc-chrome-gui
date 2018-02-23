@@ -309,6 +309,11 @@ kissProtocol.processPacket = function (code, obj) {
             obj.ESC_TelemetrieStats[3] = data.getInt16(148, 0);
             obj.ESC_TelemetrieStats[4] = data.getInt16(150, 0);
             obj.ESC_TelemetrieStats[5] = data.getInt16(152, 0);
+	    
+	    obj.RXcommands[8] = 1500 + ((data.getInt16(154, 0) / 1000) * 500);
+	    obj.RXcommands[9] = 1500 + ((data.getInt16(156, 0) / 1000) * 500);
+	    obj.RXcommands[10] = 1500 + ((data.getInt16(158, 0) / 1000) * 500);
+	    
             break;
         case this.GET_SETTINGS:
             if (!obj.G_P) {
@@ -501,6 +506,10 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.AUX[10] = data.getUint8(171, 0);
                 obj.ledBrightness = data.getUint8(172, 0);
                 var tmp =  data.getUint8(173, 0);
+            }
+            if (obj.ver > 110){
+                obj.AUX[11] = data.getUint8(174, 0);
+		obj.setpointIntoD = data.getUint8(175, 0);
             }
 
             } catch (Exception) {
@@ -740,6 +749,11 @@ kissProtocol.preparePacket = function (code, obj) {
                     data.setUint8(162, tmp); 
                     blen=171;
                 }
+		if (obj.ver > 110){
+		    data.setUint8(163, obj.AUX[11]); //pentathrottle
+		    data.setUint8(164, obj.setpointIntoD); 
+	            blen=173;
+	        }
             break;
             
             case this.SET_NOTCH:

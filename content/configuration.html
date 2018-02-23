@@ -4,13 +4,15 @@
         <select class="mixer unsafe" name="mixer">
             <!-- auto generated -->
         </select>
-        <div class="mixerPreview">
+        <div class="mixerPreview"> 
             <img class="mixer-image" src="./images/mixer/0.png" />
+	   <div id="pentaNoteFC" style="display:none; margin-left:60px; margin-top:-40px; position:absolute;color:#FF4444;">NOTE:<br/>On the KISSFC v1 PWM5 is mapped <br/>on PWM6 when Dshot is active!</div>
+	   <div id="pentaNoteCC" style="display:none; margin-left:60px; margin-top:-40px; position:absolute;color:#FF4444;">NOTE:<br/>On the KISSCC PWM5 is on SPI Pin MO if Dshot is used <br/>else its on SPI MI</div>
         </div>
         <div class="groupTitle" data-i18n="title.receiver">Receiver</div>
         <select class="rxType unsafe">
             <option value="0" style="display:none" data-i18n="rx-type.0">Autodetect</option>
-            <option value="1" data-i18n="rx-type.1">4-6 single Channel</option>
+            <option value="1" style="display:none" data-i18n="rx-type.1">4-6 single Channel</option>
             <option value="2" title="Gr. SumO & Deltang RX" data-i18n="rx-type.2">PPM:Thr.,Roll,Pitch,Yaw</option>
             <option value="3" title="OrangeRX" data-i18n="rx-type.3">PPM:Pitch,Thr.,Roll,Yaw</option>
             <option value="4" data-i18n="rx-type.4">PPM:Thr.,Pitch,Yaw,Roll</option>
@@ -175,6 +177,7 @@
     
     <div class="wrapper-narrow">
         <div class="groupTitle" data-i18n="title.aux-functions">AUX Functions</div>
+       <dl id="aux11"></dl>
         <dl id="aux0"></dl>
         <dl id="aux1"></dl>
         <dl id="aux4"></dl>
@@ -190,7 +193,7 @@
     </div>    
     
      <div class="wrapper-narrow">
-    <div class="groupTitle" data-i18n="title.filter">Filter</div>
+    <div class="groupTitle" data-i18n="title.filter" style="margin-top:20px;">Filter</div>
        	<dl>
         <dt data-i18n="column.lpf-frequency">LPF FRQ</dt>
             <dd>
