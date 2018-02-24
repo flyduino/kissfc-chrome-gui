@@ -10,6 +10,7 @@
     which we missed, this might create some problems.
 */
 
+var usedVersion = 0;
 var kissProtocol = {
     GET_TELEMETRY:  0x20,
     GET_INFO:       0x21,
@@ -310,10 +311,11 @@ kissProtocol.processPacket = function (code, obj) {
             obj.ESC_TelemetrieStats[4] = data.getInt16(150, 0);
             obj.ESC_TelemetrieStats[5] = data.getInt16(152, 0);
 	    
-	    obj.RXcommands[8] = 1500 + ((data.getInt16(154, 0) / 1000) * 500);
-	    obj.RXcommands[9] = 1500 + ((data.getInt16(156, 0) / 1000) * 500);
-	    obj.RXcommands[10] = 1500 + ((data.getInt16(158, 0) / 1000) * 500);
-	    
+	    if (usedVersion > 110){
+		    obj.RXcommands[8] = 1500 + ((data.getInt16(154, 0) / 1000) * 500);
+		    obj.RXcommands[9] = 1500 + ((data.getInt16(156, 0) / 1000) * 500);
+		    obj.RXcommands[10] = 1500 + ((data.getInt16(158, 0) / 1000) * 500);
+	    }
             break;
         case this.GET_SETTINGS:
             if (!obj.G_P) {
@@ -366,6 +368,7 @@ kissProtocol.processPacket = function (code, obj) {
             obj.RPY_Curve[1] = data.getInt16(42, 0) / 1000;
             obj.RPY_Curve[2] = data.getInt16(44, 0) / 1000;
             obj.ver = data.getUint8(92);
+	    usedVersion = obj.ver;
             
             
             try {
