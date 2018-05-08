@@ -4,7 +4,7 @@ CONTENT.tpa = {
 
 };
 
-CONTENT.tpa.initialize = function(callback) {
+CONTENT.tpa.initialize = function (callback) {
     var self = this;
 
     self.startedUIupdate = 0;
@@ -12,11 +12,11 @@ CONTENT.tpa.initialize = function(callback) {
     self.settingsFilled = 0;
     self.hasInput = false;
 
-    GUI.switchContent('tpa', function() {
-        kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
+    GUI.switchContent('tpa', function () {
+        kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
             self.settingsFilled = 1;
-            GUI.load("./content/tpa.html", function() {
-                  htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
+            GUI.load("./content/tpa.html", function () {
+                htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
             });
         });
     });
@@ -28,47 +28,47 @@ CONTENT.tpa.initialize = function(callback) {
         var rowNames = ['roll', 'pitch', 'yaw'];
         var precision = [2, 3, 2];
         var breakpoints = [
-              { throttle:   0, influence: 30},
-              { throttle:  30, influence: 0},
-              { throttle:  50, influence: 0},
-              { throttle: 100, influence: 100 }];    
+            { throttle: 0, influence: 30 },
+            { throttle: 30, influence: 0 },
+            { throttle: 50, influence: 0 },
+            { throttle: 100, influence: 100 }];
         if ($('input[name="UCTI"]').prop('checked')) {
             breakpoints = [
-              { throttle: 0,                                       influence: parseInt($('input[name="BPI1"]').val())},
-              { throttle: parseInt($('input[name="BP1"]').val()), influence: parseInt($('input[name="BPI2"]').val())},
-              { throttle: parseInt($('input[name="BP2"]').val()), influence: parseInt($('input[name="BPI3"]').val())},
-              { throttle: 100,                                       influence: parseInt($('input[name="BPI4"]').val())}];
+                { throttle: 0, influence: parseInt($('input[name="BPI1"]').val()) },
+                { throttle: parseInt($('input[name="BP1"]').val()), influence: parseInt($('input[name="BPI2"]').val()) },
+                { throttle: parseInt($('input[name="BP2"]').val()), influence: parseInt($('input[name="BPI3"]').val()) },
+                { throttle: 100, influence: parseInt($('input[name="BPI4"]').val()) }];
         }
-        
+
         var vPIDc = 1;
         if ($('input[name="UVPID"]').prop('checked')) {
             var useVoltage = parseFloat($("#simulatedVoltage").val());
             var IV = [parseFloat($('input[name="LV1"]').val()), parseFloat($('input[name="LV2"]').val()), parseFloat($('input[name="LV3"]').val())];
             var IVP = [parseInt($('input[name="LVP1"]').val()), parseInt($('input[name="LVP2"]').val()), parseInt($('input[name="LVP3"]').val())];
             var useRangeFactor = 0;
-            if (useVoltage < IV[0]) vPIDc = IVP[0]/100;
-            else if(useVoltage < IV[1]){
-                useRangeFactor = 1/(IV[1]-IV[0])*(useVoltage-IV[0]);
-                vPIDc = (IVP[0]/100)*(1-useRangeFactor)+(IVP[1]/100)*useRangeFactor;
-            } else if(useVoltage < IV[2]){
-                useRangeFactor = 1/(IV[2]-IV[1])*(useVoltage-IV[1]);
-                vPIDc = (IVP[1]/100)*(1-useRangeFactor)+(IVP[2]/100)*useRangeFactor;
-            } else vPIDc = IVP[2]/100;
+            if (useVoltage < IV[0]) vPIDc = IVP[0] / 100;
+            else if (useVoltage < IV[1]) {
+                useRangeFactor = 1 / (IV[1] - IV[0]) * (useVoltage - IV[0]);
+                vPIDc = (IVP[0] / 100) * (1 - useRangeFactor) + (IVP[1] / 100) * useRangeFactor;
+            } else if (useVoltage < IV[2]) {
+                useRangeFactor = 1 / (IV[2] - IV[1]) * (useVoltage - IV[1]);
+                vPIDc = (IVP[1] / 100) * (1 - useRangeFactor) + (IVP[2] / 100) * useRangeFactor;
+            } else vPIDc = IVP[2] / 100;
         }
-      
-        var tmp = vPIDc*100;
-        $("#simulatedBatteryInfluence").text(tmp.toFixed(0)+'%');
-        
+
+        var tmp = vPIDc * 100;
+        $("#simulatedBatteryInfluence").text(tmp.toFixed(0) + '%');
+
         $("#tpa_chart").kissTPAChart('setBreakpoints', breakpoints);
         var influence = $("#tpa_chart").kissTPAChart('getInfluence');
-        var tpa = [ parseFloat($('tr.TPA input').eq(0).val()), parseFloat($('tr.TPA input').eq(1).val()), parseFloat($('tr.TPA input').eq(2).val()) ];
+        var tpa = [parseFloat($('tr.TPA input').eq(0).val()), parseFloat($('tr.TPA input').eq(1).val()), parseFloat($('tr.TPA input').eq(2).val())];
         for (var x = 0; x < 3; x++) {
-            for (var a = 0; a<3; a++) {
+            for (var a = 0; a < 3; a++) {
                 var pid = parseFloat($('tr.' + rowNames[x] + ' input').eq(a).val());
-                pid = pid*(1-tpa[a]*influence)*vPIDc;
-                var s = ""+pid.toFixed(precision[a]);
-                s=s.replace("." , ",");
-                $('tr.' + rowNames[x] + ' td').eq(4+a).children().first().text(s);
+                pid = pid * (1 - tpa[a] * influence) * vPIDc;
+                var s = "" + pid.toFixed(precision[a]);
+                s = s.replace(".", ",");
+                $('tr.' + rowNames[x] + ' td').eq(4 + a).children().first().text(s);
             }
         }
     }
@@ -85,8 +85,8 @@ CONTENT.tpa.initialize = function(callback) {
         window.clearTimeout(self.updateTimeout);
 
         validateBounds('.tpa input[type="number"]');
-        
-        if (data['ver']>108) {
+
+        if (data['ver'] > 108) {
             $('.voltage_influence').hide();
         }
 
@@ -108,15 +108,15 @@ CONTENT.tpa.initialize = function(callback) {
             ');
         }
 
-        $('.meter .fill', receiverContainer).each(function() {
+        $('.meter .fill', receiverContainer).each(function () {
             receiverFillArray.push($(this));
         });
 
-        $('.meter', receiverContainer).each(function() {
+        $('.meter', receiverContainer).each(function () {
             receiverLabelArray.push($('.label', this));
         });
 
-        self.barResize = function() {
+        self.barResize = function () {
             var containerWidth = $('.meter:first', receiverContainer).width(),
                 labelWidth = $('.meter .label:first', receiverContainer).width(),
                 margin = (containerWidth / 2) - (labelWidth / 2);
@@ -136,15 +136,15 @@ CONTENT.tpa.initialize = function(callback) {
         };
 
 
-       
+
 
         function grabData() {
-             // pid and rates
+            // pid and rates
             // roll
             data['G_P'][0] = parseFloat($('tr.roll input').eq(0).val());
             data['G_I'][0] = parseFloat($('tr.roll input').eq(1).val());
             data['G_D'][0] = parseFloat($('tr.roll input').eq(2).val());
-           
+
             // pitch
             data['G_P'][1] = parseFloat($('tr.pitch input').eq(0).val());
             data['G_I'][1] = parseFloat($('tr.pitch input').eq(1).val());
@@ -179,10 +179,10 @@ CONTENT.tpa.initialize = function(callback) {
 
         function updateUI() {
             var telem = kissProtocol.data[kissProtocol.GET_TELEMETRY];
-            
-          
+
+
             if (!telem) {
-                if (GUI.activeContent == 'tpa') self.updateTimeout = window.setTimeout(function() {
+                if (GUI.activeContent == 'tpa') self.updateTimeout = window.setTimeout(function () {
                     updateUI();
                 }, 5);
                 return;
@@ -201,7 +201,7 @@ CONTENT.tpa.initialize = function(callback) {
 
             var midscale = 1.5;
 
-            if (GUI.activeContent == 'tpa') self.updateTimeout = window.setTimeout(function() {
+            if (GUI.activeContent == 'tpa') self.updateTimeout = window.setTimeout(function () {
                 fastDataPoll();
             }, 50);
         }
@@ -210,7 +210,7 @@ CONTENT.tpa.initialize = function(callback) {
         $(window).on('resize', self.resizeCanvas).resize();
 
         function fastDataPoll() {
-            kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function() {
+            kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
                 if (GUI.activeContent == 'tpa') {
                     if (self.startedUIupdate == 0) {
                         updateUI();
@@ -224,9 +224,9 @@ CONTENT.tpa.initialize = function(callback) {
         $('tr.roll input').eq(0).val(data['G_P'][0]);
         $('tr.roll input').eq(1).val(data['G_I'][0]);
         $('tr.roll input').eq(2).val(data['G_D'][0]);
-        
+
         for (var i = 0; i < 3; i++) {
-            $('tr.roll input').eq(i).on('input', function() {
+            $('tr.roll input').eq(i).on('input', function () {
                 contentChange(true);
             });
         }
@@ -236,7 +236,7 @@ CONTENT.tpa.initialize = function(callback) {
         $('tr.pitch input').eq(1).val(data['G_I'][1]);
         $('tr.pitch input').eq(2).val(data['G_D'][1]);
         for (var i = 0; i < 3; i++) {
-            $('tr.pitch input').eq(i).on('input', function() {
+            $('tr.pitch input').eq(i).on('input', function () {
                 contentChange(true);
             });
         }
@@ -246,21 +246,21 @@ CONTENT.tpa.initialize = function(callback) {
         $('tr.yaw input').eq(1).val(data['G_I'][2]);
         $('tr.yaw input').eq(2).val(data['G_D'][2]);
         for (var i = 0; i < 3; i++) {
-            $('tr.yaw input').eq(i).on('input', function() {
+            $('tr.yaw input').eq(i).on('input', function () {
                 contentChange(true);
             });
         }
-        
+
         $('tr.TPA input').eq(0).val(data['TPA'][0]);
         $('tr.TPA input').eq(1).val(data['TPA'][1]);
         $('tr.TPA input').eq(2).val(data['TPA'][2]);
         for (var i = 0; i < 3; i++) {
-            $('tr.TPA input').eq(i).on('input', function() {
+            $('tr.TPA input').eq(i).on('input', function () {
                 contentChange(true);
             });
         }
-        
-        $('input[name="UCTI"]').on('change', function() {
+
+        $('input[name="UCTI"]').on('change', function () {
             contentChange(true);
             if (parseInt($('input[name="UCTI"]').prop('checked') ? 1 : 0) == 1) {
                 $('input[name^="BP"]').removeAttr("disabled");
@@ -279,53 +279,53 @@ CONTENT.tpa.initialize = function(callback) {
         $('input[name="BPI2"]').val(data['TPABPI2']);
         $('input[name="BPI3"]').val(data['TPABPI3']);
         $('input[name="BPI4"]').val(data['TPABPI4']);
-        
-        
-        if (data['ver']<109) {
 
-        $('input[name="UVPID"]').on('change', function() {
-            contentChange(true);
-            if (parseInt($('input[name="UVPID"]').prop('checked') ? 1 : 0) == 1) {
-                $('input[name^="LV"]').removeAttr("disabled");
-            } else {
-                $('input[name^="LV"]').attr('disabled', 'true');
-            }
-        });
 
-        $('input[name="UVPID"]').prop('checked', data['BatteryInfluence']);
-        if (data['BatteryInfluence']) {
-            $('input[name^="LV"]').removeAttr("disabled");
-        }
-        $('input[name="LV1"]').val(data['voltage1']);
-        $('input[name="LV2"]').val(data['voltage2']);
-        $('input[name="LV3"]').val(data['voltage3']);
-        $('input[name="LVP1"]').val(data['voltgePercent1']);
-        $('input[name="LVP2"]').val(data['voltgePercent2']);
-        $('input[name="LVP3"]').val(data['voltgePercent3']);
+        if (data['ver'] < 109) {
 
-        if (data['BatteryInfluence'] || data['CustomTPAInfluence']) {
-            document.body.style.overflow = "scroll";
-        }
-        
-        $('input[name^="BP"]').on("input", function() {
-             contentChange(true);
-        });
-        
-        $('input[name^="LV"]').on("input", function() {
+            $('input[name="UVPID"]').on('change', function () {
                 contentChange(true);
-        });
-        
-        $('#simulatedVoltage').on('change', function() {
-            contentChange(false);
-        });
+                if (parseInt($('input[name="UVPID"]').prop('checked') ? 1 : 0) == 1) {
+                    $('input[name^="LV"]').removeAttr("disabled");
+                } else {
+                    $('input[name^="LV"]').attr('disabled', 'true');
+                }
+            });
+
+            $('input[name="UVPID"]').prop('checked', data['BatteryInfluence']);
+            if (data['BatteryInfluence']) {
+                $('input[name^="LV"]').removeAttr("disabled");
+            }
+            $('input[name="LV1"]').val(data['voltage1']);
+            $('input[name="LV2"]').val(data['voltage2']);
+            $('input[name="LV3"]').val(data['voltage3']);
+            $('input[name="LVP1"]').val(data['voltgePercent1']);
+            $('input[name="LVP2"]').val(data['voltgePercent2']);
+            $('input[name="LVP3"]').val(data['voltgePercent3']);
+
+            if (data['BatteryInfluence'] || data['CustomTPAInfluence']) {
+                document.body.style.overflow = "scroll";
+            }
+
+            $('input[name^="BP"]').on("input", function () {
+                contentChange(true);
+            });
+
+            $('input[name^="LV"]').on("input", function () {
+                contentChange(true);
+            });
+
+            $('#simulatedVoltage').on('change', function () {
+                contentChange(false);
+            });
         }
         $('#tpa_chart').kissTPAChart();
-        
+
         $(window).on('resize', self.resizeChart).resize();
-     
+
         fastDataPoll();
 
-        $('#save').click(function() {
+        $('#save').click(function () {
             grabData();
             $('#save').removeClass("saveAct");
             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
@@ -334,13 +334,13 @@ CONTENT.tpa.initialize = function(callback) {
 };
 
 
-CONTENT.tpa.resizeChart = function() {
+CONTENT.tpa.resizeChart = function () {
     var wrapper = $('#charts');
     console.log("resize chart");
-    $('#tpa_chart').kissTPAChart('resize', {width: wrapper.width() });
+    $('#tpa_chart').kissTPAChart('resize', { width: wrapper.width() });
 }
 
-CONTENT.tpa.cleanup = function(callback) {
+CONTENT.tpa.cleanup = function (callback) {
     $(window).off('resize', this.barResize);
     $(window).off('resize', this.resizeChart);
     window.clearTimeout(this.updateTimeout);

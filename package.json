@@ -1,10 +1,15 @@
 {
-  "name": "KISS GUI",
+  "name": "KISS-GUI",
   "main": "main.html",
-  "version": "2.0.2",
+  "version": "2.0.7",
   "single-instance": true,
+  "scripts": {
+    "start": "node node_modules/gulp/bin/gulp.js debug",
+    "buildall": "node node_modules/gulp/bin/gulp.js release --osx64 --win32 --win64 --linux64 --linux32 --chromeos"
+  },
   "window": {
     "title": "KISS GUI",
+    "icon": "images/icon_128.png",
     "width": 900,
     "height": 670,
     "min_width": 900,
@@ -12,10 +17,42 @@
     "fullscreen": false,
     "resizable": true,
     "toolbar": true,
-    "frame": true 
+    "frame": true
   },
+  "repository": {
+    "type": "git",
+    "url": "github.com/flyduino/kissfc-chrome-gui"
+  },
+  "author": "Flyduino, Alexander Fedorov & Carsten Wache",
+  "license": "n/a",
   "chromium-args": "--child-clean-exit --enable-webgl --ignore-gpu-blacklist --disable-pinch",
   "webkit": {
     "plugin": true
+  },
+  "dependencies": {
+    "archiver": "^2.0.3",
+    "bluebird": "3.4.1",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-appdmg": "^1.0.3",
+    "gulp-concat": "~2.6.1",
+    "gulp-install": "^1.1.0",
+    "jquery-ui-npm": "1.12.0",
+    "git-rev-sync": "1.12.0",
+    "marked": "^0.3.17",
+    "nw": "^0.25.4-sdk",
+    "nw-builder": "^3.4.1",
+    "os": "^0.1.1",
+    "platform-dependent-modules": "0.0.14",
+    "react-switchery": "1.0.0",
+    "run-sequence": "^2.2.0",
+    "temp": "^0.8.3"
+  },
+  "config": {
+    "platformDependentModules": {
+      "darwin": [
+        "gulp-appdmg@1.0.3"
+      ]
+    }
   }
 }

@@ -3,7 +3,7 @@
 		"authors": [
 			"Alexander Wolf"
 		],
-		"last-updated": "2017-03-21",
+		"last-updated": "2018-06-11",
 		"locale": "de",
 		"message-documentation": "qqq"
 	},
@@ -35,6 +35,9 @@
 	"rx-type.14": "Multiplex SRXL",
 	"rx-type.15": "FrSky S-BUS (n. invertiert)",
 	"rx-type.16": "JR XBus Mode B",
+	"rx-type.17": "TBS CRSF",
+	"rx-type.18": "FrSky F-Port",
+	"rx-type.19": "FrSky F-Port (invertiert)",
 	"title.uav-type": "UAV Typ",
 	"title.receiver": "Empfänger",
 	"title.presets": "Voreinstellung",
@@ -100,7 +103,8 @@
 	"output.old.2": "PWM",
 	"text.fs-mode-sec": "FS. lagemodus Sek.",
 	"text.firmware-version": "Firmware version:",
-	"text.sn": "S/N",
+	"text.sn": "S/N:",
+	"text.eeprom-version": "Eeprom version:",
 	"text.activated": "Aktiviert",
 	"text.not-activated": "Nicht aktiviert",
 	"text.serial-number": "Seriennummer",
@@ -368,12 +372,13 @@
 	"text.release-notes" : "Release notes",
 	"text.esc-type": "ESC type",
 	"button.reset-model": "Reset model",
-	"column.adaptive-filter": "Enable adaptive filter",
-	"title.adaptive-filter": "Adaptive filter",
+	"column.adaptive-filter": "Aktiviere adaptiven Filter",
+	"title.adaptive-filter": "adaptiver Filter",
 	"column.runcam": "Runcam split",
-	"column.led-brightness": "Brightness",
+	"column.led-brightness": "Helligkeit",
 	"menu.fc-flasher":"FC Flasher",
-	"column.PentaHover":"Hover",
-	"column.PentaForward":"Forward",
-	"text.fc-type" : "FC type"
+	"column.PentaHover":"Schweben",
+	"column.PentaForward":"Forwärts",
+	"text.fc-type" : "FC type",
+	"column.setpoint-weight": "Setpoint Gewichtung (%)"
 }

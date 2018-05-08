@@ -3,7 +3,7 @@
 		"authors": [
 			"Motard Geek"
 		],
-		"last-updated": "2017-03-17",
+		"last-updated": "2018-06-11",
 		"locale": "fr",
 		"message-documentation": "qqq"
 	},
@@ -35,6 +35,9 @@
 	"rx-type.14": "Multiplex SRXL",
 	"rx-type.15": "FrSky S-BUS (not inverted)",
 	"rx-type.16": "JR XBus Mode B",
+	"rx-type.17": "TBS CRSF",
+	"rx-type.18": "FrSky F-Port",
+	"rx-type.19": "FrSky F-Port (inverted)",
 	"title.uav-type": "Type de multirotor",
 	"title.receiver": "Récepteur",
 	"title.presets": "Préréglages",
@@ -100,7 +103,8 @@
 	"output.old.2": "PWM",
 	"text.fs-mode-sec": "Stabilisé avant FailSafe",
 	"text.firmware-version": "Version du firmware:",
-	"text.sn": "Numéro de série",
+	"text.sn": "Numéro de série:",
+	"text.eeprom-version": "Version du eeprom:",
 	"text.activated": "Activée",
 	"text.not-activated": "Pas activée",
 	"text.serial-number": "Numéro de série",
@@ -142,20 +146,16 @@
 	"column.debug-fields": "Champs de debug",
 	"column.vtx-type": "Type",
 	"column.vtx-frequency": "Fréquence",
-
-  "column.vtx-low-power": "Puissance basse: (mW)&nbsp;",
+	"column.vtx-low-power": "Puissance basse: (mW)&nbsp;",
 	"column.vtx-high-power": "Puissance haute: (mW)&nbsp;",
-
 	"column.buzzer-emulation": "Émuler avec les moteurs",
 	"column.lap-timer-type": "Type et connexion",
 	"column.lipo-volts": "Tension inférieur à ",
 	"column.lipo-mah": "Consommation supérieure à ",
-
-  "column.led-color": "Couleur:",
+	"column.led-color": "Couleur:",
 	"column.notch-center": "Center Frequency: (Hz)",
 	"column.notch-cutoff": "Cutoff Frequency: (Hz)",
 	"column.yaw-filter-strength": "Puissance du filtre Yaw",
-
 	"serial.0": "OSD",
 	"serial.1": "Logger / 10%",
 	"serial.2": "Logger / 20%",
@@ -238,18 +238,14 @@
 	"led.custom": "Personnalisé",
 	"title.motors": "Moteur",
 	"title.other": "Autre",
-
-	"title.telemetry": "Télémétrie",	
-
-  "button.test": "TEST",
+	"title.telemetry": "Télémétrie",
+	"button.test": "TEST",
 	"button.calibrate-accelerometer": "Calibrer l'accéléromètre",
 	"text.motor-test-button": "JE SAIS CE QUE JE FAIS",
 	"column.mode": "Mode:",
 	"column.status": "Statut:",
 	"column.angle-x": "AngleX:",
-
-  "column.idle": "Inactif:",
-
+	"column.idle": "Inactif:",
 	"column.angle-y": "AngleY:",
 	"column.voltage": "Tension:",
 	"text.acro": "Acro",
@@ -361,25 +357,25 @@
 	"text.fc-flasher-complete": "Flashage terminé!!!",
 	"title.kiss": "KISS Flight Control GUI",
 	"text.connect": "Veuillez conecter la Kiss FC à votre ordinateur et sélectionner le port au dessus.",
-	
-	"title.reverse-motors" : "Sens de l'axe YAW",
-	"column.reverse-motors" : "Inverser le sens de l'axe YAW",
-	"title.esc-settings" : "Réglages ESC KiSS",
-	"column.esc-number" : "ESC",
-	"column.esc-reverse" : "Inverser le sens",
+	"title.reverse-motors": "Sens de l'axe YAW",
+	"column.reverse-motors": "Inverser le sens de l'axe YAW",
+	"title.esc-settings": "Réglages ESC KiSS",
+	"column.esc-number": "ESC",
+	"column.esc-reverse": "Inverser le sens",
 	"column.esc-3dmode": "Mode 3D",
 	"column.turtle-mode": "Mode Tortue",
 	"button.select-remote-firmware": "SELECT REMOTE FIRMWARE",
 	"button.download-firmware": "DOWNLOAD FIRMWARE",
 	"text.flight-controller": "Flight controller",
 	"text.firmware-versions": "Firmware versions",
-	"text.release-notes" : "Release notes",
+	"text.release-notes": "Release notes",
 	"text.esc-type": "ESC type",
 	"button.reset-model": "Reset model",
 	"column.adaptive-filter": "Enable adaptive filter",
 	"title.adaptive-filter": "Adaptive filter",
 	"column.runcam": "Runcam split",
 	"column.led-brightness": "Brightness",
-	"menu.fc-flasher":"FC Flasher",
-	"text.fc-type" : "FC type" 
+	"menu.fc-flasher": "FC Flasher",
+	"text.fc-type": "FC type",
+	"column.setpoint-weight": "Setpoint weight (%)"
 }

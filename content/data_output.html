@@ -1,53 +1,84 @@
 <div class="data_output">
-	<div class="receiver wrapper-narrow">
+    <div class="receiver wrapper-narrow">
         <div class="groupTitle" data-i18n="title.receiver">Receiver</div>
         <div class="bars">
         </div>
     </div>
     <div class="motors wrapper-narrow">
-        <div id="motorTestTitle" class="groupTitle"><span data-i18n="title.motors">Motors</span> <a class="motor-test-button" href="#" style="font-size:11px;" data-i18n="button.test">TEST</a> <input style="display:none" type="checkbox" class="motor-test-enabled"/></div>
+        <div id="motorTestTitle" class="groupTitle">
+            <span data-i18n="title.motors">Motors</span>
+            <a class="motor-test-button" href="#" style="font-size:11px;" data-i18n="button.test">TEST</a>
+            <input style="display:none" type="checkbox" class="motor-test-enabled" />
+        </div>
         <div class="bars">
         </div>
     </div>
     <div class="other wrapper-narrow">
         <div class="groupTitle" data-i18n="title.other">Other</div>
         <table class="otherValues">
-        	<tr><td data-i18n="column.mode">Mode:</td><td id="omode">&nbsp;</td><td data-i18n="column.status">Status:</td><td id="ostatus">&nbsp;</td></tr>
-        	<tr><td data-i18n="column.angle-x">AngleX:</td><td id="oanglex">&nbsp;</td><td data-i18n="column.idle">Idle:</td><td id="idle">&nbsp;</td></tr>
-        	<tr><td data-i18n="column.angle-y">AngleY:</td><td id="oangley">&nbsp;</td><td data-i18n="column.voltage">Voltage:</td><td id="Vbat">&nbsp;</td></tr>
-        	<tr><td colspan="4"><a class="calibrateAccelerometer" href="#" style="font-size:11px;" data-i18n="button.calibrate-accelerometer">Calibrate Accelerometer</a></td></tr>
+            <tr>
+                <td data-i18n="column.mode">Mode:</td>
+                <td id="omode">&nbsp;</td>
+                <td data-i18n="column.status">Status:</td>
+                <td id="ostatus">&nbsp;</td>
+            </tr>
+            <tr>
+                <td data-i18n="column.angle-x">AngleX:</td>
+                <td id="oanglex">&nbsp;</td>
+                <td data-i18n="column.idle">Idle:</td>
+                <td id="idle">&nbsp;</td>
+            </tr>
+            <tr>
+                <td data-i18n="column.angle-y">AngleY:</td>
+                <td id="oangley">&nbsp;</td>
+                <td data-i18n="column.voltage">Voltage:</td>
+                <td id="Vbat">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <a class="calibrateAccelerometer" href="#" style="font-size:11px;" data-i18n="button.calibrate-accelerometer">Calibrate Accelerometer</a>
+                </td>
+            </tr>
         </table>
     </div>
     <div class="clear-both"></div>
     <div class="plot">
-        <div class="groupTitle"><span data-i18n="title.telemetry">Telemetry</span> 
-		<select name="graphTitle" style="position: relative; top:-1px;">
-		    <option value="0" data-i18n="telemetry.0">Gyro &amp; ACC Data</option>
-		</select>
-				
-	</div>
+        <div class="groupTitle">
+            <span data-i18n="title.telemetry">Telemetry</span>
+            <select name="graphTitle" style="position: relative; top:-1px;">
+                <option value="0" data-i18n="telemetry.0">Gyro &amp; ACC Data</option>
+            </select>
+
+        </div>
         <dl class="legend">
-            <dt id="graph1" data-i18n="legend.1">Gyroscope X</dt><dd>&nbsp;</dd>
-            <dt id="graph2" data-i18n="legend.2">Gyroscope Y</dt><dd>&nbsp;</dd>
-            <dt id="graph3" data-i18n="legend.3">Gyroscope Z</dt><dd>&nbsp;</dd>
-            <dt id="graph4" data-i18n="legend.4">Accelerometer X</dt><dd>&nbsp;</dd>
-            <dt id="graph5" data-i18n="legend.5">Accelerometer Y</dt><dd>&nbsp;</dd>
-            <dt id="graph6" data-i18n="legend.6">Accelerometer Z</dt><dd>&nbsp;</dd>
+            <dt id="graph1" data-i18n="legend.1">Gyroscope X</dt>
+            <dd>&nbsp;</dd>
+            <dt id="graph2" data-i18n="legend.2">Gyroscope Y</dt>
+            <dd>&nbsp;</dd>
+            <dt id="graph3" data-i18n="legend.3">Gyroscope Z</dt>
+            <dd>&nbsp;</dd>
+            <dt id="graph4" data-i18n="legend.4">Accelerometer X</dt>
+            <dd>&nbsp;</dd>
+            <dt id="graph5" data-i18n="legend.5">Accelerometer Y</dt>
+            <dd>&nbsp;</dd>
+            <dt id="graph6" data-i18n="legend.6">Accelerometer Z</dt>
+            <dd>&nbsp;</dd>
         </dl>
         <canvas id="graph" width="100" height="190"></canvas>
         <div id="model" class="model_chart"></div>
     </div>
     <div>
-    	<a class="reset_model" href="#" style="font-size:11px;" data-i18n="button.reset-model">Reset model</a>
+        <a class="reset_model" href="#" style="font-size:11px;" data-i18n="button.reset-model">Reset model</a>
     </div>
 </div>
 <div class="motor-test-disclaimer">
-	<div class="motor-test-disclaimer-inner">
-		<div class="warning1" data-i18n="title.warning"></div>
-		<div class="warning2" data-i18n="[html]text.motor-test-warning">		
-		
-		</div>
-		<br/><br/>
-		<a class="warning-button" href="#" data-i18n="text.motor-test-button"></a>
-	</div>
+    <div class="motor-test-disclaimer-inner">
+        <div class="warning1" data-i18n="title.warning"></div>
+        <div class="warning2" data-i18n="[html]text.motor-test-warning">
+
+        </div>
+        <br/>
+        <br/>
+        <a class="warning-button" href="#" data-i18n="text.motor-test-button"></a>
+    </div>
 </div>

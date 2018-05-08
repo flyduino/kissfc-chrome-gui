@@ -55,7 +55,9 @@
     text-align: center;
 }
 .configuration .pid_rates td {
+    width: 60px;
 }
+
 .configuration .pid_rates input {
     width: 60px;
 }
