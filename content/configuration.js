@@ -193,10 +193,10 @@ CONTENT.configuration.initialize = function (callback) {
         document.getElementById('rxexbus1').style.display = "inline";
         document.getElementById('rxsrxl1').style.display = "inline";
         document.getElementById('rxxbusb1').style.display = "inline";
-        if (data['ver'] > 108) {
+        if (data['ver'] >= 109) {
             document.getElementById('rxcrsf1').style.display = "inline";
         }
-        if (data['ver'] > 111) {
+        if (data['ver'] >= 112) {
             document.getElementById('rxfport1').style.display = "inline";
             document.getElementById('rxfport2').style.display = "inline";
 
@@ -284,6 +284,11 @@ CONTENT.configuration.initialize = function (callback) {
         var mixer_list_e = $('select.mixer');
         for (var i = 0; i < mixerList.length; i++) {
             mixer_list_e.append('<option data-i18n="mixer.' + (i) + '" value="' + (i) + '">' + mixerList[i].name + '</option>');
+        }
+
+        if (data["ver"] < 110) {
+            $("select[name='mixer'] option[value='7']").remove();
+            $("select[name='mixer'] option[value='8']").remove();
         }
 
         mixer_list_e.on('change', function () {

@@ -53,7 +53,7 @@ CONTENT.advanced.initialize = function (callback) {
             $("#reverseMotorsText").removeAttr("data-i18n");
             $("#reverseMotorsText").text("Use Forward Motors for bidirectional thrust");
         }
-        if (data['ver'] > 110) {
+        if (data['ver'] >= 111) {
             $('input[name="SID"]').removeAttr("disabled");
             $('input[name="SID"]').val(data['setpointIntoD']);
         }

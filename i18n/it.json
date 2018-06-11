@@ -91,6 +91,8 @@
     "filter.5": "Low",
     "filter.6": "Very Low",
     "filter.7": "Advanced Settings",
+    "output.7": "Dshot 2400",
+	"output.6": "Dshot 1200",
     "output.5": "Dshot 600",
     "output.4": "Dshot 300",
     "output.3": "Dshot 150",
