@@ -1,6 +1,6 @@
 {
   "name": "kiss-gui",
-  "main": "main.html",
+  "main": "start.js",
   "version": "2.0.7",
   "single-instance": true,
   "scripts": {
