@@ -108,7 +108,7 @@ function getRunDebugAppCommand() {
 }
 function get_release_filename(platform, ext) {
     
-    return 'KISS-GUI_' + pkg.version + '_' + platform + '-' + git.short() + '.' + ext;
+    return 'KISS-GUI_' + pkg.version + '_' + platform + '-' + git.branch() + '_' + git.short() + '.' + ext;
 }
 
 // -----------------
