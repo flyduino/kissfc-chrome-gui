@@ -187,6 +187,7 @@ gulp.task('dist', ['clean-dist'], function () {
         './js/websocket_serial.js',
 
         // Tabs
+        './start.js',
         './main.js',
         './content/*.js',
 
