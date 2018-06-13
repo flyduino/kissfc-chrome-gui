@@ -10,8 +10,8 @@
   "window": {
     "title": "KISS GUI",
     "icon": "images/icon_128.png",
-    "min_width": 920,
-    "min_height": 680,
+    "min_width": 900,
+    "min_height": 600,
     "fullscreen": false,
     "resizable": true,
     "toolbar": true,
