@@ -2,3 +2,5 @@
 
 - Add F-Port support
 - Cleanups and bugfixes
+- Backup files are stores human-readable
+- Remember window size and position
