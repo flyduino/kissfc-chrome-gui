@@ -22,7 +22,6 @@
     "url": "github.com/flyduino/kissfc-chrome-gui"
   },
   "author": "Flyduino, Alexander Fedorov & Carsten Wache",
-  "license": "n/a",
   "chromium-args": "--child-clean-exit --enable-webgl --ignore-gpu-blacklist --disable-pinch",
   "webkit": {
     "plugin": true
@@ -31,15 +30,15 @@
     "archiver": "^2.0.3",
     "bluebird": "3.4.1",
     "del": "^3.0.0",
+    "git-rev-sync": "1.12.0",
     "gulp": "^3.9.1",
     "gulp-appdmg": "^1.0.3",
     "gulp-concat": "~2.6.1",
     "gulp-install": "^1.1.0",
     "jquery-ui-npm": "1.12.0",
-    "git-rev-sync": "1.12.0",
     "marked": "^0.3.17",
-    "nw": "^0.25.4-sdk",
-    "nw-builder": "^3.4.1",
+    "nw": "^0.30.2",
+    "nw-builder": "^3.5.4",
     "os": "^0.1.1",
     "platform-dependent-modules": "0.0.14",
     "react-switchery": "1.0.0",
