@@ -65,7 +65,7 @@ CONTENT.configuration.initialize = function (callback) {
                             } else {
                                 return v;
                             }
-                        },2);
+                        }, 2);
                         var blob = new Blob([json], {
                             type: 'text/plain'
                         });
@@ -307,7 +307,7 @@ CONTENT.configuration.initialize = function (callback) {
                 $("#aux11").hide();
                 $('input[name="3dMode"]').prop('disabled', false);
             }
-            $('.mixerPreview img').attr('src', './images/mixer/' + val + (data['reverseMotors'] == 0 ? '' : 'inv') + ".png");
+            UpdateMixerImage(val, data['ESCOutputLayout'], data['reverseMotors']);
         });
 
         // apply configuration values to GUI elements
@@ -520,10 +520,6 @@ CONTENT.configuration.initialize = function (callback) {
         if (data['CopterType'] == 7 || data['CopterType'] == 8) $("#aux11").show();
         else $("#aux11").hide();
 
-
-
-
-
         if (data['ver'] < 109) {
             $('select[name="lpf"]').val(data['LPF']);
         } else {
@@ -533,6 +529,10 @@ CONTENT.configuration.initialize = function (callback) {
                 $('select[name="lpf"]').val(7);
             }
         }
+        $('select[name="lpf"]').on('change', function () {
+            contentChange();
+        });
+
         $('select[name="lpf"]').on('change', function () {
             contentChange();
         });
@@ -554,7 +554,29 @@ CONTENT.configuration.initialize = function (callback) {
         //            contentChange(); 
         //        });
 
+        // Begin Custom ESC Orientation
+        if (data['ver'] >= 113) {
 
+            $('select[name="ESCOutputLayout"]').val(data['ESCOutputLayout']);
+
+            if (data['CopterType'] == 1 || data['CopterType'] == 2) {
+                $('select[name="ESCOutputLayout"]').removeAttr("disabled");
+                $('select[name="ESCOutputLayout"]').val(data['ESCOutputLayout']);
+
+            } else {
+                $('select[name="ESCOutputLayout"]').prop('disabled', 'true');
+                $('select[name="ESCOutputLayout"]').val(0);
+            }
+
+            $('select[name="ESCOutputLayout"]').on('change', function () {
+                contentChange();
+                UpdateMixerImage(data['CopterType'], parseInt($('select[name="ESCOutputLayout"]').val()), data['reverseMotors']);
+
+            }
+            )
+        }
+
+        // END Custom ESC Orientation
 
         if (data['ver'] > MAX_CONFIG_VERSION) {
             $("#navigation").hide();
@@ -692,8 +714,20 @@ CONTENT.configuration.initialize = function (callback) {
             if (data['ver'] > 110 && (data['CopterType'] == 7 || data['CopterType'] == 8)) {
                 data['AUX'][11] = $("#aux11").kissAux('value');
             }
+
+            if (data['ver'] >= 113) {
+                data['ESCOutputLayout'] = parseInt($('select[name="ESCOutputLayout"]').val());
+                console.log('Store ESCOutputLayout:' + data['ESCOutputLayout'] );
+            }
         }
         settingsFilled = 1;
+
+        function UpdateMixerImage(Type, ESCOrientation, Reverse) {
+            if (typeof ESCOrientation == 'undefined') ESCOrientation = 0;
+            console.log("Update Image =" + Type + " - " + ESCOrientation + " - " + Reverse);
+
+            $('.mixerPreview img').attr('src', './images/mixer/' + Type + (ESCOrientation > 0 && (Type == 1 || Type == 2) ? '_' + ESCOrientation : '') + (Reverse == 0 ? '' : '_inv') + ".png");
+        }
 
         function contentChange() {
             if (settingsFilled) {

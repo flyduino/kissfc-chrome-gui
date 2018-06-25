@@ -1,9 +1,29 @@
 <div class="configuration">
     <div class="wrapper-wide">
-        <div class="groupTitle" data-i18n="title.uav-type">UAV Type</div>
-        <select class="mixer unsafe" name="mixer">
-            <!-- auto generated -->
-        </select>
+        <table  style="border: 0px;">
+            <tr>
+                <td width="20%">
+                        <div class="groupTitle" data-i18n="title.uav-type">UAV Type</div>
+                        <select class="mixer unsafe" name="mixer">
+                            <!-- auto generated -->
+                        </select>
+                </td>
+                <td width="40%">
+                        <div class="groupTitle" data-i18n="title.custom-esc-orientation">ESC orientation</div>
+                        <select class="unsafe" disabled="disabled" name="ESCOutputLayout" id="ESCOutputLayout">
+                            <option value="0" data-i18n="escOrientation.0">Default</option>
+                            <option value="1" data-i18n="escOrientation.1">90° CW</option>
+                            <option value="2" data-i18n="escOrientation.2">90° CCW</option>
+                            <option value="3" data-i18n="escOrientation.3">180° CW/CCW</option>
+                            <option value="4" data-i18n="escOrientation.4">Upside-Down</option>
+                            <option value="5" data-i18n="escOrientation.5">Upside-Down 90° CW</option>
+                            <option value="6" data-i18n="escOrientation.6">Upside-Down 90° CCW</option>
+                            <option value="7" data-i18n="escOrientation.7">Upside-Down 180° CW/CCW</option>
+                        </select>
+                </td>
+            </tr>
+        </table>
+
         <div class="mixerPreview">
             <img class="mixer-image" src="./images/mixer/0.png" />
             <div id="pentaNoteFC" style="display:none; margin-left:60px; margin-top:-40px; position:absolute;color:#FF4444;">NOTE:
@@ -13,6 +33,7 @@
                 <br/>On the KISSCC PWM5 is on SPI Pin MO if Dshot is used
                 <br/>else its on SPI MI</div>
         </div>
+
         <div class="groupTitle" data-i18n="title.receiver">Receiver</div>
         <select class="rxType unsafe">
             <option value="0" style="display:none" data-i18n="rx-type.0" id="rxauto">Autodetect</option>

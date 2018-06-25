@@ -338,6 +338,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.NFCO = [];
                 obj.ver = 0;
                 obj.reverseMotors = 0;
+                obj.ESCOutputLayout = 0;
             }
 
             obj.G_P[0] = data.getUint16(0, 0) / 1000;
@@ -515,7 +516,7 @@ kissProtocol.processPacket = function (code, obj) {
                     obj.setpointIntoD = data.getUint8(175, 0);
                 }
                 if (obj.ver > 112) {
-                    obj.CEO = data.getUint8(176,0); // Custom ESC Orientation
+                    obj.ESCOutputLayout = data.getUint8(176,0); // Custom ESC Orientation
                 }
 
 
@@ -766,7 +767,7 @@ kissProtocol.preparePacket = function (code, obj) {
                 blen = 173;
             }
             if (obj.ver > 112) {
-                data.setUint8(165,obj.CEO); // ESC output orientation
+                data.setUint8(165,obj.ESCOutputLayout); // ESC output orientation
                 blen = 174;
             }
 
