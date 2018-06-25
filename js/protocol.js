@@ -514,6 +514,10 @@ kissProtocol.processPacket = function (code, obj) {
                     obj.AUX[11] = data.getUint8(174, 0);
                     obj.setpointIntoD = data.getUint8(175, 0);
                 }
+                if (obj.ver > 112) {
+                    obj.CEO = data.getUint8(176,0); // Custom ESC Orientation
+                }
+
 
             } catch (Exception) {
                 console.log("Exception while reading packet");
@@ -761,6 +765,12 @@ kissProtocol.preparePacket = function (code, obj) {
                 data.setUint8(164, obj.setpointIntoD);
                 blen = 173;
             }
+            if (obj.ver > 112) {
+                data.setUint8(165,obj.CEO); // ESC output orientation
+                blen = 174;
+            }
+
+
             break;
 
         case this.SET_NOTCH:
