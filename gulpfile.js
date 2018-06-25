@@ -261,7 +261,7 @@ gulp.task('debug', ['dist', 'clean-debug'], function (done) {
         }
         var run = getRunDebugAppCommand();
         console.log('Starting debug app (' + run + ')...');
-        exec(run);
+        //exec(run);
         done();
     });
 });
