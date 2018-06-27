@@ -217,7 +217,8 @@ CONTENT.esc_flasher.initialize = function (callback) {
                             'KISS32A': "Kiss Racing 32A ESC",
                             'KISS24A': "Kiss Racing 24A ESC",
                             'KISS16A': "Kiss AIOv2 ESC",
-                            'KISS8A': "Kiss AIOv1 ESC"
+                            'KISS8A': "Kiss AIOv1 ESC",
+                            'KISS25A': "Kiss Racing 25A ESC (Single + 4in1)"
                         };
                         if (add) $("#fc_type").append("<option value='" + board + "'>" + board + " - " + escBoardNames[board] + "</option>");
                     });

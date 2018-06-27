@@ -574,6 +574,8 @@ kissProtocol.processPacket = function (code, obj) {
                         info.type = 'KISS 24 Ultralite';
                     } else if (type == 7) {
                         info.type = 'KISS 32A';
+                    } else if (type == 9) {
+                        info.type = 'KISS 25A';
                     } else {
                         info.type = 'ESC ID: ' + type;
                     }
