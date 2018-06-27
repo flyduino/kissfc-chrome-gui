@@ -8,7 +8,7 @@ function getAvailableSerialDevices(callback) {
     var devices = [];
 
     if (typeof chromeSerial !== 'undefined') {
-        chromeSerial.getDevices(function(chromeDevices) {
+        chromeSerial.getDevices(function (chromeDevices) {
             for (var i = 0; i < chromeDevices.length; i++) devices.push(chromeDevices[i]);
             if (typeof androidOTGSerial !== 'undefined') devices.push(ANDROID_OTG_SERIAL);
             if (typeof websocketSerial !== 'undefined') devices.push(KISSFC_WIFI);

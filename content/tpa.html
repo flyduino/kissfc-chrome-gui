@@ -1,206 +1,259 @@
 <div class="tpa">
-	
-		<div class="receiver wrapper-narrow">
-			<div class="groupTitle" data-i18n="title.receiver">Receiver</div>
-			<div class="bars"></div>
-		</div>
 
-		<div class="wrapper-wide">	
-			<div class="groupTitle"  data-i18n="title.tpa-influence-chart">TPA influence chart</div>
-			<div id="charts">
-				<div id="tpa_chart" class="tpa_chart"></div>
-			</div>
-		</div>
+	<div class="receiver wrapper-narrow">
+		<div class="groupTitle" data-i18n="title.receiver">Receiver</div>
+		<div class="bars"></div>
+	</div>
 
-		<div class="clear-both"></div>
-		<div class="pids">
-			<div class="groupTitle" data-i18n="title.pids">PIDS</div>
-			<table class="pids">
+	<div class="wrapper-wide">
+		<div class="groupTitle" data-i18n="title.tpa-influence-chart">TPA influence chart</div>
+		<div id="charts">
+			<div id="tpa_chart" class="tpa_chart"></div>
+		</div>
+	</div>
+
+	<div class="clear-both"></div>
+	<div class="pids">
+		<div class="groupTitle" data-i18n="title.pids">PIDS</div>
+		<table class="pids">
+			<tr>
+				<th class="name"></th>
+				<th class="p" data-i18n="column.p">P</th>
+				<th class="i" data-i18n="column.i">I</th>
+				<th class="d" data-i18n="column.d">D</th>
+				<th class="p" data-i18n="column.p">P</th>
+				<th class="i" data-i18n="column.i">I</th>
+				<th class="d" data-i18n="column.d">D</th>
+			</tr>
+			<tr class="roll">
+				<td data-i18n="column.roll">Roll</td>
+				<td>
+					<input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+				</td>
+				<td>
+					<input type="number" lang="en-150" step="0.001" min="0" max="65" data-step="0.001" data-precision="3" />
+				</td>
+				<td>
+					<input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+				</td>
+				<td>
+					<div class="cpid">0.0</div>
+				</td>
+				<td>
+					<div class="cpid">0.0</div>
+				</td>
+				<td>
+					<div class="cpid">0.0</div>
+				</td>
+			</tr>
+			<tr class="pitch">
+				<td data-i18n="column.pitch">Pitch</td>
+				<td>
+					<input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+				</td>
+				<td>
+					<input type="number" lang="en-150" step="0.001" min="0" max="65" data-step="0.001" data-precision="3" />
+				</td>
+				<td>
+					<input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+				</td>
+				<td>
+					<div class="cpid">0.0</div>
+				</td>
+				<td>
+					<div class="cpid">0.0</div>
+				</td>
+				<td>
+					<div class="cpid">0.0</div>
+				</td>
+			</tr>
+			<tr class="yaw">
+				<td data-i18n="column.yaw">Yaw</td>
+				<td>
+					<input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+				</td>
+				<td>
+					<input type="number" lang="en-150" step="0.001" min="0" max="65" data-step="0.001" data-precision="3" />
+				</td>
+				<td>
+					<input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+				</td>
+				<td>
+					<div class="cpid">0.0</div>
+				</td>
+				<td>
+					<div class="cpid">0.0</div>
+				</td>
+				<td>
+					<div class="cpid">0.0</div>
+				</td>
+			</tr>
+			<tr class="TPA">
+				<td data-i18n="column.tpa">TPA</td>
+				<td>
+					<input type="number" lang="en-150" step="0.01" min="0" max="0.9" data-step="0.01" data-precision="2" />
+				</td>
+				<td>
+					<input type="number" lang="en-150" step="0.01" min="0" max="0.9" data-step="0.01" data-precision="2" />
+				</td>
+				<td>
+					<input type="number" lang="en-150" step="0.01" min="0" max="0.9" data-step="0.01" data-precision="2" />
+				</td>
+			</tr>
+		</table>
+
+		<div class="configuration" id="AC" style="width: 100%; height: 200px; color: #FFF;">
+
+			<table class="tpa_influence">
 				<tr>
-					<th class="name"></th>
-					<th class="p" data-i18n="column.p">P</th>
-					<th class="i" data-i18n="column.i">I</th>
-					<th class="d" data-i18n="column.d">D</th>
-					<th class="p" data-i18n="column.p">P</th>
-					<th class="i" data-i18n="column.i">I</th>
-					<th class="d" data-i18n="column.d">D</th>
+					<td width="65%" colspan="5">
+						<input type="checkbox" name="UCTI" />&nbsp;
+						<span data-i18n="column.custom-tpa-influence">Use custom TPA influence values</span>
+					</td>
 				</tr>
-				<tr class="roll">
-					<td data-i18n="column.roll">Roll</td>
-					<td><input type="number" lang="en-150" step="0.01" min="0" max="65"
-						data-step="0.01" data-precision="2" /></td>
-					<td><input type="number" lang="en-150" step="0.001" min="0" max="65"
-						data-step="0.001" data-precision="3" /></td>
-					<td><input type="number" lang="en-150" step="0.01" min="0" max="65"
-						data-step="0.01" data-precision="2" /></td>
-					<td><div class="cpid">0.0</div></td>
-					<td><div class="cpid">0.0</div></td>
-					<td><div class="cpid">0.0</div></td>
+				<tr>
+					<td width="65%" colspan="5" style="text-align: center">
+						<div class="groupTitle" data-i18n="title.tpa-influence">TPA influence</div>
+					</td>
 				</tr>
-				<tr class="pitch">
-					<td  data-i18n="column.pitch">Pitch</td>
-					<td><input type="number" lang="en-150" step="0.01" min="0" max="65"
-						data-step="0.01" data-precision="2" /></td>
-					<td><input type="number" lang="en-150" step="0.001" min="0" max="65"
-						data-step="0.001" data-precision="3" /></td>
-					<td><input type="number" lang="en-150" step="0.01" min="0" max="65"
-						data-step="0.01" data-precision="2" /></td>
-					<td><div class="cpid">0.0</div></td>
-					<td><div class="cpid">0.0</div></td>
-					<td><div class="cpid">0.0</div></td>
+				<tr>
+					<td width="13%">&nbsp;</td>
+					<td width="13%" data-i18n="breakpoint.1"></td>
+					<td width="13%" data-i18n="breakpoint.2"></td>
+					<td width="13%" data-i18n="breakpoint.3"></td>
+					<td width="13%" data-i18n="breakpoint.4"></td>
 				</tr>
-				<tr class="yaw">
-					<td  data-i18n="column.yaw">Yaw</td>
-					<td><input type="number" lang="en-150" step="0.01" min="0" max="65"
-						data-step="0.01" data-precision="2" /></td>
-					<td><input type="number" lang="en-150" step="0.001" min="0" max="65"
-						data-step="0.001" data-precision="3" /></td>
-					<td><input type="number" lang="en-150" step="0.01" min="0" max="65"
-						data-step="0.01" data-precision="2" /></td>
-					<td><div class="cpid">0.0</div></td>
-					<td><div class="cpid">0.0</div></td>
-					<td><div class="cpid">0.0</div></td>
+				<tr>
+					<td width="13%" data-i18n="column.throttle-percentage"></td>
+					<td width="13%">0</td>
+					<td width="13%">
+						<input disabled="true" type="number" lang="en-150" step="1" size="3" name="BP1" min="0" max="100" data-step="1" data-precision="0"
+						 value="30" />
+					</td>
+					<td width="13%">
+						<input disabled="true" type="number" lang="en-150" step="1" size="3" name="BP2" min="0" max="100" data-step="1" data-precision="0"
+						 value="50" />
+					</td>
+					<td width="13%">100</td>
 				</tr>
-				<tr class="TPA">
-					<td  data-i18n="column.tpa">TPA</td>
-					<td><input type="number" lang="en-150" step="0.01" min="0" max="0.9"
-						data-step="0.01" data-precision="2" /></td>
-					<td><input type="number" lang="en-150" step="0.01" min="0" max="0.9"
-						data-step="0.01" data-precision="2" /></td>
-					<td><input type="number" lang="en-150" step="0.01" min="0" max="0.9"
-						data-step="0.01" data-precision="2" /></td>
+				<tr>
+					<td width="13%" data-i18n="column.influence-percentage"></td>
+					<td width="13%">
+						<input disabled="true" type="number" lang="en-150" step="1" size="3" name="BPI1" min="0" max="100" data-step="1" data-precision="0"
+						 value="30" />
+					</td>
+					<td width="13%">
+						<input disabled="true" type="number" lang="en-150" step="1" size="3" name="BPI2" min="0" max="100" data-step="1" data-precision="0"
+						 value="0" />
+					</td>
+					<td width="13%">
+						<input disabled="true" type="number" lang="en-150" step="1" size="3" name="BPI3" min="0" max="100" data-step="1" data-precision="0"
+						 value="0" />
+					</td>
+					<td width="13%">
+						<input disabled="true" type="number" lang="en-150" step="1" size="3" name="BPI4" min="0" max="100" data-step="1" data-precision="0"
+						 value="100" />
+					</td>
 				</tr>
 			</table>
 
-			<div class="configuration" id="AC"
-				style="width: 100%; height: 200px; color: #FFF;">
 
-							<table  class="tpa_influence">
-								<tr>
-									<td width="65%" colspan="5"><input type="checkbox" name="UCTI" />&nbsp;<span data-i18n="column.custom-tpa-influence">Use custom TPA influence values</span></td>
-								</tr>
-								<tr>
-									<td width="65%" colspan="5"
-										style="text-align: center"><div class="groupTitle" data-i18n="title.tpa-influence">TPA influence</div></td>
-								</tr>
-								<tr>
-									<td width="13%">&nbsp;</td>
-									<td width="13%" data-i18n="breakpoint.1"></td>
-									<td width="13%" data-i18n="breakpoint.2"></td>
-									<td width="13%" data-i18n="breakpoint.3"></td>
-									<td width="13%" data-i18n="breakpoint.4"></td>
-								</tr>
-								<tr>
-									<td width="13%" data-i18n="column.throttle-percentage"></td>
-									<td width="13%">0</td>
-									<td width="13%"><input disabled="true" type="number" lang="en-150" step="1"
-										size="3" name="BP1" min="0" max="100" data-step="1"
-										data-precision="0" value="30" /></td>
-									<td width="13%"><input disabled="true" type="number" lang="en-150" step="1"
-										size="3" name="BP2" min="0" max="100" data-step="1"
-										data-precision="0" value="50" /></td>
-									<td width="13%">100</td>
-								</tr>
-								<tr>
-									<td width="13%" data-i18n="column.influence-percentage"></td>
-									<td width="13%"><input disabled="true" type="number" lang="en-150" step="1"
-										size="3" name="BPI1" min="0" max="100" data-step="1"
-										data-precision="0" value="30" /></td>
-									<td width="13%"><input disabled="true" type="number" lang="en-150" step="1"
-										size="3" name="BPI2" min="0" max="100" data-step="1"
-										data-precision="0" value="0" /></td>
-									<td width="13%"><input disabled="true" type="number" lang="en-150" step="1"
-										size="3" name="BPI3" min="0" max="100" data-step="1"
-										data-precision="0" value="0" /></td>
-									<td width="13%"><input disabled="true" type="number" lang="en-150" step="1"
-										size="3" name="BPI4" min="0" max="100" data-step="1"
-										data-precision="0" value="100" /></td>
-								</tr>
-							</table>
-				
-					
-							<table class="voltage_influence">
-								<tr>
-									<td width="65%" colspan="4"><input type="checkbox" name="UVPID" /> &nbsp;<span data-i18n="column.pid-voltage-correction"></span></td>
-								</tr>
-								<tr>
-									<td width="65%" colspan="4" style="text-align: center"><div class="groupTitle" data-i18n="title.battery-influence"></div></td>
-								</tr>
-								<tr>
-									<td width="13%">&nbsp;</td>
-									<td width="13%" data-i18n="voltage.1">Voltage 1</td>
-									<td width="13%" data-i18n="voltage.2">Voltage 2</td>
-									<td width="13%" data-i18n="voltage.3">Voltage 3</td>
-								</tr>
-								<tr>
-									<td width="13%" data-i18n="column.battery-voltage">Lipo Voltage [V]</td>
-									<td width="13%"><input disabled="true" type="number" lang="en-150" step="0.1"
-										size="3" name="LV1" min="0" max="100"
-										data-step="0.1" data-precision="1" value="12.8" /></td>
-									<td width="13%"><input disabled="true" type="number" lang="en-150" step="0.1"
-										size="3" name="LV2" min="0" max="100"
-										data-step="0.1" data-precision="1" value="14.8" /></td>
-									<td width="13%"><input disabled="true" type="number" lang="en-150" step="0.1"
-										size="3" name="LV3" min="0" max="100"
-										data-step="0.1" data-precision="1" value="16.8" /></td>
-								</tr>
-								<tr>
-									<td width="13%" data-i18n="column.pid-strength-percentage">PID strength [%]</td>
-									<td width="13%"><input disabled="true" type="number" lang="en-150" step="1"
-										size="3" name="LVP1" min="0" max="250" data-step="1"
-										data-precision="0" value="130" /></td>
-									<td width="13%"><input disabled="true" type="number" lang="en-150" step="1"
-										size="3" name="LVP2" min="0" max="250" data-step="1"
-										data-precision="0" value="100" /></td>
-									<td width="13%"><input disabled="true" type="number" lang="en-150" step="1"
-										size="3" name="LVP3" min="0" max="250" data-step="1"
-										data-precision="0" value="70" /></td>
-								</tr>
-								
-								<tr>
-									<td colspan="4" style="padding-top: 10px"><span data-i18n="text.voltage-prefix">
-									With battery voltage</span> <select id="simulatedVoltage">
-										<option value="10" data-i18n="volts.10">10v</option>
-										<option value="10.5" data-i18n="volts.10.5">10.5v</option>
-										<option value="11" data-i18n="volts.11">11v</option>
-										<option value="11.5" data-i18n="volts.11.5">11.5v</option>
-										<option value="12" data-i18n="volts.12">12v</option>
-										<option value="12.5" data-i18n="volts.12.5">12.5v</option>
-										<option value="13" data-i18n="volts.13">13v</option>
-										<option value="13.5" data-i18n="volts.13.5">13.5v</option>
-										<option value="14" data-i18n="volts.14">14v</option>
-										<option value="14.5" data-i18n="volts.14.5">14.5v</option>
-										<option value="15"  data-i18n="volts.15"selected>15v</option>
-										<option value="15.5" data-i18n="volts.15.5">15.5v</option>
-										<option value="16" data-i18n="volts.16">16v</option>
-										<option value="16.5" data-i18n="volts.16.5">16.5v</option>
-										<option value="17" data-i18n="volts.17">17v</option>
-										<option value="17.5" data-i18n="volts.17.5">17.5v</option>
-										<option value="18" data-i18n="volts.18">18v</option>
-										<option value="18.5" data-i18n="volts.18.5">18.5v</option>
-										<option value="19" data-i18n="volts.19">19v</option>
-										<option value="19.5" data-i18n="volts.19.5">19.5v</option>
-										<option value="20" data-i18n="volts.20">20v</option>
-										<option value="20.5" data-i18n="volts.20.5">20.5v</option>
-										<option value="21" data-i18n="volts.21">21v</option>
-										<option value="21.5" data-i18n="volts.21.5">21.5v</option>
-										<option value="22" data-i18n="volts.22">22v</option>
-										<option value="22.5" data-i18n="volts.22.5">22.5v</option>
-									</select> <span data-i18n="text.voltage-suffix">its influence on PIDS will be</span> <span id="simulatedBatteryInfluence">0</span>
-									</td>
-								</tr>	
-							</table>
-						
-				</table>
+			<table class="voltage_influence">
+				<tr>
+					<td width="65%" colspan="4">
+						<input type="checkbox" name="UVPID" /> &nbsp;
+						<span data-i18n="column.pid-voltage-correction"></span>
+					</td>
+				</tr>
+				<tr>
+					<td width="65%" colspan="4" style="text-align: center">
+						<div class="groupTitle" data-i18n="title.battery-influence"></div>
+					</td>
+				</tr>
+				<tr>
+					<td width="13%">&nbsp;</td>
+					<td width="13%" data-i18n="voltage.1">Voltage 1</td>
+					<td width="13%" data-i18n="voltage.2">Voltage 2</td>
+					<td width="13%" data-i18n="voltage.3">Voltage 3</td>
+				</tr>
+				<tr>
+					<td width="13%" data-i18n="column.battery-voltage">Lipo Voltage [V]</td>
+					<td width="13%">
+						<input disabled="true" type="number" lang="en-150" step="0.1" size="3" name="LV1" min="0" max="100" data-step="0.1"
+						 data-precision="1" value="12.8" />
+					</td>
+					<td width="13%">
+						<input disabled="true" type="number" lang="en-150" step="0.1" size="3" name="LV2" min="0" max="100" data-step="0.1"
+						 data-precision="1" value="14.8" />
+					</td>
+					<td width="13%">
+						<input disabled="true" type="number" lang="en-150" step="0.1" size="3" name="LV3" min="0" max="100" data-step="0.1"
+						 data-precision="1" value="16.8" />
+					</td>
+				</tr>
+				<tr>
+					<td width="13%" data-i18n="column.pid-strength-percentage">PID strength [%]</td>
+					<td width="13%">
+						<input disabled="true" type="number" lang="en-150" step="1" size="3" name="LVP1" min="0" max="250" data-step="1" data-precision="0"
+						 value="130" />
+					</td>
+					<td width="13%">
+						<input disabled="true" type="number" lang="en-150" step="1" size="3" name="LVP2" min="0" max="250" data-step="1" data-precision="0"
+						 value="100" />
+					</td>
+					<td width="13%">
+						<input disabled="true" type="number" lang="en-150" step="1" size="3" name="LVP3" min="0" max="250" data-step="1" data-precision="0"
+						 value="70" />
+					</td>
+				</tr>
 
-			</div>
+				<tr>
+					<td colspan="4" style="padding-top: 10px">
+						<span data-i18n="text.voltage-prefix">
+							With battery voltage</span>
+						<select id="simulatedVoltage">
+							<option value="10" data-i18n="volts.10">10v</option>
+							<option value="10.5" data-i18n="volts.10.5">10.5v</option>
+							<option value="11" data-i18n="volts.11">11v</option>
+							<option value="11.5" data-i18n="volts.11.5">11.5v</option>
+							<option value="12" data-i18n="volts.12">12v</option>
+							<option value="12.5" data-i18n="volts.12.5">12.5v</option>
+							<option value="13" data-i18n="volts.13">13v</option>
+							<option value="13.5" data-i18n="volts.13.5">13.5v</option>
+							<option value="14" data-i18n="volts.14">14v</option>
+							<option value="14.5" data-i18n="volts.14.5">14.5v</option>
+							<option value="15" data-i18n="volts.15" selected>15v</option>
+							<option value="15.5" data-i18n="volts.15.5">15.5v</option>
+							<option value="16" data-i18n="volts.16">16v</option>
+							<option value="16.5" data-i18n="volts.16.5">16.5v</option>
+							<option value="17" data-i18n="volts.17">17v</option>
+							<option value="17.5" data-i18n="volts.17.5">17.5v</option>
+							<option value="18" data-i18n="volts.18">18v</option>
+							<option value="18.5" data-i18n="volts.18.5">18.5v</option>
+							<option value="19" data-i18n="volts.19">19v</option>
+							<option value="19.5" data-i18n="volts.19.5">19.5v</option>
+							<option value="20" data-i18n="volts.20">20v</option>
+							<option value="20.5" data-i18n="volts.20.5">20.5v</option>
+							<option value="21" data-i18n="volts.21">21v</option>
+							<option value="21.5" data-i18n="volts.21.5">21.5v</option>
+							<option value="22" data-i18n="volts.22">22v</option>
+							<option value="22.5" data-i18n="volts.22.5">22.5v</option>
+						</select>
+						<span data-i18n="text.voltage-suffix">its influence on PIDS will be</span>
+						<span id="simulatedBatteryInfluence">0</span>
+					</td>
+				</tr>
+			</table>
+
+			</table>
+
+		</div>
 
 
-			<div class="config_buttons">
-			<a id="save" class="config_button" href="#"
-				title="Save Settings to EEPROM"  data-i18n="button.save">Save Settings</a>
+		<div class="config_buttons">
+			<a id="save" class="config_button" href="#" title="Save Settings to EEPROM" data-i18n="button.save">Save Settings</a>
 		</div>
 		<div class="clear-both"></div>
 
 	</div>
-</div>	
+</div>

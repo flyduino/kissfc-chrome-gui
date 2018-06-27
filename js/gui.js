@@ -3,23 +3,23 @@
 var CONTENT = {}; // filled by individual content js file
 
 var GUI = {
-    connectingTo : false,
-    connectedTo : false,
-    activeContent : null,
-    contentSwitchInProgress : false,
-    intervalArray : [],
-    timeoutArray : [],
-    state : "CONNECT"
+    connectingTo: false,
+    connectedTo: false,
+    activeContent: null,
+    contentSwitchInProgress: false,
+    intervalArray: [],
+    timeoutArray: [],
+    state: "CONNECT"
 };
 
-GUI.intervalAdd = function(name, code, interval, first) {
+GUI.intervalAdd = function (name, code, interval, first) {
     var data = {
-        'name' : name,
-        'timer' : null,
-        'code' : code,
-        'interval' : interval,
-        'fired' : 0,
-        'paused' : false
+        'name': name,
+        'timer': null,
+        'code': code,
+        'interval': interval,
+        'fired': 0,
+        'paused': false
     };
 
     if (first == true) {
@@ -28,7 +28,7 @@ GUI.intervalAdd = function(name, code, interval, first) {
         data.fired++; // increment counter
     }
 
-    data.timer = setInterval(function() {
+    data.timer = setInterval(function () {
         code(); // execute code
 
         data.fired++; // increment counter
@@ -39,7 +39,7 @@ GUI.intervalAdd = function(name, code, interval, first) {
     return data;
 };
 
-GUI.intervalRemove = function(name) {
+GUI.intervalRemove = function (name) {
     for (var i = 0; i < this.intervalArray.length; i++) {
         if (this.intervalArray[i].name == name) {
             clearInterval(this.intervalArray[i].timer); // stop timer
@@ -54,7 +54,7 @@ GUI.intervalRemove = function(name) {
     return false;
 };
 
-GUI.intervalKillAll = function(keepArray) {
+GUI.intervalKillAll = function (keepArray) {
     var self = this;
     var timersKilled = 0;
 
@@ -62,7 +62,7 @@ GUI.intervalKillAll = function(keepArray) {
         // iteration
         var keep = false;
         if (keepArray) { // only run through the array if it exists
-            keepArray.forEach(function(name) {
+            keepArray.forEach(function (name) {
                 if (self.intervalArray[i].name == name) {
                     keep = true;
                 }
@@ -82,16 +82,16 @@ GUI.intervalKillAll = function(keepArray) {
     return timersKilled;
 };
 
-GUI.timeoutAdd = function(name, code, timeout) {
+GUI.timeoutAdd = function (name, code, timeout) {
     var self = this;
     var data = {
-        'name' : name,
-        'timer' : null,
-        'timeout' : timeout
+        'name': name,
+        'timer': null,
+        'timeout': timeout
     };
 
     // start timer with "cleaning" callback
-    data.timer = setTimeout(function() {
+    data.timer = setTimeout(function () {
         code(); // execute code
 
         // remove object from array
@@ -105,7 +105,7 @@ GUI.timeoutAdd = function(name, code, timeout) {
     return data;
 };
 
-GUI.timeoutRemove = function(name) {
+GUI.timeoutRemove = function (name) {
     for (var i = 0; i < this.timeoutArray.length; i++) {
         if (this.timeoutArray[i].name == name) {
             clearTimeout(this.timeoutArray[i].timer); // stop timer
@@ -119,7 +119,7 @@ GUI.timeoutRemove = function(name) {
     return false;
 };
 
-GUI.timeoutKillAll = function() {
+GUI.timeoutKillAll = function () {
     var timersKilled = 0;
 
     for (var i = 0; i < this.timeoutArray.length; i++) {
@@ -133,22 +133,22 @@ GUI.timeoutKillAll = function() {
     return timersKilled;
 };
 
-GUI.contentSwitchCleanup = function(callback) {
+GUI.contentSwitchCleanup = function (callback) {
     GUI.intervalKillAll(); // all intervals (mostly data pulling) needs to be
     // removed on tab switch
 
     CONTENT[this.activeContent].cleanup(callback);
 };
 
-GUI.switchContent = function(newContent, callback) {
+GUI.switchContent = function (newContent, callback) {
     if (GUI.activeContent != newContent) {
         console.log('Switching content to ' + newContent);
-        
+
         $('#navigation li').removeClass('selected');
-        $("#navigation li[data-name='"+newContent+"']").addClass('selected')
-        
+        $("#navigation li[data-name='" + newContent + "']").addClass('selected')
+
         GUI.activeContent = newContent;
-        kissProtocol.clearPendingRequests(function() {
+        kissProtocol.clearPendingRequests(function () {
             callback();
         });
     } else {
@@ -156,18 +156,18 @@ GUI.switchContent = function(newContent, callback) {
     }
 }
 
-GUI.load = function(url, callback) {
+GUI.load = function (url, callback) {
     $('#content').animate({
         scrollTop: 0
     }, 700);
-    $('#content').load(url, function() {
- 
+    $('#content').load(url, function () {
+
         callback();
         $("*", "#content").i18n();
     });
 }
 
-GUI.switchToConnect = function() {
+GUI.switchToConnect = function () {
     // set button to connect
     // unlock port select
     $('#port').prop('disabled', false);
@@ -178,14 +178,14 @@ GUI.switchToConnect = function() {
     GUI.state = "CONNECT";
 }
 
-GUI.switchToConnecting = function() {
+GUI.switchToConnecting = function () {
     // set button to connecting
     $('#port').prop('disabled', true);
     $('a.connect').text($.i18n("menu.connecting"));
     GUI.state = "CONNECTING";
 }
 
-GUI.switchToDisconnect = function() {
+GUI.switchToDisconnect = function () {
     // set button to disconnect
     $('a.connect').text($.i18n("menu.disconnect")).addClass('active');
     $('#navigation li').addClass('unlocked');

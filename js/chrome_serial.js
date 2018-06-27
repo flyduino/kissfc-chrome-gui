@@ -14,25 +14,25 @@
 'use strict';
 
 var chromeSerial = {
-    request:         null,
-    connectionId:    false,
-    bitrate:         0,
-    bytesReceived:   0,
-    bytesSent:       0,
-    failed:          0,
+    request: null,
+    connectionId: false,
+    bitrate: 0,
+    bytesReceived: 0,
+    bytesSent: 0,
+    failed: 0,
 
-    transmitting:    false,
-    outputBuffer:    [],
+    transmitting: false,
+    outputBuffer: [],
 
     connect: function (path, options, callback) {
         var self = this;
 
         var request = {
-            path:           path,
-            options:        options,
-            callback:       callback,
-            fulfilled:      false,
-            canceled:       false
+            path: path,
+            options: options,
+            callback: callback,
+            fulfilled: false,
+            canceled: false
         };
 
         // expose request object reference to the serial layer so .disconnect routine can interact with the flags
@@ -184,7 +184,7 @@ var chromeSerial = {
     },
     send: function (data, callback) {
         var self = this;
-        self.outputBuffer.push({'data': data, 'callback': callback});
+        self.outputBuffer.push({ 'data': data, 'callback': callback });
 
         function send() {
             // store inside separate variables in case array gets destroyed
@@ -192,13 +192,13 @@ var chromeSerial = {
                 callback = self.outputBuffer[0].callback;
 
             self.dump('<-', data);
-            
+
             if (self.connectionId) {
                 chrome.serial.send(self.connectionId, data, function (sendInfo) {
                     // track sent bytes for statistics
-                    
+
                     if (typeof sendInfo !== 'undefined') {
-                    
+
                         self.bytesSent += sendInfo.bytesSent;
 
                         // fire callback
@@ -272,14 +272,14 @@ var chromeSerial = {
         this.outputBuffer = [];
         this.transmitting = false;
     },
-    byteToHex: function(byte) {
-        var hexChar = ["0", "1", "2", "3", "4", "5", "6", "7","8", "9", "A", "B", "C", "D", "E", "F"];
+    byteToHex: function (byte) {
+        var hexChar = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
         return hexChar[(byte >> 4) & 0x0f] + hexChar[byte & 0x0f];
     },
-    wordToHex: function(byte) {
-        return this.byteToHex(byte>>8 & 0xff)+this.byteToHex(byte & 0xff);
+    wordToHex: function (byte) {
+        return this.byteToHex(byte >> 8 & 0xff) + this.byteToHex(byte & 0xff);
     },
-    dump: function(direction, data) {
+    dump: function (direction, data) {
         /* var view = new Uint8Array(data);
         var line = '';
         for (var i = 0; i < view.length; i++) {

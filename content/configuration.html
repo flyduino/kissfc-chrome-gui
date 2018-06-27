@@ -4,182 +4,268 @@
         <select class="mixer unsafe" name="mixer">
             <!-- auto generated -->
         </select>
-        <div class="mixerPreview"> 
+        <div class="mixerPreview">
             <img class="mixer-image" src="./images/mixer/0.png" />
-	   <div id="pentaNoteFC" style="display:none; margin-left:60px; margin-top:-40px; position:absolute;color:#FF4444;">NOTE:<br/>On the KISSFC v1 PWM5 is mapped <br/>on PWM6 when Dshot is active!</div>
-	   <div id="pentaNoteCC" style="display:none; margin-left:60px; margin-top:-40px; position:absolute;color:#FF4444;">NOTE:<br/>On the KISSCC PWM5 is on SPI Pin MO if Dshot is used <br/>else its on SPI MI</div>
+            <div id="pentaNoteFC" style="display:none; margin-left:60px; margin-top:-40px; position:absolute;color:#FF4444;">NOTE:
+                <br/>On the KISSFC v1 PWM5 is mapped
+                <br/>on PWM6 when Dshot is active!</div>
+            <div id="pentaNoteCC" style="display:none; margin-left:60px; margin-top:-40px; position:absolute;color:#FF4444;">NOTE:
+                <br/>On the KISSCC PWM5 is on SPI Pin MO if Dshot is used
+                <br/>else its on SPI MI</div>
         </div>
         <div class="groupTitle" data-i18n="title.receiver">Receiver</div>
         <select class="rxType unsafe">
-            <option value="0" style="display:none" data-i18n="rx-type.0">Autodetect</option>
-            <option value="1" style="display:none" data-i18n="rx-type.1">4-6 single Channel</option>
-            <option value="2" title="Gr. SumO & Deltang RX" data-i18n="rx-type.2">PPM:Thr.,Roll,Pitch,Yaw</option>
-            <option value="3" title="OrangeRX" data-i18n="rx-type.3">PPM:Pitch,Thr.,Roll,Yaw</option>
-            <option value="4" data-i18n="rx-type.4">PPM:Thr.,Pitch,Yaw,Roll</option>
-            <option value="5" data-i18n="rx-type.5">PPM:Roll,Pitch,Yaw,Thr.</option>
-            <option id="ppmadd1" value="12" style="display:none;" data-i18n="rx-type.12">PPM:Pitch,Roll,Thr.,Yaw</option>
-            <option id="ppmadd2" value="13" style="display:none;" data-i18n="rx-type.13">PPM:Roll,Pitch,Thr.,Yaw</option>
-            <option value="6" data-i18n="rx-type.6">Spekt. Sat. DSM2</option>
-            <option value="7" data-i18n="rx-type.7">Spekt. Sat. DSMX</option>
-            <option value="8" data-i18n="rx-type.8">FrSky S-BUS</option>
-            <option value="15" data-i18n="rx-type.15">FrSky S-BUS (not inverted)</option>
-            <option value="11" data-i18n="rx-type.11">Futaba S-BUS</option>
-            <option value="9" data-i18n="rx-type.9">Gr. SUMD</option>
-            <option value="10" data-i18n="rx-type.10">Jeti EX Bus</option>
-       		<option id="mpxSRXL" value="14" style="display:none;" data-i18n="rx-type.14">Multiplex SRXL</option>
-       		<option id="jrxbusb" value="16" style="display:none;" data-i18n="rx-type.16">JR XBus Mode B</option>
-		<option id="CRSF" value="17" >TBS CRSF</option>
-		<option id="CRSF" value="18" >FrSky Fport</option>
-		<option id="CRSF" value="19" >FrSky Fport Inverted</option>
+            <option value="0" style="display:none" data-i18n="rx-type.0" id="rxauto">Autodetect</option>
+            <option value="1" style="display:none" data-i18n="rx-type.1" id="rxpwm1">4-6 single Channel</option>
+            <option value="2" style="display:none" data-i18n="rx-type.2" id="rxppm1">PPM:Thr.,Roll,Pitch,Yaw</option>
+            <option value="3" style="display:none" data-i18n="rx-type.3" id="rxppm2">PPM:Pitch,Thr.,Roll,Yaw</option>
+            <option value="4" style="display:none" data-i18n="rx-type.4" id="rxppm3">PPM:Thr.,Pitch,Yaw,Roll</option>
+            <option value="5" style="display:none" data-i18n="rx-type.5" id="rxppm4">PPM:Roll,Pitch,Yaw,Thr.</option>
+            <option value="12" style="display:none" data-i18n="rx-type.12" id="rxppm5">PPM:Pitch,Roll,Thr.,Yaw</option>
+            <option value="13" style="display:none" data-i18n="rx-type.13" id="rxppm6">PPM:Roll,Pitch,Thr.,Yaw</option>
+            <option value="6" style="display:none" data-i18n="rx-type.6" id="rxdsm1">Spekt. Sat. DSM2</option>
+            <option value="7" style="display:none" data-i18n="rx-type.7" id="rxdsm2">Spekt. Sat. DSMX</option>
+            <option value="8" style="display:none" data-i18n="rx-type.8" id="rxsbus1">FrSky S-BUS</option>
+            <option value="15" style="display:none" data-i18n="rx-type.15" id="rxsbus2">FrSky S-BUS (not inverted)</option>
+            <option value="11" style="display:none" data-i18n="rx-type.11" id="rxsbus3">Futaba S-BUS</option>
+            <option value="9" style="display:none" data-i18n="rx-type.9" id="rxsumd1">Gr. SUMD</option>
+            <option value="10" style="display:none" data-i18n="rx-type.10" id="rxexbus1">Jeti EX Bus</option>
+            <option value="14" style="display:none" data-i18n="rx-type.14" id="rxsrxl1">Multiplex SRXL</option>
+            <option value="16" style="display:none" data-i18n="rx-type.16" id="rxxbusb1">JR XBus Mode B</option>
+            <option value="17" style="display:none" data-i18n="rx-type.17" id="rxcrsf1">TBS CRSF</option>
+            <option value="18" style="display:none" data-i18n="rx-type.18" id="rxfport1">FrSky Fport</option>
+            <option value="19" style="display:none" data-i18n="rx-type.19" id="rxfport2">FrSky Fport (inverted)</option>
         </select>
         <dl class="general_settings">
-	    <br />
-        <dt style="min-width:130px;" data-i18n="text.fs-mode-sec">FS. levelmode Sec.: </dt><dd><input type="number" lang="en-150" step="1" name="failsaveseconds" style="width:40px;" data-step="1" min="0" max="20" class="unsafe"/></dd>
-	</dl>
+            <br />
+            <dt style="min-width:130px;" data-i18n="text.fs-mode-sec">FS. levelmode Sec.: </dt>
+            <dd>
+                <input type="number" lang="en-150" step="1" name="failsaveseconds" style="width:40px;" data-step="1" min="0" max="20" class="unsafe"
+                />
+            </dd>
+        </dl>
 
-	
+
     </div>
     <div class="wrapper-narrow">
         <div class="groupTitle" data-i18n="title.general-settings">General Settings</div>
         <dl class="general_settings">
-            <dt title="the minimum throttle for the motors" data-i18n="column.min-throttle">Min. Throttle</dt><dd><input class="unsafe" type="number" lang="en-150" step="1" name="minThrottle" data-step="1" min="0" max="2200" /></dd>
-            <dt title="the maximum throttle for the motors" data-i18n="column.max-throttle">Max. Throttle</dt><dd><input class="unsafe" type="number" lang="en-150" step="1" name="maxThrottle" data-step="1" min="0" max="2200" /></dd>
-            <dt title="the throttle value where the PID controller starts acting" data-i18n="column.min-command">Min. Command</dt><dd><input class="unsafe" type="number" lang="en-150" step="1" name="minCommand" data-step="1" min="0" max="2200" /></dd>
-            <dt title="the ESC's middle command for 3D mode use" data-i18n="column.mid-command">Mid. Command</dt><dd><input class="unsafe" type="number" lang="en-150" step="1" name="midCommand" data-step="1" min="0" max="2200" /></dd>
-	  		<dt class="tricopter" data-i18n="column.tri-yaw-mid">Tri Yaw Mid.</dt><dd class="tricopter"><input class="unsafe" type="number" lang="en-150" step="1" name="TYmid" data-step="1" min="0" max="2200" /></dd>
-	  		<dt class="tricopter" data-i18n="column.tri-yaw-invert">Tri Yaw Invert</dt><dd  class="tricopter"><input class="unsafe" type="checkbox" name="TYinv" /></dd>
-      		<dt><span title="ESC Mode" data-i18n="column.esc-mode">ESC Mode</span></dt>
-			<dd>
-				<select class="unsafe" name="outputMode" id="outputMode">
-					<option value="7">Dshot 2400</option>
-					<option value="6">Dshot 1200</option>
-					<option value="5" data-i18n="output.5">Dshot 600</option>
-					<option value="4" data-i18n="output.4">Dshot 300</option>
-					<option value="3" data-i18n="output.3">Dshot 150</option>
-					<option value="2" data-i18n="output.2">OneShot 42</option>
-					<option value="1" data-i18n="output.1" selected>OneShot 125</option>
-					<option value="0" data-i18n="output.0">PWM</option>
-				</select>
-				<select class="unsafe" name="outputModeOld" id="outputModeOld" style="display:none;">
-					<option value="0" data-i18n="output.old.0">OneShot 42</option>
-					<option value="1" selected data-i18n="output.old.1">OneShot 125</option>
-					<option value="2" data-i18n="output.old.2">PWM</option>
-				</select>
-			</dd>
-      		<dt data-i18n="column.3d-mode">3D Mode</dt><dd><input class="unsafe" type="checkbox" disabled="true" name="3dMode"/></dd>
+            <dt title="the minimum throttle for the motors" data-i18n="column.min-throttle">Min. Throttle</dt>
+            <dd>
+                <input class="unsafe" type="number" lang="en-150" step="1" name="minThrottle" data-step="1" min="0" max="2200" />
+            </dd>
+            <dt title="the maximum throttle for the motors" data-i18n="column.max-throttle">Max. Throttle</dt>
+            <dd>
+                <input class="unsafe" type="number" lang="en-150" step="1" name="maxThrottle" data-step="1" min="0" max="2200" />
+            </dd>
+            <dt title="the throttle value where the PID controller starts acting" data-i18n="column.min-command">Min. Command</dt>
+            <dd>
+                <input class="unsafe" type="number" lang="en-150" step="1" name="minCommand" data-step="1" min="0" max="2200" />
+            </dd>
+            <dt title="the ESC's middle command for 3D mode use" data-i18n="column.mid-command">Mid. Command</dt>
+            <dd>
+                <input class="unsafe" type="number" lang="en-150" step="1" name="midCommand" data-step="1" min="0" max="2200" />
+            </dd>
+            <dt class="tricopter" data-i18n="column.tri-yaw-mid">Tri Yaw Mid.</dt>
+            <dd class="tricopter">
+                <input class="unsafe" type="number" lang="en-150" step="1" name="TYmid" data-step="1" min="0" max="2200" />
+            </dd>
+            <dt class="tricopter" data-i18n="column.tri-yaw-invert">Tri Yaw Invert</dt>
+            <dd class="tricopter">
+                <input class="unsafe" type="checkbox" name="TYinv" />
+            </dd>
+            <dt>
+                <span title="ESC Mode" data-i18n="column.esc-mode">ESC Mode</span>
+            </dt>
+            <dd>
+                <select class="unsafe" name="outputMode" id="outputMode">
+                    <option value="7" data-i18n="output.7">Dshot 2400</option>
+                    <option value="6" data-i18n="output.6">Dshot 1200</option>
+                    <option value="5" data-i18n="output.5">Dshot 600</option>
+                    <option value="4" data-i18n="output.4">Dshot 300</option>
+                    <option value="3" data-i18n="output.3">Dshot 150</option>
+                    <option value="2" data-i18n="output.2">OneShot 42</option>
+                    <option value="1" data-i18n="output.1" selected>OneShot 125</option>
+                    <option value="0" data-i18n="output.0">PWM</option>
+                </select>
+            </dd>
+            <dt data-i18n="column.3d-mode">3D Mode</dt>
+            <dd>
+                <input class="unsafe" type="checkbox" disabled="true" name="3dMode" />
+            </dd>
         </dl>
     </div>
-  
+
     <div class="wrapper-wide">
-    
-    	<div class="wrapper-full">
-    		<div class="groupTitle" data-i18n="title.presets">Presets</div>
- 			<select id="prePID">
-				<option value="preset" selected="selected" data-i18n="option.preset">Preset</option>
-				<option value="user" data-i18n="option.user">User</option>
-			</select>	      
-			<select id="presetSel">
-				<option value="Preset1" selected="selected" data-i18n="option.custom">custom</option>
-			</select>
-			<select id="userSel">
-			</select>
-	       	<span id="shareButton" data-i18n="button.share">Share</span>
-    	</div>           
-    
+
+        <div class="wrapper-full">
+            <div class="groupTitle" data-i18n="title.presets">Presets</div>
+            <select id="prePID">
+                <option value="preset" selected="selected" data-i18n="option.preset">Preset</option>
+                <option value="user" data-i18n="option.user">User</option>
+            </select>
+            <select id="presetSel">
+                <option value="Preset1" selected="selected" data-i18n="option.custom">custom</option>
+            </select>
+            <select id="userSel">
+            </select>
+            <span id="shareButton" data-i18n="button.share">Share</span>
+        </div>
+
         <div class="groupTitle" data-i18n="title.pids-and-rates">PID &amp; Rates</div>
-        
+
         <div class="wrapper-half" style="max-width: 245px">
-        <table class="pids">
-            <tr>
-                <th class="name"></th>
-                <th class="p" data-i18n="column.p">P</th>
-                <th class="i" data-i18n="column.i">I</th>
-                <th class="d" data-i18n="column.d">D</th>
-            </tr>
-            <tr class="roll">
-                <td data-i18n="column.roll">Roll</td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="number" lang="en-150" step="0.001" min="0" max="65" data-step="0.001" data-precision="3" /></td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-            </tr>
-            <tr class="pitch">
-                <td data-i18n="column.pitch">Pitch</td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="number" lang="en-150" step="0.001" min="0" max="65" data-step="0.001" data-precision="3" /></td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-            </tr>
-            <tr class="yaw">
-                <td data-i18n="column.yaw">Yaw</td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="number" lang="en-150" step="0.001" min="0" max="65" data-step="0.001" data-precision="3" /></td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-            </tr>
-            <tr class="TPA">
-                <td data-i18n="column.tpa">TPA</td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="0.9" data-step="0.01" data-precision="2" /></td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="0.9" data-step="0.01" data-precision="2" /></td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="0.9" data-step="0.01" data-precision="2" /></td>
-            </tr>
-        </table>   
-        </div>
-        
-        <div class="wrapper-half"> 
-        
-        <table class="rates">
-            <tr>
-                <th class="name"></th>
-                <th class="rate" data-i18n="column.rc-rate">RC Rate</th>
-                <th class="expo" data-i18n="column.rc-expo">Rate</th>
-                <th class="curve" data-i18n="column.rc-curve">RC Curve</th>
-            </tr>
-         	<tr class="roll">
-                <td data-i18n="column.roll">Roll</td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-            </tr>
-            <tr class="pitch">
-                <td data-i18n="column.pitch">Pitch</td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-            </tr>
-            <tr class="yaw">
-                <td data-i18n="column.yaw">Yaw</td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-                <td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-            </tr>
-        </table>    
-        </div>
-        	
-          <div class="wrapper-full">
-           	<table class="levels">
-           		<tr>
-                	<th></th>
-                	<th data-i18n="column.p">P</th>
-                	<th data-i18n="column.i">I</th>
-                	<th data-i18n="column.d">D</th>
-            	</tr>
-            	<tr class="level">
-                	<td data-i18n="column.level">Level</td>
-                	<td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-                	<td><input type="number" lang="en-150" step="0.001" min="0" max="65" data-step="0.001" data-precision="3" /></td>
-                	<td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-            	</tr>
-            	<tr class="level">
-                	<td data-i18n="[column.level-max]">Max&deg;</td>
-	       			<td><input type="number" lang="en-150" step="1" min="0" max="60" data-step="1" data-precision="0" /></td>
-            	</tr>
+            <table class="pids">
+                <tr>
+                    <th class="name"></th>
+                    <th class="p" data-i18n="column.p">P</th>
+                    <th class="i" data-i18n="column.i">I</th>
+                    <th class="d" data-i18n="column.d">D</th>
+                </tr>
+                <tr class="roll">
+                    <td data-i18n="column.roll">Roll</td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.001" min="0" max="65" data-step="0.001" data-precision="3" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                </tr>
+                <tr class="pitch">
+                    <td data-i18n="column.pitch">Pitch</td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.001" min="0" max="65" data-step="0.001" data-precision="3" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                </tr>
+                <tr class="yaw">
+                    <td data-i18n="column.yaw">Yaw</td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.001" min="0" max="65" data-step="0.001" data-precision="3" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                </tr>
+                <tr class="TPA">
+                    <td data-i18n="column.tpa">TPA</td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="0.9" data-step="0.01" data-precision="2" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="0.9" data-step="0.01" data-precision="2" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="0.9" data-step="0.01" data-precision="2" />
+                    </td>
+                </tr>
             </table>
-         </div> 
-      
-        <div class="general_settings" style="margin-top:20px;"><span data-i18n="text.firmware-version">Firmware Version:</span> <span  id="version"></span> <span data-i18n="text.sn"></span>: <span id="SN" class="uuid"></span><br /><br /></div>
+        </div>
+
+        <div class="wrapper-half">
+
+            <table class="rates">
+                <tr>
+                    <th class="name"></th>
+                    <th class="rate" data-i18n="column.rc-rate">RC Rate</th>
+                    <th class="expo" data-i18n="column.rc-expo">Rate</th>
+                    <th class="curve" data-i18n="column.rc-curve">RC Curve</th>
+                </tr>
+                <tr class="roll">
+                    <td data-i18n="column.roll">Roll</td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                </tr>
+                <tr class="pitch">
+                    <td data-i18n="column.pitch">Pitch</td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                </tr>
+                <tr class="yaw">
+                    <td data-i18n="column.yaw">Yaw</td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="wrapper-full">
+            <table class="levels">
+                <tr>
+                    <th></th>
+                    <th data-i18n="column.p">P</th>
+                    <th data-i18n="column.i">I</th>
+                    <th data-i18n="column.d">D</th>
+                </tr>
+                <tr class="level">
+                    <td data-i18n="column.level">Level</td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.001" min="0" max="65" data-step="0.001" data-precision="3" />
+                    </td>
+                    <td>
+                        <input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+                    </td>
+                </tr>
+                <tr class="level">
+                    <td data-i18n="[column.level-max]">Max&deg;</td>
+                    <td>
+                        <input type="number" lang="en-150" step="1" min="0" max="60" data-step="1" data-precision="0" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="general_settings" style="margin-top:20px;">
+            <span data-i18n="text.firmware-version">Firmware Version:</span>
+            <span id="version"></span>
+            <br />
+            <span data-i18n="text.sn">Serial Number:</span>
+            <span id="SN" class="uuid"></span>
+            <br />
+            <span data-i18n="text.eeprom-version">EEPROM Version:</span>
+            <span id="eeprom1" class "uuid"></span>
+            <br />
+        </div>
     </div>
-    
+
     <div class="wrapper-narrow">
         <div class="groupTitle" data-i18n="title.aux-functions">AUX Functions</div>
-       <dl id="aux11"></dl>
+        <dl id="aux11"></dl>
         <dl id="aux0"></dl>
         <dl id="aux1"></dl>
         <dl id="aux4"></dl>
@@ -191,13 +277,13 @@
         <dl id="aux7"></dl>
         <dl id="aux8"></dl>
         <dl id="aux9"></dl>
-     
-    </div>    
-    
-     <div class="wrapper-narrow">
-    <div class="groupTitle" data-i18n="title.filter" style="margin-top:20px;">Filter</div>
-       	<dl>
-        <dt data-i18n="column.lpf-frequency">LPF FRQ</dt>
+
+    </div>
+
+    <div class="wrapper-narrow">
+        <div class="groupTitle" data-i18n="title.filter" style="margin-top:20px;">Filter</div>
+        <dl>
+            <dt data-i18n="column.lpf-frequency">LPF FRQ</dt>
             <dd>
                 <select name="lpf">
                     <option value="0" data-i18n="filter.0">Off</option>
@@ -207,35 +293,35 @@
                     <option value="4" data-i18n="filter.4">Medium Low</option>
                     <option value="5" data-i18n="filter.5">Low</option>
                     <option value="6" data-i18n="filter.6">Very Low</option>
-		 			<option value="7" data-i18n="filter.7">Advanced Settings</option>
+                    <option value="7" data-i18n="filter.7">Advanced Settings</option>
                 </select>
             </dd>
         </dl>
     </div>
-  
+
     <div class="config_buttons">
-    	<a id="backup" class="config_button" href="#"  title="Backup to file"  data-i18n="button.backup">Backup</a>
-    	<a id="restore" class="config_button" href="#" title="Restore from file" data-i18n="button.restore">Restore</a>
-    	<a id="save" class="config_button" href="#" title="Save Settings to EEPROM" data-i18n="button.save">Save Settings</a>
+        <a id="backup" class="config_button" href="#" title="Backup to file" data-i18n="button.backup">Backup</a>
+        <a id="restore" class="config_button" href="#" title="Restore from file" data-i18n="button.restore">Restore</a>
+        <a id="save" class="config_button" href="#" title="Save Settings to EEPROM" data-i18n="button.save">Save Settings</a>
     </div>
     <div class="clear-both"></div>
-    
+
     <div id="activation" style="display:none">
-    	<div data-i18n="[html]text.need-activation"></div>
-  		<div id="serial">
-  			<br/>
-  			<span id="SN2" class="uuid"></span>
-  		</div>	  	
-    	<br/><br/>
-    </div> 	
-    
+        <div data-i18n="[html]text.need-activation"></div>
+        <div id="serial">
+            <br/>
+            <span id="SN2" class="uuid"></span>
+        </div>
+        <br/>
+        <br/>
+    </div>
+
     <div id="upgrade_gui" style="display:none">
-    	<div data-i18n="[html]text.need-upgrade-gui"></div>
-    	<a class="external_link_button" href="http://kiss.flyduino.net/dwkb/mismatching-firmware-and-gui-versions/" target="_blank">For more information please visit http://kiss.flyduino.net/</a>
-    </div> 	
-    
+        <div data-i18n="[html]text.need-upgrade-gui"></div>
+        <a class="external_link_button" href="http://kiss.flyduino.net/dwkb/mismatching-firmware-and-gui-versions/" target="_blank">For more information please visit http://kiss.flyduino.net/</a>
+    </div>
+
     <div id="downgrade_gui" style="display:none">
-    	<div data-i18n="[html]text.need-downgrade-gui"></div>
-    	<a class="external_link_button" href="http://kiss.flyduino.net/dwkb/mismatching-firmware-and-gui-versions/" target="_blank">For more information please visit http://kiss.flyduino.net/</a>
-    </div> 
-</div>
+        <div data-i18n="[html]text.need-downgrade-gui"></div>
+        <a class="external_link_button" href="http://kiss.flyduino.net/dwkb/mismatching-firmware-and-gui-versions/" target="_blank">For more information please visit http://kiss.flyduino.net/</a>
+    </div>
