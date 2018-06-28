@@ -1,0 +1,7 @@
+## 2.0.7
+
+- Prepared for Frsky F-Port
+- Cleanups and bugfixes
+- Backup files are stores human-readable (thanks to zumbrunnen)
+- GUI remember window size and position
+- Add support for KISS 25A ESC (Single & 4-in1)

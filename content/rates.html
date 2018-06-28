@@ -1,55 +1,73 @@
 <div class="rates">
 	<div class="wrapper-narrow">
-    	<div class="receiver">
-        <div class="groupTitle" data-i18n="title.receiver">Receiver</div>
-        <div class="bars"></div>
-        
-        <div class="groupTitle" data-i18n="title.rates">Rates</div>
+		<div class="receiver">
+			<div class="groupTitle" data-i18n="title.receiver">Receiver</div>
+			<div class="bars"></div>
 
-        	<table class="rc_rates">
+			<div class="groupTitle" data-i18n="title.rates">Rates</div>
+
+			<table class="rc_rates">
 				<tr>
 					<th class="name"></th>
 					<th class="rate" data-i18n="column.rc-rate">RC Rate</th>
 					<th class="expo" data-i18n="column.rc-expo">Rate</th>
 					<th class="curve" data-i18n="column.rc-curve">RC Curve</th>
 				</tr>
-		<tr class="roll">
-			<td class="name" data-i18n="column.roll">Roll</td>
-			<td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-			<td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-			<td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-		</tr>
-		<tr class="pitch">
-			<td class="name" data-i18n="column.pitch">Pitch</td>
-			<td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-			<td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-			<td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-		</tr>
-		<tr class="yaw">
-			<td class="name"  data-i18n="column.yaw">Yaw</td>
-			<td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-			<td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-			<td><input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" /></td>
-		</tr>
-	</table>
-	
-    </div>
-    
-    </div>
+				<tr class="roll">
+					<td class="name" data-i18n="column.roll">Roll</td>
+					<td>
+						<input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+					</td>
+					<td>
+						<input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+					</td>
+					<td>
+						<input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+					</td>
+				</tr>
+				<tr class="pitch">
+					<td class="name" data-i18n="column.pitch">Pitch</td>
+					<td>
+						<input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+					</td>
+					<td>
+						<input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+					</td>
+					<td>
+						<input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+					</td>
+				</tr>
+				<tr class="yaw">
+					<td class="name" data-i18n="column.yaw">Yaw</td>
+					<td>
+						<input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+					</td>
+					<td>
+						<input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+					</td>
+					<td>
+						<input type="number" lang="en-150" step="0.01" min="0" max="65" data-step="0.01" data-precision="2" />
+					</td>
+				</tr>
+			</table>
+
+		</div>
+
+	</div>
 
 	<div class="wrapper-wide">
-        <div class="groupTitle"  data-i18n="title.charts">Charts</div>
-	<div id="charts">
-		<div id="rates_chart_roll" class="rc_chart"></div>
-		<div id="rates_chart_pitch" class="rc_chart"></div><br/>
-		<div id="rates_chart_yaw" class="rc_chart"></div>
-		<div id="model" class="rc_chart"></div>
-	</div>
-    </div>
-
-		<div class="config_buttons">
-			<a id="save" class="config_button" href="#"
-				title="Save Settings to EEPROM" data-i18n="button.save">Save Settings</a>
+		<div class="groupTitle" data-i18n="title.charts">Charts</div>
+		<div id="charts">
+			<div id="rates_chart_roll" class="rc_chart"></div>
+			<div id="rates_chart_pitch" class="rc_chart"></div>
+			<br/>
+			<div id="rates_chart_yaw" class="rc_chart"></div>
+			<div id="model" class="rc_chart"></div>
 		</div>
-		<div class="clear-both"></div>
+	</div>
+
+	<div class="config_buttons">
+		<a id="save" class="config_button" href="#" title="Save Settings to EEPROM" data-i18n="button.save">Save Settings</a>
+	</div>
+	<div class="clear-both"></div>
 </div>

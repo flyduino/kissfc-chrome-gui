@@ -5,16 +5,16 @@ CONTENT.configuration = {
     PRESET_PIDs: [],
 };
 
-CONTENT.configuration.initialize = function(callback) {
+CONTENT.configuration.initialize = function (callback) {
     var self = this;
 
-    GUI.switchContent('configuration', function() {
-         kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-            GUI.load("./content/configuration.html", function() {
-                  htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
+    GUI.switchContent('configuration', function () {
+        kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+            GUI.load("./content/configuration.html", function () {
+                htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
             });
         });
-     });
+    });
 
     function copyTextToClipboard(text) {
         var copyFrom = $('<textarea/>');
@@ -36,7 +36,7 @@ CONTENT.configuration.initialize = function(callback) {
             type: 'saveFile',
             suggestedName: 'kissfc-backup',
             accepts: accepts
-        }, function(fileEntry) {
+        }, function (fileEntry) {
             if (chrome.runtime.lastError) {
                 console.error(chrome.runtime.lastError.message);
                 return;
@@ -49,34 +49,34 @@ CONTENT.configuration.initialize = function(callback) {
 
             chosenFileEntry = fileEntry;
 
-            chrome.fileSystem.getDisplayPath(chosenFileEntry, function(path) {
+            chrome.fileSystem.getDisplayPath(chosenFileEntry, function (path) {
                 console.log('Export to file: ' + path);
             });
 
-            chrome.fileSystem.getWritableEntry(chosenFileEntry, function(fileEntryWritable) {
+            chrome.fileSystem.getWritableEntry(chosenFileEntry, function (fileEntryWritable) {
 
-                chrome.fileSystem.isWritableEntry(fileEntryWritable, function(isWritable) {
+                chrome.fileSystem.isWritableEntry(fileEntryWritable, function (isWritable) {
                     if (isWritable) {
                         chosenFileEntry = fileEntryWritable;
                         var config = kissProtocol.data[kissProtocol.GET_SETTINGS];
-                        var json = JSON.stringify(config, function(k, v) {
+                        var json = JSON.stringify(config, function (k, v) {
                             if (k === 'buffer' || k === 'isActive' || k === 'actKey' || k === 'SN') {
                                 return undefined;
                             } else {
                                 return v;
                             }
-                        });
+                        },2);
                         var blob = new Blob([json], {
                             type: 'text/plain'
                         });
 
-                        chosenFileEntry.createWriter(function(writer) {
-                            writer.onerror = function(e) {
+                        chosenFileEntry.createWriter(function (writer) {
+                            writer.onerror = function (e) {
                                 console.error(e);
                             };
 
                             var truncated = false;
-                            writer.onwriteend = function() {
+                            writer.onwriteend = function () {
                                 if (!truncated) {
                                     truncated = true;
                                     writer.truncate(blob.size);
@@ -86,7 +86,7 @@ CONTENT.configuration.initialize = function(callback) {
                             };
 
                             writer.write(blob);
-                        }, function(e) {
+                        }, function (e) {
                             console.error(e);
                         });
                     } else {
@@ -107,7 +107,7 @@ CONTENT.configuration.initialize = function(callback) {
         chrome.fileSystem.chooseEntry({
             type: 'openFile',
             accepts: accepts
-        }, function(fileEntry) {
+        }, function (fileEntry) {
             if (chrome.runtime.lastError) {
                 console.error(chrome.runtime.lastError.message);
                 return;
@@ -120,21 +120,21 @@ CONTENT.configuration.initialize = function(callback) {
 
             chosenFileEntry = fileEntry;
 
-            chrome.fileSystem.getDisplayPath(chosenFileEntry, function(path) {
+            chrome.fileSystem.getDisplayPath(chosenFileEntry, function (path) {
                 console.log('Import config from: ' + path);
             });
 
-            chosenFileEntry.file(function(file) {
+            chosenFileEntry.file(function (file) {
                 var reader = new FileReader();
 
-                reader.onprogress = function(e) {
+                reader.onprogress = function (e) {
                     if (e.total > 4096) {
                         console.log('File limit (4 KB) exceeded, aborting');
                         reader.abort();
                     }
                 };
 
-                reader.onloadend = function(e) {
+                reader.onloadend = function (e) {
                     if (e.total != 0 && e.total == e.loaded) {
                         console.log('Read OK');
                         try {
@@ -154,60 +154,84 @@ CONTENT.configuration.initialize = function(callback) {
     function htmlLoaded(data) {
         validateBounds('#content input[type="number"]');
         var settingsFilled = 0;
-        
+
         console.log("RECEIVED:");
         console.log(data);
 
 
         $('input[name="3dMode"]').removeAttr("disabled");
-        
-            kissProtocol.send(kissProtocol.GET_INFO, [0x21], function() {
-                var info = kissProtocol.data[kissProtocol.GET_INFO];
-                $('#version').text(info.firmvareVersion);
-		if((data['CopterType'] == 7 || data['CopterType'] == 8) && (info.firmvareVersion.indexOf("KISSFC") != -1 && info.firmvareVersion.indexOf("F7") == -1)){
-		    $('#pentaNoteFC').show();
-		}
-		if((data['CopterType'] == 7 || data['CopterType'] == 8) && (info.firmvareVersion.indexOf("KISSCC") != -1)){
-		    $('#pentaNoteCC').show();
-		}
-            });
+
+        kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () {
+            var info = kissProtocol.data[kissProtocol.GET_INFO];
+            $('#version').text(info.firmvareVersion);
+            if ((data['CopterType'] == 7 || data['CopterType'] == 8) && (info.firmvareVersion.indexOf("KISSFC") != -1 && info.firmvareVersion.indexOf("F7") == -1)) {
+                $('#pentaNoteFC').show();
+            }
+            if ((data['CopterType'] == 7 || data['CopterType'] == 8) && (info.firmvareVersion.indexOf("KISSCC") != -1)) {
+                $('#pentaNoteCC').show();
+            }
+        });
 
 
-            document.getElementById('ppmadd1').style.display = "inline";
-            document.getElementById('ppmadd2').style.display = "inline";
-            document.getElementById('mpxSRXL').style.display = "inline";
-        
 
-            document.getElementById('jrxbusb').style.display = "inline";
-        
-        if (data['vtxType']==0) {
+        // Begin show available RX protocol
+        if (data['ver'] < 109) { //TODO - Check version
+            document.getElementById('rxpwm1').style.display = "inline";
+        }
+        document.getElementById('rxppm1').style.display = "inline";
+        document.getElementById('rxppm2').style.display = "inline";
+        document.getElementById('rxppm3').style.display = "inline";
+        document.getElementById('rxppm4').style.display = "inline";
+        document.getElementById('rxppm5').style.display = "inline";
+        document.getElementById('rxppm6').style.display = "inline";
+        document.getElementById('rxdsm1').style.display = "inline";
+        document.getElementById('rxdsm2').style.display = "inline";
+        document.getElementById('rxsbus1').style.display = "inline";
+        document.getElementById('rxsbus2').style.display = "inline";
+        document.getElementById('rxsbus3').style.display = "inline";
+        document.getElementById('rxsumd1').style.display = "inline";
+        document.getElementById('rxexbus1').style.display = "inline";
+        document.getElementById('rxsrxl1').style.display = "inline";
+        document.getElementById('rxxbusb1').style.display = "inline";
+        if (data['ver'] >= 109) {
+            document.getElementById('rxcrsf1').style.display = "inline";
+        }
+        if (data['ver'] >= 112) {
+            document.getElementById('rxfport1').style.display = "inline";
+            document.getElementById('rxfport2').style.display = "inline";
+
+        }
+
+
+
+        if (data['vtxType'] == 0) {
             $('#aux5').hide();
             $('#aux6').hide();
             $('#aux7').hide();
         }
-        if (data['ver'] < 109){
+        if (data['ver'] < 109) {
             $("select[name='outputMode'] option[value='6']").remove();
             $("select[name='outputMode'] option[value='7']").remove();
             $("select[name='lpf'] option[value='7']").remove();
         } else {
-		kissProtocol.send(kissProtocol.GET_INFO, [0x21], function(){
-			var info = kissProtocol.data[kissProtocol.GET_INFO];
-			var FCinfo = info.firmvareVersion.split(/-/g);
+            kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () {
+                var info = kissProtocol.data[kissProtocol.GET_INFO];
+                var FCinfo = info.firmvareVersion.split(/-/g);
 
-			if(FCinfo[0].length < 7 || info.firmvareVersion.indexOf("KISSFC") == -1){
-				$("select[name='outputMode'] option[value='6']").remove();
-			}
-			if(FCinfo[0].length < 9 || info.firmvareVersion.indexOf("KISSFC") == -1){
-				$("select[name='outputMode'] option[value='7']").remove();
-			}
-			if (FCinfo[0]=='KISSFCV2F7') {
-			    $("li[data-name='fc_flasher']").show();
-			} else {
-			    $("li[data-name='fc_flasher']").remove();
-			}
-		});
-	}
-        
+                if (FCinfo[0].length < 7 || info.firmvareVersion.indexOf("KISSFC") == -1) {
+                    $("select[name='outputMode'] option[value='6']").remove();
+                }
+                if (FCinfo[0].length < 9 || info.firmvareVersion.indexOf("KISSFC") == -1) {
+                    $("select[name='outputMode'] option[value='7']").remove();
+                }
+                if (FCinfo[0] == 'KISSFCV2F7') {
+                    $("li[data-name='fc_flasher']").show();
+                } else {
+                    $("li[data-name='fc_flasher']").remove();
+                }
+            });
+        }
+
         var MCUid = '';
         for (var i = 0; i < 4; i++) {
             if (data['SN'][i] < 16) MCUid += '0';
@@ -226,12 +250,13 @@ CONTENT.configuration.initialize = function(callback) {
 
         var sntext = MCUid + ' (' + (data['isActive'] ? $.i18n('text.activated') : $.i18n('text.not-activated')) + ')';
         $('#SN').text(sntext);
-        $('#SN2').text($.i18n("text.serial-number")+": " + MCUid);
+        $('#SN2').text($.i18n("text.serial-number") + ": " + MCUid);
+        $('#eeprom1').text(data['ver']);
 
-        $('#SN').on('click', function(e) {
+        $('#SN').on('click', function (e) {
             copyTextToClipboard(MCUid);
             $('#SN').text($.i18n("text.serial-clipboard"));
-            setTimeout(function() {
+            setTimeout(function () {
                 $('#SN').text(sntext);
             }, 1000);
         });
@@ -250,7 +275,7 @@ CONTENT.configuration.initialize = function(callback) {
             name: $.i18n("mixer.5")
         }, {
             name: $.i18n("mixer.6")
-	}, {
+        }, {
             name: $.i18n("mixer.7")
         }, {
             name: $.i18n("mixer.8")
@@ -258,26 +283,31 @@ CONTENT.configuration.initialize = function(callback) {
 
         var mixer_list_e = $('select.mixer');
         for (var i = 0; i < mixerList.length; i++) {
-            mixer_list_e.append('<option data-i18n="mixer.'+(i)+'" value="' + (i) + '">' + mixerList[i].name + '</option>');
+            mixer_list_e.append('<option data-i18n="mixer.' + (i) + '" value="' + (i) + '">' + mixerList[i].name + '</option>');
         }
 
-        mixer_list_e.on('change', function() {
+        if (data["ver"] < 110) {
+            $("select[name='mixer'] option[value='7']").remove();
+            $("select[name='mixer'] option[value='8']").remove();
+        }
+
+        mixer_list_e.on('change', function () {
             var val = parseInt($(this).val());
             contentChange();
-            if (val==0) $(".tricopter").show(); else $(".tricopter").hide();
-	    if (val == 7 || val == 8){
-		if(val != 8){
-		    $("#aux11 > dt").text($.i18n("column.PentaForward"));
-		}else{
-		    $("#aux11 > dt").text($.i18n("column.PentaHover"));
-		}
-		$("#aux11").show(); 
-		$('input[name="3dMode"]').prop('disabled', true);
-	    }else{
-		$("#aux11").hide();
-		$('input[name="3dMode"]').prop('disabled', false);
-	    }
-            $('.mixerPreview img').attr('src', './images/mixer/' + val +(data['reverseMotors']==0?'':'inv')+".png");
+            if (val == 0) $(".tricopter").show(); else $(".tricopter").hide();
+            if (val == 7 || val == 8) {
+                if (val != 8) {
+                    $("#aux11 > dt").text($.i18n("column.PentaForward"));
+                } else {
+                    $("#aux11 > dt").text($.i18n("column.PentaHover"));
+                }
+                $("#aux11").show();
+                $('input[name="3dMode"]').prop('disabled', true);
+            } else {
+                $("#aux11").hide();
+                $('input[name="3dMode"]').prop('disabled', false);
+            }
+            $('.mixerPreview img').attr('src', './images/mixer/' + val + (data['reverseMotors'] == 0 ? '' : 'inv') + ".png");
         });
 
         // apply configuration values to GUI elements
@@ -285,54 +315,54 @@ CONTENT.configuration.initialize = function(callback) {
         mixer_list_e.val(data['CopterType']).change();
         $('.rxType').val(data['RXType']);
 
-        $('.rxType').on('change', function() {
+        $('.rxType').on('change', function () {
             contentChange();
         });
 
         // general settings
         $('input[name="minThrottle"]').val(data['MinThrottle16']);
-        $('input[name="minThrottle"]').on('input', function() {
+        $('input[name="minThrottle"]').on('input', function () {
             contentChange();
         });
         $('input[name="maxThrottle"]').val(data['MaxThrottle16']);
-        $('input[name="maxThrottle"]').on('input', function() {
+        $('input[name="maxThrottle"]').on('input', function () {
             contentChange();
         });
         $('input[name="minCommand"]').val(data['MinCommand16']);
-        $('input[name="minCommand"]').on('input', function() {
+        $('input[name="minCommand"]').on('input', function () {
             contentChange();
         });
         $('input[name="midCommand"]').val(data['MidCommand16']);
-        $('input[name="midCommand"]').on('input', function() {
+        $('input[name="midCommand"]').on('input', function () {
             contentChange();
         });
         $('input[name="TYmid"]').val(data['TYmid16']);
-        $('input[name="TYmid"]').on('input', function() {
+        $('input[name="TYmid"]').on('input', function () {
             contentChange();
         });
         $('input[name="TYinv"]').prop('checked', data['TYinv8']);
-        $('input[name="TYinv"]').on('input', function() {
+        $('input[name="TYinv"]').on('input', function () {
             contentChange();
         });
-        
+
         var outputMode = data['ESConeshot125'];
 
-            $("#outputMode").val(outputMode);       
-            $("#outputMode").on('change', function() {
-                contentChange();
-            });  
-        
+        $("#outputMode").val(outputMode);
+        $("#outputMode").on('change', function () {
+            contentChange();
+        });
+
 
         $('input[name="failsaveseconds"]').val(data['failsaveseconds']);
-        $('input[name="failsaveseconds"]').on('input', function() {
+        $('input[name="failsaveseconds"]').on('input', function () {
             contentChange();
         });
 
 
         $('input[name="3dMode"]').prop('checked', data['Active3DMode']);
         if (data['Active3DMode']) $("#aux4").show(); else $("#aux4").hide();
-        $('input[name="3dMode"]').on('click', function() {
-             if ($(this).prop('checked')) $("#aux4").show(); else $("#aux4").hide();
+        $('input[name="3dMode"]').on('click', function () {
+            if ($(this).prop('checked')) $("#aux4").show(); else $("#aux4").hide();
             contentChange();
         });
 
@@ -345,7 +375,7 @@ CONTENT.configuration.initialize = function(callback) {
         $('tr.roll input').eq(4).val(data['RPY_Expo'][0]);
         $('tr.roll input').eq(5).val(data['RPY_Curve'][0]);
         for (var i = 0; i < 6; i++) {
-            $('tr.roll input').eq(i).on('input', function() {
+            $('tr.roll input').eq(i).on('input', function () {
                 contentChange();
             });
         }
@@ -358,7 +388,7 @@ CONTENT.configuration.initialize = function(callback) {
         $('tr.pitch input').eq(4).val(data['RPY_Expo'][1]);
         $('tr.pitch input').eq(5).val(data['RPY_Curve'][1]);
         for (var i = 0; i < 6; i++) {
-            $('tr.pitch input').eq(i).on('input', function() {
+            $('tr.pitch input').eq(i).on('input', function () {
                 contentChange();
             });
         }
@@ -371,7 +401,7 @@ CONTENT.configuration.initialize = function(callback) {
         $('tr.yaw input').eq(4).val(data['RPY_Expo'][2]);
         $('tr.yaw input').eq(5).val(data['RPY_Curve'][2]);
         for (var i = 0; i < 6; i++) {
-            $('tr.yaw input').eq(i).on('input', function() {
+            $('tr.yaw input').eq(i).on('input', function () {
                 contentChange();
             });
         }
@@ -381,7 +411,7 @@ CONTENT.configuration.initialize = function(callback) {
         $('tr.TPA input').eq(1).val(data['TPA'][1]);
         $('tr.TPA input').eq(2).val(data['TPA'][2]);
         for (var i = 0; i < 3; i++) {
-            $('tr.TPA input').eq(i).on('input', function() {
+            $('tr.TPA input').eq(i).on('input', function () {
                 contentChange();
             });
         }
@@ -391,67 +421,78 @@ CONTENT.configuration.initialize = function(callback) {
         $('tr.level input').eq(1).val(data['A_I']);
         $('tr.level input').eq(2).val(data['A_D']);
         $('tr.level input').eq(3).val(Math.round(data['maxAng']));
-        
+
         for (var i = 0; i < 4; i++) {
-            $('tr.level input').eq(i).on('input', function() {
+            $('tr.level input').eq(i).on('input', function () {
                 contentChange();
             });
         }
 
-        $("#aux0").kissAux({ name: $.i18n("column.arm"),    
-                             change: function() { contentChange(); },
-                             value: data['AUX'][0]
-                           });    
-        $("#aux1").kissAux({ name: $.i18n("column.level"),  
-                             change: function() { contentChange(); },
-                             value: data['AUX'][1]
-                           });    
-        $("#aux2").kissAux({ name: $.i18n("column.buzzer"), 
-                              change: function() { contentChange(); },
-                              value: data['AUX'][2]
-                            });    
-        $("#aux3").kissAux({ name: $.i18n("column.led"),    
-                             change: function() { contentChange(); },
-                             knob: true,
-                             value: data['AUX'][3]
-                           });    
-        $("#aux4").kissAux({ name: $.i18n("column.3d"),    
-                             change: function() { contentChange(); },
-                             value: data['AUX'][4]
-                           });
+        $("#aux0").kissAux({
+            name: $.i18n("column.arm"),
+            change: function () { contentChange(); },
+            value: data['AUX'][0]
+        });
+        $("#aux1").kissAux({
+            name: $.i18n("column.level"),
+            change: function () { contentChange(); },
+            value: data['AUX'][1]
+        });
+        $("#aux2").kissAux({
+            name: $.i18n("column.buzzer"),
+            change: function () { contentChange(); },
+            value: data['AUX'][2]
+        });
+        $("#aux3").kissAux({
+            name: $.i18n("column.led"),
+            change: function () { contentChange(); },
+            knob: true,
+            value: data['AUX'][3]
+        });
+        $("#aux4").kissAux({
+            name: $.i18n("column.3d"),
+            change: function () { contentChange(); },
+            value: data['AUX'][4]
+        });
 
-        $("#aux5").kissAux({ name: $.i18n("column.vtx-power"),    
-            change: function() { contentChange(); },
+        $("#aux5").kissAux({
+            name: $.i18n("column.vtx-power"),
+            change: function () { contentChange(); },
             knob: true,
             value: data['AUX'][5]
         });
-        
-        $("#aux6").kissAux({ name: $.i18n("column.vtx-band"),    
-            change: function() { contentChange(); },
+
+        $("#aux6").kissAux({
+            name: $.i18n("column.vtx-band"),
+            change: function () { contentChange(); },
             value: data['AUX'][6]
         });
-        
-        $("#aux7").kissAux({ name: $.i18n("column.vtx-channel"),    
-            change: function() { contentChange(); },
+
+        $("#aux7").kissAux({
+            name: $.i18n("column.vtx-channel"),
+            change: function () { contentChange(); },
             value: data['AUX'][7]
         });
-        
+
         if (data['ver'] > 108) {
-            $("#aux8").kissAux({ name: $.i18n("column.turtle-mode"),    
-                change: function() { contentChange(); },
+            $("#aux8").kissAux({
+                name: $.i18n("column.turtle-mode"),
+                change: function () { contentChange(); },
                 value: data['AUX'][8]
             });
         } else {
             $("#aux8").hide();
         }
-        
+
         if (data['ver'] > 109) {
-            $("#aux9").kissAux({ name: $.i18n("column.runcam"),    
-                change: function() { contentChange(); },
+            $("#aux9").kissAux({
+                name: $.i18n("column.runcam"),
+                change: function () { contentChange(); },
                 value: data['AUX'][9]
             });
-            $("#aux10").kissAux({ name: $.i18n("column.led-brightness"),    
-                change: function() { contentChange(); },
+            $("#aux10").kissAux({
+                name: $.i18n("column.led-brightness"),
+                change: function () { contentChange(); },
                 value: data['AUX'][10],
                 knob: true
             });
@@ -460,91 +501,93 @@ CONTENT.configuration.initialize = function(callback) {
             $("#aux10").hide();
         }
         if (data['ver'] > 110) {
-	    if(data['CopterType'] != 8){
-		    $("#aux11").kissAux({ name: $.i18n("column.PentaForward"),    
-			change: function() { contentChange(); },
-			value: data['AUX'][11],
-			knobOnly: true
-		    });
-	    }else{
-		    $("#aux11").kissAux({ name: $.i18n("column.PentaHover"),    
-			change: function() { contentChange(); },
-			value: data['AUX'][11],
-			knobOnly: true
-		    });
-	    }
-	}
-	if(data['CopterType'] == 7 || data['CopterType'] == 8) $("#aux11").show();
+            if (data['CopterType'] != 8) {
+                $("#aux11").kissAux({
+                    name: $.i18n("column.PentaForward"),
+                    change: function () { contentChange(); },
+                    value: data['AUX'][11],
+                    knobOnly: true
+                });
+            } else {
+                $("#aux11").kissAux({
+                    name: $.i18n("column.PentaHover"),
+                    change: function () { contentChange(); },
+                    value: data['AUX'][11],
+                    knobOnly: true
+                });
+            }
+        }
+        if (data['CopterType'] == 7 || data['CopterType'] == 8) $("#aux11").show();
         else $("#aux11").hide();
-	
-	
-	
-	
-        
+
+
+
+
+
         if (data['ver'] < 109) {
             $('select[name="lpf"]').val(data['LPF']);
         } else {
-            if (data['LPF'] == data['DLpF'] && data['LPF'] == data['yawLpF']){
+            if (data['LPF'] == data['DLpF'] && data['LPF'] == data['yawLpF']) {
                 $('select[name="lpf"]').val(data['LPF']);
             } else {
                 $('select[name="lpf"]').val(7);
             }
-	}
-        $('select[name="lpf"]').on('change', function() {
+        }
+        $('select[name="lpf"]').on('change', function () {
             contentChange();
         });
-         
+
         // Temp fix
         if (typeof androidOTGSerial !== 'undefined') {
             $('#backup').hide();
             $('#restore').hide();
         }
-        
-        if (data.lipoConnected==1) {
+
+        if (data.lipoConnected == 1) {
             $(".unsafe").addClass("unsafe_active");
         } else {
             $(".unsafe").removeClass("unsafe_active");
         }
         $(".unsafe_active").prop('disabled', true);
-        
-//        $("input,select").on("change", function() {
-//            contentChange(); 
-//        });
-        
-        
-           
-        if (data['ver']>MAX_CONFIG_VERSION) {
+
+        //        $("input,select").on("change", function() {
+        //            contentChange(); 
+        //        });
+
+
+
+        if (data['ver'] > MAX_CONFIG_VERSION) {
             $("#navigation").hide();
-            $("#upgrade_gui").kissWarning({});  
+            $("#upgrade_gui").kissWarning({});
             $("#upgrade_gui").show();
-        } else if (data['ver']<MIN_CONFIG_VERSION) {
+        } else if (data['ver'] < MIN_CONFIG_VERSION) {
             $("#navigation").hide();
-            $("#downgrade_gui").kissWarning({});  
+            $("#downgrade_gui").kissWarning({});
             $("#downgrade_gui").show();
         } else if (!data['isActive']) {
             $("#navigation").hide();
-            
+
             $("#activation").kissWarning({
-                title:$.i18n("title.warning"),
-                button:$.i18n("button.activate"), 
-                action: function() {
+                title: $.i18n("title.warning"),
+                button: $.i18n("button.activate"),
+                action: function () {
                     // Activation procedure
                     $(".button", "#activation").hide();
                     $.ajax({
                         url: 'http://ultraesc.de/KISSFC/getActivation/index.php?SN=' + MCUid + '&VER=' + data['ver'],
                         cache: false,
                         dataType: "text",
-                        success: function(key) {
+                        success: function (key) {
                             console.log('Got activation code ' + key);
                             data['actKey'] = parseInt(key);
                             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
-                            kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-                                   $('#content').load("./content/configuration.html", function() {
-                                       htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
-                                   });
+                            kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+                                $('#content').load("./content/configuration.html", function () {
+                                    htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
+                                });
                             });
                         },
-                        error: function() {
+                        error: function () {
                             $(".button", "#activation").show();
                             console.log('getting activation code failed');
                             data['actKey'] = 0;
@@ -552,12 +595,12 @@ CONTENT.configuration.initialize = function(callback) {
                         }
                     });
                 }
-            }); 
+            });
             $("#activation").show();
         } else {
             $("#navigation").show();
         }
-              
+
         function grabData() {
             // uav type and receiver
             data['CopterType'] = parseInt($('select.mixer').val());
@@ -570,15 +613,15 @@ CONTENT.configuration.initialize = function(callback) {
             data['MidCommand16'] = parseInt($('input[name="midCommand"]').val());
             data['TYmid16'] = parseInt($('input[name="TYmid"]').val());
             data['TYinv8'] = parseInt($('input[name="TYinv"]').prop('checked') ? 1 : 0);
-            
-             var outputMode = 0;
 
-                outputMode = parseInt($('select[name="outputMode"]').val());
-                data['ESConeshot125'] = outputMode;
-                data['ESConeshot42'] = 0;
-           
+            var outputMode = 0;
+
+            outputMode = parseInt($('select[name="outputMode"]').val());
+            data['ESConeshot125'] = outputMode;
+            data['ESConeshot42'] = 0;
+
             data['Active3DMode'] = parseInt($('input[name="3dMode"]').prop('checked') ? 1 : 0);
-	    if( data['CopterType'] == 7 ||  data['CopterType'] == 8) data['Active3DMode'] = 0;
+            if (data['CopterType'] == 7 || data['CopterType'] == 8) data['Active3DMode'] = 0;
             data['failsaveseconds'] = parseInt($('input[name="failsaveseconds"]').val());
             data['BoardRotation'] = 0;
 
@@ -617,9 +660,9 @@ CONTENT.configuration.initialize = function(callback) {
             data['A_I'] = parseFloat($('tr.level input').eq(1).val());
             data['A_D'] = parseFloat($('tr.level input').eq(2).val());
             data['maxAng'] = parseFloat($('tr.level input').eq(3).val());
-	    
-            if (data['ver'] < 109){
-               data['LPF'] = parseInt($('select[name="lpf"]').val());
+
+            if (data['ver'] < 109) {
+                data['LPF'] = parseInt($('select[name="lpf"]').val());
             } else {
                 if (parseInt($('select[name="lpf"]').val()) != 7) {
                     data['LPF'] = parseInt($('select[name="lpf"]').val());
@@ -627,42 +670,42 @@ CONTENT.configuration.initialize = function(callback) {
                     data['DLpF'] = parseInt($('select[name="lpf"]').val());
                 }
             }
-            
-            data['AUX'][0]=$("#aux0").kissAux('value');
-            data['AUX'][1]=$("#aux1").kissAux('value');
-            data['AUX'][2]=$("#aux2").kissAux('value');
-            data['AUX'][3]=$("#aux3").kissAux('value');
-            data['AUX'][4]=data['Active3DMode'] ? $("#aux4").kissAux('value') : 0;
-            data['AUX'][5]=$("#aux5").kissAux('value');
-            data['AUX'][6]=$("#aux6").kissAux('value');
-            data['AUX'][7]=$("#aux7").kissAux('value');
-            
-            if (data['ver'] >108) {
-                data['AUX'][8]=$("#aux8").kissAux('value');
+
+            data['AUX'][0] = $("#aux0").kissAux('value');
+            data['AUX'][1] = $("#aux1").kissAux('value');
+            data['AUX'][2] = $("#aux2").kissAux('value');
+            data['AUX'][3] = $("#aux3").kissAux('value');
+            data['AUX'][4] = data['Active3DMode'] ? $("#aux4").kissAux('value') : 0;
+            data['AUX'][5] = $("#aux5").kissAux('value');
+            data['AUX'][6] = $("#aux6").kissAux('value');
+            data['AUX'][7] = $("#aux7").kissAux('value');
+
+            if (data['ver'] > 108) {
+                data['AUX'][8] = $("#aux8").kissAux('value');
             }
-            
-            if (data['ver'] >109) {
-                data['AUX'][9]=$("#aux9").kissAux('value');
-                data['AUX'][10]=$("#aux10").kissAux('value');
+
+            if (data['ver'] > 109) {
+                data['AUX'][9] = $("#aux9").kissAux('value');
+                data['AUX'][10] = $("#aux10").kissAux('value');
             }
-	    
-	    if (data['ver'] > 110 && (data['CopterType'] == 7 || data['CopterType'] == 8)) {
-		data['AUX'][11]=$("#aux11").kissAux('value');
-	    }
+
+            if (data['ver'] > 110 && (data['CopterType'] == 7 || data['CopterType'] == 8)) {
+                data['AUX'][11] = $("#aux11").kissAux('value');
+            }
         }
         settingsFilled = 1;
 
         function contentChange() {
             if (settingsFilled) {
                 $('#save').addClass("saveAct");
-            }    
+            }
         }
 
         $.ajax({
             url: 'http://ultraesc.de/PREPID/?getPIDs',
             cache: false,
             dataType: "text",
-            success: function(data) {
+            success: function (data) {
                 console.log('userPIDs request success');
                 var uPIDSettings = data.split('[');
                 for (var i = 1; i < uPIDSettings.length; i++) {
@@ -684,7 +727,7 @@ CONTENT.configuration.initialize = function(callback) {
                     userPIDselect.append('<option value="' + i + '">' + newSetName + '</option>');
                 }
             },
-            error: function() {
+            error: function () {
                 console.log('userPIDs request failed');
                 $('#userSel').append('<option value="0">could not connect to server</option>');
             }
@@ -695,7 +738,7 @@ CONTENT.configuration.initialize = function(callback) {
             url: './PRESET_PID.txt',
             cache: false,
             dataType: "text",
-            success: function(data) {
+            success: function (data) {
                 console.log('presetPIDs request success');
                 var PIDSettings = data.split('[');
                 for (var i = 1; i < PIDSettings.length; i++) {
@@ -712,7 +755,7 @@ CONTENT.configuration.initialize = function(callback) {
                     userPIDselect.append('<option value="' + i + '">' + self.PRESET_PIDs[i].name + '</option>');
                 }
             },
-            error: function() {
+            error: function () {
                 console.log('presetPIDs request failed');
                 $('#presetSel').append('<option value="0">could not load PESET_PID.txt</option>');
             }
@@ -724,18 +767,18 @@ CONTENT.configuration.initialize = function(callback) {
                 url: 'http://ultraesc.de/KISSFC/getActivation/index.php?SN=' + MCUid + '&VER=' + data['ver'],
                 cache: false,
                 dataType: "text",
-                success: function(key) {
+                success: function (key) {
                     console.log('Got activation code ' + key);
                     data['actKey'] = parseInt(key);
                 },
-                error: function() {
+                error: function () {
                     console.log('getting activation code failed');
                     data['actKey'] = 0;
                 }
 
             });
         }
-        $('#prePID').change(function() {
+        $('#prePID').change(function () {
             if (document.getElementById('prePID').value == 'preset') {
                 document.getElementById('userSel').style.display = 'none';
                 document.getElementById('presetSel').style.display = 'inline-block';
@@ -748,18 +791,18 @@ CONTENT.configuration.initialize = function(callback) {
                 shareButton.innerHTML = 'Use';
             }
         });
-        $('#presetSel').change(function() {
+        $('#presetSel').change(function () {
             if (document.getElementById('presetSel').value == 'Preset1') {
                 shareButton.innerHTML = 'share';
             } else {
                 shareButton.innerHTML = 'use';
             }
         });
-        $('#userSel').change(function() {
+        $('#userSel').change(function () {
             shareButton.innerHTML = 'use';
         });
 
-        $('#shareButton').click(function() {
+        $('#shareButton').click(function () {
             if (document.getElementById('shareButton').innerHTML == 'use') {
                 var useVals = [];
                 if (document.getElementById('prePID').value == 'preset') {
@@ -826,25 +869,25 @@ CONTENT.configuration.initialize = function(callback) {
             }
         });
 
-        $('#save').on('click', function() {
+        $('#save').on('click', function () {
             grabData();
             $('#save').removeClass("saveAct");
             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
-                 kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function() {
-                       GUI.load("./content/configuration.html", function() {
-                            htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
-                        });
-                 });
+            kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+                GUI.load("./content/configuration.html", function () {
+                    htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
+                });
+            });
         });
 
-        $('#backup').on('click', function() {
+        $('#backup').on('click', function () {
             grabData();
             backupConfig();
         });
 
-        $('#restore').on('click', function() {
-            restoreConfig(function(config) {
-                GUI.load("./content/configuration.html", function() {
+        $('#restore').on('click', function () {
+            restoreConfig(function (config) {
+                GUI.load("./content/configuration.html", function () {
                     var v = +kissProtocol.data[kissProtocol.GET_SETTINGS]['ver'];
                     var tmp = $.extend({}, kissProtocol.data[kissProtocol.GET_SETTINGS], config);
                     kissProtocol.upgradeTo104(tmp);
@@ -858,6 +901,6 @@ CONTENT.configuration.initialize = function(callback) {
     }
 };
 
-CONTENT.configuration.cleanup = function(callback) {
+CONTENT.configuration.cleanup = function (callback) {
     if (callback) callback();
 };

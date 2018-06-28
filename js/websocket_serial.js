@@ -1,37 +1,37 @@
 'use strict';
 
-var KISS_WIFI_ADDRESS="192.168.4.1";
+var KISS_WIFI_ADDRESS = "192.168.4.1";
 
-$.get("http://kiss.local/", function(data) {
-    KISS_WIFI_ADDRESS="kiss.local";
+$.get("http://kiss.local/", function (data) {
+    KISS_WIFI_ADDRESS = "kiss.local";
     $("#wifi").attr("href", "http://kiss.local/");
 })
 
 var websocketSerial = {
-    request:         null,
-    bytesReceived:   0,
-    bytesSent:       0,
-    failed:          0,
-    ws:                 null,
-    transmitting:    false,
-    outputBuffer:    [],
-    closeCallback:   false,
-    
-    onConnect : function(self, socket) {
+    request: null,
+    bytesReceived: 0,
+    bytesSent: 0,
+    failed: 0,
+    ws: null,
+    transmitting: false,
+    outputBuffer: [],
+    closeCallback: false,
+
+    onConnect: function (self, socket) {
         self.ws = socket;
         self.ws.binaryType = 'arraybuffer';
-        self.ws.onmessage = function (evt) { 
+        self.ws.onmessage = function (evt) {
             var received_msg = evt.data;
-              for (var i = (self.onReceive.listeners.length - 1); i >= 0; i--) {
-                  self.onReceive.listeners[i]({data:evt.data}); 
-              } 
+            for (var i = (self.onReceive.listeners.length - 1); i >= 0; i--) {
+                self.onReceive.listeners[i]({ data: evt.data });
+            }
         };
-                
-        self.ws.onclose = function() { 
-               console.log("Connection is closed..."); 
-               if (self.closeCallback) self.closeCallback({});
+
+        self.ws.onclose = function () {
+            console.log("Connection is closed...");
+            if (self.closeCallback) self.closeCallback({});
         };
-        
+
         if (!self.request.canceled) {
             self.bytesReceived = 0;
             self.bytesSent = 0;
@@ -43,33 +43,33 @@ var websocketSerial = {
             });
             if (self.request.callback) self.request.callback({});
         } else if (self.request.canceled) {
-           setTimeout(function initialization() {
+            setTimeout(function initialization() {
                 self.ws.close();
             }, 150);
-        } 
+        }
     },
 
     connect: function (path, options, callback) {
         var self = this;
         var request = {
-            path:           path,
-            options:        options,
-            callback:       callback,
-            fulfilled:      false,
-            canceled:       false,
-            binary : false
+            path: path,
+            options: options,
+            callback: callback,
+            fulfilled: false,
+            canceled: false,
+            binary: false
         };
         self.request = request;
-        var url = "ws://"+KISS_WIFI_ADDRESS+":81/";
+        var url = "ws://" + KISS_WIFI_ADDRESS + ":81/";
         console.log("Connecting to " + url);
         var ws1 = new WebSocket(url);
-            ws1.onopen = function() {
+        ws1.onopen = function () {
             self.onConnect(self, ws1);
         };
-        ws1.onerror = function(e) {
+        ws1.onerror = function (e) {
             console.log("Connection ERROR occured");
             GUI.switchToConnect();
-        };    
+        };
     },
     disconnect: function (callback) {
         var self = this;
@@ -102,7 +102,7 @@ var websocketSerial = {
     },
     send: function (data, callback) {
         var self = this;
-        self.outputBuffer.push({'data': data, 'callback': callback});
+        self.outputBuffer.push({ 'data': data, 'callback': callback });
 
         function send() {
             // store inside separate variables in case array gets destroyed
@@ -110,7 +110,7 @@ var websocketSerial = {
                 callback = self.outputBuffer[0].callback;
 
             self.dump('<-', data);
-            
+
             if (self.ws) {
                 if (self.request.binary) {
                     self.ws.send(data, { binary: true });
@@ -118,7 +118,7 @@ var websocketSerial = {
                     var str = self.bytesToHexString(data);
                     self.ws.send(str);
                 }
-                self.bytesSent += data.length; 
+                self.bytesSent += data.length;
                 if (callback) callback({});
                 self.outputBuffer.shift();
                 if (self.outputBuffer.length) {
@@ -133,7 +133,7 @@ var websocketSerial = {
                     send();
                 } else {
                     self.transmitting = false;
-                   }
+                }
             }
         }
         if (!self.transmitting) {
@@ -173,20 +173,20 @@ var websocketSerial = {
         this.outputBuffer = [];
         this.transmitting = false;
     },
-    byteToHex: function(byte) {
-        var hexChar = ["0", "1", "2", "3", "4", "5", "6", "7","8", "9", "A", "B", "C", "D", "E", "F"];
+    byteToHex: function (byte) {
+        var hexChar = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
         return hexChar[(byte >> 4) & 0x0f] + hexChar[byte & 0x0f];
     },
-    wordToHex: function(byte) {
-        return this.byteToHex(byte>>8 & 0xff)+this.byteToHex(byte & 0xff);
+    wordToHex: function (byte) {
+        return this.byteToHex(byte >> 8 & 0xff) + this.byteToHex(byte & 0xff);
     },
     bytesToHexString: function toHexString(data) {
         var view = new Uint8Array(data);
         var line = '';
-        for (var i = 0; i < view.length; i++) line +=  this.byteToHex(view[i]);
+        for (var i = 0; i < view.length; i++) line += this.byteToHex(view[i]);
         return line;
     },
-    dump: function(direction, data) {
+    dump: function (direction, data) {
         /*var view = new Uint8Array(data);
         var line = '';
         for (var i = 0; i < view.length; i++) {

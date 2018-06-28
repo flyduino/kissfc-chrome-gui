@@ -1,6 +1,6 @@
 'use strict';
 
-var PortHandler = new function() {
+var PortHandler = new function () {
     this.mainTimeoutReference;
     this.initialPorts = false;
 
@@ -8,15 +8,15 @@ var PortHandler = new function() {
     this.portRemovedCallbacks = [];
 }
 
-PortHandler.initialize = function() {
+PortHandler.initialize = function () {
     // start listening, check after 250ms
     this.check();
 };
 
-PortHandler.check = function() {
+PortHandler.check = function () {
     var self = this;
 
-    getAvailableSerialDevices(function(currentPorts) {
+    getAvailableSerialDevices(function (currentPorts) {
         // port got removed or initialPorts wasn't initialized yet
         if (self.arrayDifference(self.initialPorts, currentPorts).length > 0 || !self.initialPorts) {
             var removedPorts = self.arrayDifference(self.initialPorts, currentPorts);
@@ -42,7 +42,7 @@ PortHandler.check = function() {
                     $("#portArea").children().removeClass('flashing-in-progress');
                     $('a.connect').text($.i18n("menu.connect"));
                     GUI.contentSwitchInProgress = true;
-                    GUI.contentSwitchCleanup(function() {
+                    GUI.contentSwitchCleanup(function () {
                         CONTENT['welcome'].initialize();
                     });
                 }
@@ -71,10 +71,10 @@ PortHandler.check = function() {
             // auto-select last used port (only during initialization)
             if (!self.initialPorts) {
                 if (typeof chromeSerial !== 'undefined') {
-                    chrome.storage.local.get('lastUsedPort', function(result) {
+                    chrome.storage.local.get('lastUsedPort', function (result) {
                         // if lastUsedPort was set, we try to select it
                         if (result.lastUsedPort) {
-                            currentPorts.forEach(function(port) {
+                            currentPorts.forEach(function (port) {
                                 if (port == result.lastUsedPort) {
                                     console.log('Selecting last used port: ' + result.lastUsedPort);
 
@@ -137,40 +137,40 @@ PortHandler.check = function() {
             self.initialPorts = currentPorts;
         }
 
-        self.mainTimeoutReference = setTimeout(function() {
+        self.mainTimeoutReference = setTimeout(function () {
             self.check();
         }, 2000);
     });
 };
 
-PortHandler.updatePortSelect = function(ports) {
+PortHandler.updatePortSelect = function (ports) {
     $('#port').html(''); // drop previous one
 
     if (ports.length > 0) {
         for (var i = 0; i < ports.length; i++) {
             $('#port').append($("<option/>", {
-                value : ports[i],
-                text : ports[i]
+                value: ports[i],
+                text: ports[i]
             }));
         }
     } else {
         $('#port').append($("<option/>", {
-            value : 0,
-            text : 'No Ports'
+            value: 0,
+            text: 'No Ports'
         }));
     }
 };
 
-PortHandler.portDetected = function(name, code, timeout, ignoreTimeout) {
+PortHandler.portDetected = function (name, code, timeout, ignoreTimeout) {
     var self = this;
     var obj = {
-        'name' : name,
-        'code' : code,
-        'timeout' : (timeout) ? timeout : 10000
+        'name': name,
+        'code': code,
+        'timeout': (timeout) ? timeout : 10000
     };
 
     if (!ignoreTimeout) {
-        obj.timer = setTimeout(function() {
+        obj.timer = setTimeout(function () {
             console.log('PortHandler - timeout - ' + obj.name);
 
             // trigger callback
@@ -191,16 +191,16 @@ PortHandler.portDetected = function(name, code, timeout, ignoreTimeout) {
     return obj;
 };
 
-PortHandler.portRemoved = function(name, code, timeout, ignoreTimeout) {
+PortHandler.portRemoved = function (name, code, timeout, ignoreTimeout) {
     var self = this;
     var obj = {
-        'name' : name,
-        'code' : code,
-        'timeout' : (timeout) ? timeout : 10000
+        'name': name,
+        'code': code,
+        'timeout': (timeout) ? timeout : 10000
     };
 
     if (!ignoreTimeout) {
-        obj.timer = setTimeout(function() {
+        obj.timer = setTimeout(function () {
             console.log('PortHandler - timeout - ' + obj.name);
 
             // trigger callback
@@ -222,7 +222,7 @@ PortHandler.portRemoved = function(name, code, timeout, ignoreTimeout) {
 };
 
 // accepting single level array with "value" as key
-PortHandler.arrayDifference = function(firstArray, secondArray) {
+PortHandler.arrayDifference = function (firstArray, secondArray) {
     var cloneArray = [];
 
     // create hardcopy
@@ -239,7 +239,7 @@ PortHandler.arrayDifference = function(firstArray, secondArray) {
     return cloneArray;
 };
 
-PortHandler.flushCallbacks = function() {
+PortHandler.flushCallbacks = function () {
     var killed = 0;
 
     for (var i = this.portDetectedCallbacks.length - 1; i >= 0; i--) {
