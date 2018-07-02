@@ -724,7 +724,7 @@ CONTENT.configuration.initialize = function (callback) {
 
         function UpdateMixerImage(Type, ESCOrientation, Reverse) {
             if (typeof ESCOrientation == 'undefined') ESCOrientation = 0;
-            console.log("Update Image =" + Type + " - " + ESCOrientation + " - " + Reverse);
+            console.log("Updating mixer image: Type=" + Type + " ESCOrientation=" + ESCOrientation + " Reverse=" + Reverse);
 
             $('.mixerPreview img').attr('src', './images/mixer/' + Type + (ESCOrientation > 0 && (Type == 1 || Type == 2) ? '_' + ESCOrientation : '') + (Reverse == 0 ? '' : '_inv') + ".png");
         }
