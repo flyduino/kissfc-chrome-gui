@@ -227,7 +227,7 @@ CONTENT.configuration.initialize = function (callback) {
                 if (FCinfo[0] == 'KISSFCV2F7') {
                     $("li[data-name='fc_flasher']").show();
                 } else {
-                    $("li[data-name='fc_flasher']").remove();
+                    $("li[data-name='fc_flasher']").hide();
                 }
             });
         }
