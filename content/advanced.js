@@ -120,39 +120,6 @@ CONTENT.advanced.initialize = function (callback) {
                 $('input[name="CBO2"]').prop('disabled', 'true');
             }
         });
-/*
-        // Begin Custom ESC Orientation
-        if (data['ver'] >= 113 && (data['CopterType'] == 1 || data['CopterType'] == 2 )) {
-
-
-            var ceo = false;
-            $('input[name="CEO"]').removeAttr("disabled");
-            if (data['CEO'] > 0) {
-                ceo = true;
-                $('select[name="CEO0"]').val(data['CEO']);
-            }
-            console.log("CEO=" + ceo);
-            $('input[name="CEO"]').prop('checked', ceo);
-            if (ceo) {
-                $('select[name="CEO0"]').removeAttr("disabled");
-
-            } else {
-                $('select[name="CEO0"]').prop('disabled', 'true');
-            }
-
-            $('input[name="CEO"]').on('change', function () {
-                if ($('input[name="CEO"]').prop('checked')) {
-                    $('select[name="CEO0"]').removeAttr("disabled");
-                } else {
-                    $('select[name="CEO0"]').prop('disabled', 'true');
-                    $('select[name="CEO0"]').val(0);
-
-
-                }
-            });
-        }
-        // END Custom ESC Orientation
-*/
 
         for (var i = 0; i < 64; i++) {
             $("select[name='lapTimerTransponderId']").append("<option value='" + i + "'>" + ((i == 0) ? '--' : i) + "</option>");
