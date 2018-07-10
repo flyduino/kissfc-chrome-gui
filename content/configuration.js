@@ -158,6 +158,7 @@ CONTENT.configuration.initialize = function (callback) {
         console.log("RECEIVED:");
         console.log(data);
 
+        // $( document ).tooltip();  
 
         $('input[name="3dMode"]').removeAttr("disabled");
 
