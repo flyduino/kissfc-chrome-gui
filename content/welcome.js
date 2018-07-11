@@ -41,7 +41,7 @@ CONTENT.welcome.initialize = function (callback) {
         $("#portArea").show();
         $('#menu').show();
         $(".navigation-menu-button").css("display", "");
-        $('#gui_version').text(" v2.0.8");
+        $('#gui_version').text("v"+chrome.runtime.getManifest().version);
 
         $("#language").on("change", function () {
             var lang = $(this).val();
