@@ -385,5 +385,6 @@
 	"column.led-brightness": "Brightness",
 	"menu.fc-flasher": "FC Flasher",
 	"text.fc-type": "FC type",
-	"column.setpoint-weight": "Setpoint weight (%)"
+	"column.setpoint-weight": "Setpoint weight (%)",
+	"popup.newGUIavailable": "This GUI version is outdated. Please follow below link to the latest GUI."
 }

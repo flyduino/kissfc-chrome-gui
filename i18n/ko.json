@@ -383,7 +383,8 @@
 	"title.adaptive-filter": "어댑티브 필터",
 	"column.runcam": "런캠 스플릿",
 	"column.led-brightness": "밝기",
-	"menu.fc-flasher":"FC 플래셔",
-	"text.fc-type" : "FC 종류",
-  "column.setpoint-weight": "Setpoint weight (%)"
+	"menu.fc-flasher": "FC 플래셔",
+	"text.fc-type": "FC 종류",
+	"column.setpoint-weight": "Setpoint weight (%)",
+	"popup.newGUIavailable": "This GUI version is outdated. Please follow below link to the latest GUI."
 }
