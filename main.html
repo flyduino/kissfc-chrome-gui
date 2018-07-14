@@ -9,7 +9,10 @@
     <meta name="author" content="Graphics: Max Levine" />
 
     <link type="text/css" rel="stylesheet" href="./js/libraries/jquery.minicolors.css" media="all" />
-
+    <link type="text/css" rel="stylesheet" href="./js/libraries/jquery-ui.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="./js/libraries/jquery-ui.structure.min.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="./js/libraries/jquery-ui.theme.min.css" media="all" />
+    
     <link type="text/css" rel="stylesheet" href="./content/welcome.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./content/configuration.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./content/data_output.css" media="all" />
@@ -22,7 +25,9 @@
     <link type="text/css" rel="stylesheet" href="./js/plugins/jquery.kiss.aux.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./js/plugins/jquery.kiss.warning.css" media="all" />
 
-    <script type="text/javascript" src="./js/libraries/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="./js/libraries/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="./js/libraries/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="./js/libraries/semver.js"></script>
     <script type="text/javascript" src="./js/libraries/three.min.js"></script>
     <script type="text/javascript" src="./js/input_validation.js"></script>
     <script type="text/javascript" src="./js/gui.js"></script>
@@ -91,6 +96,10 @@
         <div id="content">
         </div>
     </div>
+    <div id="dialogGUIupdate">
+        <p data-i18n="popup.newGUIavailable">This GUI version is outdated.</p><br/>
+        <p style="text-align: center;"><a href="https://github.com/flyduino/kiss-gui/releases" target="_blank" style="color:red; font-weight: bold;">Download</a></p>
+      </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/startup.js"></script>
 </body>

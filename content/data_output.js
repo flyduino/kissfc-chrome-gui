@@ -73,6 +73,12 @@ CONTENT.data_output.initialize = function (callback) {
         window.clearTimeout(self.updateTimeout);
         self.requestTelemetry = true;
 
+
+        var data = kissProtocol.data[kissProtocol.GET_SETTINGS];
+        $('.mixerPreview img').attr('src', './images/mixer/' + data['CopterType'] + (data['ESCOutputLayout'] > 0 && (data['CopterType'] == 1 || data['CopterType'] == 2) ? '_' + data['ESCOutputLayout'] : '') + (data['reverseMotors'] == 0 ? '' : '_inv') + ".png");
+
+
+
         for (var i = 0; i < receiverNames.length; i++) {
             var name = receiverNames[i];
 
@@ -225,7 +231,7 @@ CONTENT.data_output.initialize = function (callback) {
 
         function updateUI() {
             var data = kissProtocol.data[kissProtocol.GET_TELEMETRY];
-
+ 
             var useGraphData = parseInt($('select[name="graphTitle"]').val());
 
             if (/*

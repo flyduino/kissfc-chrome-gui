@@ -351,6 +351,7 @@ CONTENT.advanced.initialize = function (callback) {
             } else {
                 data['CBO'] = [0, 0, 0];
             }
+
             data['lapTimerTypeAndInterface'] = parseInt($('select[name="lapTimerTypeAndInterface"]').val());
             data['lapTimerTransponderId'] = parseInt($('select[name="lapTimerTransponderId"]').val());
             data['loggerDebugVariables'] = parseInt($('select[name="loggerDebugVariables"]').val());

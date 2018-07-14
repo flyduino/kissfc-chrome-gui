@@ -128,6 +128,7 @@
 	"text.need-upgrade-gui": "Ваша версия прошивки KISS <b>НОВЕЕ</b>, чем версия с которой может работать этот графический интерфейс.<br/><br/><br/><br/>",
 	"text.need-downgrade-gui": "Ваша версия прошивки KISS <b>СТАРЕЕ</b>, чем версия с которой может работать этот графический интерфейс.<br/><br/><br/><br/>",
 	"title.custom-orientation": "Особая ориентация контроллера",
+	"title.custom-esc-orientation": "Motor output mapping",
 	"title.rx-deadbands": "Мертвые зоны",
 	"title.serial-config": "Конфигурация последовательного порта",
 	"title.logger-debug-configuration": "Журнал отладочной информации",
@@ -155,6 +156,14 @@
 	"column.notch-center": "Центральная частота (Гц)",
 	"column.notch-cutoff": "Частота отреза (Гц)",
 	"column.yaw-filter-strength": "Сила фильтра",
+	"escOrientation.0": "Default",
+	"escOrientation.1": "90° CW",
+	"escOrientation.2": "90° CCW",
+	"escOrientation.3": "180° CW/CCW",
+	"escOrientation.4": "Upside-Down",
+	"escOrientation.5": "Upside-Down 90° CW",
+	"escOrientation.6": "Upside-Down 90° CCW",
+	"escOrientation.7": "Upside-Down 180°",
 	"serial.0": "ОСД",
 	"serial.1": "Журнал / 10%",
 	"serial.2": "Журнал / 20%",
@@ -376,5 +385,6 @@
 	"column.led-brightness": "Яркость",
 	"menu.fc-flasher": "FC Flasher",
 	"text.fc-type": "FC type",
-	"column.setpoint-weight": "Setpoint weight (%)"
+	"column.setpoint-weight": "Setpoint weight (%)",
+	"popup.newGUIavailable": "This GUI version is outdated. Please follow below link to the latest GUI."
 }

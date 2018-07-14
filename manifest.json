@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
     "minimum_chrome_version": "38",
-    "version": "2.0.7",
-    "author": "Flyduino & Alexander Fedorov",
+    "version": "2.0.8",
+    "author": "Flyduino & Alexander Fedorov & Carsten Wache",
     "name": "KISS GUI",
     "short_name": "KISSGUI",
     "description": "",

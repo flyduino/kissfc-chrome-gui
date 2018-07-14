@@ -155,6 +155,14 @@
 	"column.notch-center": "Frecuencia central: (Hz)",
 	"column.notch-cutoff": "Frecuencia de corte: (Hz)",
 	"column.yaw-filter-strength": "Fuerza del filtro Yaw",
+	"escOrientation.0": "estándar",
+	"escOrientation.1": "90° CW",
+	"escOrientation.2": "90° CCW",
+	"escOrientation.3": "180° CW/CCW",
+	"escOrientation.4": "al revés",
+	"escOrientation.5": "al revés 90° CW",
+	"escOrientation.6": "al revés 90° CCW",
+	"escOrientation.7": "al revés 180°",
 	"serial.0": "OSD",
 	"serial.1": "Registro / 10%",
 	"serial.2": "Registro / 20%",
@@ -376,5 +384,7 @@
 	"column.led-brightness": "Brightness",
 	"menu.fc-flasher": "FC Flasher",
 	"text.fc-type": "FC type",
-	"column.setpoint-weight": "Setpoint weight (%)"
+	"column.setpoint-weight": "Setpoint weight (%)",
+	"popup.newGUIavailable": "This GUI version is outdated. Please follow below link to the latest GUI."
+
 }

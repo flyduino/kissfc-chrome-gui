@@ -129,6 +129,7 @@
 	"text.need-upgrade-gui": "Din KISS Firmware version är <b>NYARE</b> än vad GUIt kan hantera.<br/><br/><br/><br/>",
 	"text.need-downgrade-gui": "Din KISS Firmware version är <b>ÄLDRE</b> än vad GUIt kan hantera.<br/><br/><br/><br/>",
 	"title.custom-orientation": "Anpassad FC orientering",
+	"title.custom-esc-orientation": "Motor output mapping",
 	"title.rx-deadbands": "Mott. Dödband",
 	"title.serial-config": "Seriel inställning",
 	"title.logger-debug-configuration": "Debugloggerkonfiguration",
@@ -156,6 +157,14 @@
 	"column.notch-center": "Centerfrekvens: (Hz)",
 	"column.notch-cutoff": "Gränsfrekvens: (Hz)",
 	"column.yaw-filter-strength": "Yaw filterstyrka",
+	"escOrientation.0": "Default",
+	"escOrientation.1": "90° CW",
+	"escOrientation.2": "90° CCW",
+	"escOrientation.3": "180° CW/CCW",
+	"escOrientation.4": "Upside-Down",
+	"escOrientation.5": "Upside-Down 90° CW",
+	"escOrientation.6": "Upside-Down 90° CCW",
+	"escOrientation.7": "Upside-Down 180°",
 	"serial.0": "OSD",
 	"serial.1": "Logger / 10%",
 	"serial.2": "Logger / 20%",
@@ -376,5 +385,6 @@
 	"column.led-brightness": "Brightness",
 	"menu.fc-flasher": "FC Flasher",
 	"text.fc-type": "FC type",
-	"column.setpoint-weight": "Setpoint weight (%)"
+	"column.setpoint-weight": "Setpoint weight (%)",
+	"popup.newGUIavailable": "This GUI version is outdated. Please follow below link to the latest GUI."
 }

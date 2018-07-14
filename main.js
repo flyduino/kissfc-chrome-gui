@@ -1,7 +1,7 @@
 'use strict';
 
 var MIN_CONFIG_VERSION = 108; // this gui can manage versions in this range
-var MAX_CONFIG_VERSION = 112;
+var MAX_CONFIG_VERSION = 113;
 
 function getLanguage(callback) {
     if (typeof chromeSerial !== 'undefined') {
@@ -47,11 +47,33 @@ function changeLanguage() {
     });
 }
 
+function checkGithubRelease(currVersion) {
+
+    $.get('https://api.github.com/repos/flyduino/kiss-gui/releases', function (releaseData) {
+        console.log('Loaded release information from GitHub.');
+        console.log('Latest release found: ' + releaseData[0].tag_name, ' parameter: ' + currVersion);
+        if (semver.gt(releaseData[0].tag_name, currVersion)) {
+            console.log('New version aviable!');
+            $("#dialogGUIupdate").dialog();
+
+        } else {
+            console.log('Latest version!');
+        }
+    });
+
+};
+
 $(document).ready(function () {
 
     $.i18n.debug = true;
 
     changeLanguage();
+
+    // Check for update
+    checkGithubRelease(chrome.runtime.getManifest().version);
+    //checkUpdate.checkGithubRelease('2.0.6');
+
+
 
     PortHandler.initialize();
     CONTENT.welcome.initialize();

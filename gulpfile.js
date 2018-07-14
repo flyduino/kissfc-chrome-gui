@@ -152,6 +152,9 @@ gulp.task('dist', ['clean-dist'], function () {
         // CSS files
         './main.css',
         './js/libraries/jquery.minicolors.css',
+        './js/libraries/jquery-ui.css',
+        './js/libraries/jquery-ui.structure.min.css',
+        './js/libraries/jquery-ui.theme.min.css',   
         './js/plugins/jquery.kiss.aux.css',
         './js/plugins/jquery.kiss.warning.css',
         './content/configuration.css',
@@ -168,8 +171,10 @@ gulp.task('dist', ['clean-dist'], function () {
         './js/libraries/github.js',
         './js/libraries/hex_parser.js',
         './js/libraries/imu.js',
-        './js/libraries/jquery-2.1.3.min.js',
+        './js/libraries/jquery-3.3.1.min.js',
         './js/libraries/jquery.minicolors.min.js',
+        './js/libraries/jquery-ui.min.js',
+        './js/libraries/semver.js',       
         './js/libraries/stm32usbdfu.js',
         './js/libraries/three.js',
         './js/libraries/three.min.js',
@@ -200,6 +205,7 @@ gulp.task('dist', ['clean-dist'], function () {
         './content/*.html',
         './images/*',
         './images/**/*',
+        './js/libraries/images/*.png',
         './i18n/*.json',
         './PRESET_PID.txt', // PID presets
         './README.md' // Readme including links for driver
@@ -261,7 +267,7 @@ gulp.task('debug', ['dist', 'clean-debug'], function (done) {
         }
         var run = getRunDebugAppCommand();
         console.log('Starting debug app (' + run + ')...');
-        exec(run);
+        //exec(run);
         done();
     });
 });

@@ -128,6 +128,7 @@
 	"text.need-upgrade-gui": "Your KISS Firmware version is <b>NEWER</b> than this GUI can handle.<br/><br/><br/><br/>",
 	"text.need-downgrade-gui": "Your KISS Firmware version is <b>OLDER</b> than this GUI can handle.<br/><br/><br/><br/>",
 	"title.custom-orientation": "Custom FC orientation",
+	"title.custom-esc-orientation": "Motor output mapping",
 	"title.rx-deadbands": "RX deadbands",
 	"title.serial-config": "Serial config",
 	"title.logger-debug-configuration": "Logger Debug Configuration",
@@ -155,6 +156,14 @@
 	"column.notch-center": "Center Frequency: (Hz)",
 	"column.notch-cutoff": "Cutoff Frequency: (Hz)",
 	"column.yaw-filter-strength": "Yaw Filter strength",
+	"escOrientation.0": "Default",
+	"escOrientation.1": "90° CW",
+	"escOrientation.2": "90° CCW",
+	"escOrientation.3": "180° CW/CCW",
+	"escOrientation.4": "Upside-Down",
+	"escOrientation.5": "Upside-Down 90° CW",
+	"escOrientation.6": "Upside-Down 90° CCW",
+	"escOrientation.7": "Upside-Down 180°",
 	"serial.0": "OSD",
 	"serial.1": "Logger / 10%",
 	"serial.2": "Logger / 20%",
@@ -378,5 +387,6 @@
 	"column.PentaHover": "Hover",
 	"column.PentaForward": "Forward",
 	"text.fc-type": "FC type",
-	"column.setpoint-weight": "Setpoint weight (%)"
+	"column.setpoint-weight": "Setpoint weight (%)",
+	"popup.newGUIavailable": "This GUI version is outdated. Please follow below link to the latest GUI."
 }
