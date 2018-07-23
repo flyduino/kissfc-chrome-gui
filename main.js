@@ -57,6 +57,7 @@ function checkGithubRelease(currVersion) {
             $("#dialogGUIupdate").dialog();
 
         } else {
+            $("#dialogGUIupdate").hide();
             console.log('Latest version!');
         }
     });
