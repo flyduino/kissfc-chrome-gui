@@ -33,7 +33,7 @@ CONTENT.advanced.initialize = function (callback) {
         if (data['motorBuzzer']) {
             $('input[name="motorBuzzer"]').prop('checked', 1);
         }
-        if (data['ver'] > 108) { // remove serial vtx from 109..
+        if (data['ver'] >= 109) { // remove serial vtx from 109..
             $("select[name='loggerConfig'] option[value='11']").remove();
             if (data['loggerConfig'] > 10) {
                 data['loggerConfig'] = 0; // osd!
@@ -51,7 +51,7 @@ CONTENT.advanced.initialize = function (callback) {
             $("#AdaptiveFilter").hide();
             $("#ledBrightness").hide();
         }
-        if (data['ver'] > 110 && (data['CopterType'] == 7 || data['CopterType'] == 8)) {
+        if (data['ver'] >= 111 && (data['CopterType'] == 7 || data['CopterType'] == 8)) {
             $("#reverseMotorsTitle").removeAttr("data-i18n"); // needs to be done clean
             $("#reverseMotorsTitle").text("Foward Motors 3D use");
             $("#reverseMotorsText").removeAttr("data-i18n");
@@ -186,11 +186,11 @@ CONTENT.advanced.initialize = function (callback) {
         $("#dialogSerial").hide(); // hide dialog by default
         
 
-        if (data['ver'] > 108) {
+        if (data['ver'] >= 109) {
             if (data['ver'] >= 114) {
-                $('#loopD').html('');
-
+                document.getElementById('loopD').innerHTML = ""; // remove looptime on >=114
             } else {
+                // TODO clean this up
                 kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () {
                     var info = kissProtocol.data[kissProtocol.GET_INFO];
                     var FCinfo = info.firmvareVersion.split(/-/g);
@@ -256,12 +256,14 @@ CONTENT.advanced.initialize = function (callback) {
 
 
             $("select[name='loggerConfig'] option[value='0']").html("disabled");
-
+            document.getElementById('newserial').innerHTML = "";
 
             $('input[name="CSC"]').on('change', function () {
                 if ($('input[name="CSC"]').prop('checked') ? 1 : 0 == 1) {
                     $("#dialogSerial").dialog();
+                    genSerials();
                 } else {
+                    document.getElementById('newserial').innerHTML = "";
                     kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () { //TODO make this nicer
                         var info = kissProtocol.data[kissProtocol.GET_INFO];
                         var FCinfo = info.firmvareVersion.split(/-/g);
@@ -277,7 +279,7 @@ CONTENT.advanced.initialize = function (callback) {
                     });
                 }
 
-                genSerials();
+                //
             });
 
             function genSerials() {
@@ -324,7 +326,7 @@ CONTENT.advanced.initialize = function (callback) {
                 }
             }
 
-            genSerials();
+            //genSerials();
 
             function gen32BitValOutOfSerialFunctions() {
                 data['SerialSetup'] = 0;
