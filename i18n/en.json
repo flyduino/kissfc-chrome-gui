@@ -131,6 +131,7 @@
 	"title.custom-esc-orientation": "Motor output mapping",
 	"title.rx-deadbands": "RX deadbands",
 	"title.serial-config": "Serial config",
+	"title.logger-config": "Logger config",
 	"title.logger-debug-configuration": "Logger Debug Configuration",
 	"title.vtx-config": "VTX config",
 	"title.buzzer-emulation": "Buzzer emulation",
@@ -164,7 +165,7 @@
 	"escOrientation.5": "Upside-Down 90° CW",
 	"escOrientation.6": "Upside-Down 90° CCW",
 	"escOrientation.7": "Upside-Down 180°",
-	"serial.0": "OSD",
+	"serial.0": "Logger Disabled/OSD",
 	"serial.1": "Logger / 10%",
 	"serial.2": "Logger / 20%",
 	"serial.3": "Logger / 30%",
@@ -388,5 +389,8 @@
 	"column.PentaForward": "Forward",
 	"text.fc-type": "FC type",
 	"column.setpoint-weight": "Setpoint weight (%)",
-	"popup.newGUIavailable": "This GUI version is outdated. Please follow below link to the latest GUI."
+	"popup.newGUIavailable": "This GUI version is outdated. Please follow below link to the latest GUI.",
+	"column.use-custom-serialconfiguration": "Use advanced serial configuration",
+	"popup.serialwarningmessage": "Please note that this are advanced features. If you adjust serials you might have to wire diffently acording to the manual.!",
+	"popup.serialwarningmessage2": "If you want to revert back to default please uncheck and save configuration."
 }

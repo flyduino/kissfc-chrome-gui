@@ -311,7 +311,7 @@ kissProtocol.processPacket = function (code, obj) {
             obj.ESC_TelemetrieStats[4] = data.getInt16(150, 0);
             obj.ESC_TelemetrieStats[5] = data.getInt16(152, 0);
 
-            if (usedVersion > 110) {
+            if (usedVersion >= 111) {
                 obj.RXcommands[8] = 1500 + ((data.getInt16(154, 0) / 1000) * 500);
                 obj.RXcommands[9] = 1500 + ((data.getInt16(156, 0) / 1000) * 500);
                 obj.RXcommands[10] = 1500 + ((data.getInt16(158, 0) / 1000) * 500);
@@ -339,6 +339,9 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.ver = 0;
                 obj.reverseMotors = 0;
                 obj.ESCOutputLayout = 0;
+                //obj.SerialSetup = 0x2060000;
+                obj.SerialSetup = 0;
+                obj.SerialPortAllowed = 0;
             }
 
             obj.G_P[0] = data.getUint16(0, 0) / 1000;
@@ -496,7 +499,7 @@ kissProtocol.processPacket = function (code, obj) {
 
                 obj.motorBuzzer = data.getUint8(163, 0);
 
-                if (obj.ver > 108) {
+                if (obj.ver >= 109) {
                     obj.loopTimeDivider = data.getUint8(164, 0);
                     obj.yawLpF = data.getUint8(165, 0);
                     obj.DLpF = data.getUint8(166, 0);
@@ -505,19 +508,24 @@ kissProtocol.processPacket = function (code, obj) {
                     obj.adaptiveFilter = data.getUint8(169, 0);
                 }
 
-                if (obj.ver > 109) {
+                if (obj.ver >= 110) {
                     obj.AUX[9] = data.getUint8(170, 0);
                     obj.AUX[10] = data.getUint8(171, 0);
                     obj.ledBrightness = data.getUint8(172, 0);
                     var tmp = data.getUint8(173, 0);
                 }
-                if (obj.ver > 110) {
+                if (obj.ver >= 111) {
                     obj.AUX[11] = data.getUint8(174, 0);
-                    obj.setpointIntoD = data.getUint8(175, 0);
+                    obj.setpointIntoD = data.getUint8(175, 0); // DTerm Weight
                 }
-                if (obj.ver > 112) {
-                    obj.ESCOutputLayout = data.getUint8(176,0); // Custom ESC Orientation
+                if (obj.ver >= 113) {
+                    obj.ESCOutputLayout = data.getUint8(176, 0); // Custom ESC Orientation
                 }
+                if (obj.ver >= 115) {
+                    obj.SerialSetup = data.getUint32(177, 0);   // Serial mapping
+                    obj.SerialPortAllowed = data.getUint8(181, 0); // Serial ports allowed
+                }
+                // next free 182
 
 
             } catch (Exception) {
@@ -743,7 +751,7 @@ kissProtocol.preparePacket = function (code, obj) {
 
             blen = 161;
 
-            if (obj.ver > 108) {
+            if (obj.ver >= 109) {
                 data.setUint8(153, obj.loopTimeDivider);
                 data.setUint8(154, obj.yawLpF);
                 data.setUint8(155, obj.DLpF);
@@ -753,7 +761,7 @@ kissProtocol.preparePacket = function (code, obj) {
                 blen = 167;
             }
 
-            if (obj.ver > 109) {
+            if (obj.ver >= 110) {
                 data.setUint8(159, obj.AUX[9]); // runcam
                 data.setUint8(160, obj.AUX[10]); // led brightness
                 data.setUint8(161, obj.ledBrightness);  // max brightness
@@ -761,16 +769,19 @@ kissProtocol.preparePacket = function (code, obj) {
                 data.setUint8(162, tmp);
                 blen = 171;
             }
-            if (obj.ver > 110) {
+            if (obj.ver >= 111) {
                 data.setUint8(163, obj.AUX[11]); //pentathrottle
                 data.setUint8(164, obj.setpointIntoD);
                 blen = 173;
             }
-            if (obj.ver > 112) {
-                data.setUint8(165,obj.ESCOutputLayout); // ESC output orientation
+            if (obj.ver >= 113) {
+                data.setUint8(165, obj.ESCOutputLayout); // ESC output orientation
                 blen = 174;
             }
-
+            if (obj.ver >= 115) {
+                data.setUint32(166, obj.SerialSetup); // Serialconfig
+                blen = 178;
+            }
 
             break;
 

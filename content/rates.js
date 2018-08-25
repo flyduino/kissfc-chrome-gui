@@ -121,8 +121,8 @@ CONTENT.rates.initialize = function (callback) {
         // aligned on
         // creation
 
-        var legendItems = $('dl.legend dd');
-        var otherItems = $('dl.otherValues dd')
+    //    var legendItems = $('dl.legend dd');
+    //    var otherItems = $('dl.otherValues dd')
         var meterScale = {
             'min': 800,
             'max': 2200

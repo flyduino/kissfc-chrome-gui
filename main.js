@@ -1,7 +1,7 @@
 'use strict';
 
 var MIN_CONFIG_VERSION = 108; // this gui can manage versions in this range
-var MAX_CONFIG_VERSION = 113;
+var MAX_CONFIG_VERSION = 115;
 
 function getLanguage(callback) {
     if (typeof chromeSerial !== 'undefined') {
@@ -57,6 +57,7 @@ function checkGithubRelease(currVersion) {
             $("#dialogGUIupdate").dialog();
 
         } else {
+            $("#dialogGUIupdate").hide();
             console.log('Latest version!');
         }
     });

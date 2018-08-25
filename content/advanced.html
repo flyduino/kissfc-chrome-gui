@@ -82,8 +82,21 @@
 			</table>
 		</div>
 
-		<div id="serial" class="wrapper-full">
+		<div id="serialnew" class="wrapper-full" style="display: none;">
 			<div class="groupTitle" data-i18n="title.serial-config">Serial config</div>
+			<table style="border: 0px;">
+				<tr>
+					<td width="100%" colspan="4">
+						<input class="unsafe" type="checkbox" disabled="disabled" name="CSC" />&nbsp;
+						<span data-i18n="column.use-custom-serialconfiguration" class="display:inline-block">Use custom serial configuration</span>
+					</td>
+				</tr>
+				</table>
+			<div id="newserial">
+			</div>
+		</div>
+		<div id="serial" class="wrapper-full">
+			<div class="groupTitle" data-i18n="title.logger-config">Logger config</div>
 			<dl class="general-settings">
 				<dt>
 					<span data-i18n="column.device">Device</span>
@@ -423,3 +436,7 @@
 	</div>
 
 </div>
+<div id="dialogSerial">
+	<p data-i18n="popup.serialwarningmessage">Serial warning message</p><br/>
+	<p data-i18n="popup.serialwarningmessage2"></p><br/>
+  </div>
