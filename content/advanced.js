@@ -1,7 +1,7 @@
 'use strict';
 
 
-var seriallookUpTable = ['KissProtocoll/OSD', 'Logger', 'Receiver', 'VTX', 'ESC TLM', 'Runcam', 'VTX  + ESC TLM'];
+var seriallookUpTable = ['KissProtocol/OSD', 'Logger', 'Receiver', 'VTX', 'ESC TLM', 'Runcam', 'VTX  + ESC TLM'];
 
 
 CONTENT.advanced = {
