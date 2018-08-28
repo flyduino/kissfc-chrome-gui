@@ -8,9 +8,7 @@ var kissProtocolHandler = function (info) {
 
 $(document).ready(function () {
     $('#portArea a.connect').click(function () {
-        var selectedPort = String($('#port').val());
-
-        var bootloaderDetected = false;
+        var selectedPort = String($('#port').val())
 
         if (selectedPort != '0') {
 
@@ -107,7 +105,7 @@ $(document).ready(function () {
             var bufferView = new Uint8Array(bufferOut);
             bufferView.set(bootloaderCheck, 0);
             serialDevice.send(bufferOut, function (a) {
-                console.log("Bootloader check has een sent");
+                console.log("Bootloader check has been sent");
             });
 
             var bootTimeout = function () {
