@@ -1,9 +1,6 @@
 'use strict';
 
 
-var seriallookUpTable = ['KissProtocol/OSD', 'Logger', 'Receiver', 'VTX', 'ESC TLM', 'Runcam', 'VTX  + ESC TLM'];
-
-
 CONTENT.advanced = {
     USER_PIDs: [],
     PRESET_PIDs: [],
@@ -184,7 +181,7 @@ CONTENT.advanced.initialize = function (callback) {
         if (data['YawCfilter']) $('input[name="YCF"]').val(data['YawCfilter']);
 
         $("#dialogSerial").hide(); // hide dialog by default
-        
+
 
         if (data['ver'] >= 109) {
             if (data['ver'] >= 114) {
@@ -226,117 +223,61 @@ CONTENT.advanced.initialize = function (callback) {
         }
 
         if (data['ver'] >= 115) {
-            var serialsFoundAndFunctions = []; //initialize serial count
             $('#serialnew').css('display', 'inline-block'); //unhide serial section
             $('input[name="CSC"]').removeAttr("disabled"); //make checkbox changeable
+            $("select[name='loggerConfig'] option[value='0']").html("disabled"); // remove logger option 0
 
-            kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () { //TODO make this nicer
-                var info = kissProtocol.data[kissProtocol.GET_INFO];
-                var FCinfo = info.firmvareVersion.split(/-/g);
-                if (FCinfo[0].length < 7 || info.firmvareVersion.indexOf("KISSFC") == -1) {
-                    if (data['SerialSetup'] != 39845888) {
-                        $('input[name="CSC"]').prop('checked', 1);
-                        genSerials();
-                    }
-                }
-                if (FCinfo[0].length < 9 || info.firmvareVersion.indexOf("KISSFC") == -1) {
-                    if (data['SerialSetup'] != 39845888) {
-                        $('input[name="CSC"]').prop('checked', 1);
-                        genSerials();
-                    }
-                }
-                if (FCinfo[0] == 'KISSFCV2F7') {
-                    if (data['SerialSetup'] != 33947648) {
-                        $('input[name="CSC"]').prop('checked', 1);
-                        genSerials();
-                    }
-                }
-            });
+            var serialsFunctions = []; //initialize serial array
+            readSerials(); // read serial from data and populate array
 
-
-
-            $("select[name='loggerConfig'] option[value='0']").html("disabled");
-            document.getElementById('newserial').innerHTML = "";
-
+            // Function for CSC changebox changes
             $('input[name="CSC"]').on('change', function () {
                 if ($('input[name="CSC"]').prop('checked') ? 1 : 0 == 1) {
-                    $("#dialogSerial").dialog();
-                    genSerials();
+                    readSerials(); // read serial from data and populate array
+                    for (i = 0; i < serialsFunctions.length; i++) {
+                        $("#serial" + i).kissSerial({
+                            name: $.i18n("title.serial") + ' ' + i,
+                            serial: i,
+                            change: function () { updateSerials(); },
+                            value: serialsFunctions[i]
+                        });
+                    }
+                    $("#newserial").show();
                 } else {
-                    document.getElementById('newserial').innerHTML = "";
-                    kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () { //TODO make this nicer
-                        var info = kissProtocol.data[kissProtocol.GET_INFO];
-                        var FCinfo = info.firmvareVersion.split(/-/g);
-                        if (FCinfo[0].length < 7 || info.firmvareVersion.indexOf("KISSFC") == -1) {
-                            data['SerialSetup'] = 39845888;
-                        }
-                        if (FCinfo[0].length < 9 || info.firmvareVersion.indexOf("KISSFC") == -1) {
-                            data['SerialSetup'] = 39845888;
-                        }
-                        if (FCinfo[0] == 'KISSFCV2F7') {
-                            data['SerialSetup'] = 33947648;
-                        }
-                    });
+                    $("#newserial").hide();
                 }
-
-                //
             });
 
-            function genSerials() {
-
-                var serialNumber = 0;
-
+            function readSerials() {
+                console.log('Read: ' + data['SerialSetup']);
                 for (i = 0; i < 8; i++) {
-                    if ((data['SerialPortAllowed'] >> (7 - i)) & 0x01) {
-                        serialsFoundAndFunctions[i] = (data['SerialSetup'] >> (28 - (serialNumber * 4))) & 0x0F;
-                        serialNumber++;
-                    }
+                    serialsFunctions[i] = (data['SerialSetup'] >> (28 - (i * 4))) & 0x0F;
                 }
-                document.getElementById('newserial').innerHTML = "";
-
-                for (var Serial in serialsFoundAndFunctions) {
-                    var NewTR = document.createElement('dl');
-                    var NewSerial = document.createElement('dt');
-                    NewSerial.innerHTML = 'Serial ' + Serial
-                    var SerialFunction = document.createElement('dd');
-                    var NewSelect = document.createElement('select');
-                    if ($('input[name="CSC"]').prop('checked') ? 1 : 0 == 1) {
-                        NewSelect.disabled = false;
-                    } else {
-                        NewSelect.disabled = true;
-                    }
-
-                    NewSelect.id = 'serial_' + Serial;
-                    NewSelect.onchange = function () {
-                        serialsFoundAndFunctions[this.id.replace(/serial_/, '')] = this.value;
-                        gen32BitValOutOfSerialFunctions()
-                    }
-                    for (i = 0; i < seriallookUpTable.length; i++) {
-                        var newOption = document.createElement('option');
-                        newOption.value = i;
-                        newOption.innerHTML = seriallookUpTable[i]
-                        if (i == serialsFoundAndFunctions[Serial])
-                            newOption.setAttribute("selected", "selected");
-                        NewSelect.appendChild(newOption);
-                    }
-                    SerialFunction.appendChild(NewSelect);
-                    NewTR.appendChild(NewSerial);
-                    NewTR.appendChild(SerialFunction);
-                    document.getElementById('newserial').appendChild(NewTR);
-                }
+                console.log(serialsFunctions)
             }
-
-            //genSerials();
-
-            function gen32BitValOutOfSerialFunctions() {
+            function updateSerials() {
+                serialsFunctions = []; // reset array
+                for (i = 0; i < 8; i++) {
+                    serialsFunctions[i] = $("#serial" + i).kissSerial('value');
+                }
+                contentChange();
+                writeSerials();
+                //data['SerialSetup'] = 4045469183; // 4029087743
+                //data['SerialSetup'] = 4029087743;
+            }
+            function writeSerials() {
+                //                console.log(serialsFunctions);
+                //                console.log(data['SerialSetup']);
                 data['SerialSetup'] = 0;
                 var bitShiftCounter = 28;
-                for (var Serial in serialsFoundAndFunctions) {
-                    data['SerialSetup'] += serialsFoundAndFunctions[Serial] << bitShiftCounter;
+                for (i = 0; i < 8; i++) {
+//                    console.log('In ' + i + ' - ' + serialsFunctions[i])
+                    data['SerialSetup'] += serialsFunctions[i] << bitShiftCounter;
                     bitShiftCounter -= 4;
                 }
-                genSerials();
+                console.log('Write: ' + data['SerialSetup']);
             }
+
         }
 
         var MCUid = '';
