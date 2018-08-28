@@ -339,9 +339,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.ver = 0;
                 obj.reverseMotors = 0;
                 obj.ESCOutputLayout = 0;
-                //obj.SerialSetup = 0x2060000;
                 obj.SerialSetup = 0;
-                obj.SerialPortAllowed = 0;
             }
 
             obj.G_P[0] = data.getUint16(0, 0) / 1000;
@@ -521,11 +519,10 @@ kissProtocol.processPacket = function (code, obj) {
                 if (obj.ver >= 113) {
                     obj.ESCOutputLayout = data.getUint8(176, 0); // Custom ESC Orientation
                 }
-                if (obj.ver >= 115) {
+                if (obj.ver >= 116) {
                     obj.SerialSetup = data.getUint32(177, 0);   // Serial mapping
-                    obj.SerialPortAllowed = data.getUint8(181, 0); // Serial ports allowed
                 }
-                // next free 182
+                // next free 181
 
 
             } catch (Exception) {
@@ -549,6 +546,7 @@ kissProtocol.processPacket = function (code, obj) {
             var p = 0;
             obj.escInfo = [];
             obj.escInfoCount = 0;
+            //obj.defaultSerialConfig = 0;
             obj.firmvareVersion = kissProtocol.readString(data, p);
             p += obj.firmvareVersion.length + 1;
 
@@ -598,6 +596,7 @@ kissProtocol.processPacket = function (code, obj) {
                     if (!found) info = undefined;
                     obj.escInfo[i] = info;
                 }
+                //obj.defaultSerialConfig = data.getUint32(p++);
             }
 
             break;
@@ -778,7 +777,7 @@ kissProtocol.preparePacket = function (code, obj) {
                 data.setUint8(165, obj.ESCOutputLayout); // ESC output orientation
                 blen = 174;
             }
-            if (obj.ver >= 115) {
+            if (obj.ver >= 116) {
                 data.setUint32(166, obj.SerialSetup); // Serialconfig
                 blen = 178;
             }
