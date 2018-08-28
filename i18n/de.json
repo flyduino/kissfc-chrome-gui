@@ -131,6 +131,7 @@
 	"title.custom-esc-orientation": "Motor Ausgang Ausrichtung",
 	"title.rx-deadbands": "RX Totband",
 	"title.serial-config": "Serielle Konfiguration",
+	"title.serial": "Serial",
 	"title.logger-config": "Logger Konfiguration",
 	"title.logger-debug-configuration": "Logger Debug Konfiguration",
 	"title.vtx-config": "VTX Konfiguration",

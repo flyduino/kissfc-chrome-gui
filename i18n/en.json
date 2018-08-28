@@ -131,6 +131,7 @@
 	"title.custom-esc-orientation": "Motor output mapping",
 	"title.rx-deadbands": "RX deadbands",
 	"title.serial-config": "Serial config",
+	"title.serial": "Serial",
 	"title.logger-config": "Logger config",
 	"title.logger-debug-configuration": "Logger Debug Configuration",
 	"title.vtx-config": "VTX config",

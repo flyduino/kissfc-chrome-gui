@@ -131,6 +131,7 @@
 	"title.custom-esc-orientation": "Motor output mapping",
 	"title.rx-deadbands": "Deadbands RX",
 	"title.serial-config": "Config seriala",
+	"title.serial": "Serial",
 	"title.logger-debug-configuration": "Configuratie Debug Logare",
 	"title.vtx-config": "Config VTX",
 	"title.buzzer-emulation": "Emulare sunet",

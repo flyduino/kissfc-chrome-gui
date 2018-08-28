@@ -131,6 +131,7 @@
 	"title.custom-esc-orientation": "Motor output mapping",
 	"title.rx-deadbands": "RX 데드밴드",
 	"title.serial-config": "시리얼 설정",
+	"title.serial": "Serial",
 	"title.logger-debug-configuration": "로거 디버그 설정",
 	"title.vtx-config": "VTX 설정",
 	"title.buzzer-emulation": "모터로 부저 소리내기",

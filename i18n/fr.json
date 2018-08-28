@@ -131,6 +131,7 @@
 	"title.custom-esc-orientation": "Motor output mapping",
 	"title.rx-deadbands": "RX deadbands",
 	"title.serial-config": "Configuration du port série",
+	"title.serial": "Serial",
 	"title.logger-debug-configuration": "Configuration du Logger Debug",
 	"title.vtx-config": "Config vTx",
 	"title.buzzer-emulation": "Émulation du buzzer",

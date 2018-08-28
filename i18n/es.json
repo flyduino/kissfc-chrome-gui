@@ -130,6 +130,7 @@
 	"title.custom-orientation": "Orientación de la FC personalizada",
 	"title.rx-deadbands": "Punto muerto del RX",
 	"title.serial-config": "Configuración puerto serie",
+	"title.serial": "Serial",
 	"title.logger-debug-configuration": "Configuración del registro de datos (Logger)",
 	"title.vtx-config": "Configuración VTX",
 	"title.buzzer-emulation": "Emular zumbador",

@@ -131,6 +131,7 @@
 	"title.custom-esc-orientation": "Motor output mapping",
 	"title.rx-deadbands": "Мертвые зоны",
 	"title.serial-config": "Конфигурация последовательного порта",
+	"title.serial": "Serial",
 	"title.logger-debug-configuration": "Журнал отладочной информации",
 	"title.vtx-config": "Видео передатчик",
 	"title.buzzer-emulation": "Иммитация пищалки",
