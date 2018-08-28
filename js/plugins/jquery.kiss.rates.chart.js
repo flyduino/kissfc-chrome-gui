@@ -1,11 +1,11 @@
-(function($) {
+(function ($) {
     var PLUGIN_NAME = 'kiss.rates.chart',
-        pluginData = function(obj) {
+        pluginData = function (obj) {
             return obj.data(PLUGIN_NAME);
         };
 
     var privateMethods = {
-        build: function(self) {
+        build: function (self) {
             var data = pluginData(self);
             var id = self.attr("id");
             var width = self.width();
@@ -13,7 +13,7 @@
             var c = $('<canvas>').attr('id', id + "_canvas").attr("width", width).attr("height", height);
             c.appendTo(self);
         },
-        calculateDegSec: function(input, rate, grate, usecurve) {
+        calculateDegSec: function (input, rate, grate, usecurve) {
             var setpoint = input;
             var RPY_useRates = 1 - Math.abs(input) * grate;
             var rxRAW = input * 1000;
@@ -24,8 +24,8 @@
     };
 
     var publicMethods = {
-        init: function(options) {
-            return this.each(function() {
+        init: function (options) {
+            return this.each(function () {
                 var self = $(this),
                     data = pluginData(self);
                 if (!data) {
@@ -43,15 +43,15 @@
 
             });
         },
-        destroy: function() {
-            return this.each(function() {
+        destroy: function () {
+            return this.each(function () {
                 $(this).removeData(PLUGIN_NAME);
             });
         },
-        axisRate: function() {
+        axisRate: function () {
             return pluginData($(this)).axisRate;
         },
-        updateRcInput: function(newValue) {
+        updateRcInput: function (newValue) {
             var self = $(this);
             var data = pluginData(self);
             var i = newValue;
@@ -63,7 +63,7 @@
                 publicMethods.refresh(self);
             }
         },
-        updateRcRates: function(newValue) {
+        updateRcRates: function (newValue) {
             var self = $(this);
             var data = pluginData(self);
             data.rate = newValue.rate;
@@ -71,7 +71,7 @@
             data.usecurve = newValue.usecurve;
             publicMethods.refresh(self);
         },
-        refresh: function(self) {
+        refresh: function (self) {
             var data = pluginData(self);
             var id = self.attr("id");
             var canvas = document.getElementById(id + "_canvas");
@@ -120,34 +120,34 @@
                 context.fillStyle = "rgb(131, 10, 10)";
                 context.fillRect(x - 2, y - 2, 4, 4);
 
-                var text1 = Math.abs(Math.round(rcInputRotation)) + " °/"+ $.i18n('text.rates-sec');
+                var text1 = Math.abs(Math.round(rcInputRotation)) + " °/" + $.i18n('text.rates-sec');
                 context.font = "12px sans-serif ";
                 context.fillStyle = "rgb(71, 71, 71)";
                 context.fillText(text1, width - context.measureText(text1).width - 2, height - 14);
-                var text2 = Math.abs(Math.round(rcInputRotation * 100 / 360)) / 100 + " " + data.message +  $.i18n('text.rates-sec');
+                var text2 = Math.abs(Math.round(rcInputRotation * 100 / 360)) / 100 + " " + data.message + $.i18n('text.rates-sec');
                 context.fillText(text2, width - context.measureText(text2).width - 2, height - 2);
                 context.fillText(data.name, 2, 12);
-                var maxRotationText = $.i18n('text.rates-max')+ " " + Math.round(maxRotation) + " °/"+ $.i18n('text.rates-sec');
+                var maxRotationText = $.i18n('text.rates-max') + " " + Math.round(maxRotation) + " °/" + $.i18n('text.rates-sec');
                 context.fillText(maxRotationText, 2, height - 2);
 
-                if (Math.abs(maxRotation)>=2000) {
-                	context.fillStyle = "rgba(80,0,0,0.8)";
+                if (Math.abs(maxRotation) >= 2000) {
+                    context.fillStyle = "rgba(80,0,0,0.8)";
                     context.fillRect(0, 0, width, height);
-                	var text3 = $.i18n('text.rates-max-rotation'); //"Max rotation > 2000 °/sec!";
+                    var text3 = $.i18n('text.rates-max-rotation'); //"Max rotation > 2000 °/sec!";
                     context.font = "14px sans-serif ";
                     context.fillStyle = "rgb(255, 255, 255)";
                     context.fillText(text3, (width - context.measureText(text3).width) >> 1, hh + 10);
-                    
-                	var text4 = $.i18n('text.rates-warning');
+
+                    var text4 = $.i18n('text.rates-warning');
                     context.font = "16px sans-serif ";
                     context.fillStyle = "rgb(255, 255, 255)";
-                    context.fillText(text4, (width - context.measureText(text4).width) >> 1, hh - 10 );
+                    context.fillText(text4, (width - context.measureText(text4).width) >> 1, hh - 10);
                 }
             }
         }
     };
 
-    $.fn.kissRatesChart = function(method) {
+    $.fn.kissRatesChart = function (method) {
         if (publicMethods[method]) {
             return publicMethods[method].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if (typeof method === 'object' || !method) {

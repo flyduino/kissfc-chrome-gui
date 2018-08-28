@@ -1,6 +1,6 @@
-(function($) {
+(function ($) {
     var PLUGIN_NAME = 'kiss.model',
-        pluginData = function(obj) {
+        pluginData = function (obj) {
             return obj.data(PLUGIN_NAME);
         };
     var
@@ -55,7 +55,7 @@
             arms: 6,
             rotation: -Math.PI / 6,
             colors: [0, 0, 1, 1, 1, 1]
-	}, {
+        }, {
             name: 'Penta 3+2 hover',
             arms: 3,
             rotation: -Math.PI / 3,
@@ -68,7 +68,7 @@
         }];
 
     var privateMethods = {
-        makeMotor: function(self, propColor) {
+        makeMotor: function (self, propColor) {
             var motorParent = new THREE.Object3D();
             var motorMaterial = new THREE.MeshPhongMaterial({
                 color: 0x000000,
@@ -107,7 +107,7 @@
             motorParent.add(propDisk);
             return motorParent;
         },
-        build: function(self) {
+        build: function (self) {
             var data = pluginData(self);
             data.mixerData = MIXER_LIST[data.mixer];
             data.scene = new THREE.Scene();
@@ -128,10 +128,10 @@
             texture.repeat.set(12, 24);
 
             var craftMaterial = new THREE.MeshPhongMaterial({
-                    map: texture,
-                    specular: 0x202020,
-                    shininess: 100
-                }),
+                map: texture,
+                specular: 0x202020,
+                shininess: 100
+            }),
                 craft = new THREE.Object3D(),
                 craftParent = new THREE.Object3D();
 
@@ -231,14 +231,14 @@
             data.scene.add(data.model);
             self.append(data.renderer.domElement);
         },
-        initCamera: function(self) {
+        initCamera: function (self) {
             var data = pluginData(self);
             data.camera = new THREE.PerspectiveCamera(40, 1, 0.1, 1000);
             data.camera.position.set(0, 100, 300);
             data.camera.position.y = 0;
             data.camera.position.z = 5;
         },
-        initRenderer: function(self) {
+        initRenderer: function (self) {
             var data = pluginData(self);
             data.renderer = new THREE.WebGLRenderer({
                 antialias: true
@@ -249,8 +249,8 @@
     };
 
     var publicMethods = {
-        init: function(options) {
-            return this.each(function() {
+        init: function (options) {
+            return this.each(function () {
                 var self = $(this),
                     data = pluginData(self);
                 if (!data) {
@@ -277,23 +277,23 @@
                 privateMethods.build(self);
             });
         },
-        destroy: function() {
-            return this.each(function() {
+        destroy: function () {
+            return this.each(function () {
                 $(this).removeData(PLUGIN_NAME);
             });
         },
-        updateRate: function(newValue) {
+        updateRate: function (newValue) {
             var self = $(this);
             var data = pluginData(self);
             data.rate = newValue;
         },
-        reset: function() {
+        reset: function () {
             var data = pluginData($(this));
-            data.model.rotation.x = -Math.PI/2;
+            data.model.rotation.x = -Math.PI / 2;
             data.model.rotation.y = 0;
-            data.model.rotation.z = -Math.PI/2;
+            data.model.rotation.z = -Math.PI / 2;
         },
-        refresh: function() {
+        refresh: function () {
             var data = pluginData($(this));
             data.model.rotateOnAxis(AXIS.roll, data.rate.roll);
             data.model.rotateOnAxis(AXIS.pitch, data.rate.pitch);
@@ -302,7 +302,7 @@
         }
     };
 
-    $.fn.kissModel = function(method) {
+    $.fn.kissModel = function (method) {
         if (publicMethods[method]) {
             return publicMethods[method].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if (typeof method === 'object' || !method) {
