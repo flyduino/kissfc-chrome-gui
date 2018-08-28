@@ -20,6 +20,7 @@
             c += '<option value="5" data-i18n="serialtype.5">Runcam</option>';
             c += '<option value="6" data-i18n="serialtype.5">VTX + ESC TLM</option>';
             c += '</select></dd>';
+            self.empty();
             self.append(c);
 
             $("select", self).on("change", function () {
@@ -38,8 +39,11 @@
         },
         changeModeState: function (self) {
             var data = pluginData(self);
-            if (data.value == 0xf) $(".kiss-serial-mode", self).hide();
-            else $(".kiss-serial-mode", self).show();
+            if (data.value == 0xf) {
+                self.hide();
+            } else {
+                self.show();
+            }
         }
     };
 
@@ -52,7 +56,7 @@
                     self.data(PLUGIN_NAME, $.extend(true, {
                         name: '',
                         serial: 0,
-                        value: 0
+                        value: 0,
                     }, options));
                     data = pluginData(self);
                 }
@@ -75,7 +79,7 @@
             var data = pluginData(self);
             data.value = newValue;
             privateMethods.changeValue(self);
-        },
+        }
     };
 
     $.fn.kissSerial = function (method) {
