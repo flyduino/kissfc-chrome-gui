@@ -157,15 +157,7 @@ gulp.task('dist', ['clean-dist'], function () {
         './js/libraries/jquery-ui.theme.min.css',   
         './js/plugins/jquery.kiss.aux.css',
         './js/plugins/jquery.kiss.warning.css',
-        './content/configuration.css',
-        './content/data_output.css',
-        './content/esc_flasher.css',
-        './content/fc_flasher.css',
-        './content/flasher.css',
-        './content/rates.css',
-        './content/tpa.css',
-        './content/upgrade.css',
-        './content/welcome.css',
+        './content/*.css',
 
         // JavaScript
         './js/libraries/github.js',
