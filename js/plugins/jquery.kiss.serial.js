@@ -1,5 +1,5 @@
 (function ($) {
-    var PLUGIN_NAME = 'kiss.aux',
+    var PLUGIN_NAME = 'kiss.serial',
         pluginData = function (obj) {
             return obj.data(PLUGIN_NAME);
         };
@@ -8,32 +8,23 @@
         build: function (self) {
             var data = pluginData(self);
             var c = "";
-            c += '<dt class="kiss-aux-function">' + data.name + '</dt>';
-            c += '<dd class="kiss-aux-function"><select class="kiss-aux-channel unsafe">';
-            c += '<option value="0">--</option>';
-            c += '<option value="1">AUX1</option>';
-            c += '<option value="2">AUX2</option>';
-            c += '<option value="3">AUX3</option>';
-            c += '<option value="4">AUX4</option>';
-            c += '<option value="5">AUX5</option>';
-            c += '<option value="6">AUX6</option>';
-            c += '<option value="7">AUX7</option>';
-            c += '</select><select class="kiss-aux-mode unsafe">';
-            c += '<option value="0" data-i18n="aux.0">--</option>';
-            if (data.knobOnly) c += '<option value="6" data-i18n="aux.6">Knob</option>';
-            else {
-                c += '<option value="1" data-i18n="aux.1">Low</option>';
-                c += '<option value="2" data-i18n="aux.2">Low + Medium</option>';
-                c += '<option value="3" data-i18n="aux.3">Medium</option>';
-                c += '<option value="4" data-i18n="aux.4">Medium + High</option>';
-                c += '<option value="5" data-i18n="aux.5">High</option>';
-                if (data.knob) c += '<option value="6" data-i18n="aux.6">Knob</option>';
-            }
+            c += '<dt class="kiss-serial-function">Serial ' + data.name + '</dt>';
+            c += '<dd class="kiss-serial-function">';
+
+            c += '<select class="kiss-serial-mode unsafe">';
+            c += '<option value="0" data-i18n="serialtype.0">KissProtocol/OSD</option>';
+            c += '<option value="1" data-i18n="serialtype.1">Logger</option>';
+            c += '<option value="2" data-i18n="serialtype.2">Receiver</option>';
+            c += '<option value="3" data-i18n="serialtype.3">VTX</option>';
+            c += '<option value="4" data-i18n="serialtype.4">ESC TLM</option>';
+            c += '<option value="5" data-i18n="serialtype.5">Runcam</option>';
+            c += '<option value="6" data-i18n="serialtype.5">VTX + ESC TLM</option>';
             c += '</select></dd>';
+            self.empty();
             self.append(c);
 
             $("select", self).on("change", function () {
-                data.value = (parseInt($(".kiss-aux-channel", self).val()) << 4) + parseInt($(".kiss-aux-mode", self).val());
+                data.value = parseInt($(".kiss-serial-mode", self).val());
                 privateMethods.changeModeState(self);
             });
             if (data.change !== undefined) $("select", self).on("change", data.change);
@@ -42,15 +33,17 @@
         changeValue: function (self) {
             var data = pluginData(self);
             if (data.value !== undefined) {
-                $(".kiss-aux-channel", self).val(data.value >> 4);
-                $(".kiss-aux-mode", self).val(data.value & 0xf);
+                $(".kiss-serial-mode", self).val(data.value);
                 privateMethods.changeModeState(self);
             }
         },
         changeModeState: function (self) {
             var data = pluginData(self);
-            if (data.value >> 4 == 0) $(".kiss-aux-mode", self).hide();
-            else $(".kiss-aux-mode", self).show();
+            if (data.value == 0xf) {
+                self.hide();
+            } else {
+                self.show();
+            }
         }
     };
 
@@ -62,8 +55,8 @@
                 if (!data) {
                     self.data(PLUGIN_NAME, $.extend(true, {
                         name: '',
-                        knob: false,
-                        value: 0
+                        serial: 0,
+                        value: 0,
                     }, options));
                     data = pluginData(self);
                 }
@@ -79,24 +72,23 @@
         value: function () {
             var self = $(this),
                 data = pluginData(self);
-            if ((data.value >> 4 == 0) || ((data.value & 15) == 0)) return 0;
-            else return data.value;
+            return data.value;
         },
         setValue: function (newValue) {
             var self = $(this);
             var data = pluginData(self);
             data.value = newValue;
             privateMethods.changeValue(self);
-        },
+        }
     };
 
-    $.fn.kissAux = function (method) {
+    $.fn.kissSerial = function (method) {
         if (publicMethods[method]) {
             return publicMethods[method].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if (typeof method === 'object' || !method) {
             return publicMethods.init.apply(this, arguments);
         } else {
-            $.error('Method [' + method + '] not available in $.kissAux');
+            $.error('Method [' + method + '] not available in $.kissSerial');
         }
     };
 })(jQuery);

@@ -293,7 +293,7 @@ CONTENT.data_output.initialize = function (callback) {
             if (data['mode'] == 0) $("#omode").text($.i18n('text.acro'));
             else if (data['mode'] == 1) $("#omode").text($.i18n('text.level'));
             else if (data['mode'] == 2) $("#omode").text($.i18n('text.3D'));
-            else if (Data['mode'] == 3) $("#omode").text($.i18n('column.turtle-mode'));
+            else if (data['mode'] == 3) $("#omode").text($.i18n('column.turtle-mode'));
             else $("#omode").text(data['mode']);
 
             if (data['Armed'] == 0) $("#ostatus").text($.i18n('text.disarmed'));
