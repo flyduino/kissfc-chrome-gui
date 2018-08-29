@@ -98,7 +98,6 @@ CONTENT.advanced.initialize = function (callback) {
             cbo = true;
         }
 
-        console.log("CBO=" + cbo);
         $('input[name="CBO"]').prop('checked', cbo);
         if (cbo) {
             $('input[name="CBO0"]').removeAttr("disabled");
@@ -222,62 +221,73 @@ CONTENT.advanced.initialize = function (callback) {
             $("select[name='lapTimerTypeAndInterface'] option[value='19']").remove();
         }
 
-        if (data['ver'] >= 115) {
+        // Implementation of enhanced serial ports
+        if (data['ver'] >= 116) {
             $('#serialnew').css('display', 'inline-block'); //unhide serial section
             $('input[name="CSC"]').removeAttr("disabled"); //make checkbox changeable
             $("select[name='loggerConfig'] option[value='0']").html("disabled"); // remove logger option 0
 
             var serialsFunctions = []; //initialize serial array
+            var defaultSerialConfig;
             readSerials(); // read serial from data and populate array
+
+            // Check for default and either reset or show
+            kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () {
+                var info = kissProtocol.data[kissProtocol.GET_INFO];
+                defaultSerialConfig = info.defaultSerialConfig;
+
+                if (data['SerialSetup'] == 0) {
+                    data['SerialSetup'] = defaultSerialConfig;
+                    contentChange();
+                }
+
+                if (defaultSerialConfig != data['SerialSetup']) {
+                    $('input[name="CSC"]').prop('checked', 1);
+                    populateSerialFields();
+                }
+            });
 
             // Function for CSC changebox changes
             $('input[name="CSC"]').on('change', function () {
                 if ($('input[name="CSC"]').prop('checked') ? 1 : 0 == 1) {
-                    readSerials(); // read serial from data and populate array
-                    for (i = 0; i < serialsFunctions.length; i++) {
-                        $("#serial" + i).kissSerial({
-                            name: $.i18n("title.serial") + ' ' + i,
-                            serial: i,
-                            change: function () { updateSerials(); },
-                            value: serialsFunctions[i]
-                        });
-                    }
+                    populateSerialFields();
                     $("#newserial").show();
                 } else {
+                    data['SerialSetup'] = defaultSerialConfig; // reset to default
                     $("#newserial").hide();
+                    contentChange();
                 }
+
             });
 
+            function populateSerialFields() {
+                for (i = 0; i < serialsFunctions.length; i++) {
+                    $("#serial" + i).kissSerial({
+                        name: $.i18n("title.serial") + ' ' + i,
+                        serial: i,
+                        change: function () { updateSerials(); },
+                        value: serialsFunctions[i]
+                    });
+                }
+            }
             function readSerials() {
-                console.log('Read: ' + data['SerialSetup']);
                 for (i = 0; i < 8; i++) {
                     serialsFunctions[i] = (data['SerialSetup'] >> (28 - (i * 4))) & 0x0F;
                 }
-                console.log(serialsFunctions)
             }
             function updateSerials() {
                 serialsFunctions = []; // reset array
-                for (i = 0; i < 8; i++) {
-                    serialsFunctions[i] = $("#serial" + i).kissSerial('value');
-                }
-                contentChange();
-                writeSerials();
-                //data['SerialSetup'] = 4045469183; // 4029087743
-                //data['SerialSetup'] = 4029087743;
-            }
-            function writeSerials() {
-                //                console.log(serialsFunctions);
-                //                console.log(data['SerialSetup']);
-                data['SerialSetup'] = 0;
+                data['SerialSetup'] = 0; // reset serialsetup
                 var bitShiftCounter = 28;
                 for (i = 0; i < 8; i++) {
-//                    console.log('In ' + i + ' - ' + serialsFunctions[i])
+                    // update serialFunctions
+                    serialsFunctions[i] = $("#serial" + i).kissSerial('value');
+                    // update SerialSetup
                     data['SerialSetup'] += serialsFunctions[i] << bitShiftCounter;
                     bitShiftCounter -= 4;
                 }
-                console.log('Write: ' + data['SerialSetup']);
+                contentChange();
             }
-
         }
 
         var MCUid = '';
