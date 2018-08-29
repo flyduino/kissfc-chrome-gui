@@ -546,7 +546,8 @@ kissProtocol.processPacket = function (code, obj) {
             var p = 0;
             obj.escInfo = [];
             obj.escInfoCount = 0;
-            //obj.defaultSerialConfig = 0;
+            if (usedVersion >= 116)
+                obj.defaultSerialConfig = 0;
             obj.firmvareVersion = kissProtocol.readString(data, p);
             p += obj.firmvareVersion.length + 1;
 
@@ -596,7 +597,8 @@ kissProtocol.processPacket = function (code, obj) {
                     if (!found) info = undefined;
                     obj.escInfo[i] = info;
                 }
-                //obj.defaultSerialConfig = data.getUint32(p++);
+                if (usedVersion >= 116)
+                    obj.defaultSerialConfig = data.getUint32(p++);
             }
 
             break;
