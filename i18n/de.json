@@ -392,6 +392,5 @@
 	"column.setpoint-weight": "Setpoint Gewichtung (%)",
 	"popup.newGUIavailable": "Diese GUI ist nicht mehr aktuell. Sie finden die aktuelle Version under dem angegbenen Link.",
 	"column.use-custom-serialconfiguration": "Erweiterte serielle Konfiguration",
-	"popup.serialwarningmessage": "Please note that this are advanced features. If you adjust serials you might have to wire diffently acording to the manual.",
-	"popup.serialwarningmessage2": "If you want to revert back to default please uncheck and save configuration."
+	"text.serial-warning": "Please note that this are advanced features. If you adjust serials you might have to wire diffently acording to the manual.<br/><br/>If you want to revert back to default please uncheck and save configuration.<br/><br/>"
 }
