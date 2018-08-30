@@ -271,7 +271,6 @@ CONTENT.advanced.initialize = function (callback) {
                 for (i = 0; i < serialsFunctions.length; i++) {
                     $("#serial" + i).kissSerial({
                         name: $.i18n("title.serial") + ' ' + i,
-                        serial: i,
                         change: function () { updateSerials(); },
                         value: serialsFunctions[i]
                     });
