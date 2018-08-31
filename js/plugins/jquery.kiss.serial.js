@@ -8,7 +8,7 @@
         build: function (self) {
             var data = pluginData(self);
             var c = "";
-            c += '<dt class="kiss-serial-function">Serial ' + data.name + '</dt>';
+            c += '<dt class="kiss-serial-function">' + data.name + '</dt>';
             c += '<dd class="kiss-serial-function">';
 
             c += '<select class="kiss-serial-mode unsafe">';
@@ -55,7 +55,6 @@
                 if (!data) {
                     self.data(PLUGIN_NAME, $.extend(true, {
                         name: '',
-                        serial: 0,
                         value: 0,
                     }, options));
                     data = pluginData(self);
