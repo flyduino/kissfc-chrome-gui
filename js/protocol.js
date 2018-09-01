@@ -339,7 +339,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.ver = 0;
                 obj.reverseMotors = 0;
                 obj.ESCOutputLayout = 0;
-                obj.SerialSetup = 0;
+                obj.SerialSetup = 0xFFFFFFFF;
             }
 
             obj.G_P[0] = data.getUint16(0, 0) / 1000;
