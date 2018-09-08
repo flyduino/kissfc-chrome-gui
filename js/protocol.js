@@ -338,8 +338,6 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.NFCO = [];
                 obj.ver = 0;
                 obj.reverseMotors = 0;
-                obj.ESCOutputLayout = 0;
-                obj.SerialSetup = 0xFFFFFFFF;
             }
 
             obj.G_P[0] = data.getUint16(0, 0) / 1000;
@@ -510,20 +508,22 @@ kissProtocol.processPacket = function (code, obj) {
                     obj.AUX[9] = data.getUint8(170, 0);
                     obj.AUX[10] = data.getUint8(171, 0);
                     obj.ledBrightness = data.getUint8(172, 0);
-                    var tmp = data.getUint8(173, 0);
                 }
                 if (obj.ver >= 111) {
                     obj.AUX[11] = data.getUint8(174, 0);
                     obj.setpointIntoD = data.getUint8(175, 0); // DTerm Weight
                 }
                 if (obj.ver >= 113) {
+                    obj.ESCOutputLayout = 0;
                     obj.ESCOutputLayout = data.getUint8(176, 0); // Custom ESC Orientation
                 }
                 if (obj.ver >= 116) {
+                    obj.SerialSetup = 0xFFFFFFFF;
                     obj.SerialSetup = data.getUint32(177, 0);   // Serial mapping
                 }
                 // next free 181
-
+                
+                
 
             } catch (Exception) {
                 console.log("Exception while reading packet");
