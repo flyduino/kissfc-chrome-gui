@@ -387,7 +387,6 @@
 	"menu.fc-flasher": "FC Flasher",
 	"text.fc-type": "FC type",
 	"column.setpoint-weight": "Setpoint weight (%)",
-	"popup.newGUIavailable": "This GUI version is outdated. Please follow below link to the latest GUI.",
-	"column.use-custom-serialconfiguration": "Use advanced serial configuration",
+	"popup.newGUIavailable": "<p style=\"text-align: center;\">This GUI version is outdated</p><br/>Please follow below link to the latest GUI.<br/><p style=\"text-align: center;\"><a href=\"https://github.com/flyduino/kiss-gui/releases\" target=\"_blank\" style=\"color:red; font-weight: bold;\">Download</a></p>",	"column.use-custom-serialconfiguration": "Use advanced serial configuration",
 	"text.serial-warning": "Please note that this are advanced features. If you adjust serials you might have to wire diffently acording to the manual.<br/><br/>If you want to revert back to default please uncheck and save configuration.<br/><br/>"
 }

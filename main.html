@@ -12,7 +12,7 @@
     <link type="text/css" rel="stylesheet" href="./js/libraries/jquery-ui.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./js/libraries/jquery-ui.structure.min.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./js/libraries/jquery-ui.theme.min.css" media="all" />
-    
+
     <link type="text/css" rel="stylesheet" href="./content/welcome.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./content/configuration.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./content/advanced.css" media="all" />
@@ -99,9 +99,11 @@
         </div>
     </div>
     <div id="dialogGUIupdate">
-        <p data-i18n="popup.newGUIavailable">This GUI version is outdated.</p><br/>
-        <p style="text-align: center;"><a href="https://github.com/flyduino/kiss-gui/releases" target="_blank" style="color:red; font-weight: bold;">Download</a></p>
-      </div>
+        <script>
+            $(document).ready(function () { nw.Window.get().on('new-win-policy', function (frame, url, policy) { policy.ignore(); nw.Shell.openExternal(url); }); });
+        </script>
+        <div data-i18n="[html]popup.newGUIavailable">This GUI version is outdated.</div>
+    </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/startup.js"></script>
 </body>
