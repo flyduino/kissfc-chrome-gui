@@ -190,7 +190,7 @@ CONTENT.advanced.initialize = function (callback) {
 
         if (data['ver'] >= 109) {
             if (data['ver'] >= 114) {
-                document.getElementById('loopD').innerHTML = ""; // remove looptime on >=114
+                $("#loopD").remove() // remove looptime on >=114
             } else {
                 // TODO clean this up
                 kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () {
