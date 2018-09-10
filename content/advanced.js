@@ -291,6 +291,11 @@ CONTENT.advanced.initialize = function (callback) {
                     // update SerialSetup
                     data['SerialSetup'] += serialsFunctions[i] << bitShiftCounter;
                     bitShiftCounter -= 4;
+                    // Set Logger to 100% if disabled but logger is set at least one serial
+                    if (serialsFunctions[i] == 1) {
+                        if ($('select[name="loggerConfig"]').val() == 0)
+                            $('select[name="loggerConfig"]').val(10);
+                    }
                 }
                 contentChange();
             }
