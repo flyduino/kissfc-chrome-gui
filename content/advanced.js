@@ -22,9 +22,9 @@ CONTENT.advanced.initialize = function (callback) {
         validateBounds('#content input[type="number"]');
 
         // serial warning
-        $(".serial-disclaimer").hide();
+        $(".warning-disclaimer").hide();
         $(".warning-button").on("click", function () {
-            $(".serial-disclaimer").hide();
+            $(".warning-disclaimer").hide();
         });
 
         $('input[name="mahAlarm"]').val(data['mahAlarm']);
@@ -258,7 +258,7 @@ CONTENT.advanced.initialize = function (callback) {
                 if ($('input[name="CSC"]').prop('checked') ? 1 : 0 == 1) {
                     populateSerialFields();
                     $("#newserial").show();
-                    $(".serial-disclaimer").show();
+                    $(".warning-disclaimer").show();
                 } else {
                     data['SerialSetup'] = defaultSerialConfig; // reset to default
                     $("#newserial").hide();

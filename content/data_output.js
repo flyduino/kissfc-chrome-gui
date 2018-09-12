@@ -174,7 +174,7 @@ CONTENT.data_output.initialize = function (callback) {
         });
 
         $(".motor-test-button").on("click", function () {
-            $(".motor-test-disclaimer").show();
+            $("#motor-test-disclaimer").show();
         });
 
         $(".warning-button").on("click", function () {
@@ -182,7 +182,7 @@ CONTENT.data_output.initialize = function (callback) {
             $(".motor-test").show();
             $(".motor-test-enabled").show();
             $("#motorTestTitle span").first().text($.i18n('text.enable-motor-test'));
-            $(".motor-test-disclaimer").hide();
+            $("#motor-test-disclaimer").hide();
         });
 
         self.barResize = function () {
