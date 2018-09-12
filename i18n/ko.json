@@ -71,6 +71,8 @@
     "column.notch-center": "중간 주파수: (Hz)",
     "column.notch-cutoff": "컷오프 주파수: (Hz)",
     "column.p": "P",
+    "column.PentaForward": "Forward",
+    "column.PentaHover": "Hover",
     "column.pid-strength-percentage": "PID 강도 [%]",
     "column.pid-voltage-correction": "PID 전압 보정 이용",
     "column.pitch": "피치",
