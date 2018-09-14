@@ -41,7 +41,7 @@ CONTENT.esc_flasher.initialize = function (callback) {
             Write(startApp);
             console.log('done.');
             $("#status").html($.i18n("text.esc-flasher-success"));
-            $(".esc-flasher-complete").show();
+            $("#esc-flasher-complete").show();
             serialDevice.disconnect();
             return;
         } else {
@@ -113,7 +113,7 @@ CONTENT.esc_flasher.initialize = function (callback) {
 
         $(".warning-button").on("click", function () {
             kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
-                $(".esc-flasher-disclaimer").hide();
+                $("#esc-flasher-disclaimer").hide();
                 var data = kissProtocol.data[kissProtocol.GET_SETTINGS];
                 if (data.lipoConnected == 1) {
                     kissProtocol.send(kissProtocol.ESC_INFO, [0x22], function () { self.pollEscInfo = true; pollEscInfo(); });
@@ -121,7 +121,7 @@ CONTENT.esc_flasher.initialize = function (callback) {
             });
         });
 
-        $(".esc-flasher-disclaimer").show();
+        $("#esc-flasher-disclaimer").show();
 
         $("#fw_version").on("change", function () {
             var asset = escFirmwareMap[$("#fc_type").val()][$(this).val()];

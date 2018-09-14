@@ -12,16 +12,13 @@
     <link type="text/css" rel="stylesheet" href="./js/libraries/jquery-ui.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./js/libraries/jquery-ui.structure.min.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./js/libraries/jquery-ui.theme.min.css" media="all" />
-    
+
     <link type="text/css" rel="stylesheet" href="./content/welcome.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./content/configuration.css" media="all" />
-    <link type="text/css" rel="stylesheet" href="./content/advanced.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./content/data_output.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./content/rates.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./content/tpa.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./content/flasher.css" media="all" />
-    <link type="text/css" rel="stylesheet" href="./content/fc_flasher.css" media="all" />
-    <link type="text/css" rel="stylesheet" href="./content/upgrade.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./content/esc_flasher.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./js/plugins/jquery.kiss.aux.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./js/plugins/jquery.kiss.warning.css" media="all" />
@@ -90,7 +87,7 @@
                     <li data-name="fc_flasher" data-i18n="menu.fc-flasher" style="display:none">FC Flasher</li>
                     <li data-name="esc_flasher" data-i18n="menu.esc-flasher">ESC Flasher</li>
                     <li data-name="wifi" data-i18n_="menu.wifi" class="external">
-                        <a id="wifi" href="http://192.168.4.1/" target=_blank>WIFI</a>
+                        <a id="wifi" href="http://192.168.4.1/" target="_blank">WIFI</a>
                     </li>
                 </ul>
             </div>
@@ -99,9 +96,11 @@
         </div>
     </div>
     <div id="dialogGUIupdate">
-        <p data-i18n="popup.newGUIavailable">This GUI version is outdated.</p><br/>
-        <p style="text-align: center;"><a href="https://github.com/flyduino/kiss-gui/releases" target="_blank" style="color:red; font-weight: bold;">Download</a></p>
-      </div>
+        <script>
+            $(document).ready(function () { nw.Window.get().on('new-win-policy', function (frame, url, policy) { policy.ignore(); nw.Shell.openExternal(url); }); });
+        </script>
+        <div data-i18n="[html]popup.newGUIavailable">This GUI version is outdated.</div>
+    </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/startup.js"></script>
 </body>

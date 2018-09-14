@@ -22,9 +22,9 @@ CONTENT.advanced.initialize = function (callback) {
         validateBounds('#content input[type="number"]');
 
         // serial warning
-        $(".serial-disclaimer").hide();
+        $(".warning-disclaimer").hide();
         $(".warning-button").on("click", function () {
-            $(".serial-disclaimer").hide();
+            $(".warning-disclaimer").hide();
         });
 
         $('input[name="mahAlarm"]').val(data['mahAlarm']);
@@ -190,7 +190,7 @@ CONTENT.advanced.initialize = function (callback) {
 
         if (data['ver'] >= 109) {
             if (data['ver'] >= 114) {
-                document.getElementById('loopD').innerHTML = ""; // remove looptime on >=114
+                $("#loopD").remove() // remove looptime on >=114
             } else {
                 // TODO clean this up
                 kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () {
@@ -258,7 +258,7 @@ CONTENT.advanced.initialize = function (callback) {
                 if ($('input[name="CSC"]').prop('checked') ? 1 : 0 == 1) {
                     populateSerialFields();
                     $("#newserial").show();
-                    $(".serial-disclaimer").show();
+                    $(".warning-disclaimer").show();
                 } else {
                     data['SerialSetup'] = defaultSerialConfig; // reset to default
                     $("#newserial").hide();
@@ -291,6 +291,11 @@ CONTENT.advanced.initialize = function (callback) {
                     // update SerialSetup
                     data['SerialSetup'] += serialsFunctions[i] << bitShiftCounter;
                     bitShiftCounter -= 4;
+                    // Set Logger to 100% if disabled but logger is set at least one serial
+                    if (serialsFunctions[i] == 1) {
+                        if ($('select[name="loggerConfig"]').val() == 0)
+                            $('select[name="loggerConfig"]').val(10);
+                    }
                 }
                 contentChange();
             }
