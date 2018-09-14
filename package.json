@@ -5,7 +5,12 @@
   "single-instance": true,
   "scripts": {
     "start": "node node_modules/gulp/bin/gulp.js debug",
-    "buildall": "node node_modules/gulp/bin/gulp.js release --osx64 --win32 --win64 --linux64 --linux32 --chromeos"
+    "buildall": "node node_modules/gulp/bin/gulp.js release --osx64 --win32 --win64 --linux64 --linux32 --chromeos",
+    "clean": "node node_modules/gulp/bin/gulp.js clean",
+    "clean-all": "node node_modules/gulp/bin/gulp.js clean-all",
+    "remove": "node node_modules/gulp/bin/gulp.js remove-all"
+    
+
   },
   "window": {
     "title": "KISS GUI",
