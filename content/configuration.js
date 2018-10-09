@@ -490,7 +490,7 @@ CONTENT.configuration.initialize = function (callback) {
 
         if (data['ver'] > 109) {
             $("#aux9").kissAux({
-                name: $.i18n("column.runcam"),
+                name: $.i18n("column.runcam-split"),
                 change: function () { contentChange(); },
                 value: data['AUX'][9]
             });
@@ -529,6 +529,7 @@ CONTENT.configuration.initialize = function (callback) {
         } else {
             if (data['LPF'] == data['DLpF'] && data['LPF'] == data['yawLpF']) {
                 $('select[name="lpf"]').val(data['LPF']);
+                $("select[name='lpf'] option[value='7']").prop("disabled", true);
             } else {
                 $('select[name="lpf"]').val(7);
             }

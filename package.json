@@ -1,7 +1,7 @@
 {
   "name": "kiss-gui",
   "main": "start.js",
-  "version": "2.0.13",
+  "version": "2.0.14",
   "single-instance": true,
   "scripts": {
     "start": "node node_modules/gulp/bin/gulp.js debug",
