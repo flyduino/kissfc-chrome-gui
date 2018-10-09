@@ -203,6 +203,22 @@ CONTENT.advanced.initialize = function (callback) {
 
                 $('select[name="loopTimeDivider"]').val(data['loopTimeDivider']);
                 $('select[name="loopTimeDivider"]').removeAttr("disabled");
+                if (data['loopTimeDivider'] != 1) {
+                    $('input[name="adaptiveFilter"]').prop('checked', 0);
+                    $('input[name="adaptiveFilter"]').prop("disabled", true);                      
+                } else {
+                    $('input[name="adaptiveFilter"]').removeAttr("disabled"); 
+                }
+                
+                $('select[name="loopTimeDivider"]').on("change", function() {
+                    if ($(this).val() != 1) {
+                        $('input[name="adaptiveFilter"]').prop('checked', 0);
+                        $('input[name="adaptiveFilter"]').prop("disabled", true);                      
+                    } else {
+                        $('input[name="adaptiveFilter"]').removeAttr("disabled");   
+                    }
+                });
+
             }
             $('select[name="yawlpf"]').removeAttr("disabled");
             $('select[name="yawlpf"]').val(data['yawLpF']);
