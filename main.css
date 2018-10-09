@@ -250,7 +250,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .wrapper-full {
 		width: 100%;
 		padding: 5px;
-		margin-bottom: 20px;
+		margin-bottom: 10px;
 		clear: both;
 		padding-left: 2px;
 }
