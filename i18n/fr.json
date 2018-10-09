@@ -80,7 +80,7 @@
     "column.rc-rate": "RC Rate",
     "column.reverse-motors": "Inverser le sens de l'axe YAW",
     "column.roll": "Roll",
-    "column.runcam": "Runcam split",
+    "column.runcam-split": "RunCam Split",
     "column.rx-deadband": "RX Deadband",
     "column.setpoint-weight": "Setpoint weight (%)",
     "column.status": "Statut:",

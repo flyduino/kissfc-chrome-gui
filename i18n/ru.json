@@ -80,7 +80,7 @@
     "column.rc-rate": "РУ рейт",
     "column.reverse-motors": "Reverse yaw control direction (reversed motor)",
     "column.roll": "Крен",
-    "column.runcam": "Runcam split",
+    "column.runcam-split": "RunCam Split",
     "column.rx-deadband": "Мертвая зона",
     "column.setpoint-weight": "Setpoint weight (%)",
     "column.status": "Статус:",

@@ -80,7 +80,7 @@
     "column.rc-rate": "Rata RC",
     "column.reverse-motors": "Reverse yaw control direction (reversed motor)",
     "column.roll": "Rulare",
-    "column.runcam": "Runcam split",
+    "column.runcam-split": "RunCam Split",
     "column.rx-deadband": "Deadband RX",
     "column.setpoint-weight": "Setpoint weight (%)",
     "column.status": "Stare:",

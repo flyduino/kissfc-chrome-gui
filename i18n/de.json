@@ -81,7 +81,7 @@
     "column.rc-rate": "RC Rate",
     "column.reverse-motors": "Gier Steuerung umkehren (Invertierte Motorlaufrichtung)",
     "column.roll": "Roll",
-    "column.runcam": "Runcam split",
+    "column.runcam-split": "RunCam Split",
     "column.rx-deadband": "RX Totband",
     "column.setpoint-weight": "Setpoint Gewichtung (%)",
     "column.status": "Status:",
