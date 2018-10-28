@@ -29,6 +29,8 @@
     "button.reset-model": "Reset model",
     "button.restore": "Återställ",
     "button.save": "Spara",
+    "button.saved": "Saved!",
+    "button.saving": "Saving...",
     "button.select-firmware": "VÄLJ FIRMWARE",
     "button.select-remote-firmware": "SELECT REMOTE FIRMWARE",
     "button.share": "Dela",

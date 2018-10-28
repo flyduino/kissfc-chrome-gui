@@ -28,6 +28,8 @@
     "button.reset-model": "Центрировать модель",
     "button.restore": "Восстановить",
     "button.save": "Записать",
+    "button.saved": "Saved!",
+    "button.saving": "Saving...",
     "button.select-firmware": "ВЫБЕРИТЕ ПРОШИВКУ",
     "button.select-remote-firmware": "СКАЧАТЬ ИЗ СЕТИ",
     "button.share": "Поделиться",

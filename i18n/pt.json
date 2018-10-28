@@ -28,6 +28,8 @@
     "button.reset-model": "Reset model",
     "button.restore": "Restaurar",
     "button.save": "Guardar",
+    "button.saved": "Saved!",
+    "button.saving": "Saving...",
     "button.select-firmware": "SELECCIONAR FIRMWARE",
     "button.select-remote-firmware": "SELECT REMOTE FIRMWARE",
     "button.share": "Partilhar",

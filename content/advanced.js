@@ -205,17 +205,17 @@ CONTENT.advanced.initialize = function (callback) {
                 $('select[name="loopTimeDivider"]').removeAttr("disabled");
                 if (data['loopTimeDivider'] != 1) {
                     $('input[name="adaptiveFilter"]').prop('checked', 0);
-                    $('input[name="adaptiveFilter"]').prop("disabled", true);                      
+                    $('input[name="adaptiveFilter"]').prop("disabled", true);
                 } else {
-                    $('input[name="adaptiveFilter"]').removeAttr("disabled"); 
+                    $('input[name="adaptiveFilter"]').removeAttr("disabled");
                 }
-                
-                $('select[name="loopTimeDivider"]').on("change", function() {
+
+                $('select[name="loopTimeDivider"]').on("change", function () {
                     if ($(this).val() != 1) {
                         $('input[name="adaptiveFilter"]').prop('checked', 0);
-                        $('input[name="adaptiveFilter"]').prop("disabled", true);                      
+                        $('input[name="adaptiveFilter"]').prop("disabled", true);
                     } else {
-                        $('input[name="adaptiveFilter"]').removeAttr("disabled");   
+                        $('input[name="adaptiveFilter"]').removeAttr("disabled");
                     }
                 });
 
@@ -517,8 +517,12 @@ CONTENT.advanced.initialize = function (callback) {
         }
 
         function contentChange() {
+            $('#save').removeAttr("data-i18n");
+            $('#save').attr('data-i18n', 'button.save');
+            $('#save').text($.i18n("button.save"));
             if (settingsFilled) {
                 $('#save').addClass("saveAct");
+
             }
         }
 
@@ -539,19 +543,42 @@ CONTENT.advanced.initialize = function (callback) {
             });
         }
 
-
+        /*        
+                $('#save').on('click', function () {
+                    grabData();
+                    $('#save').removeClass("saveAct");
+                    $('#save').html($.i18n("button.saving"));
+                    kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
+                    if (!data['isActive']) {
+                        kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+                            GUI.load("./content/advanced.html", function () {
+                                htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
+        
+                            });
+                        });
+                    }
+                    $('#save').removeAttr("data-i18n");
+                    $('#save').attr('data-i18n', 'button.saved');
+                    $('#save').html($.i18n("button.saved"));
+        
+                });
+        */
         $('#save').on('click', function () {
             grabData();
             $('#save').removeClass("saveAct");
+            $('#save').html($.i18n("button.saving"));
             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
-            if (!data['isActive']) {
-                kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
-                    GUI.load("./content/advanced.html", function () {
-                        htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
-                    });
+            kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+                GUI.load("./content/advanced.html", function () {
+                    htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
+                    $('#save').removeAttr("data-i18n");
+                    $('#save').attr('data-i18n', 'button.saved');
+
                 });
-            }
+            });
+
         });
+
     }
 };
 

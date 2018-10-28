@@ -29,6 +29,8 @@
     "button.reset-model": "모델 리셋",
     "button.restore": "복원하기",
     "button.save": "저장하기",
+    "button.saved": "Saved!",
+    "button.saving": "Saving...",
     "button.select-firmware": "펌웨어 선택",
     "button.select-remote-firmware": "서버 펌웨어 선택",
     "button.share": "공유하기",
