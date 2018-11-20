@@ -9,8 +9,6 @@
     "clean": "node node_modules/gulp/bin/gulp.js clean",
     "clean-all": "node node_modules/gulp/bin/gulp.js clean-all",
     "remove": "node node_modules/gulp/bin/gulp.js remove-all"
-    
-
   },
   "window": {
     "title": "KISS GUI",
@@ -42,7 +40,7 @@
     "gulp-install": "^1.1.0",
     "jquery-ui-npm": "1.12.0",
     "marked": "^0.3.17",
-    "nw": "^0.30.2",
+    "nw": "^0.30.5",
     "nw-builder": "^3.5.4",
     "os": "^0.1.1",
     "platform-dependent-modules": "0.0.14",
@@ -56,5 +54,8 @@
         "gulp-appdmg@1.0.3"
       ]
     }
+  },
+  "dependencies": {
+    "natives": "^1.1.6"
   }
 }
