@@ -119,6 +119,14 @@ gulp.task('clean', function () {
     return runSequence('clean-dist', 'clean-apps', 'clean-debug', 'clean-release');
 });
 
+gulp.task('clean-all', function () {
+    return runSequence('clean-dist', 'clean-apps', 'clean-debug', 'clean-release','clean-cache');
+});
+
+gulp.task('remove-all', function () {
+    return runSequence('clean-dist', 'clean-apps', 'clean-debug', 'clean-release','clean-cache', 'clean-node-modules');
+});
+
 gulp.task('clean-dist', function () {
     return del([distDir + '**'], { force: true });
 });

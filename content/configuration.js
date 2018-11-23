@@ -490,7 +490,7 @@ CONTENT.configuration.initialize = function (callback) {
 
         if (data['ver'] > 109) {
             $("#aux9").kissAux({
-                name: $.i18n("column.runcam"),
+                name: $.i18n("column.runcam-split"),
                 change: function () { contentChange(); },
                 value: data['AUX'][9]
             });
@@ -529,6 +529,7 @@ CONTENT.configuration.initialize = function (callback) {
         } else {
             if (data['LPF'] == data['DLpF'] && data['LPF'] == data['yawLpF']) {
                 $('select[name="lpf"]').val(data['LPF']);
+                $("select[name='lpf'] option[value='7']").prop("disabled", true);
             } else {
                 $('select[name="lpf"]').val(7);
             }
@@ -734,8 +735,12 @@ CONTENT.configuration.initialize = function (callback) {
         }
 
         function contentChange() {
+            $('#save').removeAttr("data-i18n");
+            $('#save').attr('data-i18n', 'button.save');
+            $('#save').text($.i18n("button.save"));
             if (settingsFilled) {
                 $('#save').addClass("saveAct");
+
             }
         }
 
@@ -910,10 +915,14 @@ CONTENT.configuration.initialize = function (callback) {
         $('#save').on('click', function () {
             grabData();
             $('#save').removeClass("saveAct");
+            $('#save').html($.i18n("button.saving"));
             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
             kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
                 GUI.load("./content/configuration.html", function () {
                     htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
+                    $('#save').removeAttr("data-i18n");
+                    $('#save').attr('data-i18n', 'button.saved');
+                    
                 });
             });
         });
