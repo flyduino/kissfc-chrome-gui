@@ -521,7 +521,10 @@ kissProtocol.processPacket = function (code, obj) {
                     obj.SerialSetup = 0xFFFFFFFF;
                     obj.SerialSetup = data.getUint32(177, 0);   // Serial mapping
                 }
-                // next free 181
+                if (obj.ver >= 117) {
+                     obj.AUX[12] = data.getUint8(181, 0); // realpit
+                }
+                // next free 182
                 
                 
 
@@ -782,6 +785,10 @@ kissProtocol.preparePacket = function (code, obj) {
             if (obj.ver >= 116) {
                 data.setUint32(166, obj.SerialSetup); // Serialconfig
                 blen = 178;
+            }
+            if (obj.ver >= 117) {
+                data.setUint8(170, obj.AUX[12]); //realpit
+                blen = 179;
             }
 
             break;

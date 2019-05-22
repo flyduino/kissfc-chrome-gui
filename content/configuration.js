@@ -541,6 +541,15 @@ CONTENT.configuration.initialize = function (callback) {
         $('select[name="lpf"]').on('change', function () {
             contentChange();
         });
+        
+        if (data['ver'] >= 117){
+            $("#aux12").kissAux({
+                name: "Real PIT mode",
+                change: function () { contentChange(); },
+                value: data['AUX'][12]
+            });
+            $("#aux12").show();
+        }else $("#aux12").hide();
 
         // Temp fix
         if (typeof androidOTGSerial !== 'undefined') {
@@ -723,6 +732,9 @@ CONTENT.configuration.initialize = function (callback) {
             if (data['ver'] >= 113) {
                 data['ESCOutputLayout'] = parseInt($('select[name="ESCOutputLayout"]').val());
                 console.log('Store ESCOutputLayout:' + data['ESCOutputLayout']);
+            }
+            if (data['ver'] >= 117) {
+               data['AUX'][12] = $("#aux12").kissAux('value');
             }
         }
         settingsFilled = 1;
