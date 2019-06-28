@@ -396,6 +396,7 @@
     "vtx.1": "Dummy VTX",
     "vtx.2": "IRC Tramp HV",
     "vtx.3": "TBS Unify",
+    "vtx.4": "TBS EVO",
     "telemetry.7" : "RX Uplink",
     "telemetry.8" : "RX Downlink",
     "legend.19": "RSSI 1 dBm",
@@ -408,6 +409,5 @@
     "legend.26": "RSSI dBm",
     "legend.27": "LQ %",
     "legend.28": "SNR dBm"
-    
-    
+ 
 }
