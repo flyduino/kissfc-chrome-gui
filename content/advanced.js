@@ -76,7 +76,7 @@ CONTENT.advanced.initialize = function (callback) {
         $('input[name="vtxPowerLow"]').val(+data['vtxPowerLow']);
         $('input[name="vtxPowerHigh"]').val(+data['vtxPowerHigh']);
         
-        if (data['ver'] < 116) { // Remove TBS EVO
+        if (data['ver'] < 117) { // Remove TBS EVO
         	$("#vtxType > option[value='4']").remove();
         }
 
