@@ -75,6 +75,10 @@ CONTENT.advanced.initialize = function (callback) {
         $('select[name="vtxType"]').val(data['vtxType']);
         $('input[name="vtxPowerLow"]').val(+data['vtxPowerLow']);
         $('input[name="vtxPowerHigh"]').val(+data['vtxPowerHigh']);
+        
+        if (data['ver'] < 117) { // Remove TBS EVO
+        	$("#vtxType > option[value='4']").remove();
+        }
 
         $('select[name="loggerConfig"]').on('change', function () {
             var tmp = +$(this).val();
