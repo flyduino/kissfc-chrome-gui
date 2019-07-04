@@ -195,6 +195,7 @@
     "output.5": "Dshot 600",
     "output.6": "Dshot 1200",
     "output.7": "Dshot 2400",
+    "output.8": "FETtec OneWire",
     "popup.newGUIavailable": "<p style=\"text-align: center;\">This GUI version is outdated</p><br/>Please follow below link to the latest GUI.<br/><p style=\"text-align: center;\"><a href=\"https://github.com/flyduino/kiss-gui/releases\" target=\"_blank\" style=\"color:red; font-weight: bold;\">Download</a></p>",
     "rx-type.0": "Autodetect",
     "rx-type.1": "4-6 single Channel",
