@@ -396,5 +396,19 @@
     "vtx.0": "--",
     "vtx.1": "Dummy VTX",
     "vtx.2": "IRC Tramp HV",
-    "vtx.3": "TBS Unify"
+    "vtx.3": "TBS Unify",
+    "vtx.4": "TBS EVO",
+    "telemetry.7" : "RX Uplink",
+    "telemetry.8" : "RX Downlink",
+    "legend.19": "RSSI 1 dBm",
+    "legend.20": "RSSI 2 dBm",
+    "legend.21": "LQ %",
+    "legend.22": "SNR dBm",
+    "legend.23": "Antenna",
+    "legend.24": "RF Mode",
+    "legend.25": "TX Power mW",
+    "legend.26": "RSSI dBm",
+    "legend.27": "LQ %",
+    "legend.28": "SNR dBm"
+ 
 }

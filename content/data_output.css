@@ -90,20 +90,21 @@
     margin-left: 105px;
     font-weight: bold;
 }
+
 .data_output .plot dl dd:nth-of-type(1) {
     color: #00A8F0;
 }
 .data_output .plot dl dd:nth-of-type(2) {
-    color: #C0D800;
-}
-.data_output .plot dl dd:nth-of-type(3) {
-    color: #f8921a;
-}
-.data_output .plot dl dd:nth-of-type(4) {
     color: #f02525;
 }
-.data_output .plot dl dd:nth-of-type(5) {
+.data_output .plot dl dd:nth-of-type(3) {
+    color: #C0D800;
+}
+.data_output .plot dl dd:nth-of-type(4) {
     color: #9440ED;
+}
+.data_output .plot dl dd:nth-of-type(5) {
+    color: #f8921a;
 }
 .data_output .plot dl dd:nth-of-type(6) {
     color: #147A66;

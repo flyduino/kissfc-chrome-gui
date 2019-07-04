@@ -199,8 +199,8 @@ kissProtocol.proceedRequest = function () {
 
 kissProtocol.processPacket = function (code, obj) {
     var data = new DataView(obj.buffer, 0);
-
-    switch (code) {
+    
+     switch (code) {
         case this.GET_TELEMETRY:
             if (!obj.RXcommands) {
                 obj.RXcommands = [];
@@ -220,6 +220,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.ESC_Telemetrie5 = [];
                 obj.ESC_TelemetrieStats = [];
                 obj.adaptiveFilter = 0;
+                obj.RXStats = undefined;
             }
 
             obj.RXcommands[0] = 1000 + ((data.getInt16(0, 0) / 1000) * 1000);
@@ -316,6 +317,22 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.RXcommands[9] = 1500 + ((data.getInt16(156, 0) / 1000) * 500);
                 obj.RXcommands[10] = 1500 + ((data.getInt16(158, 0) / 1000) * 500);
             }
+            
+            if (data.byteLength >= 170 && usedVersion >= 116) {
+            	obj.RXStats = {
+            		upRSSI1 : -data.getUint8(160, 0),
+            		upRSSI2 : -data.getUint8(161, 0),
+            		upLQ : data.getUint8(162, 0),
+            		upSNR : data.getInt8(163, 0), 
+            		upAntenna : data.getUint8(164, 0),
+            		rfMode : data.getUint8(165, 0),
+            		upTXPower : data.getUint8(166, 0),
+            		downRSSI : -data.getUint8(167, 0),
+            		downLQ : data.getUint8(168, 0),
+            		downSNR : data.getInt8(169, 0)
+            	};
+            }
+            
             break;
         case this.GET_SETTINGS:
             if (!obj.G_P) {
