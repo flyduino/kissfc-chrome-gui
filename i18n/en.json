@@ -81,6 +81,7 @@
     "column.rc-curve": "RC Curve",
     "column.rc-expo": "Rate",
     "column.rc-rate": "RC Rate",
+    "column.RealPit": "Real Pit mode",
     "column.reverse-motors": "Reverse yaw control direction (reversed motor)",
     "column.roll": "Roll",
     "column.runcam-split": "RunCam Split",

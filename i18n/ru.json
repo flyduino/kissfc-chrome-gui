@@ -80,6 +80,7 @@
     "column.rc-curve": "РУ кривая",
     "column.rc-expo": "Рейт",
     "column.rc-rate": "РУ рейт",
+    "column.RealPit": "Real Pit mode",
     "column.reverse-motors": "Reverse yaw control direction (reversed motor)",
     "column.roll": "Крен",
     "column.runcam-split": "RunCam Split",

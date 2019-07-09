@@ -81,6 +81,7 @@
     "column.rc-curve": "RC커브",
     "column.rc-expo": "레이트",
     "column.rc-rate": "RC레이트",
+    "column.RealPit": "Real Pit mode",
     "column.reverse-motors": "요 제어 방향을 반대로",
     "column.roll": "롤",
     "column.runcam-split": "런캠 스플릿",
