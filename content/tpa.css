@@ -1,26 +1,30 @@
-
 .tpa .bars {
     float: left;
     width: 100%;
     font-weight: bold;
 }
+
 .tpa .bars ul {
     margin-bottom: 5px;
     clear: left;
 }
+
 .tpa .bars li {
     float: left;
     height: 22px;
     line-height: 20px;
 }
+
 .tpa .bars .name {
     padding: 0 10px 0 0;
     width: 40px;
     text-align: right;
 }
+
 .tpa .bars .meter {
     width: calc(100% - 50px);
 }
+
 .tpa .bars .meter-bar {
     position: relative;
     margin-top: 2px;
@@ -29,6 +33,7 @@
     border: 1px solid silver;
     background-color: #f4f4f4;
 }
+
 .tpa .bars .meter-bar .label {
     position: absolute;
     width: 50px;
@@ -37,6 +42,7 @@
     text-align: center;
     color: #474747;
 }
+
 .tpa .bars .meter-bar .fill {
     position: relative;
     overflow: hidden;
@@ -44,15 +50,19 @@
     height: 15px;
     background-color: #830a0a;
 }
+
 .tpa .bars .meter-bar .fill .label {
     color: white;
 }
+
 .tpa .pids {
-	border-collapse: collapse;
+    border-collapse: collapse;
 }
+
 .tpa .pids tr {
     height: 25px;
 }
+
 .tpa .pids th {
     width: 60px;
     padding-right: 5px;
@@ -62,12 +72,14 @@
 .tpa .pids input {
     width: 60px;
 }
+
 .tpa .pids .name {
     padding: 0 10px 0 0;
     width: 40px;
     text-align: right;
     font-weight: bold;
 }
+
 .tpa .pids input[type="text"] {
     width: 60px;
     height: 20px;
@@ -87,11 +99,11 @@
 .tpa .tpa_chart {
     width: 58%;
     height: 160px;
-	display: inline-block;    
+    display: inline-block;
 }
 
 .cpid {
-	width: 56px;
+    width: 56px;
     height: 20px;
     line-height: 20px;
     font-family: system-ui;
@@ -104,16 +116,16 @@
 }
 
 .tpa_influence {
-	width: 50%;
-	float: left;
+    width: 50%;
+    float: left;
 }
 
 .battery_influence {
-	width: 50%;
-	float: right;
+    width: 50%;
+    float: right;
 }
 
 #simulatedVoltage {
-	width: 80px;
-	height: 24px;
+    width: 80px;
+    height: 24px;
 }

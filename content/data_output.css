@@ -1,17 +1,16 @@
-
-.data_output .other dl {
-}
 .data_output .other dl dt {
     float: left;
     width: 50px;
     line-height: 20px;
     text-align: right;
 }
+
 .data_output .other dl dd {
     margin-left: 55px;
     line-height: 20px;
     font-weight: bold;
 }
+
 .data_output .other a {
     margin: 10px 0 0 0;
     display: block;
@@ -22,34 +21,42 @@
     background-color: #830a0a;
     text-align: center;
 }
+
 .data_output .other a:hover {
     background-color: #d01414;
 }
+
 .data_output .bars {
     float: left;
     width: 100%;
     font-weight: bold;
 }
+
 .data_output .bars ul {
     margin-bottom: 5px;
     clear: left;
 }
+
 .data_output .bars li {
     float: left;
     height: 22px;
     line-height: 20px;
 }
+
 .data_output .bars .name {
     padding: 0 10px 0 0;
     width: 40px;
     text-align: right;
 }
+
 .data_output .bars .meter {
     width: calc(100% - 80px);
 }
+
 .data_output .bars .motor {
     width: calc(100% - 80px);
 }
+
 .data_output .bars .meter-bar {
     position: relative;
     margin-top: 2px;
@@ -58,6 +65,7 @@
     border: 1px solid silver;
     background-color: #f4f4f4;
 }
+
 .data_output .bars .meter-bar .label {
     position: absolute;
     width: 50px;
@@ -66,6 +74,7 @@
     text-align: center;
     color: #474747;
 }
+
 .data_output .bars .meter-bar .fill {
     position: relative;
     overflow: hidden;
@@ -73,18 +82,22 @@
     height: 15px;
     background-color: #830a0a;
 }
+
 .data_output .bars .meter-bar .fill .label {
     color: white;
 }
+
 .data_output .plot dl {
     float: left;
 }
+
 .data_output .plot dl dt {
     line-height: 32px;
     float: left;
     width: 100px;
     text-align: right;
 }
+
 .data_output .plot dl dd {
     line-height: 32px;
     margin-left: 105px;
@@ -94,36 +107,43 @@
 .data_output .plot dl dd:nth-of-type(1) {
     color: #00A8F0;
 }
+
 .data_output .plot dl dd:nth-of-type(2) {
     color: #f02525;
 }
+
 .data_output .plot dl dd:nth-of-type(3) {
     color: #C0D800;
 }
+
 .data_output .plot dl dd:nth-of-type(4) {
     color: #9440ED;
 }
+
 .data_output .plot dl dd:nth-of-type(5) {
     color: #f8921a;
 }
+
 .data_output .plot dl dd:nth-of-type(6) {
     color: #147A66;
 }
+
 .data_output .plot {
     margin: 10px 0 0 0;
 }
+
 .data_output #graph {
-   /* float: right; */
+    /* float: right; */
     background-color: white;
     margin-left: 10px;
 }
 
 .data_output {
-	margin-bottom: 50px;
+    margin-bottom: 50px;
 }
 
 .data_output .motor-test {
-	margin-left: 10px;
+    margin-left: 10px;
 }
 
 .data_output .motor-test-button {
@@ -135,30 +155,30 @@
     background-color: #830a0a;
     font-size: 16px;
 }
+
 .data_output .motor-test-button a:hover {
     background-color: #d01414;
 }
 
 .data_output .otherValues {
-	width: 100%;
+    width: 100%;
 }
 
 .data_output .otherValues td {
-	width: 25%;
-	text-align: right;
+    width: 25%;
+    text-align: right;
 }
 
 .data_output .model_chart {
     width: 190px;
     height: 190px;
-	display: inline-block;    
-	float: right;
+    display: inline-block;
 }
-		
+
 .data_output .plot dd {
-	width: 35px;
-	overflow: hidden;
-	text-overflow: hidden;
+    width: 35px;
+    overflow: hidden;
+    text-overflow: hidden;
 }
 
 a.reset_model {
@@ -172,19 +192,19 @@ a.reset_model {
     text-align: center;
     float: right;
 }
+
 a.reset-model:hover {
     background-color: #d01414;
 }
 
-@media ( max-width : 500px) {
-	.data_output .model_chart {
-		display: block;
-		float: none;
-		margin-left: 10px;
-	}	
-	
-	a.reset_model {
-		float: left;
-		margin-left: 10px;
-	}
+@media ( max-width: 500px) {
+    .data_output .model_chart {
+        display: block;
+        float: none;
+        margin-left: 10px;
+    }
+    a.reset_model {
+        float: left;
+        margin-left: 10px;
+    }
 }
