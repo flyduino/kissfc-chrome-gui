@@ -225,7 +225,7 @@ CONTENT.configuration.initialize = function (callback) {
                 if (FCinfo[0].length < 9 || info.firmvareVersion.indexOf("KISSFC") == -1) {
                     $("select[name='outputMode'] option[value='7']").remove();
                 }
-                if (FCinfo[0] == 'KISSFCV2F7') {
+                if (FCinfo[0] == 'KISSFCV2F7' || FCinfo[0] == 'FETTEC_KISSFC') {
                     $("li[data-name='fc_flasher']").show();
                 } else {
                     $("li[data-name='fc_flasher']").hide();
@@ -541,6 +541,15 @@ CONTENT.configuration.initialize = function (callback) {
         $('select[name="lpf"]').on('change', function () {
             contentChange();
         });
+        
+        if (data['ver'] >= 117){
+            $("#aux12").kissAux({
+                name: "Real PIT mode",
+                change: function () { contentChange(); },
+                value: data['AUX'][12]
+            });
+            $("#aux12").show();
+        }else $("#aux12").hide();
 
         // Temp fix
         if (typeof androidOTGSerial !== 'undefined') {
@@ -723,6 +732,9 @@ CONTENT.configuration.initialize = function (callback) {
             if (data['ver'] >= 113) {
                 data['ESCOutputLayout'] = parseInt($('select[name="ESCOutputLayout"]').val());
                 console.log('Store ESCOutputLayout:' + data['ESCOutputLayout']);
+            }
+            if (data['ver'] >= 117) {
+               data['AUX'][12] = $("#aux12").kissAux('value');
             }
         }
         settingsFilled = 1;

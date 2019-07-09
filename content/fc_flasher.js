@@ -245,7 +245,8 @@ CONTENT.fc_flasher.initialize = function (callback) {
                     $("#fc_type").empty();
                     $("#fw_version").empty();
                     var fc2BoardNames = {
-                        'KISSFCV2F7': "Kiss FC v2 F7"
+                        'KISSFCV2F7': "Kiss FC v2 F7",
+                        'FETTEC_KISSFC': "FETtec KISS FC"
                     };
                     $.each(fcFirmwareMap2, function (board, assets) {
                         var add = true;
