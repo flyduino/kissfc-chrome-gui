@@ -397,8 +397,8 @@
     "vtx.0": "--",
     "vtx.1": "Dummy VTX",
     "vtx.2": "IRC Tramp HV",
-    "vtx.3": "TBS Unify",
-    "vtx.4": "TBS EVO",
+    "vtx.3": "TBS Unify Smart Audio",
+    "vtx.4": "TBS EVO Crossfire",
     "telemetry.7" : "RX Uplink",
     "telemetry.8" : "RX Downlink",
     "legend.19": "RSSI 1 dBm",
@@ -410,6 +410,14 @@
     "legend.25": "TX Power mW",
     "legend.26": "RSSI dBm",
     "legend.27": "LQ %",
-    "legend.28": "SNR dBm"
- 
+    "legend.28": "SNR dBm",
+    "serialtype.0": "KissProtocol/OSD",
+    "serialtype.1": "Logger",
+    "serialtype.2": "Receiver",
+    "serialtype.3": "VTX",
+    "serialtype.4": "ESC TLM",
+    "serialtype.5": "Runcam",
+    "serialtype.6": "VTX + ESC TLM",
+    "serialtype.7": "GPS"
+
 }

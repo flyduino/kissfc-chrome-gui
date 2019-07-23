@@ -201,6 +201,9 @@ CONTENT.configuration.initialize = function (callback) {
 
         }
 
+        if (data['ver'] < 117) {
+        	$("select[name='outputMode'] option[value='8']").remove();
+        }
 
 
         if (data['vtxType'] == 0) {
@@ -227,6 +230,7 @@ CONTENT.configuration.initialize = function (callback) {
                     $("li[data-name='fc_flasher']").show();
                 } else {
                     $("li[data-name='fc_flasher']").hide();
+                    $("select[name='outputMode'] option[value='8']").remove(); // Hide FETtec Onewire
                 }
             });
         }
