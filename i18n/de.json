@@ -81,6 +81,7 @@
     "column.rc-curve": "RC Kurve",
     "column.rc-expo": "Rate",
     "column.rc-rate": "RC Rate",
+    "column.RealPit": "Real Pit modus",
     "column.reverse-motors": "Gier Steuerung umkehren (Invertierte Motorlaufrichtung)",
     "column.roll": "Roll",
     "column.runcam-split": "RunCam Split",

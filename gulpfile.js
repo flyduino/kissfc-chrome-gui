@@ -1,30 +1,27 @@
 'use strict';
 
-var pkg = require('./package.json');
+const pkg = require('./package.json');
 
-var git = require('git-rev-sync');
+const git = require('git-rev-sync');
 
-var child_process = require('child_process');
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
-var archiver = require('archiver');
-var del = require('del');
-var NwBuilder = require('nw-builder');
+const archiver = require('archiver');
+const del = require('del');
+const NwBuilder = require('nw-builder');
 
-var gulp = require('gulp');
-var concat = require('gulp-concat');
-var install = require("gulp-install");
-var runSequence = require('run-sequence');
-var os = require('os');
-var exec = require('child_process').exec;
+const gulp = require('gulp');
+const install = require("gulp-install");
+const runSequence = require('run-sequence');
+const os = require('os');
 
-var distDir = './dist/';
-var appsDir = './apps/';
-var debugDir = './debug/';
-var releaseDir = './release/';
-var cacheDir = './cache/';
-var nmDir = './node_modules/';
+const distDir = './dist/';
+const appsDir = './apps/';
+const debugDir = './debug/';
+const releaseDir = './release/';
+const cacheDir = './cache/';
+const nmDir = './node_modules/';
 
 // -----------------
 // Helper functions
@@ -224,6 +221,7 @@ gulp.task('apps', ['dist', 'clean-apps'], function (done) {
     console.log('Release build.');
 
     var builder = new NwBuilder({
+        version: '0.36.4',
         files: './dist/**/*',
         buildDir: appsDir,
         platforms: platforms,
@@ -250,6 +248,7 @@ gulp.task('debug', ['dist', 'clean-debug'], function (done) {
     console.log('Debug build.');
 
     var builder = new NwBuilder({
+        version: '0.36.4',
         files: './dist/**/*',
         buildDir: debugDir,
         platforms: platforms,

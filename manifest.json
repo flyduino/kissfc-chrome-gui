@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "minimum_chrome_version": "38",
-    "version": "2.0.14",
+    "version": "2.0.15",
     "author": "Flyduino & Alexander Fedorov & Carsten Wache",
     "name": "KISS GUI",
     "short_name": "KISSGUI",
@@ -24,7 +24,6 @@
         "http://ultraesc.de/",
         "https://*.github.com/",
         "https://*.githubusercontent.com/",
-        "http://*.baseflight.net/",
         "https://*.amazonaws.com/",
         {
             "fileSystem": [

@@ -1,16 +1,18 @@
-
 .configuration .mixer {
     float: left;
 }
+
 .configuration .mixerPreview {
     margin-left: 140px;
     width: 150px;
     height: 100px;
 }
+
 .configuration select {
     height: 22px;
     border: 1px solid silver;
 }
+
 .configuration input[type="text"] {
     width: 70px;
     height: 20px;
@@ -18,6 +20,7 @@
     text-align: right;
     border: 1px solid silver;
 }
+
 .configuration input[type="number"] {
     width: 70px;
     height: 20px;
@@ -25,35 +28,43 @@
     text-align: right;
     border: 1px solid silver;
 }
+
 .configuration dl.general-settings {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
+
 .configuration dt {
     float: left;
     width: 100px;
     height: 27px;
     line-height: 24px;
 }
+
 .configuration dd {
     margin-left: 100px;
     height: 27px;
 }
+
 .configuration dd input[type="checkbox"] {
     position: relative;
     top: 3px;
     margin-left: 30px;
 }
+
 .configuration .pid_rates {
     border-collapse: collapse;
 }
+
 .configuration .pid_rates tr {
     height: 25px;
 }
+
 .configuration .pid_rates th {
     width: 60px;
     padding-right: 5px;
     text-align: center;
 }
+
 .configuration .pid_rates td {
     width: 60px;
 }
@@ -61,15 +72,19 @@
 .configuration .pid_rates input {
     width: 60px;
 }
+
 .configuration .pid_rates .name {
     width: 40px;
 }
+
 .configuration .aux_settings dt {
     width: 60px;
 }
+
 .configuration .aux_settings dd {
     margin-left: 60px;
 }
+
 #save.saveAct {
     background-color: #830a0a;
 }
@@ -79,7 +94,7 @@
     height: 22px;
 }
 
-.minicolors input[type=hidden] + .minicolors-swatch {
+.minicolors input[type=hidden]+.minicolors-swatch {
     position: relative;
     cursor: pointer;
     top: -1px;
@@ -87,66 +102,64 @@
     height: 18px;
 }
 
-.configuration .rates tr > *:nth-child(1) {
-	display: none;	
-	width: 50px;
+.configuration .rates tr>*:nth-child(1) {
+    display: none;
+    width: 50px;
 }
 
 #userSel {
-	width: 200px;  
+    width: 200px;
 }
 
-.configuration .pids tr > *:nth-child(1) {
-	width: 50px;
+.configuration .pids tr>*:nth-child(1) {
+    width: 50px;
 }
 
-.configuration .levels tr > *:nth-child(1) {
-	width: 50px;
+.configuration .levels tr>*:nth-child(1) {
+    width: 50px;
 }
-
 
 .tricopter {
-	display: none;
+    display: none;
 }
 
 .configuration dt.lap-timer {
-	width: 150px;
+    width: 150px;
 }
 
 .configuration select.lap-timer-transponder-id {
-	width: 40px;
-	margin-left: 6px;
+    width: 40px;
+    margin-left: 6px;
 }
 
 .configuration dt.ssid-title {
-	width: 140px;
+    width: 140px;
 }
 
 #lapTimerTypeAndInterface {
-	width: 140px;
+    width: 140px;
 }
 
 .configuration {
-	padding-bottom: 50px;
+    padding-bottom: 50px;
 }
 
-
 #shareButton {
-	width: 78px;
-	text-align: center;
-	cursor:pointer; 
-	display:inline-block; 
-	background-color:#333; 
-	height:18px; 
-	padding-top:4px;
+    width: 78px;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    background-color: #333;
+    height: 18px;
+    padding-top: 4px;
 }
 
 #userSel {
-	display: none;
+    display: none;
 }
 
 .external_link_button {
-  	margin: 40px 0 0 0;
+    margin: 40px 0 0 0;
     color: white;
     padding: 10px 10px 10px 10px;
     height: 24px;

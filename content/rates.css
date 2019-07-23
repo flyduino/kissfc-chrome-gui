@@ -1,31 +1,36 @@
-
 .rates .receiver {
     float: left;
     width: 100%;
 }
+
 .rates .bars {
     float: left;
     width: 100%;
     font-weight: bold;
     margin-bottom: 20px;
 }
+
 .rates .bars ul {
     margin-bottom: 5px;
     clear: left;
 }
+
 .rates .bars li {
     float: left;
     height: 22px;
     line-height: 20px;
 }
+
 .rates .bars .name {
     padding: 0 10px 0 0;
     width: 40px;
     text-align: right;
 }
+
 .rates .bars .meter {
     width: calc(100% - 50px);
 }
+
 .rates .bars .meter-bar {
     position: relative;
     margin-top: 2px;
@@ -34,6 +39,7 @@
     border: 1px solid silver;
     background-color: #f4f4f4;
 }
+
 .rates .bars .meter-bar .label {
     position: absolute;
     width: 50px;
@@ -42,6 +48,7 @@
     text-align: center;
     color: #474747;
 }
+
 .rates .bars .meter-bar .fill {
     position: relative;
     overflow: hidden;
@@ -49,15 +56,19 @@
     height: 15px;
     background-color: #830a0a;
 }
+
 .rates .bars .meter-bar .fill .label {
     color: white;
 }
+
 .rates .rc_rates {
-	border-collapse: collapse;
+    border-collapse: collapse;
 }
+
 .rates .rc_rates tr {
     height: 25px;
 }
+
 .rates .rc_rates th {
     width: 60px;
     padding-right: 5px;
@@ -67,12 +78,14 @@
 .rates .rc_rates input {
     width: 60px;
 }
+
 .rates .rc_rates .name {
     padding: 0 10px 0 0;
     width: 40px;
     text-align: right;
     font-weight: bold;
 }
+
 .rates .rc_rates input[type="text"] {
     width: 60px;
     height: 20px;
@@ -80,6 +93,7 @@
     text-align: right;
     border: 1px solid silver;
 }
+
 .rates .rc_rates input[type="number"] {
     width: 60px;
     height: 20px;
@@ -87,8 +101,9 @@
     text-align: right;
     border: 1px solid silver;
 }
+
 .rates .rc_chart {
     width: 200px;
     height: 200px;
-	display: inline-block;    
+    display: inline-block;
 }

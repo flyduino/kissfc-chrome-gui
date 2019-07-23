@@ -158,8 +158,6 @@ CONTENT.configuration.initialize = function (callback) {
         console.log("RECEIVED:");
         console.log(data);
 
-        // $( document ).tooltip();  
-
         $('input[name="3dMode"]').removeAttr("disabled");
 
         kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () {
@@ -483,7 +481,10 @@ CONTENT.configuration.initialize = function (callback) {
                 name: $.i18n("column.turtle-mode"),
                 change: function () { contentChange(); },
                 value: data['AUX'][8]
-            });
+            }).show();
+            if (outputMode < 3) {
+                $("#aux8").hide();
+            }
         } else {
             $("#aux8").hide();
         }
@@ -537,14 +538,10 @@ CONTENT.configuration.initialize = function (callback) {
         $('select[name="lpf"]').on('change', function () {
             contentChange();
         });
-
-        $('select[name="lpf"]').on('change', function () {
-            contentChange();
-        });
         
         if (data['ver'] >= 117){
             $("#aux12").kissAux({
-                name: "Real PIT mode",
+                name: $.i18n("column.RealPit"),
                 change: function () { contentChange(); },
                 value: data['AUX'][12]
             });
@@ -563,10 +560,6 @@ CONTENT.configuration.initialize = function (callback) {
             $(".unsafe").removeClass("unsafe_active");
         }
         $(".unsafe_active").prop('disabled', true);
-
-        //        $("input,select").on("change", function() {
-        //            contentChange(); 
-        //        });
 
         // Begin Custom ESC Orientation
         if (data['ver'] >= 113) {

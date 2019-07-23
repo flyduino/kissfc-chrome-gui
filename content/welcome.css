@@ -3,6 +3,7 @@
     bottom: 10px;
     right: 10px;
 }
+
 .welcome .ads img {
     width: 200px;
     height: 100px;
@@ -11,5 +12,5 @@
 }
 
 #language {
-	width: 100px;
+    width: 100px;
 }
