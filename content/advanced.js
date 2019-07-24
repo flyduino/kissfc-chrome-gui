@@ -292,7 +292,8 @@ CONTENT.advanced.initialize = function (callback) {
                     $("#serial" + i).kissSerial({
                         name: $.i18n("title.serial") + ' ' + i,
                         change: function () { updateSerials(); },
-                        value: serialsFunctions[i]
+                        value: serialsFunctions[i],
+                        version: data['ver']
                     });
                 }
             }
