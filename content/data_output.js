@@ -282,7 +282,7 @@ CONTENT.data_output.initialize = function (callback) {
                 $('#graph6').text('');
             } else if (useGraphData == 9) {
                 $('#graph1').text($.i18n('legend.29'));
-                $('#graph2').text('');
+                $('#graph2').text($.i18n('legend.30'));
                 $('#graph3').text('');
                 $('#graph4').text('');
                 $('#graph5').text('');
@@ -485,13 +485,14 @@ CONTENT.data_output.initialize = function (callback) {
                     break;
                 case 9:
                     legendItems.eq(0).text(data['idleTime']);
-                    legendItems.eq(1).text('');
+                    legendItems.eq(1).text((data['LiPoVolt'] * 10).toFixed(2));
                     legendItems.eq(2).text('');
                     legendItems.eq(3).text('');
                     legendItems.eq(4).text('');
                     legendItems.eq(5).text('');
 
-                    sampleBlock.push((data['idleTime'] / 100) - midscale);
+                    sampleBlock.push(data['idleTime'] / 500);
+                    sampleBlock.push((data['LiPoVolt'] / 2) - midscale);
                     break;
             }
 
