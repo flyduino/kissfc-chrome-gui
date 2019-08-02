@@ -226,7 +226,6 @@ CONTENT.data_output.initialize = function (callback) {
         });
 
         var legendItems = $('dl.legend dd');
-        // var otherItems = $('dl.otherValues dd')
         var meterScale = { 'min': 800, 'max': 2200 };
 
         function updateUI() {
@@ -234,10 +233,7 @@ CONTENT.data_output.initialize = function (callback) {
 
             var useGraphData = parseInt($('select[name="graphTitle"]').val());
 
-            if (/*
-             * data && (data['ESC_Telemetrie0'][1] != 0 ||
-             * data['ESC_Telemetrie0'][0] != 0) &&
-             */ !self.ESCTelemetry) {
+            if (!self.ESCTelemetry) {
                 self.ESCTelemetry = 1;
                 $('select[name="graphTitle"]').html('<option value="0" data-i18n="telemetry.0">Gyro &amp; ACC Data:</option><option value="1" data-i18n="telemetry.1">ESC Temperatures:</option><option id="ESCTelemetrie" value="2" data-i18n="telemetry.2">ESC Voltanges:</option><option value="3" data-i18n="telemetry.3">ESC Currents:</option><option value="4" data-i18n="telemetry.4">ESC used A/h</option><option value="5" data-i18n="telemetry.5">ESC E-RpM / 1000</option><option value="6" data-i18n="telemetry.6">ESC TLM Stats</option>' + (data.RXStats !== undefined ? '<option value="7" data-i18n="telemetry.7">RX Uplink</option><option value="8" data-i18n="telemetry.8">RX Downlink</option>' : '') + '<option value="9" data-i18n="telemetry.9">FC Stats</option>').children().i18n();
             }
@@ -536,15 +532,6 @@ CONTENT.data_output.initialize = function (callback) {
 
         // start
         fastDataPoll();
-
-        /*
-         * // old code that uses interval for data polling, at this time period
-         * it will build up a catastrophic request buffer and eventually crash
-         * !!! // we will poll data at 50 fps
-         * GUI.intervalAdd('telemetryDataPoll', function () {
-         * kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], updateUI); },
-         * 20, true);
-         */
     }
 };
 

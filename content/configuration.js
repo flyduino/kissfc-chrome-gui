@@ -254,11 +254,6 @@ CONTENT.configuration.initialize = function (callback) {
         var sntext = MCUid + ' (' + (data['isActive'] ? $.i18n('text.activated') : $.i18n('text.not-activated')) + ')';
         $('#SN').text(sntext);
         $('#SN2').text($.i18n("text.serial-number") + ": " + MCUid);
-        /*
-        $('#eeprom1').text(data['ver']);
-        $('#debug').text(data['SerialSetup']);
-        $('#debug2').text(data['SerialPortAllowed']); 
-        */
         $('#SN').on('click', function (e) {
             copyTextToClipboard(MCUid);
             $('#SN').text($.i18n("text.serial-clipboard"));
