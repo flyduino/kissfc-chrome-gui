@@ -373,10 +373,10 @@ CONTENT.data_output.initialize = function (callback) {
                     legendItems.eq(4).text(data['ESC_Telemetrie4'][0].toFixed(3));
                     legendItems.eq(5).text(data['ESC_Telemetrie5'][0].toFixed(3));
                     sampleBlock.push((data['ESC_Telemetrie0'][0] / 35) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie3'][0] / 35) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie1'][0] / 35) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie4'][0] / 35) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie2'][0] / 35) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie3'][0] / 35) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie4'][0] / 35) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie5'][0] / 35) - midscale);
                     break;
                 case 2:
@@ -387,10 +387,10 @@ CONTENT.data_output.initialize = function (callback) {
                     legendItems.eq(4).text((data['ESC_Telemetrie4'][1] / 100).toFixed(3));
                     legendItems.eq(5).text((data['ESC_Telemetrie5'][1] / 100).toFixed(3));
                     sampleBlock.push((data['ESC_Telemetrie0'][1] / 1000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie3'][1] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie1'][1] / 1000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie4'][1] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie2'][1] / 1000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie3'][1] / 1000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie4'][1] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie5'][1] / 1000) - midscale);
                     break;
                 case 3:
@@ -401,10 +401,10 @@ CONTENT.data_output.initialize = function (callback) {
                     legendItems.eq(4).text((data['ESC_Telemetrie4'][2] / 100).toFixed(3));
                     legendItems.eq(5).text((data['ESC_Telemetrie5'][2] / 100).toFixed(3));
                     sampleBlock.push((data['ESC_Telemetrie0'][2] / 1000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie3'][2] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie1'][2] / 1000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie4'][2] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie2'][2] / 1000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie3'][2] / 1000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie4'][2] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie5'][2] / 1000) - midscale);
                     break;
                 case 4:
@@ -415,10 +415,10 @@ CONTENT.data_output.initialize = function (callback) {
                     legendItems.eq(4).text((data['ESC_Telemetrie4'][3] / 1000).toFixed(3));
                     legendItems.eq(5).text((data['ESC_Telemetrie5'][3] / 1000).toFixed(3));
                     sampleBlock.push((data['ESC_Telemetrie0'][3] / 5000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie3'][3] / 5000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie1'][3] / 5000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie4'][3] / 5000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie2'][3] / 5000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie3'][3] / 5000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie4'][3] / 5000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie5'][3] / 5000) - midscale);
                     break;
                 case 5:
@@ -429,10 +429,10 @@ CONTENT.data_output.initialize = function (callback) {
                     legendItems.eq(4).text((data['ESC_Telemetrie4'][4] / 10).toFixed(3));
                     legendItems.eq(5).text((data['ESC_Telemetrie5'][4] / 10).toFixed(3));
                     sampleBlock.push((data['ESC_Telemetrie0'][4] / 1000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie3'][4] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie1'][4] / 1000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie4'][4] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie2'][4] / 1000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie3'][4] / 1000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie4'][4] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie5'][4] / 1000) - midscale);
                     break;
                 case 6:
