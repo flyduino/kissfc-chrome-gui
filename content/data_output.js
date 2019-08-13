@@ -226,20 +226,16 @@ CONTENT.data_output.initialize = function (callback) {
         });
 
         var legendItems = $('dl.legend dd');
-    //    var otherItems = $('dl.otherValues dd')
         var meterScale = { 'min': 800, 'max': 2200 };
 
         function updateUI() {
             var data = kissProtocol.data[kissProtocol.GET_TELEMETRY];
- 
+
             var useGraphData = parseInt($('select[name="graphTitle"]').val());
 
-            if (/*
-             * data && (data['ESC_Telemetrie0'][1] != 0 ||
-             * data['ESC_Telemetrie0'][0] != 0) &&
-             */ !self.ESCTelemetry) {
+            if (!self.ESCTelemetry) {
                 self.ESCTelemetry = 1;
-                $('select[name="graphTitle"]').html('<option value="0" data-i18n="telemetry.0">Gyro &amp; ACC Data:</option><option value="1" data-i18n="telemetry.1">ESC Temperatures:</option><option id="ESCTelemetrie" value="2" data-i18n="telemetry.2">ESC Voltanges:</option><option value="3" data-i18n="telemetry.3">ESC Currents:</option><option value="4" data-i18n="telemetry.4">ESC used A/h</option><option value="5" data-i18n="telemetry.5">ESC E-RpM / 1000</option><option value="6" data-i18n="telemetry.6">ESC TLM Stats</option>' + ( data.RXStats !== undefined ? '<option value="7" data-i18n="telemetry.7">RX Uplink</option><option value="8" data-i18n="telemetry.8">RX Downlink</option>' : '')).children().i18n();
+                $('select[name="graphTitle"]').html('<option value="0" data-i18n="telemetry.0">Gyro &amp; ACC Data:</option><option value="1" data-i18n="telemetry.1">ESC Temperatures:</option><option id="ESCTelemetrie" value="2" data-i18n="telemetry.2">ESC Voltanges:</option><option value="3" data-i18n="telemetry.3">ESC Currents:</option><option value="4" data-i18n="telemetry.4">ESC used A/h</option><option value="5" data-i18n="telemetry.5">ESC E-RpM / 1000</option><option value="6" data-i18n="telemetry.6">ESC TLM Stats</option>' + (data.RXStats !== undefined ? '<option value="7" data-i18n="telemetry.7">RX Uplink</option><option value="8" data-i18n="telemetry.8">RX Downlink</option>' : '') + '<option value="9" data-i18n="telemetry.9">FC Stats</option>').children().i18n();
             }
             if (!data) {
                 if (GUI.activeContent == 'data_output') self.updateTimeout = window.setTimeout(function () { updateUI(); }, 5);
@@ -278,6 +274,13 @@ CONTENT.data_output.initialize = function (callback) {
                 $('#graph2').text($.i18n('legend.26'));
                 $('#graph3').text($.i18n('legend.27'));
                 $('#graph4').text($.i18n('legend.28'));
+                $('#graph5').text('');
+                $('#graph6').text('');
+            } else if (useGraphData == 9) {
+                $('#graph1').text($.i18n('legend.29'));
+                $('#graph2').text($.i18n('legend.30'));
+                $('#graph3').text('');
+                $('#graph4').text('');
                 $('#graph5').text('');
                 $('#graph6').text('');
             } else {
@@ -370,10 +373,10 @@ CONTENT.data_output.initialize = function (callback) {
                     legendItems.eq(4).text(data['ESC_Telemetrie4'][0].toFixed(3));
                     legendItems.eq(5).text(data['ESC_Telemetrie5'][0].toFixed(3));
                     sampleBlock.push((data['ESC_Telemetrie0'][0] / 35) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie3'][0] / 35) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie1'][0] / 35) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie4'][0] / 35) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie2'][0] / 35) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie3'][0] / 35) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie4'][0] / 35) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie5'][0] / 35) - midscale);
                     break;
                 case 2:
@@ -384,10 +387,10 @@ CONTENT.data_output.initialize = function (callback) {
                     legendItems.eq(4).text((data['ESC_Telemetrie4'][1] / 100).toFixed(3));
                     legendItems.eq(5).text((data['ESC_Telemetrie5'][1] / 100).toFixed(3));
                     sampleBlock.push((data['ESC_Telemetrie0'][1] / 1000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie3'][1] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie1'][1] / 1000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie4'][1] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie2'][1] / 1000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie3'][1] / 1000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie4'][1] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie5'][1] / 1000) - midscale);
                     break;
                 case 3:
@@ -398,10 +401,10 @@ CONTENT.data_output.initialize = function (callback) {
                     legendItems.eq(4).text((data['ESC_Telemetrie4'][2] / 100).toFixed(3));
                     legendItems.eq(5).text((data['ESC_Telemetrie5'][2] / 100).toFixed(3));
                     sampleBlock.push((data['ESC_Telemetrie0'][2] / 1000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie3'][2] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie1'][2] / 1000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie4'][2] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie2'][2] / 1000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie3'][2] / 1000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie4'][2] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie5'][2] / 1000) - midscale);
                     break;
                 case 4:
@@ -412,10 +415,10 @@ CONTENT.data_output.initialize = function (callback) {
                     legendItems.eq(4).text((data['ESC_Telemetrie4'][3] / 1000).toFixed(3));
                     legendItems.eq(5).text((data['ESC_Telemetrie5'][3] / 1000).toFixed(3));
                     sampleBlock.push((data['ESC_Telemetrie0'][3] / 5000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie3'][3] / 5000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie1'][3] / 5000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie4'][3] / 5000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie2'][3] / 5000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie3'][3] / 5000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie4'][3] / 5000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie5'][3] / 5000) - midscale);
                     break;
                 case 5:
@@ -426,10 +429,10 @@ CONTENT.data_output.initialize = function (callback) {
                     legendItems.eq(4).text((data['ESC_Telemetrie4'][4] / 10).toFixed(3));
                     legendItems.eq(5).text((data['ESC_Telemetrie5'][4] / 10).toFixed(3));
                     sampleBlock.push((data['ESC_Telemetrie0'][4] / 1000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie3'][4] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie1'][4] / 1000) - midscale);
-                    sampleBlock.push((data['ESC_Telemetrie4'][4] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie2'][4] / 1000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie3'][4] / 1000) - midscale);
+                    sampleBlock.push((data['ESC_Telemetrie4'][4] / 1000) - midscale);
                     sampleBlock.push((data['ESC_Telemetrie5'][4] / 1000) - midscale);
                     break;
                 case 6:
@@ -453,30 +456,39 @@ CONTENT.data_output.initialize = function (callback) {
                     legendItems.eq(3).text(data['RXStats'].upSNR);
                     legendItems.eq(4).text(data['RXStats'].upAntenna + 1);
                     legendItems.eq(5).text(data['RXStats'].rfMode);
-                    
+
                     sampleBlock.push((data['RXStats'].upRSSI1 / 100) - midscale);
-                    sampleBlock.push((data['RXStats'].upRSSI2  / 100) - midscale);
-                    sampleBlock.push((data['RXStats'].upLQ  / 100) - midscale);
-                    sampleBlock.push((data['RXStats'].upSNR  / 100) - midscale);
+                    sampleBlock.push((data['RXStats'].upRSSI2 / 100) - midscale);
+                    sampleBlock.push((data['RXStats'].upLQ / 100) - midscale);
+                    sampleBlock.push((data['RXStats'].upSNR / 100) - midscale);
                     sampleBlock.push((data['RXStats'].upAntenna + 1) - midscale);
                     sampleBlock.push(data['RXStats'].rfMode - midscale);
                     break;
                 case 8:
-                	var powerNames = ['0', '10', '25', '100', '500', '1000', '2000']; 
-                	
+                    var powerNames = ['0', '10', '25', '100', '500', '1000', '2000'];
+
                     legendItems.eq(0).text(powerNames[data['RXStats'].upTXPower]);
                     legendItems.eq(1).text(data['RXStats'].downRSSI);
                     legendItems.eq(2).text(data['RXStats'].downLQ);
                     legendItems.eq(3).text(data['RXStats'].downSNR);
                     legendItems.eq(4).text('');
                     legendItems.eq(5).text('');
-                    
+
                     sampleBlock.push(data['RXStats'].upTXPower - midscale);
-                    sampleBlock.push((data['RXStats'].downRSSI  / 100) - midscale);
-                    sampleBlock.push((data['RXStats'].downLQ  / 100) - midscale);
-                    sampleBlock.push((data['RXStats'].downSNR  / 100) - midscale);
-                 
-    
+                    sampleBlock.push((data['RXStats'].downRSSI / 100) - midscale);
+                    sampleBlock.push((data['RXStats'].downLQ / 100) - midscale);
+                    sampleBlock.push((data['RXStats'].downSNR / 100) - midscale);
+                    break;
+                case 9:
+                    legendItems.eq(0).text(data['idleTime']);
+                    legendItems.eq(1).text((data['LiPoVolt'] * 10).toFixed(2));
+                    legendItems.eq(2).text('');
+                    legendItems.eq(3).text('');
+                    legendItems.eq(4).text('');
+                    legendItems.eq(5).text('');
+
+                    sampleBlock.push(data['idleTime'] / 500);
+                    sampleBlock.push((data['LiPoVolt'] / 2) - midscale);
                     break;
             }
 
@@ -520,15 +532,6 @@ CONTENT.data_output.initialize = function (callback) {
 
         // start
         fastDataPoll();
-
-        /*
-         * // old code that uses interval for data polling, at this time period
-         * it will build up a catastrophic request buffer and eventually crash
-         * !!! // we will poll data at 50 fps
-         * GUI.intervalAdd('telemetryDataPoll', function () {
-         * kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], updateUI); },
-         * 20, true);
-         */
     }
 };
 

@@ -128,15 +128,10 @@ CONTENT.tpa.initialize = function (callback) {
 
         $(window).on('resize', self.barResize).resize();
 
-    //    var legendItems = $('dl.legend dd');
-    //    var otherItems = $('dl.otherValues dd')
         var meterScale = {
             'min': 800,
             'max': 2200
         };
-
-
-
 
         function grabData() {
             // pid and rates
