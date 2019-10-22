@@ -1,27 +1,87 @@
-'use strict';
+"use strict";
 
-const pkg = require('./package.json');
+const appdmg = require("appdmg");
 
-const git = require('git-rev-sync');
+const pkg = require("./package.json");
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
+const exec = require("child_process").exec;
 
-const archiver = require('archiver');
-const del = require('del');
-const NwBuilder = require('nw-builder');
+const zip = require("gulp-zip");
+const del = require("del");
+const NwBuilder = require("nw-builder");
 
-const gulp = require('gulp');
-const install = require("gulp-install");
-const runSequence = require('run-sequence');
-const os = require('os');
+const gulp = require("gulp");
+const yarn = require("gulp-yarn");
+const rename = require("gulp-rename");
+const os = require("os");
+const git = require("git-rev-sync");
 
-const distDir = './dist/';
-const appsDir = './apps/';
-const debugDir = './debug/';
-const releaseDir = './release/';
-const cacheDir = './cache/';
-const nmDir = './node_modules/';
+const DIST_DIR = "./dist/";
+const APPS_DIR = "./apps/";
+const DEBUG_DIR = "./debug/";
+const RELEASE_DIR = "./release/";
+
+var nwBuilderOptions = {
+  version: "0.36.4",
+  files: "./dist/**/*",
+  macIcns: './images/icon_128.icns',
+  macPlist: { CFBundleDisplayName: "KISS GUI" },
+  //    winIco: './images/icon_128.ico',
+  zip: false
+};
+
+//-----------------
+//Pre tasks operations
+//-----------------
+const SELECTED_PLATFORMS = getInputPlatforms();
+
+//-----------------
+//Tasks
+//-----------------
+
+gulp.task(
+  "clean",
+  gulp.parallel(clean_dist, clean_apps, clean_debug, clean_release)
+);
+
+gulp.task("clean-dist", clean_dist);
+
+gulp.task("clean-apps", clean_apps);
+
+gulp.task("clean-debug", clean_debug);
+
+gulp.task("clean-release", clean_release);
+
+gulp.task("clean-cache", clean_cache);
+
+var distBuild = gulp.series(dist_src);
+var distRebuild = gulp.series(clean_dist, distBuild);
+gulp.task("dist", distRebuild);
+
+var appsBuild = gulp.series(
+  gulp.parallel(clean_apps, distRebuild),
+  apps,
+  gulp.parallel(listPostBuildTasks(APPS_DIR))
+);
+gulp.task("apps", appsBuild);
+
+var debugBuild = gulp.series(
+  distBuild,
+  debug,
+  gulp.parallel(listPostBuildTasks(DEBUG_DIR)),
+  start_debug
+);
+gulp.task("debug", debugBuild);
+
+var releaseBuild = gulp.series(
+  gulp.parallel(clean_release, appsBuild),
+  gulp.parallel(listReleaseTasks())
+);
+gulp.task("release", releaseBuild);
+
+gulp.task("default", debugBuild);
 
 // -----------------
 // Helper functions
@@ -30,330 +90,444 @@ const nmDir = './node_modules/';
 // Get platform from commandline args
 // #
 // # gulp <task> [<platform>]+        Run only for platform(s) (with <platform> one of --linux64, --linux32, --osx64, --win32, --win64, or --chromeos)
-// # 
-function getPlatforms(includeChromeOs) {
-    var supportedPlatforms = ['linux64', 'linux32', 'osx64', 'win32', 'win64'];
-    var platforms = [];
-    var regEx = /--(\w+)/;
-    for (var i = 3; i < process.argv.length; i++) {
-        var arg = process.argv[i].match(regEx)[1];
-        if (supportedPlatforms.indexOf(arg) > -1) {
-            platforms.push(arg);
-        } else if (arg === 'chromeos') {
-            if (includeChromeOs) {
-                platforms.push(arg);
-            }
-        } else {
-            console.log(`Your current platform (${os.platform()}) is not a supported build platform. Please specify platform to build for on the command line.`);
-            process.exit();
-        }
+// #
+function getInputPlatforms() {
+  var supportedPlatforms = [
+    "linux64",
+    "linux32",
+    "osx64",
+    "win32",
+    "win64",
+    "chromeos"
+  ];
+  var platforms = [];
+  var regEx = /--(\w+)/;
+  console.log(process.argv);
+  for (var i = 3; i < process.argv.length; i++) {
+    var arg = process.argv[i].match(regEx)[1];
+    if (supportedPlatforms.indexOf(arg) > -1) {
+      platforms.push(arg);
+    } else {
+      console.log("Unknown platform: " + arg);
+      process.exit();
     }
-    if (platforms.length === 0) {
-        switch (os.platform()) {
-            case 'darwin':
-                platforms.push('osx64');
-                
-                break;
-            case 'linux':
-                platforms.push('linux64');
-                
-                break;
-            case 'win32':
-                platforms.push('win32');
-                
-                break;
-            case 'win64':
-                platforms.push('win64');
-                
-                break;
-            default:
-                break;
-        }
+  }
+
+  if (platforms.length === 0) {
+    var defaultPlatform = getDefaultPlatform();
+    if (supportedPlatforms.indexOf(defaultPlatform) > -1) {
+      platforms.push(defaultPlatform);
+    } else {
+      console.error(
+        `Your current platform (${os.platform()}) is not a supported build platform. Please specify platform to build for on the command line.`
+      );
+      process.exit();
     }
-    
-    console.log('Building for platform(s): ' + platforms + '.');
-    
-    return platforms;
+  }
+
+  if (platforms.length > 0) {
+    console.log("Building for platform(s): " + platforms + ".");
+  } else {
+    console.error("No suitable platforms found.");
+    process.exit();
+  }
+
+  return platforms;
 }
 
-function getRunDebugAppCommand() {
-    switch (os.platform()) {
-        case 'darwin':
-            return 'open ' + path.join(debugDir, pkg.name, 'osx64', pkg.name + '.app');
-            
-            break;
-        case 'linux64':
-            return path.join(debugDir, pkg.name, 'linux64', pkg.name);
-            
-            break;
-        case 'linux32':
-            return path.join(debugDir, pkg.name, 'linux32', pkg.name);
-            
-            break;
-        case 'win32':
-            return path.join(debugDir, pkg.name, 'win32', pkg.name + '.exe');
+// Gets the default platform to be used
+function getDefaultPlatform() {
+  var defaultPlatform;
+  switch (os.platform()) {
+    case "darwin":
+      defaultPlatform = "osx64";
 
-            break;
-            case 'win64':
-            return path.join(debugDir, pkg.name, 'win64', pkg.name + '.exe');
+      break;
+    case "linux":
+      defaultPlatform = "linux64";
 
-            break;
-            default:
-            return '';
-            break;
-    }
-}
-function get_release_filename(platform, ext) {
-    
-    return 'KISS-GUI_' + pkg.version + '-' + git.branch() + '_' + git.short() + '-' + platform + '.' + ext;
+      break;
+    case "win32":
+      defaultPlatform = "win32";
+
+      break;
+
+    default:
+      defaultPlatform = "";
+
+      break;
+  }
+  return defaultPlatform;
 }
 
-// -----------------
-// Tasks
-// -----------------
+function getPlatforms() {
+  return SELECTED_PLATFORMS.slice();
+}
 
-gulp.task('clean', function () {
-    return runSequence('clean-dist', 'clean-apps', 'clean-debug', 'clean-release');
-});
+function removeItem(platforms, item) {
+  var index = platforms.indexOf(item);
+  if (index >= 0) {
+    platforms.splice(index, 1);
+  }
+}
 
-gulp.task('clean-all', function () {
-    return runSequence('clean-dist', 'clean-apps', 'clean-debug', 'clean-release','clean-cache');
-});
+function getRunDebugAppCommand(arch) {
+  switch (arch) {
+    case "osx64":
+      return "open " + path.join(DEBUG_DIR, pkg.name, arch, pkg.name + ".app");
 
-gulp.task('remove-all', function () {
-    return runSequence('clean-dist', 'clean-apps', 'clean-debug', 'clean-release','clean-cache', 'clean-node-modules');
-});
+      break;
 
-gulp.task('clean-dist', function () {
-    return del([distDir + '**'], { force: true });
-});
+    case "linux64":
+    case "linux32":
+      return path.join(DEBUG_DIR, pkg.name, arch, pkg.name);
 
-gulp.task('clean-apps', function () {
-    return del([appsDir + '**'], { force: true });
-});
+      break;
 
-gulp.task('clean-debug', function () {
-    return del([debugDir + '**'], { force: true });
-});
+    case "win32":
+    case "win64":
+      return path.join(DEBUG_DIR, pkg.name, arch, pkg.name + ".exe");
 
-gulp.task('clean-release', function () {
-    return del([releaseDir + '**'], { force: true });
-});
+      break;
 
-gulp.task('clean-cache', function () {
-    return del([cacheDir + '**'], { force: true });
-});
+    default:
+      return "";
 
-gulp.task('clean-node-modules', function () {
-    return del([nmDir + '**'], { force: true });
-});
+      break;
+  }
+}
+
+function getReleaseFilename(platform, ext) {
+  return (
+    pkg.name +
+    "_" +
+    pkg.version +
+    "-" +
+    git.branch() +
+    "_" +
+    git.short() +
+    "-" +
+    platform +
+    "." +
+    ext
+  );
+}
+
+function clean_dist() {
+  return del([DIST_DIR + "**"], { force: true });
+}
+
+function clean_apps() {
+  return del([APPS_DIR + "**"], { force: true });
+}
+
+function clean_debug() {
+  return del([DEBUG_DIR + "**"], { force: true });
+}
+
+function clean_release() {
+  return del([RELEASE_DIR + "**"], { force: true });
+}
+
+function clean_cache() {
+  return del(["./cache/**"], { force: true });
+}
 
 // Real work for dist task. Done in another task to call it via
 // run-sequence.
-gulp.task('dist', ['clean-dist'], function () {
+function dist_src() {
+  var distSources = [
+    // CSS files
+    './main.css',
+    './js/libraries/jquery.minicolors.css',
+    './js/libraries/jquery-ui.css',
+    './js/libraries/jquery-ui.structure.min.css',
+    './js/libraries/jquery-ui.theme.min.css',   
+    './js/plugins/jquery.kiss.aux.css',
+    './js/plugins/jquery.kiss.warning.css',
+    './content/*.css',
 
-    var distSources = [
+    // JavaScript
+    './js/libraries/github.js',
+    './js/libraries/hex_parser.js',
+    './js/libraries/imu.js',
+    './js/libraries/jquery-3.3.1.min.js',
+    './js/libraries/jquery.minicolors.min.js',
+    './js/libraries/jquery-ui.min.js',
+    './js/libraries/semver.js',       
+    './js/libraries/stm32usbdfu.js',
+    './js/libraries/three.js',
+    './js/libraries/three.min.js',
+    './js/libraries/i18n/*.js',
+    './js/plugins/jquery.kiss.*.js',
+    './js/android_otg_serial.js',
+    './js/chrome_serial.js',
+    './js/connection_handler.js',
+    './js/gui.js',
+    './js/input_validation.js',
+    './js/port_handler.js',
+    './js/protocol.js',
+    './js/serial.js',
+    './js/startup.js',
+    './js/websocket_serial.js',
 
-        // CSS files
-        './main.css',
-        './js/libraries/jquery.minicolors.css',
-        './js/libraries/jquery-ui.css',
-        './js/libraries/jquery-ui.structure.min.css',
-        './js/libraries/jquery-ui.theme.min.css',   
-        './js/plugins/jquery.kiss.aux.css',
-        './js/plugins/jquery.kiss.warning.css',
-        './content/*.css',
+    // Tabs
+    './start.js',
+    './main.js',
+    './content/*.js',
 
-        // JavaScript
-        './js/libraries/github.js',
-        './js/libraries/hex_parser.js',
-        './js/libraries/imu.js',
-        './js/libraries/jquery-3.3.1.min.js',
-        './js/libraries/jquery.minicolors.min.js',
-        './js/libraries/jquery-ui.min.js',
-        './js/libraries/semver.js',       
-        './js/libraries/stm32usbdfu.js',
-        './js/libraries/three.js',
-        './js/libraries/three.min.js',
-        './js/libraries/i18n/*.js',
-        './js/plugins/jquery.kiss.*.js',
-        './js/android_otg_serial.js',
-        './js/chrome_serial.js',
-        './js/connection_handler.js',
-        './js/gui.js',
-        './js/input_validation.js',
-        './js/port_handler.js',
-        './js/protocol.js',
-        './js/serial.js',
-        './js/startup.js',
-        './js/websocket_serial.js',
+    // everything else
+    './eventPage.js',
+    './cordova.js', // For cordova
+    './*.html',
+    './content/*.html',
+    './images/*',
+    './images/**/*',
+    './js/libraries/images/*.png',
+    './i18n/*.json',
+    './PRESET_PID.txt', // PID presets
+    './README.md' // Readme including links for driver
+];
 
-        // Tabs
-        './start.js',
-        './main.js',
-        './content/*.js',
+  return (
+    gulp
+      .src(distSources, { base: "." })
+      .pipe(gulp.src("manifest.json", { passthrougth: true }))
+      .pipe(gulp.src("package.json", { passthrougth: true }))
+      // .pipe(gulp.src('changelog.html', { passthrougth: true }))
+      .pipe(gulp.dest(DIST_DIR))
+      .pipe(
+        yarn({
+          production: true,
+          ignoreScripts: true
+        })
+      )
+  );
+}
 
-        // everything else
-        './package.json', // For NW.js
-        './manifest.json', // For Chrome app
-        './eventPage.js',
-        './cordova.js', // For cordova
-        './*.html',
-        './content/*.html',
-        './images/*',
-        './images/**/*',
-        './js/libraries/images/*.png',
-        './i18n/*.json',
-        './PRESET_PID.txt', // PID presets
-        './README.md' // Readme including links for driver
-    ];
-    return gulp.src(distSources, { base: '.' })
-        .pipe(gulp.dest(distDir))
-        .pipe(install({
-            npm: '--production --ignore-scripts'
-        }));;
-});
-// Create runable app directories in ./apps
+// Create runnable app directories in ./apps
+function apps(done) {
+  var platforms = getPlatforms();
+  removeItem(platforms, "chromeos");
 
-// had to remove "winIco: './images/icon_128.ico'" since it require wine 
-gulp.task('apps', ['dist', 'clean-apps'], function (done) {
-    var platforms = getPlatforms();
-    console.log('Release build.');
+  buildNWApps(platforms, "normal", APPS_DIR, done);
+}
 
-    var builder = new NwBuilder({
-        version: '0.36.4',
-        files: './dist/**/*',
-        buildDir: appsDir,
-        platforms: platforms,
-        flavor: 'normal',
-        macIcns: './images/icon_128.icns',
-        macPlist: { 'CFBundleDisplayName': 'KISS GUI' }
+function listPostBuildTasks(folder, done) {
+  var platforms = getPlatforms();
+
+  var postBuildTasks = [];
+
+  if (platforms.indexOf("linux32") != -1) {
+    postBuildTasks.push(function post_build_linux32(done) {
+      return post_build("linux32", folder, done);
     });
-    builder.on('log', console.log);
-    builder.build(function (err) {
-        if (err) {
-            console.log('Error building NW apps: ' + err);
-            runSequence('clean-apps', function () {
-                process.exit(1);
-            });
-        }
-        done();
-    });
-});
+  }
 
-// had to remove "winIco: './images/icon_128.ico'" since it require wine
+  if (platforms.indexOf("linux64") != -1) {
+    postBuildTasks.push(function post_build_linux64(done) {
+      return post_build("linux64", folder, done);
+    });
+  }
+
+  // We need to return at least one task, if not gulp will throw an error
+  if (postBuildTasks.length == 0) {
+    postBuildTasks.push(function post_build_none(done) {
+      done();
+    });
+  }
+  return postBuildTasks;
+}
+
+function post_build(arch, folder, done) {
+  if (arch === "linux32" || arch === "linux64") {
+    // Copy Ubuntu launcher scripts to destination dir
+    var launcherDir = path.join(folder, pkg.name, arch);
+    console.log("Copy Ubuntu launcher scripts to " + launcherDir);
+    return gulp.src("assets/linux/**").pipe(gulp.dest(launcherDir));
+  }
+
+  return done();
+}
+
 // Create debug app directories in ./debug
-gulp.task('debug', ['dist', 'clean-debug'], function (done) {
-    var platforms = getPlatforms();
-    console.log('Debug build.');
+function debug(done) {
+  var platforms = getPlatforms();
+  removeItem(platforms, "chromeos");
 
-    var builder = new NwBuilder({
-        version: '0.36.4',
-        files: './dist/**/*',
-        buildDir: debugDir,
-        platforms: platforms,
-        flavor: 'sdk',
-        macIcns: './images/icon_128.icns',
-        macPlist: { 'CFBundleDisplayName': 'KISS GUI' }
-    });
-    builder.on('log', console.log);
-    builder.build(function (err) {
-        if (err) {
-            console.log('Error building NW apps: ' + err);
-            runSequence('clean-debug', function () {
-                process.exit(1);
-            });
-        }
-        var run = getRunDebugAppCommand();
-        console.log('Starting debug app (' + run + ')...');
-        //exec(run);
-        done();
-    });
-});
+  buildNWApps(platforms, "sdk", DEBUG_DIR, done);
+}
 
-// Create distribution package for windows and linux platforms
-function release(arch) {
-    var src = path.join(appsDir, pkg.name, arch);
-    var output = fs.createWriteStream(path.join(releaseDir, get_release_filename(arch, 'zip')));
-    var archive = archiver('zip', {
-        zlib: { level: 9 }
+function buildNWApps(platforms, flavor, dir, done) {
+  if (platforms.length > 0) {
+    var builder = new NwBuilder(
+      Object.assign(
+        {
+          buildDir: dir,
+          platforms: platforms,
+          flavor: flavor
+        },
+        nwBuilderOptions
+      )
+    );
+    builder.on("log", console.log);
+    builder.build(function(err) {
+      if (err) {
+        console.log("Error building NW apps: " + err);
+        clean_debug();
+        process.exit(1);
+      }
+      done();
     });
-    archive.on('warning', function (err) { throw err; });
-    archive.on('error', function (err) { throw err; });
-    archive.pipe(output);
-    archive.directory(src, 'KISS-GUI');
-    return archive.finalize();
+  } else {
+    console.log("No platform suitable for NW Build");
+    done();
+  }
+}
+
+function start_debug(done) {
+  var platforms = getPlatforms();
+
+  if (platforms.length === 1) {
+    var run = getRunDebugAppCommand(platforms[0]);
+    console.log("Starting debug app (" + run + ")...");
+    exec(run);
+  } else {
+    console.log("More than one platform specified, not starting debug app");
+  }
+  done();
+}
+
+// Create distribution package (zip) for windows and linux platforms
+function release_zip(arch) {
+  var src = path.join(APPS_DIR, pkg.name, arch, "**");
+  var output = getReleaseFilename(arch, "zip");
+  var base = path.join(APPS_DIR, pkg.name, arch);
+
+  return compressFiles(src, base, output, "KISS GUI");
 }
 
 // Create distribution package for chromeos platform
 function release_chromeos() {
-    var src = distDir;
-    var output = fs.createWriteStream(path.join(releaseDir, get_release_filename('chromeos', 'zip')));
-    var archive = archiver('zip', {
-        zlib: { level: 9 }
-    });
-    archive.on('warning', function (err) { throw err; });
-    archive.on('error', function (err) { throw err; });
-    archive.pipe(output);
-    archive.directory(src, false);
-    return archive.finalize();
+  var src = path.join(DIST_DIR, "**");
+  var output = getReleaseFilename("chromeos", "zip");
+  var base = DIST_DIR;
+
+  return compressFiles(src, base, output, ".");
 }
+
+// Compress files from srcPath, using basePath, to outputFile in the RELEASE_DIR
+function compressFiles(srcPath, basePath, outputFile, zipFolder) {
+  return gulp
+    .src(srcPath, { base: basePath })
+    .pipe(
+      rename(function(actualPath) {
+        actualPath.dirname = path.join(zipFolder, actualPath.dirname);
+      })
+    )
+    .pipe(zip(outputFile))
+    .pipe(gulp.dest(RELEASE_DIR));
+}
+
 
 // Create distribution package for macOS platform
-function release_osx64() {
-    var appdmg = require('gulp-appdmg');
-    return gulp.src([])
-        .pipe(appdmg({
-            target: path.join(releaseDir, get_release_filename('macOS', 'dmg')),
-            basepath: path.join(appsDir, pkg.name, 'osx64'),
-            specification: {
-                title: 'KISS GUI',
-                contents: [
-                    { 'x': 370, 'y': 170, 'type': 'link', 'path': '/Applications' },
-                    { 'x': 90, 'y': 170, 'type': 'file', 'path': pkg.name + '.app', 'name': 'KISS GUI.app' }
-                ],
-                icon: path.join(__dirname, 'images/icon_128.icns'),
-                background: path.join(__dirname, 'images/dmg-background.png'),
-                format: 'UDZO',
-                window: {
-                    size: {
-                        width: 600,
-                        height: 400
-                    }
-                }
-            },
-        })
-        );
+function release_osx64(done) {
+  // Create DMG
+  createDirIfNotExists(RELEASE_DIR);
+  const ee = appdmg({
+    target: path.join(RELEASE_DIR, getReleaseFilename("macOS", "dmg")),
+    basepath: path.join(APPS_DIR, pkg.name, "osx64"),
+    specification: {
+      title: "KISS GUI",
+      contents: [
+        { x: 370, y: 170, type: "link", path: "/Applications" },
+        {
+          x: 90,
+          y: 170,
+          type: "file",
+          path: pkg.name + ".app",
+          name: "KISS GUI.app"
+        }
+      ],
+      icon: path.join(__dirname, 'images/icon_128.icns'),
+      background: path.join(__dirname, 'images/dmg-background.png'),
+
+      format: "UDZO",
+      window: {
+        size: {
+            width: 600,
+            height: 400
+        }
+      }
+    }
+  }).on("progress", function(info) {
+    if (info.type == "step-begin")
+      console.log(info.title + " [" + info.current + "/" + info.total + "]");
+    else console.log("..");
+  });
+
+  ee.on("error", function(err) {
+    console.log(err);
+  });
+  
+  return done();
 }
 
-// Create distributable .zip files in ./release
-gulp.task('release', ['apps', 'clean-release'], function () {
-    fs.mkdir(releaseDir, '0775', function (err) {
-        if (err) {
-            if (err.code !== 'EEXIST') {
-                throw err;
-            }
-        }
+// Create the dir directory, with write permissions
+function createDirIfNotExists(dir) {
+  fs.mkdir(dir, "0775", function(err) {
+    if (err) {
+      if (err.code !== "EEXIST") {
+        throw err;
+      }
+    }
+  });
+}
+
+// Create a list of the gulp tasks to execute for release
+function listReleaseTasks(done) {
+  var platforms = getPlatforms();
+
+  var releaseTasks = [];
+
+  if (platforms.indexOf("chromeos") !== -1) {
+    releaseTasks.push(release_chromeos);
+  }
+
+  if (platforms.indexOf("linux64") !== -1) {
+    releaseTasks.push(function release_linux64_zip() {
+      return release_zip("linux64");
     });
-    var platforms = getPlatforms(true);
-    console.log('Packing release.');
-    if (platforms.indexOf('chromeos') !== -1) {
-        release_chromeos();
-    }
-    if (platforms.indexOf('linux64') !== -1) {
-        release('linux64');
-    }
-    if (platforms.indexOf('linux32') !== -1) {
-        release('linux32');
-    }
-    if (platforms.indexOf('osx64') !== -1) {
-        release_osx64();
-    }
-    if (platforms.indexOf('win32') !== -1) {
-        release('win32');
-    }
-    if (platforms.indexOf('win64') !== -1) {
-        release('win64');
-    }
-});
-gulp.task('default', ['debug']);
+  }
+
+  if (platforms.indexOf("linux32") !== -1) {
+    releaseTasks.push(function release_linux32_zip() {
+      return release_zip("linux32");
+    });
+  }
+
+  if (platforms.indexOf("osx64") !== -1) {
+
+    releaseTasks.push(function release_osx64_dmg(done) {
+      return release_osx64(done);
+    });
+    
+    releaseTasks.push(function release_osx64_zip() {
+      return release_zip("osx64");
+    });   
+  }
+
+  if (platforms.indexOf("win32") !== -1) {
+    releaseTasks.push(function release_win32_zip() {
+      return release_zip("win32");
+    });
+  }
+
+  if (platforms.indexOf("win64") !== -1) {
+    releaseTasks.push(function release_win64_zip() {
+      return release_zip("win64");
+    });
+  }
+
+  return releaseTasks;
+}

@@ -1,14 +1,15 @@
 {
   "name": "kiss-gui",
   "main": "start.js",
-  "version": "2.0.16",
+  "version": "2.0.17",
+  "description": "KISSFC Configuration tool",
   "single-instance": true,
   "scripts": {
     "start": "node node_modules/gulp/bin/gulp.js debug",
-    "buildall": "node node_modules/gulp/bin/gulp.js release --osx64 --win32 --win64 --linux64 --linux32 --chromeos",
-    "clean": "node node_modules/gulp/bin/gulp.js clean",
-    "clean-all": "node node_modules/gulp/bin/gulp.js clean-all",
-    "remove": "node node_modules/gulp/bin/gulp.js remove-all"
+    "postinstall": "node node_modules/platform-dependent-modules/cli.js",
+    "gulp": "node node_modules/gulp/bin/gulp.js",
+    "build": "node node_modules/gulp/bin/gulp.js release",
+    "build_all": "node node_modules/gulp/bin/gulp.js release --osx64 --win32 --win64 --linux64 --chromeos"
   },
   "window": {
     "title": "KISS GUI",
@@ -25,37 +26,35 @@
     "url": "github.com/flyduino/kissfc-chrome-gui"
   },
   "author": "Flyduino, Alexander Fedorov & Carsten Wache",
+  "license": "GPL-3.0",
   "chromium-args": "--child-clean-exit --enable-webgl --ignore-gpu-blacklist --disable-pinch",
   "webkit": {
     "plugin": true
   },
   "devDependencies": {
-    "archiver": "^2.0.3",
-    "bluebird": "3.4.1",
-    "del": "^3.0.0",
-    "git-rev-sync": "1.12.0",
-    "gulp": "^3.9.1",
-    "gulp-appdmg": "^1.0.3",
-    "gulp-concat": "~2.6.1",
-    "gulp-install": "^1.1.0",
-    "jquery-ui-npm": "1.12.0",
-    "marked": "^0.3.17",
-    "nw": "^0.30.5",
-    "nw-builder": "^3.5.4",
+    "archiver": "^3.0.0",
+    "del": "^4.1.0",
+    "follow-redirects": "^1.7.0",
+    "fs-extra": "^7.0.1",
+    "git-rev-sync": "^1.12.0",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-git": "^2.9.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-yarn": "^2.0.0",
+    "gulp-zip": "^4.2.0",
+    "nw": "^0.37.4",
+    "nw-builder": "^3.5.7",
     "os": "^0.1.1",
     "platform-dependent-modules": "0.0.14",
-    "react-switchery": "1.0.0",
-    "run-sequence": "^2.2.0",
-    "temp": "^0.8.3"
+    "targz": "^1.0.1",
+    "temp": "^0.9.0"
   },
   "config": {
-    "platformDevDependentModules": {
+    "platformDependentModules": {
       "darwin": [
-        "gulp-appdmg@1.0.3"
+        "appdmg@0.6.0"
       ]
     }
-  },
-  "dependencies": {
-    "natives": "^1.1.6"
   }
 }
