@@ -355,6 +355,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.NFCO = [];
                 obj.ver = 0;
                 obj.reverseMotors = 0;
+                obj.launchMode = 0;
             }
 
             obj.G_P[0] = data.getUint16(0, 0) / 1000;
@@ -541,7 +542,10 @@ kissProtocol.processPacket = function (code, obj) {
                 if (obj.ver >= 117) {
                      obj.AUX[12] = data.getUint8(181, 0); // realpit
                 }
-                // next free 182
+                if (obj.ver >= 119) {
+                    obj.launchMode = data.getUint8(182, 0); // launchmode
+               }
+                // next free 183
                 
                 
 
@@ -806,6 +810,10 @@ kissProtocol.preparePacket = function (code, obj) {
             if (obj.ver >= 117) {
                 data.setUint8(170, obj.AUX[12]); //realpit
                 blen = 179;
+            }
+            if (obj.ver >= 119) {
+                data.setUint8(171, obj.launchMode); //Launchmode
+                blen = 180;
             }
 
             break;

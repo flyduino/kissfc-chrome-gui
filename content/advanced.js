@@ -47,6 +47,9 @@ CONTENT.advanced.initialize = function (callback) {
             if (data['adaptiveFilter'] == "1") {
                 $('input[name="adaptiveFilter"]').prop('checked', 1);
             }
+            if (data['launchMode'] == "1") {
+                $('input[name="launchMode"]').prop('checked', 1);
+            }
             $('input[name="ledBrightness"]').val(+data['ledBrightness']);
         } else {
             $("select[name='vtxType'] option[value='3']").remove(); // no unify on 108
@@ -79,6 +82,11 @@ CONTENT.advanced.initialize = function (callback) {
         if (data['ver'] < 117) { // Remove TBS EVO
         	$("#vtxType > option[value='4']").remove();
         }
+
+        if (data['ver'] < 119) { // Hide Launchmode
+            $("#launchMode").hide();
+        }        
+
 
         $('select[name="loggerConfig"]').on('change', function () {
             var tmp = +$(this).val();
@@ -518,6 +526,13 @@ CONTENT.advanced.initialize = function (callback) {
             } else {
                 data['adaptiveFilter'] = 0;
             }
+
+            if ($('input[name="launchMode"]').prop('checked') ? 1 : 0 == 1) {
+                data['launchMode'] = 1;
+            } else {
+                data['launchMode'] = 0;
+            }
+
             data['ledBrightness'] = +$('input[name="ledBrightness"]').val();
         }
 
