@@ -12,7 +12,7 @@
             c += '<dd class="kiss-serial-function">';
 
             c += '<select class="kiss-serial-mode unsafe">';
-            c += '<option value="0" data-i18n="serialtype.0">KissProtocol</option>';
+            c += '<option value="0" data-i18n="serialtype.0">KissProtocol/OSD</option>';
             c += '<option value="1" data-i18n="serialtype.1">Logger</option>';
             c += '<option value="2" data-i18n="serialtype.2">Receiver</option>';
             c += '<option value="3" data-i18n="serialtype.3">VTX</option>';
