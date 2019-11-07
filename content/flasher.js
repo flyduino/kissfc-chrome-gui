@@ -13,8 +13,8 @@ var firmwares = [];
 var firmwareMap = {};
 
 var boardNames = {
-    'KISSCC': "Kiss AIO Flight ciontroller",
-    'KISSFC': "Kiss Flight controller"
+    'KISSCC': "Kiss CC (AIO Flight ciontroller)",
+    'KISSFC': "Kiss FC / iFlight KISSFC "
 };
 
 CONTENT.flasher = {
