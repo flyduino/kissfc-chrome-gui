@@ -416,13 +416,16 @@
     "vtx.2": "IRC Tramp HV",
     "vtx.3": "TBS Unify Smart Audio",
     "vtx.4": "TBS EVO Crossfire",
-    "serialtype.0": "KissProtocol/OSD",
+    "serialtype.0": "KissProtocol",
     "serialtype.1": "Logger",
     "serialtype.2": "Receiver",
     "serialtype.3": "VTX",
     "serialtype.4": "ESC TLM",
     "serialtype.5": "Runcam",
     "serialtype.6": "VTX + ESC TLM",
-    "serialtype.7": "GPS"
+    "serialtype.7": "GPS",
+    "serialtype.8": "DJI",
+    "serialtype.9": "OSD"
+
 
 }
