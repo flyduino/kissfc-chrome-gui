@@ -7,6 +7,7 @@ const pkg = require("./package.json");
 const fs = require("fs");
 const path = require("path");
 const exec = require("child_process").exec;
+const execSync = require("child_process").execSync;
 
 const zip = require("gulp-zip");
 const del = require("del");
@@ -17,6 +18,7 @@ const yarn = require("gulp-yarn");
 const rename = require("gulp-rename");
 const os = require("os");
 const git = require("git-rev-sync");
+const commandExistsSync = require("command-exists").sync;
 
 const DIST_DIR = "./dist/";
 const APPS_DIR = "./apps/";
@@ -28,6 +30,10 @@ var nwBuilderOptions = {
   files: "./dist/**/*",
   macIcns: './images/icon_128.icns',
   macPlist: { CFBundleDisplayName: "KISS GUI" },
+  macPlist: {
+    CFBundleDisplayName: "KISS GUI",
+    CFBundleIdentifier: "com.flyduino.kissgui"
+  },
   //    winIco: './images/icon_128.ico',
   zip: false
 };
@@ -431,6 +437,20 @@ function compressFiles(srcPath, basePath, outputFile, zipFolder) {
 
 
 // Create distribution package for macOS platform
+function osx64_sign(done) {
+  if (commandExistsSync("tmp/codesign.sh")) {
+    console.log("Codesign activity...");
+    execSync("tmp/codesign.sh", function(error, stdOut, stdErr) {
+    });
+  } else {
+    console.log("No valid script for codesign");
+  }
+  //release_zip("osx64",done);
+  release_osx64(done);
+  return done();
+}
+
+
 function release_osx64(done) {
   // Create DMG
   createDirIfNotExists(RELEASE_DIR);
@@ -509,7 +529,7 @@ function listReleaseTasks(done) {
   if (platforms.indexOf("osx64") !== -1) {
 
     releaseTasks.push(function release_osx64_dmg(done) {
-      return release_osx64(done);
+      return osx64_sign(done);
     });
     
     releaseTasks.push(function release_osx64_zip() {
