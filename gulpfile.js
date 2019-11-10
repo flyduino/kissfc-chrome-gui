@@ -29,7 +29,6 @@ var nwBuilderOptions = {
   version: "0.36.4",
   files: "./dist/**/*",
   macIcns: './images/icon_128.icns',
-  macPlist: { CFBundleDisplayName: "KISS GUI" },
   macPlist: {
     CFBundleDisplayName: "KISS GUI",
     CFBundleIdentifier: "com.flyduino.kissgui"
