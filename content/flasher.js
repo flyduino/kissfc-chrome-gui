@@ -13,8 +13,8 @@ var firmwares = [];
 var firmwareMap = {};
 
 var boardNames = {
-    'KISSCC': "Kiss AIO Flight ciontroller",
-    'KISSFC': "Kiss Flight controller"
+    'KISSCC': "Kiss CC (AIO Flight ciontroller)",
+    'KISSFC': "Kiss FC / iFlight KISSFC "
 };
 
 CONTENT.flasher = {
@@ -72,6 +72,7 @@ CONTENT.flasher.initialize = function (callback) {
             $.each(value, function (index, asset) {
                 $("#fw_version").append("<option value='" + index + "'>" + asset.release + " (" + asset.size + " bytes)</option>");
             });
+            $("#fcimage").attr("src", "images/"+$(this).val()+".png");
             $("#fw_version").trigger("change");
             $("#file_info").html("");
             $("#flash").hide();

@@ -176,6 +176,7 @@ CONTENT.fc_flasher.initialize = function (callback) {
             $.each(value, function (index, asset) {
                 $("#fw_version").append("<option value='" + index + "'>" + asset.release + " (" + asset.size + " bytes)</option>");
             });
+            $("#fcimage").attr("src", "images/"+$(this).val()+".png");
             $("#fw_version").trigger("change");
             $("#file_info").html("");
             $("#flash").hide();
