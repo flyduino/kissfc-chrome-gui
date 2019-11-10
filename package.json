@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "archiver": "^3.0.0",
+    "command-exists": "^1.2.8",
     "del": "^4.1.0",
     "follow-redirects": "^1.7.0",
     "fs-extra": "^7.0.1",
@@ -43,10 +44,12 @@
     "gulp-rename": "^1.4.0",
     "gulp-yarn": "^2.0.0",
     "gulp-zip": "^4.2.0",
+    "makensis": "^0.18.1",
     "nw": "^0.37.4",
     "nw-builder": "^3.5.7",
     "os": "^0.1.1",
     "platform-dependent-modules": "0.0.14",
+    "rpm-builder": "^1.1.0",
     "targz": "^1.0.1",
     "temp": "^0.9.0"
   },
