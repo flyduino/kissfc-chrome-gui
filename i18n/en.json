@@ -423,6 +423,9 @@
     "serialtype.4": "ESC TLM",
     "serialtype.5": "Runcam",
     "serialtype.6": "VTX + ESC TLM",
-    "serialtype.7": "GPS"
+    "serialtype.7": "GPS",
+    "serialtype.8": "DJI",
+    "serialtype.9": "DISABLED"
+
 
 }
