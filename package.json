@@ -1,7 +1,7 @@
 {
   "name": "kiss-gui",
   "main": "start.js",
-  "version": "2.0.18",
+  "version": "2.0.19",
   "description": "KISSFC Configuration tool",
   "single-instance": true,
   "scripts": {
