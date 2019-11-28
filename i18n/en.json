@@ -223,6 +223,7 @@
     "rx-type.17": "TBS CRSF",
     "rx-type.18": "FrSky F-Port",
     "rx-type.19": "FrSky F-Port (inverted)",
+    "rx-type.20": "Futaba FAST S-BUS / DJI",
     "rx-type.2": "PPM:Thr.,Roll,Pitch,Yaw",
     "rx-type.3": "PPM:Pitch,Thr.,Roll,Yaw",
     "rx-type.4": "PPM:Thr.,Pitch,Yaw,Roll",
@@ -424,8 +425,6 @@
     "serialtype.5": "Runcam",
     "serialtype.6": "VTX + ESC TLM",
     "serialtype.7": "GPS",
-    "serialtype.8": "DJI",
+    "serialtype.8": "DJI MSP",
     "serialtype.9": "DISABLED"
-
-
 }
