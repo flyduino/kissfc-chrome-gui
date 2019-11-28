@@ -201,6 +201,11 @@ CONTENT.configuration.initialize = function (callback) {
 
         }
 
+        if (data['ver'] >= 120) {
+            document.getElementById('rxsbusfast').style.display = "inline";
+
+        }
+
         if (data['ver'] < 117) {
         	$("select[name='outputMode'] option[value='8']").remove();
         }
