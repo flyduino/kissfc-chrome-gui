@@ -422,5 +422,11 @@
     "serialtype.6": "VTX + ESC TLM",
     "serialtype.7": "GPS",
     "serialtype.8": "DJI",
-    "serialtype.9": "DISABLED"
+    "serialtype.9": "DISABLED",
+    "column.rth": "RTH",
+    "title.dji.osd": "DJI OSD",
+  	"column.dji.osd.layout": "Layout",
+	"column.dji.osd.units": "Units",
+	"column.dji.osd.crosshair": "Crosshair",
+	"column.dji.osd.gps": "GPS"
 }

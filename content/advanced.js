@@ -285,9 +285,9 @@ CONTENT.advanced.initialize = function (callback) {
             	// set osd data
             	var osdConfig = +data['osdConfig'];
             	// crosshair
-            	if ((osdConfig & 0x10) == 0x10)  $('input[name="djiCrosshair"]').prop('checked', 1);
-            	if ((osdConfig & 0x20) == 0x20)  $('input[name="djiGPS"]').prop('checked', 1);
-            	if ((osdConfig & 0x40) == 0x40)  $("select[name='djiUnits']").val(1); else $("select[name='djiUnits']").val(0); 
+            	if ((osdConfig & 256) == 256)  $('input[name="djiCrosshair"]').prop('checked', 1);
+            	if ((osdConfig & 512) == 512)  $('input[name="djiGPS"]').prop('checked', 1);
+            	if ((osdConfig & 1024) == 1024)  $("select[name='djiUnits']").val(1); else $("select[name='djiUnits']").val(0); 
             	$("select[name='djiLayout']").val(osdConfig & 7); 
             	// check do we have msp enabled or not
             	for (i = 0; i < serialsFunctions.length; i++) {
@@ -557,10 +557,12 @@ CONTENT.advanced.initialize = function (callback) {
             data['ledBrightness'] = +$('input[name="ledBrightness"]').val();
               
             var osdConfig = $("select[name='djiLayout']").val() & 7;
-            if ($('input[name="djiCrosshair"]').prop('checked') ? 1 : 0 == 1) osdConfig |= 0x10;
-            if ($('input[name="djiGPS"]').prop('checked') ? 1 : 0 == 1) osdConfig |= 0x20;
-            if (+$("select[name='djiUnits']").val() == 1) osdConfig |= 0x40;
+            if ($('input[name="djiCrosshair"]').prop('checked') ? 1 : 0 == 1) osdConfig |= 256;
+            if ($('input[name="djiGPS"]').prop('checked') ? 1 : 0 == 1) osdConfig |= 512;
+            if (+$("select[name='djiUnits']").val() == 1) osdConfig |= 1024;
           
+            console.log("Set osd config: " + osdConfig);
+            
         	data['osdConfig'] = osdConfig;
 
         }
