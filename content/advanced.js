@@ -280,6 +280,22 @@ CONTENT.advanced.initialize = function (callback) {
                     populateSerialFields();
                 }
             });
+            
+            if (data['ver'] >= 121) {
+            	// set osd data
+            	var osdConfig = +data['osdConfig'];
+            	// crosshair
+            	if ((osdConfig & 0x10) == 0x10)  $('input[name="djiCrosshair"]').prop('checked', 1);
+            	if ((osdConfig & 0x20) == 0x20)  $('input[name="djiGPS"]').prop('checked', 1);
+            	if ((osdConfig & 0x40) == 0x40)  $("select[name='djiUnits']").val(1); else $("select[name='djiUnits']").val(0); 
+            	$("select[name='djiLayout']").val(osdConfig & 7); 
+            	// check do we have msp enabled or not
+            	for (i = 0; i < serialsFunctions.length; i++) {
+            		 if (serialsFunctions[i] == 8) {
+            			 $("#djiosd").show();
+            		 }
+            	}
+            }
 
             // Function for CSC changebox changes
             $('input[name="CSC"]').on('change', function () {
@@ -314,6 +330,7 @@ CONTENT.advanced.initialize = function (callback) {
                 serialsFunctions = []; // reset array
                 data['SerialSetup'] = 0; // reset serialsetup
                 var bitShiftCounter = 28;
+                var foundDJI = false;
                 for (i = 0; i < 8; i++) {
                     // update serialFunctions
                     serialsFunctions[i] = $("#serial" + i).kissSerial('value');
@@ -325,7 +342,11 @@ CONTENT.advanced.initialize = function (callback) {
                         if ($('select[name="loggerConfig"]').val() == 0)
                             $('select[name="loggerConfig"]').val(10);
                     }
+                    if (serialsFunctions[i] == 8) {
+                    	foundDJI = true;
+                    }
                 }
+                if (foundDJI) $("#djiosd").show(); else  $("#djiosd").hide();
                 contentChange();
             }
         }
@@ -534,6 +555,14 @@ CONTENT.advanced.initialize = function (callback) {
             }
 
             data['ledBrightness'] = +$('input[name="ledBrightness"]').val();
+              
+            var osdConfig = $("select[name='djiLayout']").val() & 7;
+            if ($('input[name="djiCrosshair"]').prop('checked') ? 1 : 0 == 1) osdConfig |= 0x10;
+            if ($('input[name="djiGPS"]').prop('checked') ? 1 : 0 == 1) osdConfig |= 0x20;
+            if (+$("select[name='djiUnits']").val() == 1) osdConfig |= 0x40;
+          
+        	data['osdConfig'] = osdConfig;
+
         }
 
         function contentChange() {

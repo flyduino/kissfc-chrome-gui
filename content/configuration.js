@@ -526,6 +526,15 @@ CONTENT.configuration.initialize = function (callback) {
                 });
             }
         }
+        if (data['ver'] >= 121) {
+            $("#aux13").kissAux({
+                name: $.i18n("column.rth"),
+                change: function () { contentChange(); },
+                value: data['AUX'][13]
+            });
+        } else {
+            $("#aux13").hide();
+        }
         if (data['CopterType'] == 7 || data['CopterType'] == 8) $("#aux11").show();
         else $("#aux11").hide();
 
@@ -732,6 +741,9 @@ CONTENT.configuration.initialize = function (callback) {
             }
             if (data['ver'] >= 117) {
                data['AUX'][12] = $("#aux12").kissAux('value');
+            }
+            if (data['ver'] >= 121) {
+                data['AUX'][13] = $("#aux13").kissAux('value');
             }
         }
         settingsFilled = 1;

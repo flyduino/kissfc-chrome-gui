@@ -544,11 +544,12 @@ kissProtocol.processPacket = function (code, obj) {
                 }
                 if (obj.ver >= 119) {
                     obj.launchMode = data.getUint8(182, 0); // launchmode
-               }
-                // next free 183
-                
-                
-
+                }
+                if (obj.ver >= 121) {
+                	obj.osdConfig = data.getUint16(183, 0); // DJI
+                	obj.AUX[13] = data.getUint8(185, 0); // RTH
+                }
+                // next free 186
             } catch (Exception) {
                 console.log("Exception while reading packet");
             }
@@ -815,7 +816,11 @@ kissProtocol.preparePacket = function (code, obj) {
                 data.setUint8(171, obj.launchMode); //Launchmode
                 blen = 180;
             }
-
+            if (obj.ver >= 121) {
+            	data.setUint16(172, obj.osdConfig, 0); // DJI
+                data.setUint8(174, obj.AUX[13]); //RTH
+                blen = 183;
+            }
             break;
 
         case this.SET_NOTCH:
