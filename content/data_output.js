@@ -13,6 +13,9 @@ CONTENT.data_output.initialize = function (callback) {
     self.requestTelemetry = true;
     self.imuInitialized = false;
     self.telemetry = {};
+    self.gps = {};
+    self.requestGps = false;
+    self.telemCount = 0;
 
     GUI.switchContent('data_output', function () {
         kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
@@ -75,6 +78,18 @@ CONTENT.data_output.initialize = function (callback) {
 
 
         var data = kissProtocol.data[kissProtocol.GET_SETTINGS];
+        
+         if (data['ver'] >= 121) {
+           	// set gps requests
+           	self.requestGps = false;
+           	for (i = 0; i < 8; i++) {
+               	var ser = (data['SerialSetup'] >> (28 - (i * 4))) & 0x0F;
+               	if (ser == 7) {
+            		self.requestGps = true;
+            	}
+            }
+        }
+        
         $('.mixerPreview img').attr('src', './images/mixer/' + data['CopterType'] + (data['ESCOutputLayout'] > 0 && (data['CopterType'] == 1 || data['CopterType'] == 2) ? '_' + data['ESCOutputLayout'] : '') + (data['reverseMotors'] == 0 ? '' : '_inv') + ".png");
 
 
@@ -230,6 +245,7 @@ CONTENT.data_output.initialize = function (callback) {
 
         function updateUI() {
             var data = kissProtocol.data[kissProtocol.GET_TELEMETRY];
+            var gps = kissProtocol.data[kissProtocol.GET_GPS];
 
             var useGraphData = parseInt($('select[name="graphTitle"]').val());
 
@@ -494,6 +510,18 @@ CONTENT.data_output.initialize = function (callback) {
 
             self.addSample(self.graphData, sampleBlock);
             self.renderGraph();
+            
+            if (self.requestGps && gps !== undefined) {
+               $("#gpsheader").show();
+               $("#gpsdata").show();
+               $("#latitude").text(gps.latitude.toFixed(6));
+               $("#longitude").text(gps.longitude.toFixed(6));
+               $("#speed").text(gps.speed.toFixed(2) + " km/h");
+               $("#altitude").text(gps.altitude.toFixed(2) + " m");
+               $("#course").text(gps.course.toFixed(2));
+               $("#satellites").text(gps.satellites + (gps.fix == 1 ? ' (fix)' : ''));
+            }
+            
             // Update data
             if (GUI.activeContent == 'data_output') self.updateTimeout = window.setTimeout(function () { fastDataPoll(); }, 10);
         }
@@ -517,6 +545,14 @@ CONTENT.data_output.initialize = function (callback) {
                         }
                     }
                 });
+                
+                self.telemCount ++;
+                if (self.telemCount == 100) {
+               		self.telemCount = 0;
+                	if (self.requestGps) {
+              			kissProtocol.send(kissProtocol.GET_GPS, [kissProtocol.GET_GPS, 0, 0], function () {});
+            		}
+                }
             }
         }
 

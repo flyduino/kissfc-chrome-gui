@@ -403,5 +403,12 @@
   	"column.dji.osd.layout": "Layout",
 	"column.dji.osd.units": "Units",
 	"column.dji.osd.crosshair": "Crosshair",
-	"column.dji.osd.gps": "GPS"
+	"column.dji.osd.gps": "GPS",
+    "title.gps": "GPS",
+    "column.latitude": "Latitude:",
+    "column.longitude": "Longitude:",
+    "column.altitude": "Altitude:",
+    "column.course": "Course:",
+    "column.speed": "Speed:",
+    "column.satellites": "Satellites:"
 }

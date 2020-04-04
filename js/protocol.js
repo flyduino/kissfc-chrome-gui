@@ -21,6 +21,7 @@ var kissProtocol = {
     SET_ESC_SETTINGS: 0x12,
     GET_NOTCH: 0x4F,
     SET_NOTCH: 0x50,
+    GET_GPS: 0x54,
 
     block: false,
     ready: false,
@@ -52,7 +53,7 @@ kissProtocol.read = function (readInfo) {
             switch (this.state) {
                 case 0:
                     // wait for start byte
-                    if (data[i] == 5) this.state++;
+                    if ((data[i] == 5) || (data[i] == kissProtocol.GET_GPS)) this.state++;
                     else this.state = 0;
                     this.errCase++;
                     if (this.errCase > 3) {
@@ -630,6 +631,17 @@ kissProtocol.processPacket = function (code, obj) {
 
         case this.ESC_INFO:
             break;
+            
+        case this.GET_GPS:
+        	obj.latitude =  data.getInt32(0, 0) / 10000000;  
+        	obj.longitude = data.getInt32(4, 0) / 10000000;
+        	obj.speed = data.getUint16(8, 0) / 100;
+        	obj.course = data.getUint16(10, 0) / 100;
+        	obj.altitude =  data.getInt16(12, 0);
+        	obj.satellites =  data.getUint8(14, 0) & 127;
+        	obj.fix =  data.getUint8(14, 0) >> 7;
+        	
+        	break;
 
         default:
             console.log('Unknown code received: ' + code);
