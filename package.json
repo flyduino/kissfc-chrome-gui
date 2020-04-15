@@ -59,5 +59,8 @@
         "appdmg@0.6.0"
       ]
     }
+  },
+  "dependencies": {
+    "appdmg": "^0.6.0"
   }
 }
