@@ -550,7 +550,19 @@ kissProtocol.processPacket = function (code, obj) {
                 	obj.osdConfig = data.getUint16(183, 0); // DJI
                 	obj.AUX[13] = data.getUint8(185, 0); // RTH
                 }
-                // next free 186
+                if (obj.ver >= 122) { // RTH
+                 	obj.rthReturnAltitude = data.getUint16(186, 0);
+                 	obj.rthHomeAltitude = data.getUint16(188, 0);
+                  	obj.rthDescentRadius = data.getUint16(190, 0);
+                	obj.rthHoverThrottle = data.getUint16(192, 0);
+                	obj.rthMaxThrottle = data.getUint16(194, 0);
+                	obj.rthMinThrottle = data.getUint16(196, 0);
+                 	obj.rthHomeAction = data.getUint8(198, 0);
+                 	obj.rthReturnSpeed = data.getUint8(199, 0);
+                }
+                
+                 blen = 208;
+                // next free 206
             } catch (Exception) {
                 console.log("Exception while reading packet");
             }
@@ -642,6 +654,9 @@ kissProtocol.processPacket = function (code, obj) {
         	obj.fix =  data.getUint8(14, 0) >> 7;
         	
         	break;
+        	
+        	 case 103:
+        	 break;
 
         default:
             console.log('Unknown code received: ' + code);
@@ -832,6 +847,18 @@ kissProtocol.preparePacket = function (code, obj) {
             	data.setUint16(172, obj.osdConfig, 0); // DJI
                 data.setUint8(174, obj.AUX[13]); //RTH
                 blen = 183;
+            }
+            
+            if (obj.ver >= 122) { // RTH
+                data.setUint16(175, obj.rthReturnAltitude);
+                data.setUint16(177, obj.rthHomeAltitude);
+                data.setUint16(179, obj.rthDescentRadius);
+                data.setUint16(181, obj.rthHoverThrottle);
+                data.setUint16(183, obj.rthMaxThrottle);
+                data.setUint16(185, obj.rthMinThrottle);
+                data.setUint8(187,  obj.rthHomeAction);
+                data.setUint8(188,  obj.rthReturnSpeed);
+                blen = 197;
             }
             break;
 

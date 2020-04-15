@@ -439,6 +439,16 @@
 	"column.altitude": "Altitude:",
 	"column.course": "Course:",
 	"column.speed": "Speed:",
-	"column.satellites": "Satellites:"
+	"column.satellites": "Satellites:",
+	
+	"title.rth": "Kiss RTH",
+	"column.rth.return.altitude": "Return altitude (m) (0 - auto)",
+	"column.rth.home.altitude": "Home altitude (m)",
+	"column.rth.descent.radius": "Descent radius (m)",
+	"column.rth.max.throttle": "Maximum throttle (0 - auto)",
+	"column.rth.hover.throttle": "Hover throttle (0 - auto)",
+	"column.rth.min.throttle": "Minimum throttle (0 - auto)",
+	"column.rth.return.speed": "Return speed (km/h)",
+	"column.rth.home.action": "Home action"
 			
 }

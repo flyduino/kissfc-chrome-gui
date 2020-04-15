@@ -20,7 +20,7 @@ CONTENT.advanced.initialize = function (callback) {
 
     function htmlLoaded(data) {
         validateBounds('#content input[type="number"]');
-
+        
         // serial warning
         $(".warning-disclaimer").hide();
         $(".warning-button").on("click", function () {
@@ -296,6 +296,17 @@ CONTENT.advanced.initialize = function (callback) {
             		 }
             	}
             }
+            
+            if (data['ver'] >= 122) {
+            	$('input[name="rthReturnAltitude"]').val(+data['rthReturnAltitude']);
+             	$('input[name="rthHomeAltitude"]').val(+data['rthHomeAltitude']);
+             	$('input[name="rthDescentRadius"]').val(+data['rthDescentRadius']);
+            	$('input[name="rthHoverThrottle"]').val(+data['rthHoverThrottle']);
+             	$('input[name="rthMaxThrottle"]').val(+data['rthMaxThrottle']);
+             	$('input[name="rthMinThrottle"]').val(+data['rthMinThrottle']);
+             	$('input[name="rthReturnSpeed"]').val(+data['rthReturnSpeed']);
+             	$('select[name="rthHomeAction"]').val(+data['rthHomeAction']);
+            }
 
             // Function for CSC changebox changes
             $('input[name="CSC"]').on('change', function () {
@@ -564,7 +575,16 @@ CONTENT.advanced.initialize = function (callback) {
             console.log("Set osd config: " + osdConfig);
             
         	data['osdConfig'] = osdConfig;
-
+        	
+        	// RTH
+        	data['rthReturnAltitude'] = +$('input[name="rthReturnAltitude"]').val();
+            data['rthHomeAltitude'] = +$('input[name="rthHomeAltitude"]').val();
+            data['rthDescentRadius'] = +$('input[name="rthDescentRadius"]').val();
+            data['rthHoverThrottle'] = +$('input[name="rthHoverThrottle"]').val();
+            data['rthMaxThrottle'] = +$('input[name="rthMaxThrottle"]').val();
+            data['rthMinThrottle'] = +$('input[name="rthMinThrottle"]').val();
+            data['rthReturnSpeed'] = +$('input[name="rthReturnSpeed"]').val();
+            data['rthHomeAction'] = +$('select[name="rthHomeAction"]').val();
         }
 
         function contentChange() {
