@@ -231,7 +231,7 @@ CONTENT.configuration.initialize = function (callback) {
                 if (FCinfo[0].length < 9 || info.firmvareVersion.indexOf("KISSFC") == -1) {
                     $("select[name='outputMode'] option[value='7']").remove();
                 }
-                if (FCinfo[0] == 'KISSFCV2F7' || FCinfo[0] == 'FETTEC_KISSFC') {
+                if (FCinfo[0] == 'KISSFCV2F7' || FCinfo[0] == 'FETTEC_KISSFC'|| FCinfo[0] == 'FETTEC_FC_G4') {
                     $("li[data-name='fc_flasher']").show();
                 } else {
                     $("li[data-name='fc_flasher']").hide();
