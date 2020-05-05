@@ -207,7 +207,7 @@ CONTENT.configuration.initialize = function (callback) {
         }
 
         if (data['ver'] < 117) {
-        	$("select[name='outputMode'] option[value='8']").remove();
+            $("select[name='outputMode'] option[value='8']").remove();
         }
 
 
@@ -231,11 +231,12 @@ CONTENT.configuration.initialize = function (callback) {
                 if (FCinfo[0].length < 9 || info.firmvareVersion.indexOf("KISSFC") == -1) {
                     $("select[name='outputMode'] option[value='7']").remove();
                 }
-                if (FCinfo[0] == 'KISSFCV2F7' || FCinfo[0] == 'FETTEC_KISSFC'|| FCinfo[0] == 'FETTEC_FC_G4') {
+                if (FCinfo[0] == 'KISSFCV2F7' || FCinfo[0] == 'FETTEC_KISSFC') {
                     $("li[data-name='fc_flasher']").show();
                 } else {
                     $("li[data-name='fc_flasher']").hide();
-                    $("select[name='outputMode'] option[value='8']").remove(); // Hide FETtec Onewire
+                    if (FCinfo[0] != 'FETTEC_FC_G4')
+                        $("select[name='outputMode'] option[value='8']").remove(); // Hide FETtec Onewire
                 }
             });
         }
@@ -551,15 +552,15 @@ CONTENT.configuration.initialize = function (callback) {
         $('select[name="lpf"]').on('change', function () {
             contentChange();
         });
-        
-        if (data['ver'] >= 117){
+
+        if (data['ver'] >= 117) {
             $("#aux12").kissAux({
                 name: $.i18n("column.RealPit"),
                 change: function () { contentChange(); },
                 value: data['AUX'][12]
             });
             $("#aux12").show();
-        }else $("#aux12").hide();
+        } else $("#aux12").hide();
 
         // Temp fix
         if (typeof androidOTGSerial !== 'undefined') {
@@ -639,6 +640,14 @@ CONTENT.configuration.initialize = function (callback) {
                 }
             });
             $("#activation").show();
+            $('#SN2').on('click', function (e) {
+                copyTextToClipboard(MCUid);
+                $('#SN2text').text($.i18n("text.serial-clipboard"));
+                setTimeout(function () {
+                    $('#SN2text').text("");
+                }, 1000);
+            });
+    
         } else {
             $("#navigation").show();
         }
@@ -740,7 +749,7 @@ CONTENT.configuration.initialize = function (callback) {
                 console.log('Store ESCOutputLayout:' + data['ESCOutputLayout']);
             }
             if (data['ver'] >= 117) {
-               data['AUX'][12] = $("#aux12").kissAux('value');
+                data['AUX'][12] = $("#aux12").kissAux('value');
             }
             if (data['ver'] >= 121) {
                 data['AUX'][13] = $("#aux13").kissAux('value');
@@ -943,7 +952,7 @@ CONTENT.configuration.initialize = function (callback) {
                     htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
                     $('#save').removeAttr("data-i18n");
                     $('#save').attr('data-i18n', 'button.saved');
-                    
+
                 });
             });
         });
