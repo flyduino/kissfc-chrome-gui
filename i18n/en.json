@@ -439,8 +439,11 @@
 	"column.altitude": "Altitude:",
 	"column.course": "Course:",
 	"column.speed": "Speed:",
-	"column.satellites": "Satellites:",
-	
+    "column.satellites": "Satellites:",
+    "title.homePoint": "HomePoint",
+    "column.distance": "Distance",
+    "column.direction": "Direction",
+    "column.relativeAlt": "rel. Altitude",	
 	"title.rth": "Kiss RTH",
 	"column.rth.return.altitude": "Return altitude (m) (0 - auto)",
 	"column.rth.home.altitude": "Home altitude (m)",

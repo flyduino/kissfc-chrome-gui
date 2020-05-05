@@ -298,6 +298,7 @@ CONTENT.advanced.initialize = function (callback) {
             }
             
             if (data['ver'] >= 122) {
+                $("#rth").show()
             	$('input[name="rthReturnAltitude"]').val(+data['rthReturnAltitude']);
              	$('input[name="rthHomeAltitude"]').val(+data['rthHomeAltitude']);
              	$('input[name="rthDescentRadius"]').val(+data['rthDescentRadius']);
