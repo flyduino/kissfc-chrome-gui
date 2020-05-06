@@ -13,7 +13,7 @@ CONTENT.tpa.initialize = function (callback) {
     self.hasInput = false;
 
     GUI.switchContent('tpa', function () {
-        kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+        kissProtocol.send(kissProtocol.GET_SETTINGS, [kissProtocol.GET_SETTINGS], function () {
             self.settingsFilled = 1;
             GUI.load("./content/tpa.html", function () {
                 htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])

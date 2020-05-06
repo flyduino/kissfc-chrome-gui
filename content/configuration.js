@@ -9,7 +9,7 @@ CONTENT.configuration.initialize = function (callback) {
     var self = this;
 
     GUI.switchContent('configuration', function () {
-        kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+        kissProtocol.send(kissProtocol.GET_SETTINGS, [kissProtocol.GET_SETTINGS], function () {
             GUI.load("./content/configuration.html", function () {
                 htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
             });
@@ -160,7 +160,7 @@ CONTENT.configuration.initialize = function (callback) {
 
         $('input[name="3dMode"]').removeAttr("disabled");
 
-        kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () {
+        kissProtocol.send(kissProtocol.GET_INFO, [kissProtocol.GET_INFO], function () {
             var info = kissProtocol.data[kissProtocol.GET_INFO];
             $('#version').text(info.firmvareVersion);
             if ((data['CopterType'] == 7 || data['CopterType'] == 8) && (info.firmvareVersion.indexOf("KISSFC") != -1 && info.firmvareVersion.indexOf("F7") == -1)) {
@@ -210,7 +210,6 @@ CONTENT.configuration.initialize = function (callback) {
             $("select[name='outputMode'] option[value='8']").remove();
         }
 
-
         if (data['vtxType'] == 0) {
             $('#aux5').hide();
             $('#aux6').hide();
@@ -221,22 +220,25 @@ CONTENT.configuration.initialize = function (callback) {
             $("select[name='outputMode'] option[value='7']").remove();
             $("select[name='lpf'] option[value='7']").remove();
         } else {
-            kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () {
+            kissProtocol.send(kissProtocol.GET_INFO, [kissProtocol.GET_INFO], function () {
                 var info = kissProtocol.data[kissProtocol.GET_INFO];
                 var FCinfo = info.firmvareVersion.split(/-/g);
 
-                if (FCinfo[0].length < 7 || info.firmvareVersion.indexOf("KISSFC") == -1) {
-                    $("select[name='outputMode'] option[value='6']").remove();
-                }
-                if (FCinfo[0].length < 9 || info.firmvareVersion.indexOf("KISSFC") == -1) {
-                    $("select[name='outputMode'] option[value='7']").remove();
-                }
-                if (FCinfo[0] == 'KISSFCV2F7' || FCinfo[0] == 'FETTEC_KISSFC') {
-                    $("li[data-name='fc_flasher']").show();
-                } else {
-                    $("li[data-name='fc_flasher']").hide();
-                    if (FCinfo[0] != 'FETTEC_FC_G4')
-                        $("select[name='outputMode'] option[value='8']").remove(); // Hide FETtec Onewire
+                 switch(FCinfo[0]) {
+                    case "KISSFC":
+                    case "KISSCC":
+                    case "FETTEC_FC_NANO":
+                        $("select[name='outputMode'] option[value='6']").remove(); // dshot1200
+                        $("select[name='outputMode'] option[value='7']").remove(); // dshot2400
+                        $("select[name='outputMode'] option[value='8']").remove(); // onewire
+                        $("li[data-name='fc_flasher']").hide(); // v2 flasher
+                        break;
+                    case "KISSFCV2F7":
+                    case "FETTEC_KISSFC":
+                        $("li[data-name='fc_flasher']").show();
+                        break;
+                    default:
+                        break;
                 }
             });
         }
@@ -624,7 +626,7 @@ CONTENT.configuration.initialize = function (callback) {
                             console.log('Got activation code ' + key);
                             data['actKey'] = parseInt(key);
                             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
-                            kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+                            kissProtocol.send(kissProtocol.GET_SETTINGS, [kissProtocol.GET_SETTINGS], function () {
                                 $('#content').load("./content/configuration.html", function () {
                                     htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
                                 });
@@ -947,7 +949,7 @@ CONTENT.configuration.initialize = function (callback) {
             $('#save').removeClass("saveAct");
             $('#save').html($.i18n("button.saving"));
             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
-            kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+            kissProtocol.send(kissProtocol.GET_SETTINGS, [kissProtocol.GET_SETTINGS], function () {
                 GUI.load("./content/configuration.html", function () {
                     htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
                     $('#save').removeAttr("data-i18n");

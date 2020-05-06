@@ -11,7 +11,7 @@ CONTENT.advanced.initialize = function (callback) {
     var settingsFilled = 0;
 
     GUI.switchContent('advanced', function () {
-        kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+        kissProtocol.send(kissProtocol.GET_SETTINGS, [kissProtocol.GET_SETTINGS], function () {
             GUI.load("./content/advanced.html", function () {
                 htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
             });
@@ -204,8 +204,7 @@ CONTENT.advanced.initialize = function (callback) {
             if (data['ver'] >= 114) {
                 $("#loopD").remove() // remove looptime on >=114
             } else {
-                // TODO clean this up
-                kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () {
+                kissProtocol.send(kissProtocol.GET_INFO, [kissProtocol.GET_INFO], function () {
                     var info = kissProtocol.data[kissProtocol.GET_INFO];
                     var FCinfo = info.firmvareVersion.split(/-/g);
                     if ((info.firmvareVersion.indexOf("KISSFC") != -1 && FCinfo[0].length < 7) || (info.firmvareVersion.indexOf("KISSCC") != -1 && FCinfo[0].length < 7)) {
@@ -266,7 +265,7 @@ CONTENT.advanced.initialize = function (callback) {
             readSerials(); // read serial from data and populate array
 
             // Check for default and either reset or show
-            kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () {
+            kissProtocol.send(kissProtocol.GET_INFO, [kissProtocol.GET_INFO], function () {
                 var info = kissProtocol.data[kissProtocol.GET_INFO];
                 defaultSerialConfig = info.defaultSerialConfig;
 
@@ -620,7 +619,7 @@ CONTENT.advanced.initialize = function (callback) {
             $('#save').removeClass("saveAct");
             $('#save').html($.i18n("button.saving"));
             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
-            kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+            kissProtocol.send(kissProtocol.GET_SETTINGS, [kissProtocol.GET_SETTINGS], function () {
                 GUI.load("./content/advanced.html", function () {
                     htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
                     $('#save').removeAttr("data-i18n");

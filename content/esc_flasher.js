@@ -63,7 +63,7 @@ CONTENT.esc_flasher.initialize = function (callback) {
             $("#escInfoDiv").show();
 
 
-            kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () {
+            kissProtocol.send(kissProtocol.GET_INFO, [kissProtocol.GET_INFO], function () {
                 var info = kissProtocol.data[kissProtocol.GET_INFO];
                 $("#escInfo").empty();
                 if (info['escInfoCount'] === undefined || info['escInfoCount'] == 0) {
@@ -112,11 +112,11 @@ CONTENT.esc_flasher.initialize = function (callback) {
         }
 
         $(".warning-button").on("click", function () {
-            kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+            kissProtocol.send(kissProtocol.GET_SETTINGS, [kissProtocol.GET_SETTINGS], function () {
                 $("#esc-flasher-disclaimer").hide();
                 var data = kissProtocol.data[kissProtocol.GET_SETTINGS];
                 if (data.lipoConnected == 1) {
-                    kissProtocol.send(kissProtocol.ESC_INFO, [0x22], function () { self.pollEscInfo = true; pollEscInfo(); });
+                    kissProtocol.send(kissProtocol.ESC_INFO, [kissProtocol.ESC_INFO], function () { self.pollEscInfo = true; pollEscInfo(); });
                 }
             });
         });
