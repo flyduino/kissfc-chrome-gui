@@ -198,6 +198,8 @@
     "mixer.6": "Hexacopter X",
     "mixer.7": "P3+2 Hover",
     "mixer.8": "P3+2 Forward",
+    "mixer.9": "Flat Octo",
+    "mixer.10": "Octo X",
     "option.custom": "Custom",
     "option.preset": "Presets",
     "option.user": "User",

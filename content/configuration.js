@@ -261,6 +261,7 @@ CONTENT.configuration.initialize = function (callback) {
 
         var sntext = MCUid + ' (' + (data['isActive'] ? $.i18n('text.activated') : $.i18n('text.not-activated')) + ')';
         $('#SN').text(sntext);
+        $('#eeprom1').text(data['ver']);
         $('#SN2').text($.i18n("text.serial-number") + ": " + MCUid);
         $('#SN').on('click', function (e) {
             copyTextToClipboard(MCUid);
@@ -288,6 +289,10 @@ CONTENT.configuration.initialize = function (callback) {
             name: $.i18n("mixer.7")
         }, {
             name: $.i18n("mixer.8")
+        }, {
+            name: $.i18n("mixer.9")
+        }, {
+            name: $.i18n("mixer.10")
         }];
 
         var mixer_list_e = $('select.mixer');
@@ -298,6 +303,11 @@ CONTENT.configuration.initialize = function (callback) {
         if (data["ver"] < 110) {
             $("select[name='mixer'] option[value='7']").remove();
             $("select[name='mixer'] option[value='8']").remove();
+        }
+
+        if (data["ver"] < 122) {
+            $("select[name='mixer'] option[value='9']").remove();
+            $("select[name='mixer'] option[value='10']").remove();
         }
 
         mixer_list_e.on('change', function () {
