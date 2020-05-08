@@ -425,7 +425,7 @@
     "serialtype.1": "Logger",
     "serialtype.2": "Receiver",
     "serialtype.3": "VTX",
-    "serialtype.4": "ESC TLM",
+    "serialtype.4": "ESC TLM / OneWire",
     "serialtype.5": "Runcam",
     "serialtype.6": "VTX + ESC TLM",
     "serialtype.7": "GPS",
