@@ -354,7 +354,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.RXcommands[10] = 1500 + ((data.getInt16(158, 0) / 1000) * 500);
             }
             
-            if (data.byteLength >= 170 && usedVersion >= 116) {
+            if (usedVersion >= 116) {
             	obj.RXStats = {
             		upRSSI1 : -data.getUint8(160, 0),
             		upRSSI2 : -data.getUint8(161, 0),
@@ -367,6 +367,10 @@ kissProtocol.processPacket = function (code, obj) {
             		downLQ : data.getUint8(168, 0),
             		downSNR : data.getInt8(169, 0)
             	};
+            }
+            if (usedVersion >= 123) {
+                obj.PWMOutVals[6] = data.getInt16(170, 0);
+                obj.PWMOutVals[7] = data.getInt16(172, 0);
             }
             
             break;

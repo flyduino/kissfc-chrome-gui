@@ -178,7 +178,7 @@ CONTENT.rates.initialize = function (callback) {
         $(window).on('resize', self.resizeCanvas).resize();
 
         function fastDataPoll() {
-            kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
+            kissProtocol.send(kissProtocol.GET_TELEMETRY, [kissProtocol.GET_TELEMETRY], function () {
                 if (GUI.activeContent == 'rates') {
                     if (self.startedUIupdate == 0) {
                         updateUI();

@@ -262,6 +262,8 @@
     "text.armed": "Armed",
     "text.connect": "Please connect the KISS FC to your Computer and select the port above.",
     "text.disarmed": "Disarmed",
+    "text.rth": "RTH",
+    "text.turtle-mode": "Turtle-Mode",
     "text.eeprom-version": "Eeprom version:",
     "text.enable-motor-test": "Enable Motors Test ",
     "text.esc-flasher-complete": "<br/><br/> <br/><br/>For safety reasons, communication with KISS FC has been terminated.<br/><br/>Please unplug your battery, and reconnect your KISS FC.<br/><br/>",

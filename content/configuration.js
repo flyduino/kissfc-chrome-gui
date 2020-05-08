@@ -305,7 +305,7 @@ CONTENT.configuration.initialize = function (callback) {
             $("select[name='mixer'] option[value='8']").remove();
         }
 
-        if (data["ver"] < 122) {
+        if (data["ver"] <= 122) { // Octo support starts 123
             $("select[name='mixer'] option[value='9']").remove();
             $("select[name='mixer'] option[value='10']").remove();
         }
@@ -366,10 +366,17 @@ CONTENT.configuration.initialize = function (callback) {
 
         var outputMode = data['ESConeshot125'];
 
+        if (outputMode != 8) {
+            // disable octo for non OneWire due to missing outputs           
+            $("select[name='mixer'] option[value='9']").prop("disabled", true);
+            $("select[name='mixer'] option[value='10']").prop("disabled", true);
+        }
+
         $("#outputMode").val(outputMode);
         $("#outputMode").on('change', function () {
             contentChange();
         });
+
 
 
         $('input[name="failsaveseconds"]').val(data['failsaveseconds']);

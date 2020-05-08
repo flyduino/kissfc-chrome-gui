@@ -19,7 +19,7 @@ CONTENT.data_output.initialize = function (callback) {
     self.telemCount = 0;
 
     GUI.switchContent('data_output', function () {
-        kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
+        kissProtocol.send(kissProtocol.GET_TELEMETRY, [kissProtocol.GET_TELEMETRY], function () {
             GUI.load("./content/data_output.html", htmlLoaded);
         });
     });
@@ -122,7 +122,11 @@ CONTENT.data_output.initialize = function (callback) {
         });
 
         // generate motor bars
-        var motorNames = ['PWM 1', 'PWM 2', 'PWM 3', 'PWM 4', 'PWM 5', 'PWM 6'];
+        if (data['ver'] >=123) {
+            var motorNames = ['PWM 1', 'PWM 2', 'PWM 3', 'PWM 4', 'PWM 5', 'PWM 6', 'PWM 7', 'PWM 8'];
+        } else {
+            var motorNames = ['PWM 1', 'PWM 2', 'PWM 3', 'PWM 4', 'PWM 5', 'PWM 6'];
+        }
         var motorContainer = $('.data_output .motors .bars');
         var motorFillArray = [];
         var motorLabelArray = [];
@@ -183,7 +187,7 @@ CONTENT.data_output.initialize = function (callback) {
                 var tmp = {
                     'buffer': new ArrayBuffer(7),
                     'motorTestEnabled': 0,
-                    'motorTest': [0, 0, 0, 0, 0, 0]
+                    'motorTest': [0, 0, 0, 0, 0, 0, 0, 0]
                 };
                 kissProtocol.send(kissProtocol.MOTOR_TEST, kissProtocol.preparePacket(kissProtocol.MOTOR_TEST, tmp));
             }
@@ -328,7 +332,8 @@ CONTENT.data_output.initialize = function (callback) {
             if (data['mode'] == 0) $("#omode").text($.i18n('text.acro'));
             else if (data['mode'] == 1) $("#omode").text($.i18n('text.level'));
             else if (data['mode'] == 2) $("#omode").text($.i18n('text.3D'));
-            else if (data['mode'] == 3) $("#omode").text($.i18n('column.turtle-mode'));
+            else if (data['mode'] == 3) $("#omode").text($.i18n('text.turtle-mode'));
+            else if (data['mode'] == 5) $("#omode").text($.i18n('text.rth'));
             else $("#omode").text(data['mode']);
 
             if (data['Armed'] == 0) $("#ostatus").text($.i18n('text.disarmed'));
@@ -545,7 +550,7 @@ CONTENT.data_output.initialize = function (callback) {
 
         function fastDataPoll() {
             if (self.requestTelemetry) {
-                kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
+                kissProtocol.send(kissProtocol.GET_TELEMETRY, [kissProtocol.GET_TELEMETRY], function () {
                     if (GUI.activeContent == 'data_output') {
                         if (self.startedUIupdate == 0) {
                             self.telemetry = kissProtocol.data[kissProtocol.GET_TELEMETRY];
