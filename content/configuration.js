@@ -210,6 +210,12 @@ CONTENT.configuration.initialize = function (callback) {
             $("select[name='outputMode'] option[value='8']").remove();
         }
 
+        if (data['ver'] < 123) {
+            for (var i = 8; i < 16; i++) {
+                $("select[name='ESCOutputLayout'] option[value='" + i + "']").remove();
+            }
+        }
+
         if (data['vtxType'] == 0) {
             $('#aux5').hide();
             $('#aux6').hide();
@@ -224,7 +230,7 @@ CONTENT.configuration.initialize = function (callback) {
                 var info = kissProtocol.data[kissProtocol.GET_INFO];
                 var FCinfo = info.firmvareVersion.split(/-/g);
 
-                 switch(FCinfo[0]) {
+                switch (FCinfo[0]) {
                     case "KISSFC":
                     case "KISSCC":
                     case "FETTEC_FC_NANO":
@@ -666,7 +672,7 @@ CONTENT.configuration.initialize = function (callback) {
                     $('#SN2text').text("");
                 }, 1000);
             });
-    
+
         } else {
             $("#navigation").show();
         }
@@ -773,6 +779,7 @@ CONTENT.configuration.initialize = function (callback) {
             if (data['ver'] >= 121) {
                 data['AUX'][13] = $("#aux13").kissAux('value');
             }
+
         }
         settingsFilled = 1;
 
