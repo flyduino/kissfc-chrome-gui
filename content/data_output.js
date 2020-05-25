@@ -24,6 +24,20 @@ CONTENT.data_output.initialize = function (callback) {
         });
     });
 
+    function deg2direction(val) {
+        var dividor = 45 / 2;
+        var retval = "";
+        if (val > (360 - dividor) || val < (0 + dividor)) retval = "N";
+        else if (val > (45 - dividor) || val < (45 + dividor)) retval = "NE"
+        else if (val > (90 - dividor) || val < (90 + dividor)) retval = "E"
+        else if (val > (135 - dividor) || val < (135 + dividor)) retval = "SE"
+        else if (val > (180 - dividor) || val < (180 + dividor)) retval = "S"
+        else if (val > (225 - dividor) || val < (225 + dividor)) retval = "SW"
+        else if (val > (270 - dividor) || val < (270 + dividor)) retval = "W"
+        else if (val > (315 - dividor) || val < (315 + dividor)) retval = "NW"
+        return retval
+    }
+
     function animateModel(timestamp) {
         if (GUI.activeContent == 'data_output') {
             requestAnimationFrame(animateModel);
@@ -122,7 +136,7 @@ CONTENT.data_output.initialize = function (callback) {
         });
 
         // generate motor bars
-        if (data['ver'] >=123) {
+        if (data['ver'] >= 123) {
             var motorNames = ['PWM 1', 'PWM 2', 'PWM 3', 'PWM 4', 'PWM 5', 'PWM 6', 'PWM 7', 'PWM 8'];
         } else {
             var motorNames = ['PWM 1', 'PWM 2', 'PWM 3', 'PWM 4', 'PWM 5', 'PWM 6'];
@@ -524,7 +538,7 @@ CONTENT.data_output.initialize = function (callback) {
                 $("#longitude").text(gps.longitude.toFixed(6));
                 $("#speed").text(gps.speed.toFixed(2) + " km/h");
                 $("#altitude").text(gps.altitude.toFixed(2) + " m");
-                $("#course").text(gps.course.toFixed(2));
+                $("#course").text(gps.course.toFixed(2) + " (" + deg2direction(gps.course.toFixed(2)) + ")");
                 $("#satellites").text(gps.satellites + (gps.fix == 1 ? ' (fix)' : ''));
             }
 
@@ -564,7 +578,7 @@ CONTENT.data_output.initialize = function (callback) {
                     if (self.requestGps) {
                         kissProtocol.send(kissProtocol.GET_GPS, [kissProtocol.GET_GPS, 0, 0], function () { });
                         if (data['ver'] >= 121)
-                            kissProtocol.send(kissProtocol.GET_HOME_INFO, [kissProtocol.GET_HOME_INFO, 0, 0], function () { 
+                            kissProtocol.send(kissProtocol.GET_HOME_INFO, [kissProtocol.GET_HOME_INFO, 0, 0], function () {
                             });
                     }
                 }
