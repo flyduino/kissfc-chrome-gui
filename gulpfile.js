@@ -526,14 +526,9 @@ function listReleaseTasks(done) {
   }
 
   if (platforms.indexOf("osx64") !== -1) {
-
     releaseTasks.push(function release_osx64_dmg(done) {
       return osx64_sign(done);
     });
-    
-    releaseTasks.push(function release_osx64_zip() {
-      return release_zip("osx64");
-    });   
   }
 
   if (platforms.indexOf("win32") !== -1) {
