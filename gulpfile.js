@@ -26,7 +26,7 @@ const DEBUG_DIR = "./debug/";
 const RELEASE_DIR = "./release/";
 
 var nwBuilderOptions = {
-  version: "0.46.0",
+  version: "0.36.4",
   files: "./dist/**/*",
   macIcns: './images/icon_128.icns',
   macPlist: {
