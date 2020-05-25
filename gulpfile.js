@@ -437,9 +437,9 @@ function compressFiles(srcPath, basePath, outputFile, zipFolder) {
 
 // Create distribution package for macOS platform
 function osx64_sign(done) {
-  if (commandExistsSync("tmp/code-sign.js")) {
+  if (commandExistsSync("tmp/codesign.sh")) {
     console.log("Codesign activity...");
-    execSync("node tmp/code-sign.js", function(error, stdOut, stdErr) {
+    execSync("tmp/codesign.sh", function(error, stdOut, stdErr) {
     });
   } else {
     console.log("No valid script for codesign");
