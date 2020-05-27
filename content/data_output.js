@@ -386,7 +386,6 @@ CONTENT.data_output.initialize = function (callback) {
                         // it
                         // more
                         // visible
-                        sampleBlock.push(data['ACCRaw'][i]);
                         if (i == 0) {
                             if (data['GyroRaw'][i] * 2000 > parseInt($('#gxmax').text())) $('#gxmax').text(data['GyroRaw'][i] * 2000);
                             if (data['GyroRaw'][i] * 2000 < parseInt($('#gxmin').text())) $('#gxmin').text(data['GyroRaw'][i] * 2000);
@@ -399,6 +398,9 @@ CONTENT.data_output.initialize = function (callback) {
                             if (data['GyroRaw'][i] * 2000 > parseInt($('#gzmax').text())) $('#gzmax').text(data['GyroRaw'][i] * 2000);
                             if (data['GyroRaw'][i] * 2000 < parseInt($('#gzmin').text())) $('#gzmin').text(data['GyroRaw'][i] * 2000);
                         }
+                    }
+                    for (var i = 0; i < 3; i++) {
+                        sampleBlock.push(data['ACCRaw'][i]);
                     }
 
                     break;
