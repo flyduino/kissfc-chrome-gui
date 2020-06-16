@@ -308,6 +308,11 @@ CONTENT.advanced.initialize = function (callback) {
              	$('select[name="rthHomeAction"]').val(+data['rthHomeAction']);
             }
 
+            if (data['ver'] >= 125) {
+                // remove Laptimer
+                $('#lapTimer').hide();
+            }
+
             // Function for CSC changebox changes
             $('input[name="CSC"]').on('change', function () {
                 if ($('input[name="CSC"]').prop('checked') ? 1 : 0 == 1) {

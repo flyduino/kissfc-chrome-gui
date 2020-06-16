@@ -15,7 +15,6 @@ CONTENT.data_output.initialize = function (callback) {
     self.telemetry = {};
     self.gps = {};
     self.homeinfo = {};
-    self.requestGps = false;
     self.telemCount = 0;
 
     GUI.switchContent('data_output', function () {
@@ -94,16 +93,6 @@ CONTENT.data_output.initialize = function (callback) {
 
         var data = kissProtocol.data[kissProtocol.GET_SETTINGS];
 
-        if (data['ver'] >= 119) {
-            // set gps requests
-            self.requestGps = false;
-            for (i = 0; i < 8; i++) {
-                var ser = (data['SerialSetup'] >> (28 - (i * 4))) & 0x0F;
-                if (ser == 7) {
-                    self.requestGps = true;
-                }
-            }
-        }
 
         $('.mixerPreview img').attr('src', './images/mixer/' + data['CopterType'] + (data['ESCOutputLayout'] > 0 && (data['CopterType'] == 1 || data['CopterType'] == 2) ? '_' + data['ESCOutputLayout'] : '') + (data['reverseMotors'] == 0 ? '' : '_inv') + ".png");
 
@@ -533,7 +522,7 @@ CONTENT.data_output.initialize = function (callback) {
             self.addSample(self.graphData, sampleBlock);
             self.renderGraph();
 
-            if (self.requestGps && gps !== undefined) {
+            if (gps !== undefined) {
                 $("#gpsheader").show();
                 $("#gpsdata").show();
                 $("#latitude").text(gps.latitude.toFixed(6));
@@ -544,7 +533,7 @@ CONTENT.data_output.initialize = function (callback) {
                 $("#satellites").text(gps.satellites + (gps.fix == 1 ? ' (fix)' : ''));
             }
 
-            if (self.requestGps && homeinfo !== undefined) {
+            if (homeinfo !== undefined) {
                 $("#homePointheader").show();
                 $("#homePointdata").show();
                 $("#homePointDistance").text(homeinfo.homeDistance.toFixed(2) + " m");
@@ -577,12 +566,10 @@ CONTENT.data_output.initialize = function (callback) {
                 self.telemCount++;
                 if (self.telemCount == 100) {
                     self.telemCount = 0;
-                    if (self.requestGps) {
+                    if (data['ver'] >= 119)
                         kissProtocol.send(kissProtocol.GET_GPS, [kissProtocol.GET_GPS, 0, 0], function () { });
-                        if (data['ver'] >= 121)
-                            kissProtocol.send(kissProtocol.GET_HOME_INFO, [kissProtocol.GET_HOME_INFO, 0, 0], function () {
-                            });
-                    }
+                    if (data['ver'] >= 121)
+                        kissProtocol.send(kissProtocol.GET_HOME_INFO, [kissProtocol.GET_HOME_INFO, 0, 0], function () { });
                 }
             }
         }
