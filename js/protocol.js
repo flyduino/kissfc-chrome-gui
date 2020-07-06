@@ -471,7 +471,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.SN[10] = data.getUint8(90);
                 obj.SN[11] = data.getUint8(91);
 
-                //obj.ver = data.getUint8(92);
+                //obj.ver = data.getUint8(92);  // already fetched
 
                 obj.TPA[0] = data.getUint16(93, 0) / 1000;
                 obj.TPA[1] = data.getUint16(95, 0) / 1000;
@@ -601,7 +601,7 @@ kissProtocol.processPacket = function (code, obj) {
                 }
                 
                  blen = 208;
-                // next free 206
+                // next free 200
             } catch (Exception) {
                 console.log("Exception while reading packet");
             }
