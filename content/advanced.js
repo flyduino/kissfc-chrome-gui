@@ -20,7 +20,7 @@ CONTENT.advanced.initialize = function (callback) {
 
     function htmlLoaded(data) {
         validateBounds('#content input[type="number"]');
-        
+
         // serial warning
         $(".warning-disclaimer").hide();
         $(".warning-button").on("click", function () {
@@ -78,15 +78,14 @@ CONTENT.advanced.initialize = function (callback) {
         $('select[name="vtxType"]').val(data['vtxType']);
         $('input[name="vtxPowerLow"]').val(+data['vtxPowerLow']);
         $('input[name="vtxPowerHigh"]').val(+data['vtxPowerHigh']);
-        
+
         if (data['ver'] < 117) { // Remove TBS EVO
-        	$("#vtxType > option[value='4']").remove();
+            $("#vtxType > option[value='4']").remove();
         }
 
         if (data['ver'] < 119) { // Hide Launchmode
             $("#launchMode").hide();
-        }        
-
+        }
 
         $('select[name="loggerConfig"]').on('change', function () {
             var tmp = +$(this).val();
@@ -279,33 +278,40 @@ CONTENT.advanced.initialize = function (callback) {
                     populateSerialFields();
                 }
             });
-            
+
             if (data['ver'] >= 121) {
-            	// set osd data
-            	var osdConfig = +data['osdConfig'];
-            	// crosshair
-            	if ((osdConfig & 256) == 256)  $('input[name="djiCrosshair"]').prop('checked', 1);
-            	if ((osdConfig & 512) == 512)  $('input[name="djiGPS"]').prop('checked', 1);
-            	if ((osdConfig & 1024) == 1024)  $("select[name='djiUnits']").val(1); else $("select[name='djiUnits']").val(0); 
-            	$("select[name='djiLayout']").val(osdConfig & 7); 
-            	// check do we have msp enabled or not
-            	for (i = 0; i < serialsFunctions.length; i++) {
-            		 if (serialsFunctions[i] == 8) {
-            			 $("#djiosd").show();
-            		 }
-            	}
+                // set osd data
+                var osdConfig = +data['osdConfig'];
+                // crosshair
+                if ((osdConfig & 256) == 256) $('input[name="djiCrosshair"]').prop('checked', 1);
+                if ((osdConfig & 512) == 512) $('input[name="djiGPS"]').prop('checked', 1);
+                if ((osdConfig & 1024) == 1024) $("select[name='djiUnits']").val(1); else $("select[name='djiUnits']").val(0);
+                $("select[name='djiLayout']").val(osdConfig & 7);
+                // check do we have msp enabled or not
+                for (i = 0; i < serialsFunctions.length; i++) {
+                    if (serialsFunctions[i] == 8) {
+                        $("#djiosd").show();
+                    }
+                }
             }
-            
+
             if (data['ver'] >= 122) {
                 $("#rth").show()
-            	$('input[name="rthReturnAltitude"]').val(+data['rthReturnAltitude']);
-             	$('input[name="rthHomeAltitude"]').val(+data['rthHomeAltitude']);
-             	$('input[name="rthDescentRadius"]').val(+data['rthDescentRadius']);
-            	$('input[name="rthHoverThrottle"]').val(+data['rthHoverThrottle']);
-             	$('input[name="rthMaxThrottle"]').val(+data['rthMaxThrottle']);
-             	$('input[name="rthMinThrottle"]').val(+data['rthMinThrottle']);
-             	$('input[name="rthReturnSpeed"]').val(+data['rthReturnSpeed']);
-             	$('select[name="rthHomeAction"]').val(+data['rthHomeAction']);
+                $('input[name="rthReturnAltitude"]').val(+data['rthReturnAltitude']);
+                $('input[name="rthHomeAltitude"]').val(+data['rthHomeAltitude']);
+                $('input[name="rthDescentRadius"]').val(+data['rthDescentRadius']);
+                $('input[name="rthHoverThrottle"]').val(+data['rthHoverThrottle']);
+                $('input[name="rthMaxThrottle"]').val(+data['rthMaxThrottle']);
+                $('input[name="rthMinThrottle"]').val(+data['rthMinThrottle']);
+                $('input[name="rthReturnSpeed"]').val(+data['rthReturnSpeed']);
+
+                if (data['ver'] >= 126) {
+                    $('select[name="rthHomeAction"]').val(((data['rthHomeAction'] << 1) & 0xFF) >> 1);
+                    if ((data['rthHomeAction'] >> 7 ) == 1) $('input[name="rtfFailsafeAction"]').prop('checked', 1);
+                } else {
+                    $('select[name="rthHomeAction"]').val(+data['rthHomeAction']);
+                    $("#rthfailsafe").hide();
+                }
             }
 
             if (data['ver'] >= 125) {
@@ -359,10 +365,10 @@ CONTENT.advanced.initialize = function (callback) {
                             $('select[name="loggerConfig"]').val(10);
                     }
                     if (serialsFunctions[i] == 8) {
-                    	foundDJI = true;
+                        foundDJI = true;
                     }
                 }
-                if (foundDJI) $("#djiosd").show(); else  $("#djiosd").hide();
+                if (foundDJI) $("#djiosd").show(); else $("#djiosd").hide();
                 contentChange();
             }
         }
@@ -571,25 +577,33 @@ CONTENT.advanced.initialize = function (callback) {
             }
 
             data['ledBrightness'] = +$('input[name="ledBrightness"]').val();
-              
+
             var osdConfig = $("select[name='djiLayout']").val() & 7;
             if ($('input[name="djiCrosshair"]').prop('checked') ? 1 : 0 == 1) osdConfig |= 256;
             if ($('input[name="djiGPS"]').prop('checked') ? 1 : 0 == 1) osdConfig |= 512;
             if (+$("select[name='djiUnits']").val() == 1) osdConfig |= 1024;
-          
+
             console.log("Set osd config: " + osdConfig);
-            
-        	data['osdConfig'] = osdConfig;
-        	
-        	// RTH
-        	data['rthReturnAltitude'] = +$('input[name="rthReturnAltitude"]').val();
+
+            data['osdConfig'] = osdConfig;
+
+            // RTH
+            data['rthReturnAltitude'] = +$('input[name="rthReturnAltitude"]').val();
             data['rthHomeAltitude'] = +$('input[name="rthHomeAltitude"]').val();
             data['rthDescentRadius'] = +$('input[name="rthDescentRadius"]').val();
             data['rthHoverThrottle'] = +$('input[name="rthHoverThrottle"]').val();
             data['rthMaxThrottle'] = +$('input[name="rthMaxThrottle"]').val();
             data['rthMinThrottle'] = +$('input[name="rthMinThrottle"]').val();
             data['rthReturnSpeed'] = +$('input[name="rthReturnSpeed"]').val();
-            data['rthHomeAction'] = +$('select[name="rthHomeAction"]').val();
+
+            var rthAction = $('select[name="rthHomeAction"]').val();
+            if (($('input[name="rtfFailsafeAction"]').prop('checked') ? 1 : 0 == 1) && data['ver'] >= 126) {
+                rthAction |= 128;
+            }
+
+            console.log("Set rthHomeAction: " + rthAction);
+
+            data['rthHomeAction'] = rthAction;
         }
 
         function contentChange() {

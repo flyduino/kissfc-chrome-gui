@@ -464,6 +464,7 @@
 	"column.rth.hover.throttle": "Hover throttle (0 - auto)",
 	"column.rth.min.throttle": "Minimum throttle (0 - auto)",
 	"column.rth.return.speed": "Return speed (km/h)",
-	"column.rth.home.action": "Home action"
+    "column.rth.home.action": "Home action",
+    "column.rth.failsafe.action": "RTH on Failsafe"
 			
 }
