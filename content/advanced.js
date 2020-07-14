@@ -306,8 +306,8 @@ CONTENT.advanced.initialize = function (callback) {
                 $('input[name="rthReturnSpeed"]').val(+data['rthReturnSpeed']);
 
                 if (data['ver'] >= 126) {
-                    $('select[name="rthHomeAction"]').val(((data['rthHomeAction'] << 1) & 0xFF) >> 1);
-                    if ((data['rthHomeAction'] >> 7 ) == 1) $('input[name="rtfFailsafeAction"]').prop('checked', 1);
+                    $('select[name="rthHomeAction"]').val(data['rthHomeAction'] & 0x07);
+                    if ((data['rthHomeAction'] >> 7) == 1) $('input[name="rtfFailsafeAction"]').prop('checked', 1);
                 } else {
                     $('select[name="rthHomeAction"]').val(+data['rthHomeAction']);
                     $("#rthfailsafe").hide();
