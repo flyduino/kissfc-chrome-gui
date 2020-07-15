@@ -12,15 +12,51 @@
 
 var usedVersion = 0;
 var kissProtocol = {
+    SET_SETTINGS: 0x10,
+    MOTOR_TEST: 0x11,
+    SET_ESC_SETTINGS: 0x12,
+    GET_TELEMETRY_V2: 0x13,
+
     GET_TELEMETRY: 0x20,
     GET_INFO: 0x21,
     ESC_INFO: 0x22,
     GET_SETTINGS: 0x30,
-    SET_SETTINGS: 0x10,
-    MOTOR_TEST: 0x11,
-    SET_ESC_SETTINGS: 0x12,
-    GET_NOTCH: 0x4F,
-    SET_NOTCH: 0x50,
+    ESC_FLASHER: 0x41,
+    GET_PIDS: 0x43,
+    SET_PIDS: 0x44,
+    GET_VTX: 0x45,
+    SET_VTX: 0x46,
+    GET_FILTERS: 0x47,
+    SET_FILTERS: 0x48,
+    GET_ALARM: 0x49,
+    SET_ALARM: 0x4A,
+    GET_TPA: 0x4B,
+    SET_TPA: 0x4C,
+    GET_RATES: 0x4D,
+    SET_RATES: 0x4E,
+
+    RDP_RESET: 0x4F,
+    EMPTY_BUFFER: 0x51,
+    GET_DSETPOINT: 0x52,
+    SET_DSETPOINT: 0x53,
+
+    GET_GPS: 0x54,
+    SET_GPS: 0x55,
+    GET_FFT_GRAPH: 0x56,
+    GET_GYRO_GRAPH: 0x57,
+    SET_TLM_PASSTHROUGH: 0x58,
+    SET_GPS_PASSTHROUGH: 0x59,
+    SET_CAM_PASSTHROUGH: 0x60,
+
+    JOINED_REQUEST: 0x66,
+    SCHEDULE_REQUEST: 0x67,
+    GET_RGB_LED: 0x68,
+    SET_RGB_LED: 0x69,
+
+	GET_RTH_SETTINGS: 0x70,
+	SET_RTH_SETTINGS: 0x71,
+
+	GET_HOME_INFO: 0x72,
 
     block: false,
     ready: false,
@@ -52,7 +88,7 @@ kissProtocol.read = function (readInfo) {
             switch (this.state) {
                 case 0:
                     // wait for start byte
-                    if (data[i] == 5) this.state++;
+                    if ((data[i] == 5) || (data[i] == kissProtocol.GET_GPS) || (data[i] == kissProtocol.GET_HOME_INFO)) this.state++;
                     else this.state = 0;
                     this.errCase++;
                     if (this.errCase > 3) {
@@ -318,7 +354,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.RXcommands[10] = 1500 + ((data.getInt16(158, 0) / 1000) * 500);
             }
             
-            if (data.byteLength >= 170 && usedVersion >= 116) {
+            if (usedVersion >= 116) {
             	obj.RXStats = {
             		upRSSI1 : -data.getUint8(160, 0),
             		upRSSI2 : -data.getUint8(161, 0),
@@ -331,6 +367,10 @@ kissProtocol.processPacket = function (code, obj) {
             		downLQ : data.getUint8(168, 0),
             		downSNR : data.getInt8(169, 0)
             	};
+            }
+            if (usedVersion >= 123) {
+                obj.PWMOutVals[6] = data.getInt16(170, 0);
+                obj.PWMOutVals[7] = data.getInt16(172, 0);
             }
             
             break;
@@ -431,7 +471,7 @@ kissProtocol.processPacket = function (code, obj) {
                 obj.SN[10] = data.getUint8(90);
                 obj.SN[11] = data.getUint8(91);
 
-                //obj.ver = data.getUint8(92);
+                //obj.ver = data.getUint8(92);  // already fetched
 
                 obj.TPA[0] = data.getUint16(93, 0) / 1000;
                 obj.TPA[1] = data.getUint16(95, 0) / 1000;
@@ -544,11 +584,24 @@ kissProtocol.processPacket = function (code, obj) {
                 }
                 if (obj.ver >= 119) {
                     obj.launchMode = data.getUint8(182, 0); // launchmode
-               }
-                // next free 183
+                }
+                if (obj.ver >= 121) {
+                	obj.osdConfig = data.getUint16(183, 0); // DJI
+                	obj.AUX[13] = data.getUint8(185, 0); // RTH
+                }
+                if (obj.ver >= 122) { // RTH
+                 	obj.rthReturnAltitude = data.getUint16(186, 0);
+                 	obj.rthHomeAltitude = data.getUint16(188, 0);
+                  	obj.rthDescentRadius = data.getUint16(190, 0);
+                	obj.rthHoverThrottle = data.getUint16(192, 0);
+                	obj.rthMaxThrottle = data.getUint16(194, 0);
+                	obj.rthMinThrottle = data.getUint16(196, 0);
+                 	obj.rthHomeAction = data.getUint8(198, 0);
+                 	obj.rthReturnSpeed = data.getUint8(199, 0);
+                }
                 
-                
-
+                 blen = 208;
+                // next free 200
             } catch (Exception) {
                 console.log("Exception while reading packet");
             }
@@ -556,10 +609,6 @@ kissProtocol.processPacket = function (code, obj) {
 
         case this.SET_SETTINGS:
             console.log('Settings saved');
-            break;
-
-        case this.SET_NOTCH:
-            console.log('Notch saved');
             break;
 
         case this.MOTOR_TEST:
@@ -629,6 +678,25 @@ kissProtocol.processPacket = function (code, obj) {
 
         case this.ESC_INFO:
             break;
+            
+        case this.GET_GPS:
+        	obj.latitude =  data.getInt32(0, 0) / 10000000;  
+        	obj.longitude = data.getInt32(4, 0) / 10000000;
+        	obj.speed = data.getUint16(8, 0) / 100;
+        	obj.course = data.getUint16(10, 0) / 100;
+        	obj.altitude =  data.getInt16(12, 0);
+        	obj.satellites =  data.getUint8(14, 0) & 127;
+        	obj.fix =  data.getUint8(14, 0) >> 7;        	
+            break;
+            
+        case this.GET_HOME_INFO:
+            obj.homeDistance =  data.getUint16(0, 0);
+            obj.homeDirection = data.getUint16(0, 0);
+            obj.homeRelativeAltitude = data.getUint16(4, 0);
+            break;
+        	
+        case this.SCHEDULE_REQUEST:
+        	break;
 
         default:
             console.log('Unknown code received: ' + code);
@@ -815,19 +883,24 @@ kissProtocol.preparePacket = function (code, obj) {
                 data.setUint8(171, obj.launchMode); //Launchmode
                 blen = 180;
             }
-
-            break;
-
-        case this.SET_NOTCH:
-            var x = 0;
-            for (var i = 0; i < 3; i++) {
-                for (var j = 0; j < 10; j++) {
-                    data.setUint16(x, obj.superNotch[i][j][0], 0);
-                    data.setUint16(x + 2, obj.superNotch[i][j][1], 0);
-                    x += 4;
-                }
+            if (obj.ver >= 121) {
+            	data.setUint16(172, obj.osdConfig, 0); // DJI
+                data.setUint8(174, obj.AUX[13]); //RTH
+                blen = 183;
             }
-            blen = 2 * 2 * 10 * 3;
+            
+            if (obj.ver >= 122) { // RTH
+                data.setUint16(175, obj.rthReturnAltitude);
+                data.setUint16(177, obj.rthHomeAltitude);
+                data.setUint16(179, obj.rthDescentRadius);
+                data.setUint16(181, obj.rthHoverThrottle);
+                data.setUint16(183, obj.rthMaxThrottle);
+                data.setUint16(185, obj.rthMinThrottle);
+                data.setUint8(187,  obj.rthHomeAction);
+                data.setUint8(188,  obj.rthReturnSpeed);
+                blen = 197;
+            }
+            console.log (data)
             break;
 
         case this.MOTOR_TEST:

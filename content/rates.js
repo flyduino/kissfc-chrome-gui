@@ -14,7 +14,7 @@ CONTENT.rates.initialize = function (callback) {
     self.lastTimestamp = null;
 
     GUI.switchContent('rates', function () {
-        kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+        kissProtocol.send(kissProtocol.GET_SETTINGS, [kissProtocol.GET_SETTINGS], function () {
             self.settingsFilled = 1;
             GUI.load("./content/rates.html", function () {
                 htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
@@ -178,7 +178,7 @@ CONTENT.rates.initialize = function (callback) {
         $(window).on('resize', self.resizeCanvas).resize();
 
         function fastDataPoll() {
-            kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
+            kissProtocol.send(kissProtocol.GET_TELEMETRY, [kissProtocol.GET_TELEMETRY], function () {
                 if (GUI.activeContent == 'rates') {
                     if (self.startedUIupdate == 0) {
                         updateUI();

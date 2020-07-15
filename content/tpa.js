@@ -13,7 +13,7 @@ CONTENT.tpa.initialize = function (callback) {
     self.hasInput = false;
 
     GUI.switchContent('tpa', function () {
-        kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+        kissProtocol.send(kissProtocol.GET_SETTINGS, [kissProtocol.GET_SETTINGS], function () {
             self.settingsFilled = 1;
             GUI.load("./content/tpa.html", function () {
                 htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS])
@@ -205,7 +205,7 @@ CONTENT.tpa.initialize = function (callback) {
         $(window).on('resize', self.resizeCanvas).resize();
 
         function fastDataPoll() {
-            kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
+            kissProtocol.send(kissProtocol.GET_TELEMETRY, [kissProtocol.GET_TELEMETRY], function () {
                 if (GUI.activeContent == 'tpa') {
                     if (self.startedUIupdate == 0) {
                         updateUI();

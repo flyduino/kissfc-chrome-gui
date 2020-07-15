@@ -280,7 +280,7 @@ STM32DFU_protocol.prototype.getFlashInfo = function (_interface, callback) {
                     callback({}, -3);
                     return;
                 }
-                var num_pages = parseInt(tmp3[0]);
+                var num_pages = parseInt(tmp3[0]) * 2; //Dirty hack to support 256k
                 var page_size = parseInt(tmp3[1]);
                 if (!page_size) {
                     callback({}, -4);
@@ -453,6 +453,7 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
                     self.available_flash_size = flash.total_size - (self.hex.start_linear_address - flash.start_address);
 
                     if (self.hex.bytes_total > self.available_flash_size) {
+                        self.event('info', { 'detail': 'Size exceeded: ' + self.available_flash_size + " available. " + self.hex.bytes_total + " required."});
                         self.upload_procedure(99);
                     } else {
                         self.clearStatus(function () {

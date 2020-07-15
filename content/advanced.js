@@ -11,7 +11,7 @@ CONTENT.advanced.initialize = function (callback) {
     var settingsFilled = 0;
 
     GUI.switchContent('advanced', function () {
-        kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+        kissProtocol.send(kissProtocol.GET_SETTINGS, [kissProtocol.GET_SETTINGS], function () {
             GUI.load("./content/advanced.html", function () {
                 htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
             });
@@ -78,15 +78,14 @@ CONTENT.advanced.initialize = function (callback) {
         $('select[name="vtxType"]').val(data['vtxType']);
         $('input[name="vtxPowerLow"]').val(+data['vtxPowerLow']);
         $('input[name="vtxPowerHigh"]').val(+data['vtxPowerHigh']);
-        
+
         if (data['ver'] < 117) { // Remove TBS EVO
-        	$("#vtxType > option[value='4']").remove();
+            $("#vtxType > option[value='4']").remove();
         }
 
         if (data['ver'] < 119) { // Hide Launchmode
             $("#launchMode").hide();
-        }        
-
+        }
 
         $('select[name="loggerConfig"]').on('change', function () {
             var tmp = +$(this).val();
@@ -204,8 +203,7 @@ CONTENT.advanced.initialize = function (callback) {
             if (data['ver'] >= 114) {
                 $("#loopD").remove() // remove looptime on >=114
             } else {
-                // TODO clean this up
-                kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () {
+                kissProtocol.send(kissProtocol.GET_INFO, [kissProtocol.GET_INFO], function () {
                     var info = kissProtocol.data[kissProtocol.GET_INFO];
                     var FCinfo = info.firmvareVersion.split(/-/g);
                     if ((info.firmvareVersion.indexOf("KISSFC") != -1 && FCinfo[0].length < 7) || (info.firmvareVersion.indexOf("KISSCC") != -1 && FCinfo[0].length < 7)) {
@@ -266,7 +264,7 @@ CONTENT.advanced.initialize = function (callback) {
             readSerials(); // read serial from data and populate array
 
             // Check for default and either reset or show
-            kissProtocol.send(kissProtocol.GET_INFO, [0x21], function () {
+            kissProtocol.send(kissProtocol.GET_INFO, [kissProtocol.GET_INFO], function () {
                 var info = kissProtocol.data[kissProtocol.GET_INFO];
                 defaultSerialConfig = info.defaultSerialConfig;
 
@@ -280,6 +278,46 @@ CONTENT.advanced.initialize = function (callback) {
                     populateSerialFields();
                 }
             });
+
+            if (data['ver'] >= 121) {
+                // set osd data
+                var osdConfig = +data['osdConfig'];
+                // crosshair
+                if ((osdConfig & 256) == 256) $('input[name="djiCrosshair"]').prop('checked', 1);
+                if ((osdConfig & 512) == 512) $('input[name="djiGPS"]').prop('checked', 1);
+                if ((osdConfig & 1024) == 1024) $("select[name='djiUnits']").val(1); else $("select[name='djiUnits']").val(0);
+                $("select[name='djiLayout']").val(osdConfig & 7);
+                // check do we have msp enabled or not
+                for (i = 0; i < serialsFunctions.length; i++) {
+                    if (serialsFunctions[i] == 8) {
+                        $("#djiosd").show();
+                    }
+                }
+            }
+
+            if (data['ver'] >= 122) {
+                $("#rth").show()
+                $('input[name="rthReturnAltitude"]').val(+data['rthReturnAltitude']);
+                $('input[name="rthHomeAltitude"]').val(+data['rthHomeAltitude']);
+                $('input[name="rthDescentRadius"]').val(+data['rthDescentRadius']);
+                $('input[name="rthHoverThrottle"]').val(+data['rthHoverThrottle']);
+                $('input[name="rthMaxThrottle"]').val(+data['rthMaxThrottle']);
+                $('input[name="rthMinThrottle"]').val(+data['rthMinThrottle']);
+                $('input[name="rthReturnSpeed"]').val(+data['rthReturnSpeed']);
+
+                if (data['ver'] >= 126) {
+                    $('select[name="rthHomeAction"]').val(data['rthHomeAction'] & 0x07);
+                    if ((data['rthHomeAction'] >> 7) == 1) $('input[name="rtfFailsafeAction"]').prop('checked', 1);
+                } else {
+                    $('select[name="rthHomeAction"]').val(+data['rthHomeAction']);
+                    $("#rthfailsafe").hide();
+                }
+            }
+
+            if (data['ver'] >= 125) {
+                // remove Laptimer
+                $('#lapTimer').hide();
+            }
 
             // Function for CSC changebox changes
             $('input[name="CSC"]').on('change', function () {
@@ -314,6 +352,7 @@ CONTENT.advanced.initialize = function (callback) {
                 serialsFunctions = []; // reset array
                 data['SerialSetup'] = 0; // reset serialsetup
                 var bitShiftCounter = 28;
+                var foundDJI = false;
                 for (i = 0; i < 8; i++) {
                     // update serialFunctions
                     serialsFunctions[i] = $("#serial" + i).kissSerial('value');
@@ -325,7 +364,11 @@ CONTENT.advanced.initialize = function (callback) {
                         if ($('select[name="loggerConfig"]').val() == 0)
                             $('select[name="loggerConfig"]').val(10);
                     }
+                    if (serialsFunctions[i] == 8) {
+                        foundDJI = true;
+                    }
                 }
+                if (foundDJI) $("#djiosd").show(); else $("#djiosd").hide();
                 contentChange();
             }
         }
@@ -534,6 +577,33 @@ CONTENT.advanced.initialize = function (callback) {
             }
 
             data['ledBrightness'] = +$('input[name="ledBrightness"]').val();
+
+            var osdConfig = $("select[name='djiLayout']").val() & 7;
+            if ($('input[name="djiCrosshair"]').prop('checked') ? 1 : 0 == 1) osdConfig |= 256;
+            if ($('input[name="djiGPS"]').prop('checked') ? 1 : 0 == 1) osdConfig |= 512;
+            if (+$("select[name='djiUnits']").val() == 1) osdConfig |= 1024;
+
+            console.log("Set osd config: " + osdConfig);
+
+            data['osdConfig'] = osdConfig;
+
+            // RTH
+            data['rthReturnAltitude'] = +$('input[name="rthReturnAltitude"]').val();
+            data['rthHomeAltitude'] = +$('input[name="rthHomeAltitude"]').val();
+            data['rthDescentRadius'] = +$('input[name="rthDescentRadius"]').val();
+            data['rthHoverThrottle'] = +$('input[name="rthHoverThrottle"]').val();
+            data['rthMaxThrottle'] = +$('input[name="rthMaxThrottle"]').val();
+            data['rthMinThrottle'] = +$('input[name="rthMinThrottle"]').val();
+            data['rthReturnSpeed'] = +$('input[name="rthReturnSpeed"]').val();
+
+            var rthAction = $('select[name="rthHomeAction"]').val();
+            if (($('input[name="rtfFailsafeAction"]').prop('checked') ? 1 : 0 == 1) && data['ver'] >= 126) {
+                rthAction |= 128;
+            }
+
+            console.log("Set rthHomeAction: " + rthAction);
+
+            data['rthHomeAction'] = rthAction;
         }
 
         function contentChange() {
@@ -568,7 +638,7 @@ CONTENT.advanced.initialize = function (callback) {
             $('#save').removeClass("saveAct");
             $('#save').html($.i18n("button.saving"));
             kissProtocol.send(kissProtocol.SET_SETTINGS, kissProtocol.preparePacket(kissProtocol.SET_SETTINGS, kissProtocol.data[kissProtocol.GET_SETTINGS]));
-            kissProtocol.send(kissProtocol.GET_SETTINGS, [0x30], function () {
+            kissProtocol.send(kissProtocol.GET_SETTINGS, [kissProtocol.GET_SETTINGS], function () {
                 GUI.load("./content/advanced.html", function () {
                     htmlLoaded(kissProtocol.data[kissProtocol.GET_SETTINGS]);
                     $('#save').removeAttr("data-i18n");

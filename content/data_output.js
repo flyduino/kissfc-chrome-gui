@@ -13,12 +13,29 @@ CONTENT.data_output.initialize = function (callback) {
     self.requestTelemetry = true;
     self.imuInitialized = false;
     self.telemetry = {};
+    self.gps = {};
+    self.homeinfo = {};
+    self.telemCount = 0;
 
     GUI.switchContent('data_output', function () {
-        kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
+        kissProtocol.send(kissProtocol.GET_TELEMETRY, [kissProtocol.GET_TELEMETRY], function () {
             GUI.load("./content/data_output.html", htmlLoaded);
         });
     });
+
+    function deg2direction(val) {
+        var dividor = 45 / 2;
+        var retval = "";
+        if (val > (360 - dividor) || val < (0 + dividor)) retval = "N";
+        else if (val > (45 - dividor) || val < (45 + dividor)) retval = "NE"
+        else if (val > (90 - dividor) || val < (90 + dividor)) retval = "E"
+        else if (val > (135 - dividor) || val < (135 + dividor)) retval = "SE"
+        else if (val > (180 - dividor) || val < (180 + dividor)) retval = "S"
+        else if (val > (225 - dividor) || val < (225 + dividor)) retval = "SW"
+        else if (val > (270 - dividor) || val < (270 + dividor)) retval = "W"
+        else if (val > (315 - dividor) || val < (315 + dividor)) retval = "NW"
+        return retval
+    }
 
     function animateModel(timestamp) {
         if (GUI.activeContent == 'data_output') {
@@ -75,6 +92,8 @@ CONTENT.data_output.initialize = function (callback) {
 
 
         var data = kissProtocol.data[kissProtocol.GET_SETTINGS];
+
+
         $('.mixerPreview img').attr('src', './images/mixer/' + data['CopterType'] + (data['ESCOutputLayout'] > 0 && (data['CopterType'] == 1 || data['CopterType'] == 2) ? '_' + data['ESCOutputLayout'] : '') + (data['reverseMotors'] == 0 ? '' : '_inv') + ".png");
 
 
@@ -106,7 +125,11 @@ CONTENT.data_output.initialize = function (callback) {
         });
 
         // generate motor bars
-        var motorNames = ['PWM 1', 'PWM 2', 'PWM 3', 'PWM 4', 'PWM 5', 'PWM 6'];
+        if (data['ver'] >= 123) {
+            var motorNames = ['PWM 1', 'PWM 2', 'PWM 3', 'PWM 4', 'PWM 5', 'PWM 6', 'PWM 7', 'PWM 8'];
+        } else {
+            var motorNames = ['PWM 1', 'PWM 2', 'PWM 3', 'PWM 4', 'PWM 5', 'PWM 6'];
+        }
         var motorContainer = $('.data_output .motors .bars');
         var motorFillArray = [];
         var motorLabelArray = [];
@@ -167,7 +190,7 @@ CONTENT.data_output.initialize = function (callback) {
                 var tmp = {
                     'buffer': new ArrayBuffer(7),
                     'motorTestEnabled': 0,
-                    'motorTest': [0, 0, 0, 0, 0, 0]
+                    'motorTest': [0, 0, 0, 0, 0, 0, 0, 0]
                 };
                 kissProtocol.send(kissProtocol.MOTOR_TEST, kissProtocol.preparePacket(kissProtocol.MOTOR_TEST, tmp));
             }
@@ -230,6 +253,8 @@ CONTENT.data_output.initialize = function (callback) {
 
         function updateUI() {
             var data = kissProtocol.data[kissProtocol.GET_TELEMETRY];
+            var gps = kissProtocol.data[kissProtocol.GET_GPS];
+            var homeinfo = kissProtocol.data[kissProtocol.GET_HOME_INFO];
 
             var useGraphData = parseInt($('select[name="graphTitle"]').val());
 
@@ -310,7 +335,8 @@ CONTENT.data_output.initialize = function (callback) {
             if (data['mode'] == 0) $("#omode").text($.i18n('text.acro'));
             else if (data['mode'] == 1) $("#omode").text($.i18n('text.level'));
             else if (data['mode'] == 2) $("#omode").text($.i18n('text.3D'));
-            else if (data['mode'] == 3) $("#omode").text($.i18n('column.turtle-mode'));
+            else if (data['mode'] == 3) $("#omode").text($.i18n('text.turtle-mode'));
+            else if (data['mode'] == 5) $("#omode").text($.i18n('text.rth'));
             else $("#omode").text(data['mode']);
 
             if (data['Armed'] == 0) $("#ostatus").text($.i18n('text.disarmed'));
@@ -349,7 +375,6 @@ CONTENT.data_output.initialize = function (callback) {
                         // it
                         // more
                         // visible
-                        sampleBlock.push(data['ACCRaw'][i]);
                         if (i == 0) {
                             if (data['GyroRaw'][i] * 2000 > parseInt($('#gxmax').text())) $('#gxmax').text(data['GyroRaw'][i] * 2000);
                             if (data['GyroRaw'][i] * 2000 < parseInt($('#gxmin').text())) $('#gxmin').text(data['GyroRaw'][i] * 2000);
@@ -362,6 +387,9 @@ CONTENT.data_output.initialize = function (callback) {
                             if (data['GyroRaw'][i] * 2000 > parseInt($('#gzmax').text())) $('#gzmax').text(data['GyroRaw'][i] * 2000);
                             if (data['GyroRaw'][i] * 2000 < parseInt($('#gzmin').text())) $('#gzmin').text(data['GyroRaw'][i] * 2000);
                         }
+                    }
+                    for (var i = 0; i < 3; i++) {
+                        sampleBlock.push(data['ACCRaw'][i]);
                     }
 
                     break;
@@ -486,7 +514,6 @@ CONTENT.data_output.initialize = function (callback) {
                     legendItems.eq(3).text('');
                     legendItems.eq(4).text('');
                     legendItems.eq(5).text('');
-
                     sampleBlock.push(data['idleTime'] / 500);
                     sampleBlock.push((data['LiPoVolt'] / 2) - midscale);
                     break;
@@ -494,6 +521,25 @@ CONTENT.data_output.initialize = function (callback) {
 
             self.addSample(self.graphData, sampleBlock);
             self.renderGraph();
+
+            if (gps !== undefined) {
+                $("#gpsheader").show();
+                $("#gpsdata").show();
+                $("#latitude").text(gps.latitude.toFixed(6));
+                $("#longitude").text(gps.longitude.toFixed(6));
+                $("#speed").text(gps.speed.toFixed(2) + " km/h");
+                $("#altitude").text(gps.altitude.toFixed(2) + " m");
+                $("#course").text(gps.course.toFixed(2) + " (" + deg2direction(gps.course.toFixed(2)) + ")");
+                $("#satellites").text(gps.satellites + (gps.fix == 1 ? ' (fix)' : ''));
+            }
+
+            if (homeinfo !== undefined) {
+                $("#homePointheader").show();
+                $("#homePointdata").show();
+                $("#homePointDistance").text(homeinfo.homeDistance.toFixed(2) + " m");
+                $("#homePointDirection").text(homeinfo.homeDirection.toFixed(2));
+                $("#homePointrelativeHeight").text(homeinfo.homeRelativeAltitude.toFixed(2) + " m");
+            }
             // Update data
             if (GUI.activeContent == 'data_output') self.updateTimeout = window.setTimeout(function () { fastDataPoll(); }, 10);
         }
@@ -509,7 +555,7 @@ CONTENT.data_output.initialize = function (callback) {
 
         function fastDataPoll() {
             if (self.requestTelemetry) {
-                kissProtocol.send(kissProtocol.GET_TELEMETRY, [0x20], function () {
+                kissProtocol.send(kissProtocol.GET_TELEMETRY, [kissProtocol.GET_TELEMETRY], function () {
                     if (GUI.activeContent == 'data_output') {
                         if (self.startedUIupdate == 0) {
                             self.telemetry = kissProtocol.data[kissProtocol.GET_TELEMETRY];
@@ -517,6 +563,14 @@ CONTENT.data_output.initialize = function (callback) {
                         }
                     }
                 });
+                self.telemCount++;
+                if (self.telemCount == 100) {
+                    self.telemCount = 0;
+                    if (data['ver'] >= 119)
+                        kissProtocol.send(kissProtocol.GET_GPS, [kissProtocol.GET_GPS, 0, 0], function () { });
+                    if (data['ver'] >= 121)
+                        kissProtocol.send(kissProtocol.GET_HOME_INFO, [kissProtocol.GET_HOME_INFO, 0, 0], function () { });
+                }
             }
         }
 

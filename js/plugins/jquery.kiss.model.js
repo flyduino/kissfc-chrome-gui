@@ -65,6 +65,22 @@
             arms: 3,
             rotation: -Math.PI / 3,
             colors: [0, 0, 1]
+        }, {
+            name: 'Octo Flat',
+            arms: 8,
+            rotation: -Math.PI / 8,
+            colors: [0, 0, 1, 1, 1, 1, 1, 1]
+        }, {
+            name: 'Octo X',
+            arms: 4,
+            rotation: -Math.PI / 4,
+            colors: [0, 0, 0, 0, 1, 1, 1, 1],
+            motors: [
+                [0, -1],
+                [2, -3],
+                [4, -5],
+                [6, -7]
+            ]
         }];
 
     var privateMethods = {
