@@ -124,8 +124,9 @@ CONTENT.data_output.initialize = function (callback) {
             receiverLabelArray.push($('.label', this));
         });
 
+        var octoCotperType = [9,10];
         // generate motor bars
-        if (data['ver'] >= 123) {
+        if (data['ver'] >= 123 && octoCotperType.indexOf(data['CopterType']) !== -1) {
             var motorNames = ['PWM 1', 'PWM 2', 'PWM 3', 'PWM 4', 'PWM 5', 'PWM 6', 'PWM 7', 'PWM 8'];
         } else {
             var motorNames = ['PWM 1', 'PWM 2', 'PWM 3', 'PWM 4', 'PWM 5', 'PWM 6'];
