@@ -243,7 +243,7 @@
     "output.6": "디샷1200",
     "output.7": "디샷2400",
     "output.8": "FETtec OneWire",
-    "popup.newGUIavailable": "<p style=\"text-align: center;\">This GUI version is outdated</p><br/>Please follow below link to the latest GUI.<br/><p style=\"text-align: center;\"><a href=\"https://github.com/flyduino/kiss-gui/releases\" target=\"_blank\" style=\"color:red; font-weight: bold;\">Download</a></p>",
+    "popup.newGUIavailable": "<p style=\"text-align: center;\">This GUI version is outdated</p><br/>Please follow below link to the latest GUI.<br/><p style=\"text-align: center;\"><a href=\"https://github.com/flyduino/kissfc-chrome-gui/releases\" target=\"_blank\" style=\"color:red; font-weight: bold;\">Download</a></p>",
     "rx-type.0": "자동감지",
     "rx-type.1": "4-6 싱글 채널",
     "rx-type.10": "제티 EX Bus",

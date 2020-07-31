@@ -243,7 +243,7 @@
     "output.6": "Dshot 1200",
     "output.7": "Dshot 2400",
     "output.8": "FETtec OneWire",
-    "popup.newGUIavailable": "<p style=\"text-align: center;\">Diese GUI ist nicht mehr aktuell</p><br/>Sie finden die aktuelle Version under dem angegbenen Link.<br/><p style=\"text-align: center;\"><a href=\"https://github.com/flyduino/kiss-gui/releases\" target=\"_blank\" style=\"color:red; font-weight: bold;\">Download</a></p>",
+    "popup.newGUIavailable": "<p style=\"text-align: center;\">Diese GUI ist nicht mehr aktuell</p><br/>Sie finden die aktuelle Version under dem angegbenen Link.<br/><p style=\"text-align: center;\"><a href=\"https://github.com/flyduino/kissfc-chrome-gui/releases\" target=\"_blank\" style=\"color:red; font-weight: bold;\">Download</a></p>",
     "rx-type.0": "Automatisch",
     "rx-type.1": "4-6 einf. Kanal",
     "rx-type.10": "Jeti EX Bus",
