@@ -81,6 +81,11 @@
                 [4, -5],
                 [6, -7]
             ]
+        }, {
+            name: 'Car',
+            arms: 0,
+            rotation: -Math.PI,
+            colors: [0, 0, 1, 1]
         }];
 
     var privateMethods = {
