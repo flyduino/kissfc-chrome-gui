@@ -49,7 +49,7 @@ function changeLanguage() {
 
 function checkGithubRelease(currVersion) {
 
-    $.get('https://api.github.com/repos/flyduino/kiss-gui/releases', function (releaseData) {
+    $.get('https://api.github.com/repos/flyduino/kissfc-chrome-gui/releases', function (releaseData) {
         console.log('Loaded release information from GitHub.');
         console.log('Latest release found: ' + releaseData[0].tag_name, ' parameter: ' + currVersion);
         if (semver.gt(releaseData[0].tag_name, currVersion)) {

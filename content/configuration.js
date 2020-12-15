@@ -233,7 +233,7 @@ CONTENT.configuration.initialize = function (callback) {
                 switch (FCinfo[0]) {
                     case "KISSFC":
                     case "KISSCC":
-                    case "FETTEC_FC_NANO":
+                    case "FETTEC_MINI_FC_F3":
                         $("select[name='outputMode'] option[value='6']").remove(); // dshot1200
                         $("select[name='outputMode'] option[value='7']").remove(); // dshot2400
                         $("select[name='outputMode'] option[value='8']").remove(); // onewire
@@ -299,6 +299,8 @@ CONTENT.configuration.initialize = function (callback) {
             name: $.i18n("mixer.9")
         }, {
             name: $.i18n("mixer.10")
+        }, {
+            name: $.i18n("mixer.11")
         }];
 
         var mixer_list_e = $('select.mixer');
@@ -315,7 +317,9 @@ CONTENT.configuration.initialize = function (callback) {
             $("select[name='mixer'] option[value='9']").remove();
             $("select[name='mixer'] option[value='10']").remove();
         }
-
+        if (data["ver"] <= 125) { // RCCAR support starts 126
+            $("select[name='mixer'] option[value='11']").remove();
+        }
         mixer_list_e.on('change', function () {
             var val = parseInt($(this).val());
             contentChange();

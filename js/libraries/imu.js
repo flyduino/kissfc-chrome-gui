@@ -48,10 +48,10 @@ function imuUpdate(gx, gy, gz, ax, ay, az)
             az *= norm;
 
             // Gradient decent algorithm corrective step
-            s1 = _4q1 * q3q3 + _2q3 * ax + _4q1 * q2q2 - _2q2 * ay;
-            s2 = _4q2 * q4q4 - _2q4 * ax + 4.0 * q1q1 * q2 - _2q1 * ay - _4q2 + _8q2 * q2q2 + _8q2 * q3q3 + _4q2 * az;
-            s3 = 4.0 * q1q1 * q3 + _2q1 * ax + _4q3 * q4q4 - _2q4 * ay - _4q3 + _8q3 * q2q2 + _8q3 * q3q3 + _4q3 * az;
-            s4 = 4.0 * q2q2 * q4 - _2q2 * ax + 4.0 * q3q3 * q4 - _2q3 * ay;
+            s1 = _4q1 * q3q3 + _2q3 * ay + _4q1 * q2q2 - _2q2 * ax;
+            s2 = _4q2 * q4q4 - _2q4 * ay + 4.0 * q1q1 * q2 - _2q1 * ax - _4q2 + _8q2 * q2q2 + _8q2 * q3q3 + _4q2 * az;
+            s3 = 4.0 * q1q1 * q3 + _2q1 * ay + _4q3 * q4q4 - _2q4 * ax - _4q3 + _8q3 * q2q2 + _8q3 * q3q3 + _4q3 * az;
+            s4 = 4.0 * q2q2 * q4 - _2q2 * ay + 4.0 * q3q3 * q4 - _2q3 * ax;
             norm = 1.0 / Math.sqrt(s1 * s1 + s2 * s2 + s3 * s3 + s4 * s4);    // normalise
                                                                                 // step
                                                                                 // magnitude
