@@ -233,7 +233,7 @@ CONTENT.configuration.initialize = function (callback) {
                 switch (FCinfo[0]) {
                     case "KISSFC":
                     case "KISSCC":
-                    case "FETTEC_FC_NANO":
+                    case "FETTEC_MINI_FC_F3":
                         $("select[name='outputMode'] option[value='6']").remove(); // dshot1200
                         $("select[name='outputMode'] option[value='7']").remove(); // dshot2400
                         $("select[name='outputMode'] option[value='8']").remove(); // onewire
