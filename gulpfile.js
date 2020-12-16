@@ -26,7 +26,7 @@ const DEBUG_DIR = "./debug/";
 const RELEASE_DIR = "./release/";
 
 var nwBuilderOptions = {
-  version: "0.36.4",
+  version: "0.50.2",
   files: "./dist/**/*",
   macIcns: './images/icon_128.icns',
   macPlist: {
@@ -437,9 +437,9 @@ function compressFiles(srcPath, basePath, outputFile, zipFolder) {
 
 // Create distribution package for macOS platform
 function osx64_sign(done) {
-  if (commandExistsSync("tmp/codesign.sh")) {
+  if (commandExistsSync("tmp/code-sign.js")) {
     console.log("Codesign activity...");
-    execSync("tmp/codesign.sh", function(error, stdOut, stdErr) {
+    execSync("node tmp/code-sign.js", function(error, stdOut, stdErr) {
     });
   } else {
     console.log("No valid script for codesign");
