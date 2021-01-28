@@ -609,7 +609,7 @@ CONTENT.configuration.initialize = function (callback) {
 
             $('select[name="ESCOutputLayout"]').val(data['ESCOutputLayout']);
 
-            if (data['CopterType'] == 1 || data['CopterType'] == 2) {
+            if (data['CopterType'] == 1 || data['CopterType'] == 2 || data['CopterType'] == 11) {
                 $('select[name="ESCOutputLayout"]').removeAttr("disabled");
                 $('select[name="ESCOutputLayout"]').val(data['ESCOutputLayout']);
 
