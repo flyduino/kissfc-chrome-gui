@@ -94,7 +94,7 @@ CONTENT.data_output.initialize = function (callback) {
         var data = kissProtocol.data[kissProtocol.GET_SETTINGS];
 
 
-        $('.mixerPreview img').attr('src', './images/mixer/' + data['CopterType'] + (data['ESCOutputLayout'] > 0 && (data['CopterType'] == 1 || data['CopterType'] == 2) ? '_' + data['ESCOutputLayout'] : '') + (data['reverseMotors'] == 0 ? '' : '_inv') + ".png");
+        $('.mixerPreview img').attr('src', './images/mixer/' + data['CopterType'] + (data['ESCOutputLayout'] > 0 && (data['CopterType'] == 1 || data['CopterType'] == 2 || data['CopterType'] == 11) ? '_' + data['ESCOutputLayout'] : '') + (data['reverseMotors'] == 0 ? '' : '_inv') + ".png");
 
 
 
@@ -124,7 +124,7 @@ CONTENT.data_output.initialize = function (callback) {
             receiverLabelArray.push($('.label', this));
         });
 
-        var octoCotperType = [9,10];
+        var octoCotperType = [9, 10];
         // generate motor bars
         if (data['ver'] >= 123 && octoCotperType.indexOf(data['CopterType']) !== -1) {
             var motorNames = ['PWM 1', 'PWM 2', 'PWM 3', 'PWM 4', 'PWM 5', 'PWM 6', 'PWM 7', 'PWM 8'];

@@ -36,6 +36,11 @@ CONTENT.advanced.initialize = function (callback) {
         if (data['motorBuzzer']) {
             $('input[name="motorBuzzer"]').prop('checked', 1);
         }
+
+        if (data['nonStandardDshot']) {
+            $('input[name="nonStandardDshot"]').prop('checked', 1);
+        }
+
         if (data['ver'] >= 109) { // remove serial vtx from 109..
             $("select[name='loggerConfig'] option[value='11']").remove();
             if (data['loggerConfig'] > 10) {
@@ -85,6 +90,10 @@ CONTENT.advanced.initialize = function (callback) {
 
         if (data['ver'] < 119) { // Hide Launchmode
             $("#launchMode").hide();
+        }
+
+        if (data['ver'] < 127) { // Hide non-standard Dshot 
+            $("#nonStandardDshot").hide();
         }
 
         $('select[name="loggerConfig"]').on('change', function () {
@@ -556,6 +565,12 @@ CONTENT.advanced.initialize = function (callback) {
                 data['motorBuzzer'] = 1;
             } else {
                 data['motorBuzzer'] = 0;
+            }
+
+            if ($('input[name="nonStandardDshot"]').prop('checked') ? 1 : 0 == 1) {
+                data['nonStandardDshot'] = 1;
+            } else {
+                data['nonStandardDshot'] = 0;
             }
 
             if ($('input[name="reverseMotors"]').prop('checked') ? 1 : 0 == 1) {
