@@ -320,6 +320,52 @@ CONTENT.data_output.initialize = function (callback) {
             $('#idle').text(data['idleTime'] + ' %');
             $('#Vbat').text((data['LiPoVolt'] * 10).toFixed(2) + ' v');
 
+            if (data['foundRX'] != 0) {
+                var RXprotocolText = "";
+                switch (data['foundRX']) {
+                    case 1:
+                        RXprotocolText = ' (' + "PPM" + ')';
+                        break;
+                    case 2:
+                        RXprotocolText = ' (' + "Spekt. Sat." + ')';
+                        break;
+                    case 3:
+                        RXprotocolText = ' (' + "S-Bus" + ')';
+                        break;
+                    case 4:
+                        RXprotocolText = ' (' + "F-Port" + ')';
+                        break;
+                    case 5:
+                        RXprotocolText = ' (' + "F-Port v2" + ')';
+                        break;
+                    case 6:
+                        RXprotocolText = ' (' + "Sum D" + ')';
+                        break;
+                    case 7:
+                        RXprotocolText = ' (' + "SRXL" + ')';
+                        break;
+                    case 8:
+                        RXprotocolText = ' (' + "SRXL v2" + ')';
+                        break;
+                    case 9:
+                        RXprotocolText = ' (' + "CRSF v2" + ')';
+                        break;
+                    case 10:
+                        RXprotocolText = ' (' + "CRSF v3" + ')';
+                        break;
+                    case 11:
+                        RXprotocolText = ' (' + "Jeti" + ')';
+                        break;
+                    case 12:
+                        RXprotocolText = ' (' + "Ghost" + ')';
+                        break;
+                    default:
+                        RXprotocolText = "";
+                        break;
+                }
+                $('#rxReciever').text($.i18n('title.receiver') + RXprotocolText);
+            }
+
             // update bars with latest data
             var receiverLabelArrayLength = receiverLabelArray.length;
             for (var i = 0; i < receiverLabelArrayLength; i++) {
