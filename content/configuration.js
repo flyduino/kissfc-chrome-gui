@@ -206,6 +206,10 @@ CONTENT.configuration.initialize = function (callback) {
 
         }
 
+        if (data['ver'] >= 128) {
+            document.getElementById('rxghst').style.display = "inline";
+
+        }
         if (data['ver'] < 117) {
             $("select[name='outputMode'] option[value='8']").remove();
         }
