@@ -599,9 +599,11 @@ kissProtocol.processPacket = function (code, obj) {
                  	obj.rthHomeAction = data.getUint8(198, 0);
                  	obj.rthReturnSpeed = data.getUint8(199, 0);
                 }
-                
-                 blen = 208;
-                // next free 200
+                if (obj.ver >= 127) {
+                    obj.nonStandardDshot = data.getUint8(200, 0);
+                }
+                 blen = 209;
+                // next free 201
             } catch (Exception) {
                 console.log("Exception while reading packet");
             }
@@ -899,6 +901,10 @@ kissProtocol.preparePacket = function (code, obj) {
                 data.setUint8(187,  obj.rthHomeAction);
                 data.setUint8(188,  obj.rthReturnSpeed);
                 blen = 197;
+            }
+            if (obj.ver >= 127) {
+                data.setUint8(189, obj.nonStandardDshot);
+                blen = 198;
             }
             console.log (data)
             break;

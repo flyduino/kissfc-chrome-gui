@@ -206,6 +206,10 @@ CONTENT.configuration.initialize = function (callback) {
 
         }
 
+        if (data['ver'] >= 128) {
+            document.getElementById('rxghst').style.display = "inline";
+
+        }
         if (data['ver'] < 117) {
             $("select[name='outputMode'] option[value='8']").remove();
         }
@@ -609,7 +613,7 @@ CONTENT.configuration.initialize = function (callback) {
 
             $('select[name="ESCOutputLayout"]').val(data['ESCOutputLayout']);
 
-            if (data['CopterType'] == 1 || data['CopterType'] == 2) {
+            if (data['CopterType'] == 1 || data['CopterType'] == 2 || data['CopterType'] == 11) {
                 $('select[name="ESCOutputLayout"]').removeAttr("disabled");
                 $('select[name="ESCOutputLayout"]').val(data['ESCOutputLayout']);
 
@@ -791,7 +795,7 @@ CONTENT.configuration.initialize = function (callback) {
             if (typeof ESCOrientation == 'undefined') ESCOrientation = 0;
             console.log("Updating mixer image: Type=" + Type + " ESCOrientation=" + ESCOrientation + " Reverse=" + Reverse);
 
-            $('.mixerPreview img').attr('src', './images/mixer/' + Type + (ESCOrientation > 0 && (Type == 1 || Type == 2) ? '_' + ESCOrientation : '') + (Reverse == 0 ? '' : '_inv') + ".png");
+            $('.mixerPreview img').attr('src', './images/mixer/' + Type + (ESCOrientation > 0 && (Type == 1 || Type == 2 || Type == 11) ? '_' + ESCOrientation : '') + (Reverse == 0 ? '' : '_inv') + ".png");
         }
 
         function contentChange() {
