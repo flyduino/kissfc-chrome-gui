@@ -294,7 +294,6 @@
     "serialtype.7": "GPS",
     "serialtype.8": "DJI MSP",
     "serialtype.9": "DISABLED",
-    "serialtype.10": "Sharkbyte",
     "telemetry.0": "Gyro & ACC Data",
     "telemetry.1": "ESC Temperatures",
     "telemetry.2": "ESC Voltages",

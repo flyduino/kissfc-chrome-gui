@@ -285,7 +285,6 @@
     "serial.9": "Журнал / 90%",
     "serialtype.0": "KissProtocol/OSD",
     "serialtype.1": "Logger",
-    "serialtype.10": "Sharkbyte",
     "serialtype.2": "Receiver",
     "serialtype.3": "VTX",
     "serialtype.4": "ESC TLM / OneWire",
