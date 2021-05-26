@@ -1,7 +1,7 @@
 {
   "name": "kiss-gui",
   "main": "start.js",
-  "version": "2.0.29",
+  "version": "2.0.31",
   "description": "KISSFC Configuration tool",
   "single-instance": true,
   "scripts": {
@@ -27,7 +27,7 @@
   },
   "author": "Flyduino, Alexander Fedorov & Carsten Wache",
   "license": "GPL-3.0",
-  "chromium-args": "--child-clean-exit --enable-webgl --ignore-gpu-blacklist --disable-pinch",
+  "chromium-args": "--disable-features=nw2 --child-clean-exit --enable-webgl --ignore-gpu-blacklist --disable-pinch",
   "webkit": {
     "plugin": true
   },
@@ -47,6 +47,7 @@
     "gulp-zip": "^4.2.0",
     "makensis": "^0.18.1",
     "nw": "^0.37.4",
+    "nw-dialog": "^1.0.7",
     "nw-builder": "^3.5.7",
     "os": "^0.1.1",
     "platform-dependent-modules": "0.0.14",

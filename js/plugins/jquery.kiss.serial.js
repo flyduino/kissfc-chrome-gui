@@ -25,6 +25,9 @@
                 c += '<option value="8" data-i18n="serialtype.8">DJI-MSP</option>';
                 c += '<option value="9" data-i18n="serialtype.9">DISABLED</option>';
             }
+            if (data.version >= 129) {
+                c += '<option value="10" data-i18n="serialtype.10">Sharkbyte</option>'
+            }
             c += '</select></dd>';
             self.empty();
             self.append(c);
