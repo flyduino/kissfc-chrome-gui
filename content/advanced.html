@@ -158,7 +158,19 @@
 				</dl>
 			</div>
 		</div>
-
+		<div id="bec" class="wrapper-full">
+			<div class="groupTitle" data-i18n="title.bec-config">BEC config</div>
+			<dl class="general-settings">
+				<dt>
+					<span title="Select Output" data-i18n="column.bec-type">Select Output</span>
+				</dt>
+				<dd>
+					<select class="unsafe" name="BECType" id="BECType">
+						<option value="0" data-i18n="bec.0">5v</option>
+						<option value="1" data-i18n="bec.1">16v</option>
+					</select>
+				</dd>
+		</div>
 		<div id="vtx" class="wrapper-full">
 			<div class="groupTitle" data-i18n="title.vtx-config">VTX config</div>
 			<dl class="general-settings">
@@ -313,7 +325,7 @@
 	<div class="wrapper-half">
 
 		<div id="setpointintod" class="wrapper-full">
-			<div class="groupTitle">Setpoint weight in Dterm</div>
+			<div class="groupTitle" data-i18n="title.setpoint-weight">Setpoint weight in Dterm</div>
 			<dl class="general-settings">
 				<dt style="width:220px;">
 					<span data-i18n="column.setpoint-weight">Setpoint weight (%)</span>
@@ -376,7 +388,7 @@
 			<div class="wrapper-full">
 				<dl class="general-settings">
 					<dt style="width:220px;">
-						<span>Roll/Pitch LPF FRQ</span>&nbsp;</dt>
+						<span  data-i18n="column.rp-lpf-frq">Roll/Pitch LPF FRQ</span>&nbsp;</dt>
 					<select name="mainlpf" disabled="true">
 						<option value="0" data-i18n="filter.0">Off</option>
 						<option value="1" data-i18n="filter.1">High</option>

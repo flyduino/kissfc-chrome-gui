@@ -84,6 +84,8 @@ CONTENT.advanced.initialize = function (callback) {
         $('input[name="vtxPowerLow"]').val(+data['vtxPowerLow']);
         $('input[name="vtxPowerHigh"]').val(+data['vtxPowerHigh']);
 
+        $('select[name="BECType"]').val(data['BECvoltage']);
+
         if (data['ver'] < 117) { // Remove TBS EVO
             $("#vtxType > option[value='4']").remove();
         }
@@ -94,6 +96,21 @@ CONTENT.advanced.initialize = function (callback) {
 
         if (data['ver'] < 127) { // Hide non-standard Dshot 
             $("#nonStandardDshot").hide();
+        }
+
+        if (data['ver'] < 129) { // Hide BEC
+            $("#bec").hide();
+        } else {
+            kissProtocol.send(kissProtocol.GET_INFO, [kissProtocol.GET_INFO], function () {
+                var info = kissProtocol.data[kissProtocol.GET_INFO];
+                var FCinfo = info.firmvareVersion.split(/-/g);
+                if (FCinfo[0] != "FETTEC_FC_G4") {
+                    // Hide BEC on non G4 boards
+                    $("#bec").hide();
+                    data['BECvoltage'] = 0; //set to 5V for default
+                }
+            });
+
         }
 
         $('select[name="loggerConfig"]').on('change', function () {
@@ -560,6 +577,7 @@ CONTENT.advanced.initialize = function (callback) {
             data['DLpF'] = parseInt($('select[name="Dlpf"]').val());
             data['LPF'] = parseInt($('select[name="mainlpf"]').val());
             data['setpointIntoD'] = parseInt($('input[name="SID"]').val());
+            data['BECvoltage'] = parseInt($('select[name="BECType"]').val());
 
             if ($('input[name="motorBuzzer"]').prop('checked') ? 1 : 0 == 1) {
                 data['motorBuzzer'] = 1;

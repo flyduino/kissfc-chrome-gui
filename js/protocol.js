@@ -602,7 +602,10 @@ kissProtocol.processPacket = function (code, obj) {
                 if (obj.ver >= 127) {
                     obj.nonStandardDshot = data.getUint8(200, 0);
                 }
-                 blen = 209;
+                if (obj.ver >= 128) {
+                    obj.BECvoltage = data.getUint8(201, 0) // 0 = 5V // 1 = 16V
+                }
+                 blen = 210;
                 // next free 201
             } catch (Exception) {
                 console.log("Exception while reading packet");
@@ -905,6 +908,10 @@ kissProtocol.preparePacket = function (code, obj) {
             if (obj.ver >= 127) {
                 data.setUint8(189, obj.nonStandardDshot);
                 blen = 198;
+            }
+            if (obj.ver >= 128) {
+                data.setUint8(190, obj.BECvoltage);
+                blen = 199;
             }
             console.log (data)
             break;
