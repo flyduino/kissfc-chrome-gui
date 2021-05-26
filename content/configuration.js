@@ -381,9 +381,17 @@ CONTENT.configuration.initialize = function (callback) {
         var outputMode = data['ESConeshot125'];
 
         if (outputMode != 8) {
-            // disable octo for non OneWire due to missing outputs           
-            $("select[name='mixer'] option[value='9']").prop("disabled", true);
-            $("select[name='mixer'] option[value='10']").prop("disabled", true);
+            // disable octo for non OneWire due to missing outputs   
+            kissProtocol.send(kissProtocol.GET_INFO, [kissProtocol.GET_INFO], function () {
+                var info = kissProtocol.data[kissProtocol.GET_INFO];
+                var FCinfo = info.firmvareVersion.split(/-/g);
+                if (FCinfo[0] != "FETTEC_FC_G4") {
+                    $("select[name='mixer'] option[value='9']").prop("disabled", true);
+                    $("select[name='mixer'] option[value='10']").prop("disabled", true);
+                }
+            });        
+
+
         }
 
         $("#outputMode").val(outputMode);
