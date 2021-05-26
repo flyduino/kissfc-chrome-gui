@@ -285,7 +285,7 @@
     "serial.9": "Registro / 90%",
     "serialtype.0": "KissProtocol/OSD",
     "serialtype.1": "Logger",
-
+    "serialtype.2": "Receiver",
     "serialtype.3": "VTX",
     "serialtype.4": "ESC TLM / OneWire",
     "serialtype.5": "Runcam",
