@@ -1,7 +1,7 @@
 'use strict';
 
 const MIN_CONFIG_VERSION = 108; // this gui can manage versions in this range
-const MAX_CONFIG_VERSION = 128;
+const MAX_CONFIG_VERSION = 129; //128 ghost // 129 = bec support
 
 function getLanguage(callback) {
     if (typeof chromeSerial !== 'undefined') {
