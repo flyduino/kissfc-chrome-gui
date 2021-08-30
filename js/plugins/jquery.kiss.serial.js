@@ -22,7 +22,7 @@
             if (data.version >= 118)
                 c += '<option value="7" data-i18n="serialtype.7">GPS</option>';
             if (data.version >= 120) {
-                c += '<option value="8" data-i18n="serialtype.8">DJI-MSP</option>';
+                c += '<option value="8" data-i18n="serialtype.8">DJI/MSP OSD</option>';
                 c += '<option value="9" data-i18n="serialtype.9">DISABLED</option>';
             }
             c += '</select></dd>';
