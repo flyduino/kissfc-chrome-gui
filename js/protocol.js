@@ -924,7 +924,9 @@ kissProtocol.preparePacket = function (code, obj) {
             data.setUint8(4, obj.motorTest[3], 0);
             data.setUint8(5, obj.motorTest[4], 0);
             data.setUint8(6, obj.motorTest[5], 0);
-            blen = 7;
+            data.setUint8(7, obj.motorTest[6], 0);
+            data.setUint8(8, obj.motorTest[7], 0);
+            blen = 9;
             break;
 
         case this.SET_ESC_SETTINGS:

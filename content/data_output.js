@@ -168,12 +168,12 @@ CONTENT.data_output.initialize = function (callback) {
 
         $(".motor-test").on('change', function () {
             if (self.motorTestEnabled) {
-                var motorTest = [0, 0, 0, 0, 0, 0];
+                var motorTest = [0, 0, 0, 0, 0, 0, 0, 0];
                 $(".motor-test").each(function (motor, elm) {
                     motorTest[motor] = $(elm).is(':checked') ? 1 : 0;
                 });
                 var tmp = {
-                    'buffer': new ArrayBuffer(7),
+                    'buffer': new ArrayBuffer(9),
                     'motorTestEnabled': 1,
                     'motorTest': motorTest
                 };
@@ -189,7 +189,7 @@ CONTENT.data_output.initialize = function (callback) {
             } else {
                 $(".motor-test").prop("disabled", true);
                 var tmp = {
-                    'buffer': new ArrayBuffer(7),
+                    'buffer': new ArrayBuffer(9),
                     'motorTestEnabled': 0,
                     'motorTest': [0, 0, 0, 0, 0, 0, 0, 0]
                 };
@@ -765,9 +765,9 @@ CONTENT.data_output.cleanup = function (callback) {
     if (this.motorTestEnabled) {
         console.log("For safety reasons, turning off the motors");
         var tmp = {
-            'buffer': new ArrayBuffer(7),
+            'buffer': new ArrayBuffer(9),
             'motorTestEnabled': 0,
-            'motorTest': [0, 0, 0, 0, 0, 0]
+            'motorTest': [0, 0, 0, 0, 0, 0, 0, 0]
         };
         kissProtocol.send(kissProtocol.MOTOR_TEST, kissProtocol.preparePacket(kissProtocol.MOTOR_TEST, tmp))
     }

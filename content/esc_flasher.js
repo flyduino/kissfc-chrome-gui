@@ -323,7 +323,7 @@ CONTENT.esc_flasher.initialize = function (callback) {
                 escSettings[motor] += $(elm).is(':checked') ? 2 : 0;
             });
             var tmp = {
-                'buffer': new ArrayBuffer(6),
+                'buffer': new ArrayBuffer(8),
                 'escSettings': escSettings
             };
             $('#save').removeClass("saveAct");
