@@ -259,6 +259,7 @@
     "rx-type.15": "FrSky S-BUS (not inverted)",
     "rx-type.16": "JR XBus Mode B",
     "rx-type.17": "TBS CRSF",
+    "rx-type.22": "TBS CRSF Gimbal PT",
     "rx-type.18": "FrSky F-Port (un-inverted)",
     "rx-type.19": "FrSky F-Port",
     "rx-type.2": "PPM:Thr.,Roll,Pitch,Yaw",

@@ -265,6 +265,7 @@
     "rx-type.2": "PPM:Dr.,Roll,Nick,Gier",
     "rx-type.20": "Futaba FAST S-BUS / DJI",
     "rx-type.21": "IRC Ghost",
+    "rx-type.22": "TBS CRSF Gimbal PT",
     "rx-type.3": "PPM:Nick,Dr.,Roll,Gier",
     "rx-type.4": "PPM:Dr.,Nick,Gier,Roll",
     "rx-type.5": "PPM:Roll,Nick,Gier,Dr.",

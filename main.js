@@ -1,7 +1,7 @@
 'use strict';
 
 const MIN_CONFIG_VERSION = 108; // this gui can manage versions in this range
-const MAX_CONFIG_VERSION = 130; //128 ghost // 129 = bec support // 130 = octo fix
+const MAX_CONFIG_VERSION = 130; //128 ghost // 129 = bec support // 130 = octo fix & TBS gimbal PT
 
 function getLanguage(callback) {
     if (typeof chromeSerial !== 'undefined') {
