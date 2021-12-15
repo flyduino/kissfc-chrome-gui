@@ -210,12 +210,12 @@ CONTENT.configuration.initialize = function (callback) {
             document.getElementById('rxghst').style.display = "inline";
 
         }
-	
+
         if (data['ver'] >= 130) {
             document.getElementById('rxcrsfgbpt').style.display = "inline";
 
         }
-	
+
         if (data['ver'] < 117) {
             $("select[name='outputMode'] option[value='8']").remove();
         }
@@ -395,7 +395,7 @@ CONTENT.configuration.initialize = function (callback) {
                     $("select[name='mixer'] option[value='9']").prop("disabled", true);
                     $("select[name='mixer'] option[value='10']").prop("disabled", true);
                 }
-            });        
+            });
 
 
         }

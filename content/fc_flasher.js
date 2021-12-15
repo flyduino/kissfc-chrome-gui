@@ -176,7 +176,7 @@ CONTENT.fc_flasher.initialize = function (callback) {
             $.each(value, function (index, asset) {
                 $("#fw_version").append("<option value='" + index + "'>" + asset.release + " (" + asset.size + " bytes)</option>");
             });
-            $("#fcimage").attr("src", "images/"+$(this).val()+".png");
+            $("#fcimage").attr("src", "images/" + $(this).val() + ".png");
             $("#fw_version").trigger("change");
             $("#file_info").html("");
             $("#flash").hide();
@@ -218,7 +218,7 @@ CONTENT.fc_flasher.initialize = function (callback) {
             loadGithubReleases("https://api.github.com/repos/flyduino/kissfcv2-firmware/releases", function (data) {
                 $("#loader1").hide();
                 console.log("DONE");
-                console.log(data);
+                //console.log(data);
                 $("#remote_fw").show();
                 fcFirmwareMap2 = {};
                 $.each(data, function (index, release) {
@@ -310,7 +310,7 @@ CONTENT.fc_flasher.initialize = function (callback) {
                 // prepare data to flash 
                 parsePages(self.parsed_hex, BLOCK_SIZE);
 
-                console.log(self.pages);
+                //console.log(self.pages);
 
                 $("#status").show().html("");
                 $("#flash").addClass('disabled');

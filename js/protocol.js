@@ -605,8 +605,6 @@ kissProtocol.processPacket = function (code, obj) {
                 if (obj.ver >= 129) {
                     obj.BECvoltage = data.getUint8(201, 0) // 0 = 5V // 1 = 16V
                 }
-                blen = 210;
-                // next free 202
             } catch (Exception) {
                 console.log("Exception while reading packet");
             }
@@ -719,9 +717,11 @@ kissProtocol.preparePacket = function (code, obj) {
     var crc = 0;
     var crcCounter = 0;
 
+    var ver = +kissProtocol.data[kissProtocol.GET_SETTINGS].ver;
+    console.log("Using version: " + ver);
+
     switch (code) {
         case this.SET_SETTINGS:
-
 
             data.setUint16(0, obj.G_P[0] * 1000, 0);
             data.setUint16(2, obj.G_P[1] * 1000, 0);
@@ -766,7 +766,7 @@ kissProtocol.preparePacket = function (code, obj) {
             data.setInt16(69, obj.ACCZero[1], 0);
             data.setInt16(71, obj.ACCZero[2], 0);
 
-            if (obj.ver > 103) {
+            if (ver > 103) {
                 data.setUint8(73, obj.AUX[0]);
                 data.setUint8(74, obj.AUX[1]);
                 data.setUint8(75, obj.AUX[2]);
@@ -849,7 +849,7 @@ kissProtocol.preparePacket = function (code, obj) {
 
             blen = 161;
 
-            if (obj.ver >= 109) {
+            if (ver >= 109) {
                 data.setUint8(153, obj.loopTimeDivider);
                 data.setUint8(154, obj.yawLpF);
                 data.setUint8(155, obj.DLpF);
@@ -859,7 +859,7 @@ kissProtocol.preparePacket = function (code, obj) {
                 blen = 167;
             }
 
-            if (obj.ver >= 110) {
+            if (ver >= 110) {
                 data.setUint8(159, obj.AUX[9]); // runcam
                 data.setUint8(160, obj.AUX[10]); // led brightness
                 data.setUint8(161, obj.ledBrightness);  // max brightness
@@ -867,34 +867,34 @@ kissProtocol.preparePacket = function (code, obj) {
                 data.setUint8(162, tmp);
                 blen = 171;
             }
-            if (obj.ver >= 111) {
+            if (ver >= 111) {
                 data.setUint8(163, obj.AUX[11]); //pentathrottle
                 data.setUint8(164, obj.setpointIntoD);
                 blen = 173;
             }
-            if (obj.ver >= 113) {
+            if (ver >= 113) {
                 data.setUint8(165, obj.ESCOutputLayout); // ESC output orientation
                 blen = 174;
             }
-            if (obj.ver >= 116) {
+            if (ver >= 116) {
                 data.setUint32(166, obj.SerialSetup); // Serialconfig
                 blen = 178;
             }
-            if (obj.ver >= 117) {
+            if (ver >= 117) {
                 data.setUint8(170, obj.AUX[12]); //realpit
                 blen = 179;
             }
-            if (obj.ver >= 119) {
+            if (ver >= 119) {
                 data.setUint8(171, obj.launchMode); //Launchmode
                 blen = 180;
             }
-            if (obj.ver >= 121) {
+            if (ver >= 121) {
                 data.setUint16(172, obj.osdConfig, 0); // DJI
                 data.setUint8(174, obj.AUX[13]); //RTH
                 blen = 183;
             }
 
-            if (obj.ver >= 122) { // RTH
+            if (ver >= 122) { // RTH
                 data.setUint16(175, obj.rthReturnAltitude);
                 data.setUint16(177, obj.rthHomeAltitude);
                 data.setUint16(179, obj.rthDescentRadius);
@@ -905,15 +905,15 @@ kissProtocol.preparePacket = function (code, obj) {
                 data.setUint8(188, obj.rthReturnSpeed);
                 blen = 197;
             }
-            if (obj.ver >= 127) {
+            if (ver >= 127) {
                 data.setUint8(189, obj.nonStandardDshot);
                 blen = 198;
             }
-            if (obj.ver >= 129) {
+            if (ver >= 129) {
                 data.setUint8(190, obj.BECvoltage);
                 blen = 199;
             }
-            console.log(data)
+            //console.log(data)
             break;
 
         case this.MOTOR_TEST:
@@ -924,7 +924,7 @@ kissProtocol.preparePacket = function (code, obj) {
             data.setUint8(4, obj.motorTest[3], 0);
             data.setUint8(5, obj.motorTest[4], 0);
             data.setUint8(6, obj.motorTest[5], 0);
-            if (obj.ver < 130) {
+            if (ver < 130) {
                 blen = 7;
             } else {
                 data.setUint8(7, obj.motorTest[6], 0);
@@ -940,11 +940,11 @@ kissProtocol.preparePacket = function (code, obj) {
             data.setUint8(3, obj.escSettings[3], 0);
             data.setUint8(4, obj.escSettings[4], 0);
             data.setUint8(5, obj.escSettings[5], 0);
-            if (obj.ver < 130) {
+            if (ver < 130) {
                 blen = 6;
             } else {
-                data.setUint8(4, obj.escSettings[4], 0);
-                data.setUint8(5, obj.escSettings[5], 0);
+                data.setUint8(4, obj.escSettings[6], 0);
+                data.setUint8(5, obj.escSettings[7], 0);
                 blen = 8;
             }
             break;
@@ -962,8 +962,6 @@ kissProtocol.preparePacket = function (code, obj) {
     outputU8[1] = 5;
     outputU8[2] = blen;
 
-    var ver = +kissProtocol.data[kissProtocol.GET_SETTINGS].ver;
-    console.log("using version: " + ver);
 
     for (var i = 0; i < blen; i++) {
         outputU8[i + 3] = bufferU8[i];

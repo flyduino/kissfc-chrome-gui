@@ -67,12 +67,12 @@ CONTENT.flasher.initialize = function (callback) {
 
         $("#fc_type").on("change", function () {
             var value = firmwareMap[$(this).val()];
-            console.log(value);
+            //console.log(value);
             $("#fw_version").empty();
             $.each(value, function (index, asset) {
                 $("#fw_version").append("<option value='" + index + "'>" + asset.release + " (" + asset.size + " bytes)</option>");
             });
-            $("#fcimage").attr("src", "images/"+$(this).val()+".png");
+            $("#fcimage").attr("src", "images/" + $(this).val() + ".png");
             $("#fw_version").trigger("change");
             $("#file_info").html("");
             $("#flash").hide();
@@ -113,7 +113,7 @@ CONTENT.flasher.initialize = function (callback) {
             loadGithubReleases("https://api.github.com/repos/flyduino/kissfc-firmware/releases", function (data) {
                 $("#loader1").hide();
                 console.log("DONE");
-                console.log(data);
+                //console.log(data);
                 $("#remote_fw").show();
                 firmwareMap = {};
                 $.each(data, function (index, release) {
